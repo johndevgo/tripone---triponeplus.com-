@@ -1,0 +1,49 @@
+{
+  "name": "tripone-plus",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.17.1",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "next build && start-server-and-test \"next start\" http://127.0.0.1:3000 \"playwright test\"",
+    "seed:demo": "node --env-file=.env.local --import tsx scripts/seed-demo.ts",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "@dnd-kit/core": "6.3.1",
+    "@dnd-kit/sortable": "10.0.0",
+    "@hookform/resolvers": "5.9.1",
+    "@supabase/ssr": "0.12.6",
+    "@supabase/supabase-js": "2.115.0",
+    "geist": "^1.7.2",
+    "lucide-react": "1.41.0",
+    "next": "16.3.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "react-hook-form": "7.87.0",
+    "zod": "4.5.4",
+    "zustand": "5.0.15"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "@tailwindcss/postcss": "4.3.3",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.3.4",
+    "prettier": "latest",
+    "start-server-and-test": "^3.0.12",
+    "tailwindcss": "4.3.3",
+    "tsx": "^4.23.13",
+    "typescript": "6.0.3",
+    "vitest": "5.0.0"
+  }
+}

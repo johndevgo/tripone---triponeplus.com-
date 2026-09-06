@@ -1,0 +1,3 @@
+-- Development seed data is created through `pnpm seed:demo` so it always runs
+-- as a real authenticated user and exercises the same RLS-protected RPC as onboarding.
+-- See scripts/seed-demo.ts and README.md. No service-role key is required.
