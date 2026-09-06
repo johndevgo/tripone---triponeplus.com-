@@ -40,10 +40,10 @@ Open `http://localhost:3000`. For tenant routing, add a local hosts-file entry s
 
 Required:
 
-- `NEXT_PUBLIC_SITE_URL`: `https://triponeplus.com` in production; no trailing slash.
+- `NEXT_PUBLIC_SITE_URL`: one absolute application origin. Use `https://tools.neurerohan.com.np` in the current production deployment; do not put comma-separated hosts here.
 - `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL.
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: public publishable key. A legacy anon key can use `NEXT_PUBLIC_SUPABASE_ANON_KEY` instead.
-- `APP_HOSTS`: comma-separated non-tenant application aliases. Production should include `triponeplus.com,www.triponeplus.com,app.triponeplus.com,tools.neurerohan.com.np`.
+- `APP_HOSTS`: comma-separated non-tenant application aliases. Current production should include `tools.neurerohan.com.np,tripone-triponeplus-com.vercel.app`.
 
 Optional server-only:
 
@@ -65,10 +65,11 @@ Optional server-only:
    npx supabase@latest db advisors --linked --type performance
    ```
 
-2. In Authentication → URL Configuration, set Site URL to `https://triponeplus.com`. Add exact redirects:
-   - `https://triponeplus.com/auth/callback`
-   - `https://triponeplus.com/reset-password`
-   - `https://tools.neurerohan.com.np/auth/callback` while that alias is used
+2. In Authentication → URL Configuration, set Site URL to `https://tools.neurerohan.com.np`. Add exact redirects:
+   - `https://tools.neurerohan.com.np/auth/callback`
+   - `https://tools.neurerohan.com.np/reset-password`
+   - `https://tripone-triponeplus-com.vercel.app/auth/callback`
+   - `https://tripone-triponeplus-com.vercel.app/reset-password`
    - `http://localhost:3000/**` for local development
    - the Vercel preview wildcard only for preview environments
 3. Confirm email/password Auth is enabled. Supabase Auth handles confirmation and password-reset email; custom SMTP is optional.
@@ -86,6 +87,7 @@ Optional server-only:
 7. `20260906061552_rls_performance.sql`: advisor-driven RLS optimization.
 8. `20260906112116_part3_production.sql`: hostname resolver, default domains, canonical switching, exact redirects, analytics and final publishing snapshot.
 9. `20260906115541_part3_advisor_fix.sql`: removes the duplicate domain index identified by the live database advisor.
+10. `20260906181535_fix_create_generated_site_advisory_lock.sql`: fixes JSON extraction precedence in the transactional onboarding lock without changing the function's business logic.
 
 ## Demo data
 
@@ -126,12 +128,12 @@ The included `.github/workflows/ci.yml` runs install, lint, typecheck, unit test
    ```
 
 2. Add server-only Supabase and Vercel domain variables in Project Settings → Environment Variables. Apply them to Production and only to Preview when genuinely needed.
-3. In Project Settings → Domains, attach `triponeplus.com`, `www.triponeplus.com`, and `tools.neurerohan.com.np`.
+3. In Project Settings → Domains, keep `tools.neurerohan.com.np` and the existing Vercel alias attached. `triponeplus.com` is a future domain and must not be presented as currently owned or live.
 4. Create a least-privilege Vercel token for this project, set project/team IDs, and redeploy. New TripOne+ subdomains and customer custom domains will then be attached and verified through the provider adapter.
 
 ## Cloudflare DNS
 
-With Cloudflare remaining authoritative DNS:
+If `triponeplus.com` is acquired later and Cloudflare remains authoritative DNS:
 
 - `@` → Vercel’s displayed apex A record (often `76.76.21.21`)
 - `www` → Vercel’s displayed CNAME
@@ -148,11 +150,14 @@ For customer domains, the Domains screen displays provider verification TXT reco
 corepack pnpm lint
 corepack pnpm typecheck
 corepack pnpm test
+corepack pnpm test:db
 corepack pnpm build
 corepack pnpm test:e2e
 ```
 
 Playwright public desktop/mobile smoke tests need no credentials. Authenticated onboarding/builder flows skip unless disposable E2E credentials exist. Complete the manual production checks in `docs/PRODUCTION_CHECKLIST.md` after DNS and provider credentials are configured.
+
+`test:db` requires `TRIPONE_DATABASE_URL` and runs its disposable authenticated fixtures inside a transaction that ends with `ROLLBACK`. Use only a disposable database or an explicitly authorized project.
 
 ## Security notes
 

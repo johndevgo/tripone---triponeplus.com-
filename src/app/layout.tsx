@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
+import { getAppUrl } from "@/lib/app-url";
 import "./globals.css";
 export const metadata: Metadata = {
   title: {
@@ -8,9 +9,7 @@ export const metadata: Metadata = {
   },
   description:
     "Build a fast, SEO-ready website structured for your tourism or activity business.",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  ),
+  metadataBase: new URL(getAppUrl()),
   applicationName: "TripOne+",
   openGraph: {
     title: "TripOne+ — Websites built to sell experiences",

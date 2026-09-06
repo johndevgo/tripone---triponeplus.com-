@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { getAppUrl } from "@/lib/app-url";
 import { createClient } from "@/lib/supabase/server";
 import { sectionsSchema, type ThemeId } from "@/lib/types";
 import { createExperienceSeo, getTheme } from "@/lib/site-generator";
@@ -234,17 +235,13 @@ export default async function Preview({
       ...stored.colors,
     },
   };
+  const previewBaseUrl = `${getAppUrl()}/preview/${data.site.slug}`;
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: safeJson(
-            websiteJsonLd(
-              data.site.name,
-              `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/preview/${data.site.slug}`,
-            ),
-          ),
+          __html: safeJson(websiteJsonLd(data.site.name, previewBaseUrl)),
         }}
       />
       <script
@@ -261,7 +258,7 @@ export default async function Preview({
                 country: data.business.country,
                 logoUrl: data.business.logo_url,
               },
-              `${process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"}/preview/${data.site.slug}`,
+              previewBaseUrl,
             ),
           ),
         }}

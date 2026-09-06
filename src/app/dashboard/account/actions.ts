@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { getAppUrl } from "@/lib/app-url";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
@@ -38,9 +39,7 @@ export async function sendPasswordReset() {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user?.email) redirect("/login");
-  const origin = (
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
-  ).replace(/\/$/, "");
+  const origin = getAppUrl();
   const { error } = await supabase.auth.resetPasswordForEmail(user.email, {
     redirectTo: `${origin}/reset-password`,
   });

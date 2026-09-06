@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
@@ -120,6 +120,7 @@ const defaults: OnboardingInput = {
 
 export function OnboardingWizard() {
   const router = useRouter();
+  const buildRequestActive = useRef(false);
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [building, setBuilding] = useState(false);
@@ -197,17 +198,23 @@ export function OnboardingWizard() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   async function create() {
+    if (buildRequestActive.current) return;
+    buildRequestActive.current = true;
     setBuilding(true);
     setError("");
     const valid = await trigger();
     if (!valid) {
       setError("Please review the highlighted fields.");
+      buildRequestActive.current = false;
       setBuilding(false);
       return;
     }
-    const result = await buildWebsite(getValues());
+    const submission = getValues();
+    localStorage.setItem("tripone-onboarding", JSON.stringify(submission));
+    const result = await buildWebsite(submission);
     if (!result.ok || !result.siteId) {
       setError(result.error || "Could not create your website.");
+      buildRequestActive.current = false;
       setBuilding(false);
       return;
     }

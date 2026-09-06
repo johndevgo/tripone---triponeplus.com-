@@ -5,6 +5,7 @@ import { onboardingSchema } from "@/lib/validation";
 import { generateSite } from "@/lib/site-generator";
 import { slugify } from "@/lib/utils";
 import { addProviderDomain } from "@/lib/domains/provider";
+import { publicGenerationError } from "@/lib/onboarding-errors";
 
 export type ActionResult = { ok: boolean; siteId?: string; error?: string };
 
@@ -43,14 +44,21 @@ export async function buildWebsite(raw: unknown): Promise<ActionResult> {
   const { data, error } = await supabase.rpc("create_generated_site", {
     payload: { ...parsed.data, experiences, generated },
   });
-  if (error)
+  if (error) {
+    const correlationReference = crypto.randomUUID();
+    console.error("Website generation failed", {
+      correlationReference,
+      code: error.code,
+      message: error.message,
+      details: error.details,
+      hint: error.hint,
+      userId: user.id,
+    });
     return {
       ok: false,
-      error:
-        error.code === "23505"
-          ? "That subdomain is already in use."
-          : error.message,
+      error: publicGenerationError(error, correlationReference),
     };
+  }
   const mediaUrls = [
     parsed.data.logoUrl,
     ...parsed.data.experiences.map((item) => item.featuredImageUrl),

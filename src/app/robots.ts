@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
+import { getAppUrl } from "@/lib/app-url";
 
 export default function robots(): MetadataRoute.Robots {
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "https://triponeplus.com";
+  const origin = getAppUrl("https://tools.neurerohan.com.np");
   return {
     rules: {
       userAgent: "*",

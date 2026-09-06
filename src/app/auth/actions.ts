@@ -2,6 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { getAppUrl } from "@/lib/app-url";
 import { createClient } from "@/lib/supabase/server";
 
 function value(formData: FormData, name: string) {
@@ -52,7 +53,7 @@ export async function signup(formData: FormData) {
     );
   const supabase = await createClient();
   const email = parsed.data.email;
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const origin = getAppUrl();
   const { data, error } = await supabase.auth.signUp({
     email,
     password: parsed.data.password,
@@ -76,7 +77,7 @@ export async function logout() {
 
 export async function forgotPassword(formData: FormData) {
   const supabase = await createClient();
-  const origin = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+  const origin = getAppUrl();
   const { error } = await supabase.auth.resetPasswordForEmail(
     value(formData, "email"),
     { redirectTo: `${origin}/auth/callback?next=/reset-password` },

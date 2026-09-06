@@ -1,9 +1,8 @@
 import type { MetadataRoute } from "next";
+import { getAppUrl } from "@/lib/app-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const origin = (
-    process.env.NEXT_PUBLIC_SITE_URL ?? "https://triponeplus.com"
-  ).replace(/\/$/, "");
+  const origin = getAppUrl("https://tools.neurerohan.com.np");
   return ["", "/features", "/templates", "/pricing", "/privacy", "/terms"].map(
     (path) => ({
       url: `${origin}${path}`,

@@ -7,7 +7,7 @@
 - [ ] Database and performance advisors report no unresolved warnings
 - [ ] RLS and explicit grants are reviewed after the final migration
 - [ ] `site-media` and `avatars` buckets and policies exist
-- [ ] Auth Site URL is `https://triponeplus.com`
+- [ ] Auth Site URL is `https://tools.neurerohan.com.np`
 - [ ] Exact production redirect URLs and local development redirect are allowed
 - [ ] Leaked or previously shared database and secret keys are rotated
 - [ ] Point-in-time recovery or the project backup strategy is understood
@@ -17,7 +17,7 @@
 - [ ] Repository default branch is `main` and GitHub Actions passes
 - [ ] Vercel project is connected to the GitHub repository
 - [ ] Production environment variables are configured
-- [ ] `triponeplus.com`, `www.triponeplus.com`, and `tools.neurerohan.com.np` are attached
+- [ ] `tools.neurerohan.com.np` and the existing Vercel production alias are attached
 - [ ] Wildcard Cloudflare DNS or per-subdomain DNS strategy is configured
 - [ ] `VERCEL_TOKEN`, project ID and optional team ID enable domain provisioning
 - [ ] Production deployment protection does not block customer websites
