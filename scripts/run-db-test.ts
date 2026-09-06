@@ -10,8 +10,11 @@ if (!databaseUrl)
   );
 
 const input =
-  process.argv.slice(2).find((argument) => argument !== "--") ??
+  process.argv
+    .slice(2)
+    .find((argument) => argument !== "--" && argument !== "--rollback") ??
   "supabase/tests/create_generated_site_repair.sql";
+const rollbackOnly = process.argv.includes("--rollback");
 const file = path.resolve(process.cwd(), input);
 const sql = await readFile(file, "utf8");
 const client = new Client({
@@ -23,9 +26,14 @@ const client = new Client({
 
 try {
   await client.connect();
-  await client.query(sql);
+  if (rollbackOnly) await client.query("begin");
+  try {
+    await client.query(sql);
+  } finally {
+    if (rollbackOnly) await client.query("rollback");
+  }
   console.log(
-    `Database integration test passed: ${path.relative(process.cwd(), file)}`,
+    `Database ${rollbackOnly ? "rollback validation" : "integration test"} passed: ${path.relative(process.cwd(), file)}`,
   );
 } finally {
   await client.end();
