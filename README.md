@@ -19,9 +19,11 @@ No AI or LLM API is used. Pages and copy come from typed category presets, page 
 
 Marketing: `/`, `/features`, `/templates`, `/pricing`, `/privacy`, `/terms`, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
 
-Product: `/onboarding`, `/dashboard`, `/dashboard/account`, `/dashboard/sites/[siteId]`, plus `builder`, `experiences`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `leads`, `analytics`, `domains` and `settings`.
+Product: `/onboarding`, `/dashboard`, `/dashboard/account`, `/dashboard/sites/[siteId]`, plus `builder`, `experiences`, `rentals`, `taxonomies`, `services`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `leads`, `analytics`, `domains` and `settings`.
 
 Delivery: `/preview/[siteSlug]/[[...path]]` is authenticated and noindex. Live hostnames are internally rewritten to `/tenant-sites/[hostname]/[[...path]]`; tenant `/sitemap.xml` and `/robots.txt` use the same host-aware snapshot.
+
+Published fallback: `/s/[siteSlug]/[[...path]]` renders the immutable published snapshot on the application origin until a customer or platform hostname is actually verified.
 
 ## Local setup
 
@@ -88,6 +90,8 @@ Optional server-only:
 8. `20260906112116_part3_production.sql`: hostname resolver, default domains, canonical switching, exact redirects, analytics and final publishing snapshot.
 9. `20260906115541_part3_advisor_fix.sql`: removes the duplicate domain index identified by the live database advisor.
 10. `20260906181535_fix_create_generated_site_advisory_lock.sql`: fixes JSON extraction precedence in the transactional onboarding lock without changing the function's business logic.
+11. `20260907003000_part4_multi_service_core.sql`: adds multi-service capabilities, rentals and rates, taxonomies, tenant-safe assignments, RLS, and schema-v2 publishing.
+12. `20260907010000_part4_atomic_capabilities.sql`: keeps multi-capability onboarding inside the idempotent generation transaction.
 
 ## Demo data
 

@@ -150,6 +150,7 @@ export default async function TenantPage({ params }: Props) {
             .testimonials as unknown as import("@/components/site/site-renderer").PublicTestimonial[]
         }
         activeExperience={resolved.experience}
+        activeRental={resolved.activeRental}
         basePath=""
       />
     </>

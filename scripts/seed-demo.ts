@@ -15,6 +15,7 @@ if (!url || !anonKey || !email || !password) {
 
 const input: OnboardingInput = {
   businessType: "jetski",
+  capabilities: ["jetski"],
   name: "Dubai Wave Jetski",
   slug: "dubai-wave-jetski-demo",
   shortDescription: "Demo jet ski experiences departing from Dubai Marina.",

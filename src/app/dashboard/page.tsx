@@ -2,6 +2,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ArrowRight, Globe2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
+import { fallbackSiteUrl } from "@/lib/tenancy/public-url";
 export default async function Dashboard() {
   const supabase = await createClient();
   const { data: sites } = await supabase
@@ -29,7 +30,7 @@ export default async function Dashboard() {
               <Globe2 className="text-[#FFC857]" />
               <h2 className="mt-8 text-xl font-semibold">{site.name}</h2>
               <p className="mt-1 text-sm text-white/45">
-                {site.slug}.triponeplus.com · {site.status}
+                {fallbackSiteUrl(site.slug)} · {site.status}
               </p>
               <span className="mt-6 flex items-center gap-2 text-sm">
                 Manage website <ArrowRight size={15} />

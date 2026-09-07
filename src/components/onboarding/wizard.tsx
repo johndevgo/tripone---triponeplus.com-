@@ -24,7 +24,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
+  businessCapabilities,
   businessTypes,
+  type BusinessCapability,
   type BusinessType,
   type OnboardingInput,
 } from "@/lib/types";
@@ -33,7 +35,7 @@ import { businessPresets, themes } from "@/lib/site-generator";
 import { slugify, cn } from "@/lib/utils";
 import { buildWebsite, checkSlug } from "@/app/onboarding/actions";
 
-const icons: Record<BusinessType, typeof Compass> = {
+const icons: Record<BusinessCapability, typeof Compass> = {
   jetski: Waves,
   boat_rental: Sailboat,
   day_tour: Map,
@@ -51,9 +53,13 @@ const icons: Record<BusinessType, typeof Compass> = {
   multi_day_tour: Map,
   excursion: Ship,
   water_sports: Waves,
+  motorcycle_tour: Bike,
+  motorcycle_rental: Bike,
+  vehicle_rental: Map,
+  equipment_rental: Compass,
   other: Compass,
 };
-const descriptions: Record<BusinessType, string> = {
+const descriptions: Record<BusinessCapability, string> = {
   jetski: "High-energy guided rides and rentals",
   boat_rental: "Charters, cruises and self-drive rentals",
   day_tour: "Memorable trips completed in a day",
@@ -71,7 +77,35 @@ const descriptions: Record<BusinessType, string> = {
   multi_day_tour: "Complete itineraries over several days",
   excursion: "Focused trips from a destination",
   water_sports: "On-water activities and rentals",
+  motorcycle_tour: "Guided road and trail journeys",
+  motorcycle_rental: "Motorcycles and scooters for hire",
+  vehicle_rental: "Cars, jeeps and specialist vehicles",
+  equipment_rental: "Outdoor and activity equipment for hire",
   other: "Another kind of tourism business",
+};
+const capabilityLabels: Record<BusinessCapability, string> = {
+  jetski: "Jet Ski Rental",
+  boat_rental: "Boat Rental",
+  day_tour: "Day Tours",
+  tour_operator: "Tour Operator",
+  travel_agency: "Travel Agency",
+  safari: "Safari",
+  trekking: "Trekking",
+  hiking: "Hiking",
+  diving: "Diving",
+  snorkelling: "Snorkelling",
+  rafting: "Rafting",
+  atv_buggy: "ATV / Buggy",
+  adventure_activity: "Adventure Activities",
+  local_guide: "Local Guide",
+  multi_day_tour: "Multi-Day Tours",
+  excursion: "Excursions",
+  water_sports: "Water Sports",
+  motorcycle_tour: "Motorcycle Tours",
+  motorcycle_rental: "Motorcycle Rental",
+  vehicle_rental: "Vehicle & Jeep Rental",
+  equipment_rental: "Equipment Rental",
+  other: "Other",
 };
 const steps = [
   "Business type",
@@ -99,6 +133,7 @@ const label = "text-sm font-medium text-white/80";
 
 const defaults: OnboardingInput = {
   businessType: "tour_operator",
+  capabilities: ["tour_operator"],
   name: "",
   slug: "",
   shortDescription: "",
@@ -168,7 +203,7 @@ export function OnboardingWizard() {
   async function next() {
     setError("");
     let names: (keyof OnboardingInput)[] = [];
-    if (step === 0) names = ["businessType"];
+    if (step === 0) names = ["businessType", "capabilities"];
     if (step === 1)
       names = [
         "name",
@@ -282,9 +317,25 @@ export function OnboardingWizard() {
         {step === 0 && (
           <BusinessStep
             value={values.businessType as BusinessType}
-            select={(v) =>
-              setValue("businessType", v, { shouldValidate: true })
-            }
+            selected={(values.capabilities as BusinessCapability[]) ?? []}
+            selectPrimary={(v) => {
+              setValue("businessType", v, { shouldValidate: true });
+              const current = (getValues("capabilities") ??
+                []) as BusinessCapability[];
+              if (!current.includes(v))
+                setValue("capabilities", [...current, v], {
+                  shouldValidate: true,
+                });
+            }}
+            toggle={(v) => {
+              const current = (getValues("capabilities") ??
+                []) as BusinessCapability[];
+              const next = current.includes(v)
+                ? current.filter((item) => item !== v)
+                : [...current, v];
+              if (v === getValues("businessType") && !next.includes(v)) return;
+              setValue("capabilities", next, { shouldValidate: true });
+            }}
           />
         )}{" "}
         {step === 1 && (
@@ -383,48 +434,64 @@ function Title({
 }
 function BusinessStep({
   value,
-  select,
+  selected,
+  selectPrimary,
+  toggle,
 }: {
   value: BusinessType;
-  select: (v: BusinessType) => void;
+  selected: BusinessCapability[];
+  selectPrimary: (v: BusinessType) => void;
+  toggle: (v: BusinessCapability) => void;
 }) {
   return (
     <>
       <Title
         eyebrow="Start with your structure"
         title="What kind of business are you building a website for?"
-        copy="Your answer shapes the terminology, recommended pages, calls to action and experience fields."
+        copy="Select every service line you offer. Your primary service shapes the initial terminology and recommendations."
       />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {businessTypes.map((type) => {
+        {businessCapabilities.map((type) => {
           const Icon = icons[type];
-          const active = value === type;
+          const active = selected.includes(type);
+          const primary = value === type;
           return (
-            <button
-              type="button"
-              aria-pressed={active}
-              onClick={() => select(type)}
+            <div
               key={type}
               className={cn(
-                "min-h-36 rounded-2xl border p-5 text-left transition",
+                "min-h-40 rounded-2xl border p-5 text-left transition",
                 active
                   ? "border-[#FFC857] bg-[#FFC857]/10 shadow-[inset_0_0_0_1px_rgba(255,200,87,.25)]"
                   : "border-white/10 bg-white/[.035] hover:border-white/25 hover:bg-white/[.06]",
               )}
             >
-              <div className="flex justify-between">
-                <Icon
-                  className={active ? "text-[#FFC857]" : "text-emerald-300"}
-                />
-                {active && <Check size={18} className="text-[#FFC857]" />}
-              </div>
-              <h2 className="mt-5 font-semibold">
-                {businessPresets[type].label}
-              </h2>
-              <p className="mt-1.5 text-xs leading-5 text-white/45">
-                {descriptions[type]}
-              </p>
-            </button>
+              <button
+                type="button"
+                aria-pressed={active}
+                onClick={() => toggle(type)}
+                className="block w-full text-left"
+              >
+                <div className="flex justify-between">
+                  <Icon
+                    className={active ? "text-[#FFC857]" : "text-emerald-300"}
+                  />
+                  {active && <Check size={18} className="text-[#FFC857]" />}
+                </div>
+                <h2 className="mt-5 font-semibold">{capabilityLabels[type]}</h2>
+                <p className="mt-1.5 text-xs leading-5 text-white/45">
+                  {descriptions[type]}
+                </p>
+              </button>
+              {businessTypes.includes(type as BusinessType) && (
+                <button
+                  type="button"
+                  onClick={() => selectPrimary(type as BusinessType)}
+                  className={`mt-3 text-xs font-medium ${primary ? "text-[#FFC857]" : "text-white/40 hover:text-white"}`}
+                >
+                  {primary ? "Primary service" : "Make primary"}
+                </button>
+              )}
+            </div>
           );
         })}
       </div>
@@ -459,7 +526,7 @@ function DetailsStep({
       <Title
         eyebrow="Business details"
         title="Give your website the essentials."
-        copy="We use these facts to create truthful page copy, contact details, local metadata and your proposed subdomain."
+        copy="We use these facts to create truthful page copy, contact details, local metadata and your published fallback address."
       />
       <div className="grid gap-5 sm:grid-cols-2">
         <label className={label}>
@@ -473,7 +540,7 @@ function DetailsStep({
           <ErrorText>{errors.name?.message}</ErrorText>
         </label>
         <label className={label}>
-          Subdomain
+          Site slug
           <input
             {...register("slug")}
             value={slug}
@@ -486,7 +553,7 @@ function DetailsStep({
               : slugState === "checking"
                 ? "Checking · "
                 : ""}
-            {slug || valuesafe(name)}.triponeplus.com
+            tools.neurerohan.com.np/s/{slug || valuesafe(name)}
           </span>
           <ErrorText>{errors.slug?.message}</ErrorText>
         </label>
@@ -889,7 +956,7 @@ function Review({
         </ReviewCard>
         <ReviewCard title="Proposed website">
           <p className="font-medium text-[#FFC857]">
-            {values.slug}.triponeplus.com
+            tools.neurerohan.com.np/s/{values.slug}
           </p>
           <p className="mt-3">
             Pages: {preset.pages.map((p) => p.title).join(", ")}

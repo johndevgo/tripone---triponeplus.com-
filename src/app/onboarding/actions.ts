@@ -4,7 +4,6 @@ import { createClient } from "@/lib/supabase/server";
 import { onboardingSchema } from "@/lib/validation";
 import { generateSite } from "@/lib/site-generator";
 import { slugify } from "@/lib/utils";
-import { addProviderDomain } from "@/lib/domains/provider";
 import { publicGenerationError } from "@/lib/onboarding-errors";
 
 export type ActionResult = { ok: boolean; siteId?: string; error?: string };
@@ -68,37 +67,6 @@ export async function buildWebsite(raw: unknown): Promise<ActionResult> {
       .from("media")
       .update({ site_id: data })
       .in("public_url", mediaUrls);
-  }
-  const defaultHostname = `${parsed.data.slug}.triponeplus.com`;
-  try {
-    const provider = await addProviderDomain(defaultHostname);
-    if (provider.configured) {
-      await supabase
-        .from("domains")
-        .update({
-          provider_data: provider,
-          verification_status: provider.verified ? "verified" : "pending",
-          verified_at: provider.verified ? new Date().toISOString() : null,
-          last_checked_at: new Date().toISOString(),
-          last_error: provider.verified
-            ? null
-            : "Hosting verification is pending.",
-        })
-        .eq("site_id", data)
-        .eq("domain_type", "subdomain");
-    }
-  } catch (cause) {
-    await supabase
-      .from("domains")
-      .update({
-        last_error:
-          cause instanceof Error
-            ? cause.message.slice(0, 300)
-            : "Hosting provider setup failed.",
-        last_checked_at: new Date().toISOString(),
-      })
-      .eq("site_id", data)
-      .eq("domain_type", "subdomain");
   }
   return { ok: true, siteId: String(data) };
 }

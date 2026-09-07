@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
+  Box,
   ChevronLeft,
   Compass,
   FileText,
@@ -16,6 +17,8 @@ import {
   PanelLeftClose,
   Search,
   Settings,
+  Tags,
+  Wrench,
   Quote,
   UserCircle,
   Users,
@@ -28,6 +31,8 @@ const nav = [
   [LayoutDashboard, "Overview", ""],
   [Compass, "Website", "builder"],
   [Compass, "Experiences", "experiences"],
+  [Box, "Rentals", "rentals"],
+  [Tags, "Taxonomies", "taxonomies"],
   [FileText, "Pages", "pages"],
   [Images, "Media", "media"],
   [MapPin, "Locations", "locations"],
@@ -38,6 +43,7 @@ const nav = [
   [BarChart3, "Analytics", "analytics"],
   [Globe2, "Domains", "domains"],
   [Settings, "Settings", "settings"],
+  [Wrench, "Service lines", "services"],
 ] as const;
 export function DashboardShell({
   siteId,

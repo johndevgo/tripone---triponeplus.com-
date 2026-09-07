@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
+  Box,
   CheckCircle2,
   Circle,
   Eye,
@@ -10,6 +11,7 @@ import {
 } from "lucide-react";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { currentPublicSiteUrl } from "@/lib/tenancy/public-url";
 export default async function SiteOverview({
   params,
 }: {
@@ -23,6 +25,8 @@ export default async function SiteOverview({
     { count: experiences },
     { count: allExperiences },
     { count: leads },
+    { count: rentals },
+    { data: domains },
   ] = await Promise.all([
     supabase
       .from("sites")
@@ -48,12 +52,22 @@ export default async function SiteOverview({
       .from("leads")
       .select("id", { count: "exact", head: true })
       .eq("site_id", siteId),
+    supabase
+      .from("rental_products")
+      .select("id", { count: "exact", head: true })
+      .eq("site_id", siteId)
+      .neq("status", "archived"),
+    supabase
+      .from("domains")
+      .select("hostname,verification_status,is_primary")
+      .eq("site_id", siteId),
   ]);
   if (!site) notFound();
   const cards = [
     [FileText, "Pages", pages ?? 0],
     [MapPin, "Published experiences", experiences ?? 0],
     [Users, "Leads", leads ?? 0],
+    [Box, "Rental products", rentals ?? 0],
   ] as const;
   return (
     <>
@@ -64,7 +78,7 @@ export default async function SiteOverview({
             {site.name}
           </h1>
           <p className="mt-2 text-white/45">
-            {site.slug}.triponeplus.com ·{" "}
+            {currentPublicSiteUrl(site.slug, domains ?? [])} ·{" "}
             <span className="capitalize">{site.status}</span>
           </p>
         </div>
@@ -75,7 +89,7 @@ export default async function SiteOverview({
           Preview website <ArrowUpRight size={17} />
         </Link>
       </div>
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+      <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {cards.map(([Icon, label, n]) => (
           <article className="glass rounded-2xl p-5" key={label}>
             <Icon className="text-emerald-300" size={20} />

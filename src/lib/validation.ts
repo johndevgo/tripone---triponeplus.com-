@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { businessTypes, themeIds } from "@/lib/types";
+import { businessCapabilities, businessTypes, themeIds } from "@/lib/types";
 
 const optionalUrl = z.union([z.literal(""), z.url()]).optional();
 export const experienceInputSchema = z.object({
@@ -18,6 +18,7 @@ export const experienceInputSchema = z.object({
 
 export const onboardingSchema = z.object({
   businessType: z.enum(businessTypes),
+  capabilities: z.array(z.enum(businessCapabilities)).min(1).max(12),
   name: z.string().trim().min(2).max(100),
   slug: z
     .string()

@@ -14,6 +14,7 @@ import {
 
 const input: OnboardingInput = {
   businessType: "jetski",
+  capabilities: ["jetski"],
   name: "Dubai Wave Jetski",
   slug: "dubai-wave-jetski",
   shortDescription: "Guided jet ski experiences around Dubai Marina.",

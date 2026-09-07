@@ -9,7 +9,10 @@ import {
   type ThemeId,
 } from "@/lib/types";
 import { createExperienceSeo, getTheme } from "@/lib/site-generator";
-import type { PublicExperience } from "@/components/site/site-renderer";
+import type {
+  PublicExperience,
+  PublicRental,
+} from "@/components/site/site-renderer";
 
 const pageSchema = z
   .object({
@@ -41,7 +44,44 @@ const experienceSchema = z
   })
   .passthrough();
 
-const snapshotSchema = z.object({
+const rentalSchema = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    slug: z.string(),
+    rental_type: z.string(),
+    short_description: z.string().default(""),
+    description: z.string().default(""),
+    currency: z.string().default("USD"),
+    pricing_label: z.string().nullable().optional(),
+    location_name: z.string().nullable().optional(),
+    booking_url: z.string().nullable().optional(),
+    booking_button_label: z.string().nullable().optional(),
+    quote_only: z.boolean().default(false),
+    featured_image_url: z.string().nullable().optional(),
+    specifications: z.unknown().optional(),
+    inclusions: z.unknown().optional(),
+    exclusions: z.unknown().optional(),
+    rental_terms: z.unknown().optional(),
+    seo_settings: z.record(z.string(), z.unknown()).default({}),
+    updated_at: z.string().optional(),
+  })
+  .passthrough();
+
+const rentalRateSchema = z
+  .object({
+    rental_product_id: z.string(),
+    label: z.string(),
+    amount: z.coerce.number().nullable().default(null),
+    currency: z.string(),
+    pricing_unit: z.string(),
+    minimum_quantity: z.coerce.number().nullable().optional(),
+    maximum_quantity: z.coerce.number().nullable().optional(),
+  })
+  .passthrough();
+
+export const publishedSnapshotSchema = z.object({
+  schemaVersion: z.number().int().positive().default(1),
   site: z.object({
     id: z.string(),
     name: z.string(),
@@ -70,6 +110,14 @@ const snapshotSchema = z.object({
     .passthrough(),
   pages: z.array(pageSchema).default([]),
   experiences: z.array(experienceSchema).default([]),
+  rentals: z.array(rentalSchema).default([]),
+  rentalRates: z.array(rentalRateSchema).default([]),
+  taxonomies: z.array(z.record(z.string(), z.unknown())).default([]),
+  taxonomyTerms: z.array(z.record(z.string(), z.unknown())).default([]),
+  experienceTaxonomyTerms: z
+    .array(z.record(z.string(), z.unknown()))
+    .default([]),
+  rentalTaxonomyTerms: z.array(z.record(z.string(), z.unknown())).default([]),
   locations: z.array(z.record(z.string(), z.unknown())).default([]),
   testimonials: z.array(z.record(z.string(), z.unknown())).default([]),
   redirects: z.array(z.record(z.string(), z.unknown())).default([]),
@@ -77,12 +125,17 @@ const snapshotSchema = z.object({
 });
 
 const envelopeSchema = z.object({
-  snapshot: snapshotSchema,
+  snapshot: publishedSnapshotSchema,
   requestedHostname: z.string(),
   primaryHostname: z.string(),
 });
 
 export type PublishedSite = z.infer<typeof envelopeSchema>;
+
+export function decodePublishedSnapshot(value: unknown) {
+  const parsed = publishedSnapshotSchema.safeParse(value);
+  return parsed.success ? parsed.data : null;
+}
 
 export const loadPublishedSite = cache(async (hostname: string) => {
   const supabase = createPublicClient();
@@ -104,16 +157,20 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
     ? route.slice(12)
     : null;
   const locationSlug = route.startsWith("locations/") ? route.slice(10) : null;
+  const rentalSlug = route.startsWith("rentals/") ? route.slice(8) : null;
   const experience = experienceSlug
     ? snapshot.experiences.find((item) => item.slug === experienceSlug)
     : undefined;
   const location = locationSlug
     ? snapshot.locations.find((item) => item.slug === locationSlug)
     : undefined;
+  const rental = rentalSlug
+    ? snapshot.rentals.find((item) => item.slug === rentalSlug)
+    : undefined;
   const storedPage = snapshot.pages.find(
     (item) => item.slug.replace(/^\/+|\/+$/g, "") === route,
   );
-  if (!storedPage && !experience && !location) return null;
+  if (!storedPage && !experience && !location && !rental) return null;
 
   const page = storedPage
     ? { ...storedPage, sections: validatedSections(storedPage.sections) }
@@ -123,7 +180,9 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
           snapshot.business.name,
           snapshot.business.city,
         )
-      : locationPage(location!, snapshot.business.name);
+      : rental
+        ? rentalPage(rental, snapshot.business.name)
+        : locationPage(location!, snapshot.business.name);
   if (!page) return null;
   const experiences = snapshot.experiences as unknown as PublicExperience[];
   return {
@@ -133,6 +192,15 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
       ? experiences.filter((item) => item.location_name === location.name)
       : experiences,
     location,
+    rental,
+    activeRental: rental
+      ? ({
+          ...rental,
+          rates: snapshot.rentalRates.filter(
+            (rate) => rate.rental_product_id === rental.id,
+          ),
+        } as PublicRental)
+      : undefined,
   };
 }
 
@@ -239,5 +307,55 @@ function locationPage(location: Record<string, unknown>, businessName: string) {
     seo_settings: location.seo_settings ?? {},
     updated_at:
       typeof location.updated_at === "string" ? location.updated_at : undefined,
+  };
+}
+
+function rentalPage(
+  rental: z.infer<typeof rentalSchema>,
+  businessName: string,
+) {
+  return {
+    title: rental.name,
+    slug: `rentals/${rental.slug}`,
+    sections: [
+      {
+        id: "rental-detail-hero",
+        type: "hero" as const,
+        variant: "product",
+        visible: true,
+        settings: {
+          eyebrow:
+            rental.location_name ?? rental.rental_type.replaceAll("_", " "),
+          title: rental.name,
+          description: rental.short_description,
+          imageUrl: rental.featured_image_url,
+          primaryCta: rental.booking_button_label ?? "Request rental",
+          primaryHref: rental.booking_url ?? "/contact",
+        },
+      },
+      ...(rental.description
+        ? [
+            {
+              id: "rental-description",
+              type: "richText" as const,
+              variant: "editorial",
+              visible: true,
+              settings: {
+                title: "About this rental",
+                body: rental.description,
+              },
+            },
+          ]
+        : []),
+    ],
+    seo_settings:
+      Object.keys(rental.seo_settings).length > 0
+        ? rental.seo_settings
+        : {
+            title: `${rental.name}${rental.location_name ? ` in ${rental.location_name}` : ""} | ${businessName}`,
+            description: rental.short_description,
+            canonicalPath: `/rentals/${rental.slug}`,
+          },
+    updated_at: rental.updated_at,
   };
 }

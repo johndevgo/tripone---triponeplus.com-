@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowRight,
+  Box,
   Check,
   Clock3,
   Compass,
@@ -53,6 +54,33 @@ export type PublicTestimonial = {
   quote: string;
   source?: string | null;
 };
+export type PublicRental = {
+  id: string;
+  name: string;
+  slug: string;
+  rental_type: string;
+  short_description: string;
+  description: string;
+  currency: string;
+  pricing_label?: string | null;
+  location_name?: string | null;
+  booking_url?: string | null;
+  booking_button_label?: string | null;
+  quote_only: boolean;
+  featured_image_url?: string | null;
+  specifications?: unknown;
+  inclusions?: unknown;
+  exclusions?: unknown;
+  rental_terms?: unknown;
+  rates: Array<{
+    label: string;
+    amount: number | null;
+    currency: string;
+    pricing_unit: string;
+    minimum_quantity?: number | null;
+    maximum_quantity?: number | null;
+  }>;
+};
 export type SiteRendererProps = {
   site: {
     id: string;
@@ -82,6 +110,7 @@ export type SiteRendererProps = {
     onSelectSection: (id: string) => void;
   };
   activeExperience?: PublicExperience;
+  activeRental?: PublicRental;
 };
 
 function href(base: string, path: string) {
@@ -101,6 +130,7 @@ export function SiteRenderer({
   preview,
   editor,
   activeExperience,
+  activeRental,
 }: SiteRendererProps) {
   const nav = Array.isArray(site.navigation)
     ? (site.navigation as Array<{ label: string; href: string }>)
@@ -267,6 +297,13 @@ export function SiteRenderer({
           croSettings={cro}
         />
       )}
+      {activeRental && (
+        <RentalDetail
+          rental={activeRental}
+          siteId={site.id}
+          basePath={basePath}
+        />
+      )}
       <footer className="bg-[var(--site-primary)] px-5 py-14 text-white">
         <div className="mx-auto grid max-w-7xl gap-9 sm:grid-cols-3">
           <div>
@@ -339,6 +376,107 @@ export function SiteRenderer({
           }}
         />
       )}
+    </div>
+  );
+}
+
+function RentalDetail({
+  rental,
+  siteId,
+  basePath,
+}: {
+  rental: PublicRental;
+  siteId: string;
+  basePath: string;
+}) {
+  const specifications = Array.isArray(rental.specifications)
+    ? rental.specifications.filter(
+        (item): item is { label: string; value: string } =>
+          Boolean(item) &&
+          typeof item === "object" &&
+          typeof (item as { label?: unknown }).label === "string" &&
+          typeof (item as { value?: unknown }).value === "string",
+      )
+    : [];
+  const bookingHref = rental.booking_url || href(basePath, "/contact");
+  return (
+    <div data-rental-detail>
+      {(rental.rates.length > 0 || rental.quote_only) && (
+        <section className="bg-[var(--site-surface)] px-5 py-16">
+          <div className="mx-auto max-w-7xl">
+            <p className="text-sm font-semibold uppercase tracking-[.18em] text-[var(--site-secondary)]">
+              Rental rates
+            </p>
+            <div className="mt-7 grid gap-4 md:grid-cols-3">
+              {rental.quote_only ? (
+                <article className="rounded-[var(--site-radius)] bg-[var(--site-bg)] p-6">
+                  <Box className="text-[var(--site-secondary)]" />
+                  <h2 className="mt-4 text-xl font-semibold">
+                    Request a quote
+                  </h2>
+                  <p className="mt-2 text-[var(--site-muted)]">
+                    Tell us your dates and requirements for current pricing.
+                  </p>
+                </article>
+              ) : (
+                rental.rates.map((rate) => (
+                  <article
+                    key={`${rate.label}-${rate.pricing_unit}`}
+                    className="rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-bg)] p-6"
+                  >
+                    <p className="text-sm text-[var(--site-muted)]">
+                      {rate.label}
+                    </p>
+                    <p className="mt-3 text-3xl font-semibold">
+                      {rate.amount == null
+                        ? "Quote"
+                        : `${rate.currency} ${rate.amount}`}
+                    </p>
+                    <p className="mt-1 text-sm text-[var(--site-muted)]">
+                      per {rate.pricing_unit}
+                    </p>
+                  </article>
+                ))
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+      {specifications.length > 0 && (
+        <section className="px-5 py-16">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="text-3xl font-semibold">Specifications</h2>
+            <dl className="mt-7 divide-y divide-black/10">
+              {specifications.map((item) => (
+                <div className="grid grid-cols-2 gap-4 py-4" key={item.label}>
+                  <dt className="text-[var(--site-muted)]">{item.label}</dt>
+                  <dd className="font-medium">{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+      )}
+      <section className="bg-[var(--site-primary)] px-5 py-16 text-white">
+        <div className="mx-auto max-w-3xl text-center">
+          <h2 className="text-3xl font-semibold">Ask about {rental.name}</h2>
+          <p className="mx-auto mt-3 max-w-xl text-white/65">
+            Confirm availability, dates, pickup details, and any requirements
+            before booking.
+          </p>
+          <a
+            href={bookingHref}
+            target={rental.booking_url ? "_blank" : undefined}
+            rel={rental.booking_url ? "noopener noreferrer" : undefined}
+            className="mt-7 inline-flex min-h-12 items-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-accent)] px-6 font-semibold text-[var(--site-text)]"
+          >
+            {rental.booking_button_label || "Request rental"}
+          </a>
+          <div className="mx-auto mt-8 max-w-xl text-left">
+            <LeadForm siteId={siteId} sourcePage={`/rentals/${rental.slug}`} />
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

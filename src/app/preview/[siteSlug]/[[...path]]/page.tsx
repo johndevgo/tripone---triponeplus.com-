@@ -7,6 +7,7 @@ import { createExperienceSeo, getTheme } from "@/lib/site-generator";
 import {
   SiteRenderer,
   type PublicExperience,
+  type PublicRental,
 } from "@/components/site/site-renderer";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/structured-data";
 
@@ -30,7 +31,13 @@ async function load(siteSlug: string, path: string[]) {
   const experienceRoute = route.startsWith("experiences/")
     ? route.slice(12)
     : null;
-  const [{ data: pages }, { data: experiences }] = await Promise.all([
+  const rentalRoute = route.startsWith("rentals/") ? route.slice(8) : null;
+  const [
+    { data: pages },
+    { data: experiences },
+    { data: rentals },
+    { data: rentalRates },
+  ] = await Promise.all([
     supabase
       .from("pages")
       .select("title,slug,page_type,sections,seo_settings")
@@ -42,6 +49,17 @@ async function load(siteSlug: string, path: string[]) {
       )
       .eq("site_id", site.id)
       .order("sort_order"),
+    supabase
+      .from("rental_products")
+      .select("*")
+      .eq("site_id", site.id)
+      .neq("status", "archived")
+      .order("sort_order"),
+    supabase
+      .from("rental_rates")
+      .select("*")
+      .eq("site_id", site.id)
+      .order("sort_order"),
   ]);
   const page =
     pages?.find((p) => p.slug === route) ||
@@ -51,7 +69,10 @@ async function load(siteSlug: string, path: string[]) {
   const experience = experienceRoute
     ? experiences?.find((e) => e.slug === experienceRoute)
     : null;
-  if (!page && !experience) return null;
+  const rental = rentalRoute
+    ? rentals?.find((item) => item.slug === rentalRoute)
+    : null;
+  if (!page && !experience && !rental) return null;
   const business = Array.isArray(site.businesses)
     ? site.businesses[0]
     : site.businesses;
@@ -60,7 +81,7 @@ async function load(siteSlug: string, path: string[]) {
     site,
     business,
     page: page ?? {
-      title: experience!.name,
+      title: experience?.name ?? rental!.name,
       slug: route,
       sections: [
         {
@@ -69,22 +90,41 @@ async function load(siteSlug: string, path: string[]) {
           variant: "immersive",
           visible: true,
           settings: {
-            eyebrow: experience!.location_name ?? business.name,
-            title: experience!.name,
-            description: experience!.short_description,
-            primaryCta: experience!.booking_url ? "Book now" : "Contact us",
-            primaryHref: experience!.booking_url ?? "/contact",
+            eyebrow:
+              experience?.location_name ??
+              rental?.location_name ??
+              business.name,
+            title: experience?.name ?? rental!.name,
+            description:
+              experience?.short_description ?? rental!.short_description,
+            primaryCta: experience
+              ? experience.booking_url
+                ? "Book now"
+                : "Contact us"
+              : rental!.booking_button_label,
+            primaryHref:
+              experience?.booking_url ?? rental?.booking_url ?? "/contact",
           },
         },
       ],
-      seo_settings: createExperienceSeo(
-        experience!.name,
-        business.name,
-        experience!.location_name ?? business.city,
-      ),
+      seo_settings: experience
+        ? createExperienceSeo(
+            experience.name,
+            business.name,
+            experience.location_name ?? business.city,
+          )
+        : rental!.seo_settings,
     },
     experiences: experiences ?? [],
     experience,
+    rental: rental
+      ? ({
+          ...rental,
+          rates: (rentalRates ?? []).filter(
+            (rate) => rate.rental_product_id === rental.id,
+          ),
+        } as PublicRental)
+      : null,
   };
 }
 
@@ -272,6 +312,7 @@ export default async function Preview({
         activeExperience={
           data.experience ? (data.experience as PublicExperience) : undefined
         }
+        activeRental={data.rental ?? undefined}
         basePath={`/preview/${data.site.slug}`}
         preview={data.site.status !== "published"}
       />

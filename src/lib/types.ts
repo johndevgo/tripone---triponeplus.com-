@@ -22,11 +22,46 @@ export const businessTypes = [
 ] as const;
 export type BusinessType = (typeof businessTypes)[number];
 
+export const businessCapabilities = [
+  ...businessTypes,
+  "motorcycle_tour",
+  "motorcycle_rental",
+  "vehicle_rental",
+  "equipment_rental",
+] as const;
+export type BusinessCapability = (typeof businessCapabilities)[number];
+
+export const rentalProductTypes = [
+  "motorcycle",
+  "scooter",
+  "jet_ski",
+  "boat",
+  "buggy",
+  "jeep",
+  "bicycle",
+  "equipment",
+  "other",
+] as const;
+export type RentalProductType = (typeof rentalProductTypes)[number];
+
+export const taxonomyTypes = [
+  "activity",
+  "destination",
+  "travel_style",
+  "package_category",
+  "product_category",
+] as const;
+export type TaxonomyType = (typeof taxonomyTypes)[number];
+
 export const themeIds = [
   "horizon",
   "luxe-voyage",
   "wild-current",
   "atlas",
+  "summit",
+  "marina",
+  "dune",
+  "nomad",
 ] as const;
 export type ThemeId = (typeof themeIds)[number];
 
@@ -92,6 +127,7 @@ export type ExperienceInput = {
 
 export type OnboardingInput = {
   businessType: BusinessType;
+  capabilities: BusinessCapability[];
   name: string;
   slug: string;
   shortDescription: string;
