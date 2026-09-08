@@ -100,6 +100,9 @@ export const sectionSchema = z.object({
   variant: z.string().min(1),
   visible: z.boolean(),
   settings: z.record(z.string(), z.unknown()),
+  savedSectionId: z.string().optional(),
+  savedSectionRevision: z.number().int().positive().optional(),
+  bindingMode: z.enum(["copy", "linked"]).optional(),
 });
 export const sectionsSchema = z.array(sectionSchema);
 export type SiteSection = z.infer<typeof sectionSchema>;

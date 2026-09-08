@@ -4,12 +4,17 @@ import type { SiteSection } from "@/lib/types";
 type Snapshot = { sections: SiteSection[]; selectedId: string | null };
 type BuilderStore = Snapshot & {
   pageId: string;
+  revision: number;
   history: Snapshot[];
   future: Snapshot[];
   dirty: boolean;
   saveState: "saved" | "saving" | "unsaved" | "failed";
   saveError: string | null;
-  initialize: (pageId: string, sections: SiteSection[]) => void;
+  initialize: (
+    pageId: string,
+    sections: SiteSection[],
+    revision: number,
+  ) => void;
   select: (id: string | null) => void;
   mutate: (
     producer: (sections: SiteSection[]) => SiteSection[],
@@ -18,13 +23,14 @@ type BuilderStore = Snapshot & {
   undo: () => void;
   redo: () => void;
   markSaving: () => void;
-  markSaved: () => void;
+  markSaved: (revision: number, clean?: boolean) => void;
   markFailed: (error: string) => void;
 };
 
 const clone = (sections: SiteSection[]) => structuredClone(sections);
 export const useBuilderStore = create<BuilderStore>((set, get) => ({
   pageId: "",
+  revision: 1,
   sections: [],
   selectedId: null,
   history: [],
@@ -32,9 +38,10 @@ export const useBuilderStore = create<BuilderStore>((set, get) => ({
   dirty: false,
   saveState: "saved",
   saveError: null,
-  initialize: (pageId, sections) =>
+  initialize: (pageId, sections, revision) =>
     set({
       pageId,
+      revision,
       sections: clone(sections),
       selectedId: sections[0]?.id ?? null,
       history: [],
@@ -91,7 +98,13 @@ export const useBuilderStore = create<BuilderStore>((set, get) => ({
     });
   },
   markSaving: () => set({ saveState: "saving" }),
-  markSaved: () => set({ dirty: false, saveState: "saved", saveError: null }),
+  markSaved: (revision, clean = true) =>
+    set({
+      revision,
+      dirty: clean ? false : get().dirty,
+      saveState: clean ? "saved" : "unsaved",
+      saveError: null,
+    }),
   markFailed: (saveError) =>
     set({ saveState: "failed", saveError, dirty: true }),
 }));

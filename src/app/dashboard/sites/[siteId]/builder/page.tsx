@@ -10,30 +10,39 @@ export default async function Builder({
 }) {
   const { siteId } = await params;
   const supabase = await createClient();
-  const [{ data: site }, { data: pages }, { data: experiences }] =
-    await Promise.all([
-      supabase
-        .from("sites")
-        .select(
-          "id,name,slug,theme_id,theme_settings,navigation,footer_settings,global_settings,businesses(name,city,country,phone,whatsapp,email,logo_url)",
-        )
-        .eq("id", siteId)
-        .single(),
-      supabase
-        .from("pages")
-        .select("id,title,slug,sections")
-        .eq("site_id", siteId)
-        .neq("page_type", "experience_detail_system")
-        .order("sort_order"),
-      supabase
-        .from("experiences")
-        .select(
-          "id,name,slug,short_description,price_from,currency,duration_value,duration_unit,location_name,featured_image_url,booking_url",
-        )
-        .eq("site_id", siteId)
-        .neq("status", "archived")
-        .order("sort_order"),
-    ]);
+  const [
+    { data: site },
+    { data: pages },
+    { data: savedSections },
+    { data: experiences },
+  ] = await Promise.all([
+    supabase
+      .from("sites")
+      .select(
+        "id,name,slug,theme_id,theme_settings,navigation,footer_settings,global_settings,businesses(name,city,country,phone,whatsapp,email,logo_url)",
+      )
+      .eq("id", siteId)
+      .single(),
+    supabase
+      .from("pages")
+      .select("id,title,slug,sections,revision")
+      .eq("site_id", siteId)
+      .neq("page_type", "experience_detail_system")
+      .order("sort_order"),
+    supabase
+      .from("saved_sections")
+      .select("id,name,section_type,variant,settings,save_mode,revision")
+      .eq("site_id", siteId)
+      .order("updated_at", { ascending: false }),
+    supabase
+      .from("experiences")
+      .select(
+        "id,name,slug,short_description,price_from,currency,duration_value,duration_unit,location_name,featured_image_url,booking_url",
+      )
+      .eq("site_id", siteId)
+      .neq("status", "archived")
+      .order("sort_order"),
+  ]);
   if (!site) notFound();
   const business = Array.isArray(site.businesses)
     ? site.businesses[0]
@@ -49,6 +58,7 @@ export default async function Builder({
       business={business}
       pages={validPages}
       experiences={experiences ?? []}
+      savedSections={savedSections ?? []}
     />
   );
 }

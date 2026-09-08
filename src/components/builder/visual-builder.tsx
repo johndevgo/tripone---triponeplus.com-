@@ -21,6 +21,7 @@ import {
 } from "@dnd-kit/sortable";
 import {
   ArrowLeft,
+  BookmarkPlus,
   Check,
   Copy,
   Eye,
@@ -47,7 +48,9 @@ import { getTheme, type ThemeTokens } from "@/lib/site-generator";
 import { useBuilderStore } from "./store";
 import {
   publishFromBuilder,
+  saveReusableSection,
   savePageDraft,
+  type SavedSectionRecord,
 } from "@/app/dashboard/sites/[siteId]/builder/actions";
 
 type BuilderPage = {
@@ -55,6 +58,7 @@ type BuilderPage = {
   title: string;
   slug: string;
   sections: SiteSection[];
+  revision: number;
 };
 type Props = {
   site: {
@@ -78,13 +82,20 @@ type Props = {
   };
   pages: BuilderPage[];
   experiences: PublicExperience[];
+  savedSections: SavedSectionRecord[];
 };
 
 const panel = "border-white/10 bg-[#07271f]/95 backdrop-blur-xl";
 const input =
   "mt-2 min-h-10 w-full rounded-xl border border-white/12 bg-white/[.06] px-3 text-sm text-white outline-none transition focus:border-[#FFC857]";
 
-export function VisualBuilder({ site, business, pages, experiences }: Props) {
+export function VisualBuilder({
+  site,
+  business,
+  pages,
+  experiences,
+  savedSections: initialSavedSections,
+}: Props) {
   const [activePageId, setActivePageId] = useState(pages[0]?.id ?? "");
   const [device, setDevice] = useState<"desktop" | "tablet" | "mobile">(
     "desktop",
@@ -93,6 +104,7 @@ export function VisualBuilder({ site, business, pages, experiences }: Props) {
   const [query, setQuery] = useState("");
   const [publishOpen, setPublishOpen] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  const [savedSections, setSavedSections] = useState(initialSavedSections);
   const store = useBuilderStore();
   const activePage = pages.find((page) => page.id === activePageId) ?? pages[0];
   const sensors = useSensors(
@@ -103,7 +115,8 @@ export function VisualBuilder({ site, business, pages, experiences }: Props) {
   );
 
   useEffect(() => {
-    if (activePage) store.initialize(activePage.id, activePage.sections);
+    if (activePage)
+      store.initialize(activePage.id, activePage.sections, activePage.revision);
     // The store methods are stable; page identity intentionally controls reinitialization.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activePage?.id]);
@@ -116,14 +129,16 @@ export function VisualBuilder({ site, business, pages, experiences }: Props) {
       const result = await savePageDraft({
         siteId: site.id,
         pageId: store.pageId,
+        expectedRevision: store.revision,
         sections: savingSections,
       });
       const current = useBuilderStore.getState();
-      if (result.ok && current.sections === savingSections) current.markSaved();
+      if (result.ok)
+        current.markSaved(result.revision, current.sections === savingSections);
       else if (!result.ok) current.markFailed(result.error);
     }, 900);
     return () => window.clearTimeout(timer);
-  }, [site.id, store.dirty, store.pageId, store.sections]);
+  }, [site.id, store.dirty, store.pageId, store.revision, store.sections]);
 
   const selected =
     store.sections.find((section) => section.id === store.selectedId) ?? null;
@@ -171,16 +186,43 @@ export function VisualBuilder({ site, business, pages, experiences }: Props) {
     store.mutate((sections) => [...sections, section], section.id);
     setLibraryOpen(false);
   }
+  function addSavedSection(saved: SavedSectionRecord) {
+    const section: SiteSection = {
+      id: crypto.randomUUID(),
+      type: saved.section_type,
+      variant: saved.variant,
+      visible: true,
+      settings: structuredClone(saved.settings),
+      bindingMode: saved.save_mode,
+      ...(saved.save_mode === "linked"
+        ? { savedSectionId: saved.id, savedSectionRevision: saved.revision }
+        : {}),
+    };
+    store.mutate((sections) => [...sections, section], section.id);
+    setLibraryOpen(false);
+  }
+  async function saveSelected(mode: "copy" | "linked") {
+    if (!selected) return;
+    const result = await saveReusableSection({
+      siteId: site.id,
+      name: `${sectionRegistry[selected.type].label} reusable`,
+      section: selected,
+      mode,
+    });
+    if (result.ok) setSavedSections((current) => [result.section, ...current]);
+    else store.markFailed(result.error);
+  }
   async function publish() {
     if (store.dirty) {
       store.markSaving();
       const saved = await savePageDraft({
         siteId: site.id,
         pageId: store.pageId,
+        expectedRevision: store.revision,
         sections: store.sections,
       });
       if (!saved.ok) return store.markFailed(saved.error);
-      store.markSaved();
+      store.markSaved(saved.revision);
     }
     setPublishing(true);
     const result = await publishFromBuilder(site.id);
@@ -376,6 +418,7 @@ export function VisualBuilder({ site, business, pages, experiences }: Props) {
                   null,
                 )
               }
+              saveReusable={saveSelected}
             />
           ) : (
             <p className="text-sm text-white/45">
@@ -390,6 +433,8 @@ export function VisualBuilder({ site, business, pages, experiences }: Props) {
           query={query}
           setQuery={setQuery}
           add={addSection}
+          savedSections={savedSections}
+          addSaved={addSavedSection}
           close={() => setLibraryOpen(false)}
         />
       )}
@@ -471,6 +516,7 @@ function Inspector({
   patch,
   duplicate,
   remove,
+  saveReusable,
 }: {
   section: SiteSection;
   patch: (
@@ -478,6 +524,7 @@ function Inspector({
   ) => void;
   duplicate: () => void;
   remove: () => void;
+  saveReusable: (mode: "copy" | "linked") => void;
 }) {
   const definition = sectionRegistry[section.type];
   const value = (key: string) =>
@@ -609,6 +656,20 @@ function Inspector({
           <Trash2 size={17} />
         </button>
       </div>
+      <div className="mt-3 grid grid-cols-2 gap-2">
+        <button
+          onClick={() => saveReusable("copy")}
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-white/10 text-xs"
+        >
+          <BookmarkPlus size={15} /> Save copy
+        </button>
+        <button
+          onClick={() => saveReusable("linked")}
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-[#FFC857]/30 text-xs text-[#FFC857]"
+        >
+          <BookmarkPlus size={15} /> Save linked
+        </button>
+      </div>
     </div>
   );
 }
@@ -617,11 +678,15 @@ function SectionLibrary({
   query,
   setQuery,
   add,
+  savedSections,
+  addSaved,
   close,
 }: {
   query: string;
   setQuery: (value: string) => void;
   add: (type: keyof typeof sectionRegistry) => void;
+  savedSections: SavedSectionRecord[];
+  addSaved: (section: SavedSectionRecord) => void;
   close: () => void;
 }) {
   const items = useMemo(
@@ -645,6 +710,27 @@ function SectionLibrary({
           className="min-h-11 w-full rounded-xl border border-white/10 bg-white/[.06] pl-10 pr-3 outline-none focus:border-[#FFC857]"
         />
       </label>
+      {savedSections.length > 0 && (
+        <div className="mt-5">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#FFC857]">
+            Saved sections
+          </p>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {savedSections.map((saved) => (
+              <button
+                key={saved.id}
+                onClick={() => addSaved(saved)}
+                className="rounded-xl border border-[#FFC857]/20 bg-[#FFC857]/[.05] p-3 text-left"
+              >
+                <span className="block text-sm font-medium">{saved.name}</span>
+                <span className="mt-1 block text-[11px] text-white/35">
+                  {saved.save_mode} · {saved.variant}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <div className="mt-5 grid max-h-[60vh] gap-3 overflow-y-auto sm:grid-cols-2">
         {items.map(([type, item]) => (
           <button
