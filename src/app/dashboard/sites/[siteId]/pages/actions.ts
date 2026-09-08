@@ -274,6 +274,49 @@ export async function saveFooter(input: {
   return { ok: true };
 }
 
+export async function saveHeader(input: {
+  siteId: string;
+  variant: "standard" | "centered" | "compact";
+  logoSize: "small" | "medium" | "large";
+  ctaLabel: string;
+  ctaHref: string;
+  sticky: boolean;
+  transparentOverHero: boolean;
+  showContactBar: boolean;
+}): Promise<MutationResult> {
+  const parsed = z
+    .object({
+      siteId: z.uuid(),
+      variant: z.enum(["standard", "centered", "compact"]),
+      logoSize: z.enum(["small", "medium", "large"]),
+      ctaLabel: z.string().trim().max(60),
+      ctaHref: z.string().trim().max(500),
+      sticky: z.boolean(),
+      transparentOverHero: z.boolean(),
+      showContactBar: z.boolean(),
+    })
+    .safeParse(input);
+  if (!parsed.success || /^(javascript|data):/i.test(parsed.data.ctaHref))
+    return { ok: false, error: "Invalid header settings." };
+  const auth = await authorizedSite(parsed.data.siteId);
+  if (!auth) return { ok: false, error: "Access denied." };
+  const { data: current } = await auth.supabase
+    .from("sites")
+    .select("global_settings")
+    .eq("id", parsed.data.siteId)
+    .single();
+  const globalSettings = object(current?.global_settings);
+  const { siteId, ...header } = parsed.data;
+  const { error } = await auth.supabase
+    .from("sites")
+    .update({ global_settings: { ...globalSettings, header } })
+    .eq("id", siteId);
+  if (error) return { ok: false, error: error.message };
+  revalidatePath(`/dashboard/sites/${siteId}/pages`);
+  revalidatePath(`/preview/${siteId}`);
+  return { ok: true };
+}
+
 async function syncNavigation(
   supabase: Awaited<ReturnType<typeof createClient>>,
   siteId: string,
@@ -295,4 +338,10 @@ async function syncNavigation(
       })),
     })
     .eq("id", siteId);
+}
+
+function object(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
 }

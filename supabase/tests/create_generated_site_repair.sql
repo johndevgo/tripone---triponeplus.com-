@@ -68,6 +68,19 @@ declare
       'featuredImageUrl', '',
       'extraDetails', '{}'::jsonb
     )),
+    'rentals', jsonb_build_array(jsonb_build_object(
+      'name', 'Kathmandu Test Equipment',
+      'slug', 'kathmandu-test-equipment',
+      'rentalType', 'equipment',
+      'shortDescription', 'Disposable rental inventory used only in this rolled-back test.',
+      'currency', 'NPR',
+      'quoteOnly', false,
+      'rateAmount', '1500',
+      'rateUnit', 'day',
+      'locationName', 'Kathmandu',
+      'bookingUrl', '',
+      'featuredImageUrl', ''
+    )),
     'generated', jsonb_build_object(
       'theme', jsonb_build_object('id', 'atlas'),
       'globalSettings', jsonb_build_object('brandName', 'Repair RPC Test Tours'),
@@ -111,6 +124,8 @@ begin
   end if;
   if (select count(*) from public.pages where site_id = first_site) <> 2
     or (select count(*) from public.experiences where site_id = first_site) <> 1
+    or (select count(*) from public.rental_products where site_id = first_site) <> 1
+    or (select count(*) from public.rental_rates where site_id = first_site) <> 1
     or (select count(*) from public.site_versions where site_id = first_site and version_number = 1) <> 1 then
     raise exception 'Generated site graph is incomplete';
   end if;

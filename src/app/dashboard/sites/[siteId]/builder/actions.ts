@@ -12,6 +12,12 @@ const saveInput = z.object({
   expectedRevision: z.number().int().positive(),
   sections: sectionsSchema.max(60),
 });
+const saveTemplateInput = z.object({
+  siteId: z.uuid(),
+  templateId: z.uuid(),
+  expectedVersion: z.number().int().positive(),
+  sections: sectionsSchema.max(60),
+});
 
 export type SaveResult =
   | { ok: true; savedAt: string; revision: number }
@@ -58,6 +64,50 @@ export async function savePageDraft(input: {
     ok: true,
     savedAt: String(saved.saved_at ?? new Date().toISOString()),
     revision: Number(saved.revision),
+  };
+}
+
+export async function saveTemplateDraft(input: {
+  siteId: string;
+  templateId: string;
+  expectedVersion: number;
+  sections: SiteSection[];
+}): Promise<SaveResult> {
+  const parsed = saveTemplateInput.safeParse(input);
+  if (!parsed.success)
+    return { ok: false, error: "The template contains invalid section data." };
+  for (const section of parsed.data.sections) {
+    if (!validateSection(section).success)
+      return {
+        ok: false,
+        error: `The ${section.type} section contains invalid settings.`,
+      };
+  }
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user)
+    return { ok: false, error: "Your session expired. Sign in and try again." };
+  const { data, error } = await supabase.rpc("save_site_template_draft", {
+    target_site: parsed.data.siteId,
+    target_template: parsed.data.templateId,
+    expected_version: parsed.data.expectedVersion,
+    new_sections: parsed.data.sections,
+  });
+  if (error) return { ok: false, error: error.message };
+  const saved = Array.isArray(data) ? data[0] : data;
+  if (!saved)
+    return {
+      ok: false,
+      error: "The template could not be saved. Refresh and try again.",
+    };
+  revalidatePath(`/dashboard/sites/${parsed.data.siteId}/builder`);
+  revalidatePath(`/preview/${parsed.data.siteId}`);
+  return {
+    ok: true,
+    savedAt: String(saved.saved_at ?? new Date().toISOString()),
+    revision: Number(saved.version),
   };
 }
 

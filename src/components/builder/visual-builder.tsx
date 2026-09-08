@@ -41,6 +41,7 @@ import {
 import {
   SiteRenderer,
   type PublicExperience,
+  type PublicRental,
 } from "@/components/site/site-renderer";
 import { sectionRegistry, createDefaultSection } from "@/lib/sections/registry";
 import type { SiteSection, ThemeId } from "@/lib/types";
@@ -50,6 +51,7 @@ import {
   publishFromBuilder,
   saveReusableSection,
   savePageDraft,
+  saveTemplateDraft,
   type SavedSectionRecord,
 } from "@/app/dashboard/sites/[siteId]/builder/actions";
 
@@ -59,6 +61,8 @@ type BuilderPage = {
   slug: string;
   sections: SiteSection[];
   revision: number;
+  editorKind?: "page" | "template";
+  templateKind?: string;
 };
 type Props = {
   site: {
@@ -82,7 +86,9 @@ type Props = {
   };
   pages: BuilderPage[];
   experiences: PublicExperience[];
+  rentals: PublicRental[];
   savedSections: SavedSectionRecord[];
+  initialTargetId?: string;
 };
 
 const panel = "border-white/10 bg-[#07271f]/95 backdrop-blur-xl";
@@ -94,9 +100,15 @@ export function VisualBuilder({
   business,
   pages,
   experiences,
+  rentals,
   savedSections: initialSavedSections,
+  initialTargetId,
 }: Props) {
-  const [activePageId, setActivePageId] = useState(pages[0]?.id ?? "");
+  const [activePageId, setActivePageId] = useState(
+    pages.some((page) => page.id === initialTargetId)
+      ? (initialTargetId ?? "")
+      : (pages[0]?.id ?? ""),
+  );
   const [device, setDevice] = useState<"desktop" | "tablet" | "mobile">(
     "desktop",
   );
@@ -126,19 +138,34 @@ export function VisualBuilder({
     const savingSections = store.sections;
     const timer = window.setTimeout(async () => {
       useBuilderStore.getState().markSaving();
-      const result = await savePageDraft({
-        siteId: site.id,
-        pageId: store.pageId,
-        expectedRevision: store.revision,
-        sections: savingSections,
-      });
+      const result =
+        activePage?.editorKind === "template"
+          ? await saveTemplateDraft({
+              siteId: site.id,
+              templateId: store.pageId,
+              expectedVersion: store.revision,
+              sections: savingSections,
+            })
+          : await savePageDraft({
+              siteId: site.id,
+              pageId: store.pageId,
+              expectedRevision: store.revision,
+              sections: savingSections,
+            });
       const current = useBuilderStore.getState();
       if (result.ok)
         current.markSaved(result.revision, current.sections === savingSections);
       else if (!result.ok) current.markFailed(result.error);
     }, 900);
     return () => window.clearTimeout(timer);
-  }, [site.id, store.dirty, store.pageId, store.revision, store.sections]);
+  }, [
+    activePage?.editorKind,
+    site.id,
+    store.dirty,
+    store.pageId,
+    store.revision,
+    store.sections,
+  ]);
 
   const selected =
     store.sections.find((section) => section.id === store.selectedId) ?? null;
@@ -213,14 +240,23 @@ export function VisualBuilder({
     else store.markFailed(result.error);
   }
   async function publish() {
+    if (!activePage) return;
     if (store.dirty) {
       store.markSaving();
-      const saved = await savePageDraft({
-        siteId: site.id,
-        pageId: store.pageId,
-        expectedRevision: store.revision,
-        sections: store.sections,
-      });
+      const saved =
+        activePage.editorKind === "template"
+          ? await saveTemplateDraft({
+              siteId: site.id,
+              templateId: store.pageId,
+              expectedVersion: store.revision,
+              sections: store.sections,
+            })
+          : await savePageDraft({
+              siteId: site.id,
+              pageId: store.pageId,
+              expectedRevision: store.revision,
+              sections: store.sections,
+            });
       if (!saved.ok) return store.markFailed(saved.error);
       store.markSaved(saved.revision);
     }
@@ -315,13 +351,19 @@ export function VisualBuilder({
             );
           })}
         </div>
-        <Link
-          target="_blank"
-          href={`/preview/${site.id}/${activePage.slug}`}
-          className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm"
-        >
-          <ExternalLink size={15} /> Preview
-        </Link>
+        {activePage.editorKind === "template" ? (
+          <span className="rounded-xl border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]">
+            Global {activePage.templateKind?.replaceAll("_", " ")} template
+          </span>
+        ) : (
+          <Link
+            target="_blank"
+            href={`/preview/${site.id}/${activePage.slug}`}
+            className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm"
+          >
+            <ExternalLink size={15} /> Preview
+          </Link>
+        )}
         <button
           onClick={() => setPublishOpen(true)}
           className="min-h-10 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
@@ -383,6 +425,7 @@ export function VisualBuilder({
               page={{ ...activePage, sections: store.sections }}
               theme={theme}
               experiences={experiences}
+              rentals={rentals}
               basePath={`/preview/${site.id}`}
               preview
               editor={{

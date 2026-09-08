@@ -1,6 +1,6 @@
 # TripOne+ upgrade progress
 
-Last updated: 2026-09-07
+Last updated: 2026-09-08
 
 ## Branch and deployment
 
@@ -16,9 +16,9 @@ Last updated: 2026-09-07
 | -------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1. Generation repair             | Complete    | Advisory-lock transaction, URL validation, safe error correlation, duplicate-submit guard, 25 unit tests, rollback DB test, clean Supabase advisors. |
 | 2. Multi-service model           | Complete    | Capabilities, rentals/rates, five taxonomies, same-tenant assignments, management routes, preview, and schema-v2 publishing passed their gates.      |
-| 3. Page selection/templates      | Pending     | Starts after milestone 2 gates pass.                                                                                                                 |
-| 4. Sections/themes/global chrome | Pending     | Existing registry and four themes are retained as the base.                                                                                          |
-| 5. SEO/tracking/public resolver  | Pending     | Existing immutable snapshots and tenant resolver are retained as the base.                                                                           |
+| 3. Page selection/templates      | In progress | Deterministic multi-capability page selection, optional-page controls, rental onboarding, revision-safe visual template editing, typed bindings and v3 snapshot migration are implemented. Record-specific override controls remain. |
+| 4. Sections/themes/global chrome | In progress | Eight themes, the typed section registry, linked/copy saved sections, and visual global header/footer controls render through the shared renderer. Broader per-section specialized render treatments remain. |
+| 5. SEO/tracking/public resolver  | In progress | Working `/s/{siteSlug}` publishing, prefix-aware canonicals/navigation/sitemaps, rentals and nested taxonomy landing pages are implemented. Typed third-party integration loaders and the final audit remain. |
 | 6. Full acceptance               | Pending     | Final gate includes responsive browser inspection and production smoke tests.                                                                        |
 
 ## Decision log
@@ -28,14 +28,17 @@ Last updated: 2026-09-07
 - 2026-09-07: Chose additive normalized tables for capabilities, rentals, taxonomies, assignments, and templates to preserve legacy records and snapshots.
 - 2026-09-07: Applied `20260907003000_part4_multi_service_core.sql` and `20260907010000_part4_atomic_capabilities.sql` through the official Supabase migration CLI.
 - 2026-09-07: Replaced unverified `slug.triponeplus.com` presentation with the real `/s/{siteSlug}` fallback. Verified domains still take priority.
+- 2026-09-08: Kept shared-origin fallback sites free of tenant-controlled scripts; their discoverability uses `/s/{siteSlug}/sitemap` and server-rendered published snapshots.
+- 2026-09-08: Added additive migration `20260908152000_part4_template_publishing.sql` for atomic rental onboarding, optimistic template versions, record override columns, and schema-v3 immutable publish graphs. It is locally authored but not remotely applied because official Supabase CLI authentication is not available in this checkout.
 
 ## Latest verification
 
 - TypeScript: passed (`tsc --noEmit`).
 - ESLint: passed.
-- Unit tests: 31 passed across 5 files.
+- Unit tests: 37 passed across 7 files.
 - Database integration: generation repair and Part 4 multi-service suites passed; both roll back fixtures.
-- Production build: passed with Next.js 16.3.4; fallback, rental, service-line, and taxonomy routes appear in the route manifest.
+- Production build: passed with Next.js 16.3.4; the path fallback now exposes dynamic `/s/[siteSlug]/sitemap` and published-only customer routes.
+- Remote database gate: pending for the 2026-09-08 migration. Password recovery from old session logs was deliberately blocked; use an official Supabase access token/link or an explicitly configured `TRIPONE_DATABASE_URL`.
 
 ## External dependencies
 

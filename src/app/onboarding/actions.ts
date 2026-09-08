@@ -40,8 +40,12 @@ export async function buildWebsite(raw: unknown): Promise<ActionResult> {
     ...item,
     slug: slugify(`${item.name} ${item.locationName ?? ""}`),
   }));
+  const rentals = parsed.data.rentals.map((item) => ({
+    ...item,
+    slug: slugify(`${item.name} ${item.locationName ?? ""}`),
+  }));
   const { data, error } = await supabase.rpc("create_generated_site", {
-    payload: { ...parsed.data, experiences, generated },
+    payload: { ...parsed.data, experiences, rentals, generated },
   });
   if (error) {
     const correlationReference = crypto.randomUUID();
@@ -61,6 +65,7 @@ export async function buildWebsite(raw: unknown): Promise<ActionResult> {
   const mediaUrls = [
     parsed.data.logoUrl,
     ...parsed.data.experiences.map((item) => item.featuredImageUrl),
+    ...parsed.data.rentals.map((item) => item.featuredImageUrl),
   ].filter((url): url is string => Boolean(url));
   if (mediaUrls.length) {
     await supabase

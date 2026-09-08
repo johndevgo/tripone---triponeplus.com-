@@ -19,15 +19,24 @@ type Page = {
   show_in_navigation: boolean;
   navigation_label: string | null;
 };
+type SiteTemplate = {
+  id: string;
+  name: string;
+  template_kind: string;
+  subtype: string;
+  version: number;
+};
 const input =
   "min-h-10 rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#FFC857]";
 
 export function PageManager({
   siteId,
   pages,
+  templates,
 }: {
   siteId: string;
   pages: Page[];
+  templates: SiteTemplate[];
 }) {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
@@ -80,6 +89,43 @@ export function PageManager({
           />
         ))}
       </div>
+      <section className="pt-4">
+        <div className="mb-4">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#FFC857]">
+            Dynamic pages
+          </p>
+          <h2 className="mt-2 text-xl font-semibold">
+            Shared detail templates
+          </h2>
+          <p className="mt-1 max-w-2xl text-sm text-white/45">
+            Template changes apply to matching experience, rental, taxonomy, or
+            location pages after the next publish. Record content and SEO remain
+            independent.
+          </p>
+        </div>
+        <div className="grid gap-3 md:grid-cols-2">
+          {templates.map((template) => (
+            <article className="glass rounded-2xl p-5" key={template.id}>
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <h3 className="font-semibold">{template.name}</h3>
+                  <p className="mt-1 text-xs capitalize text-white/40">
+                    {template.template_kind.replaceAll("_", " ")} ·{" "}
+                    {template.subtype}
+                    {" · "}version {template.version}
+                  </p>
+                </div>
+                <Link
+                  href={`/dashboard/sites/${siteId}/builder?target=${template.id}`}
+                  className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm hover:bg-white/[.06]"
+                >
+                  Edit template <ExternalLink size={14} />
+                </Link>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
@@ -134,7 +180,7 @@ function PageCard({
         <div className="flex items-end gap-2">
           <Link
             aria-label={`Edit ${title}`}
-            href={`/dashboard/sites/${siteId}/builder`}
+            href={`/dashboard/sites/${siteId}/builder?target=${page.id}`}
             className="grid size-10 place-items-center rounded-xl border border-white/10"
           >
             <ExternalLink size={16} />

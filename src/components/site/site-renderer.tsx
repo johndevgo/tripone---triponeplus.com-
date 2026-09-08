@@ -102,6 +102,7 @@ export type SiteRendererProps = {
   page: { title: string; slug: string; sections: SiteSection[] };
   theme: ThemeTokens;
   experiences: PublicExperience[];
+  rentals?: PublicRental[];
   testimonials?: PublicTestimonial[];
   basePath: string;
   preview?: boolean;
@@ -125,6 +126,7 @@ export function SiteRenderer({
   page,
   theme,
   experiences,
+  rentals = [],
   testimonials = [],
   basePath,
   preview,
@@ -139,6 +141,14 @@ export function SiteRenderer({
   const global = (site.global_settings ?? {}) as Record<string, unknown>;
   const integrations = object(global.integrations);
   const cro = object(global.cro);
+  const header = object(global.header);
+  const headerVariant = text(header, "variant", "standard");
+  const footerVariant = text(footer, "variant", "columns");
+  const logoSize = text(header, "logoSize", "medium");
+  const headerInnerClass =
+    headerVariant === "centered"
+      ? "md:grid md:grid-cols-[1fr_auto_1fr]"
+      : "flex";
   const css = {
     "--site-primary": theme.colors.primary,
     "--site-secondary": theme.colors.secondary,
@@ -172,8 +182,29 @@ export function SiteRenderer({
           Draft preview · Only you can see unpublished content
         </div>
       )}
-      <header className="sticky top-0 z-30 border-b border-black/5 bg-[color:var(--site-bg)]/90 backdrop-blur-xl">
-        <div className="mx-auto flex min-h-18 max-w-7xl items-center justify-between px-5">
+      <header
+        data-layout={headerVariant}
+        className={`${header.sticky === false ? "relative" : "sticky top-0"} z-30 border-b border-black/5 ${header.transparentOverHero === true ? "bg-[color:var(--site-bg)]/65" : "bg-[color:var(--site-bg)]/90"} backdrop-blur-xl`}
+      >
+        {header.showContactBar === true &&
+          (business.phone || business.whatsapp) && (
+            <div className="border-b border-black/5 bg-[var(--site-primary)] px-5 py-2 text-right text-xs text-white/75">
+              {business.phone && (
+                <a href={`tel:${business.phone}`}>{business.phone}</a>
+              )}
+              {business.phone && business.whatsapp && <span> · </span>}
+              {business.whatsapp && (
+                <a
+                  href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
+                >
+                  WhatsApp
+                </a>
+              )}
+            </div>
+          )}
+        <div
+          className={`mx-auto ${headerInnerClass} ${headerVariant === "compact" ? "min-h-14" : "min-h-18"} max-w-7xl items-center justify-between gap-5 px-5`}
+        >
           <Link href={basePath} className="flex items-center gap-2 font-bold">
             {business.logo_url ? (
               // Site logos may use a user-provided remote URL; do not widen the image proxy allowlist.
@@ -181,7 +212,7 @@ export function SiteRenderer({
               <img
                 src={business.logo_url}
                 alt=""
-                className="h-9 max-w-32 object-contain"
+                className={`${logoSize === "small" ? "h-7 max-w-24" : logoSize === "large" ? "h-12 max-w-40" : "h-9 max-w-32"} object-contain`}
               />
             ) : (
               <span className="grid size-9 place-items-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-primary)] text-white">
@@ -191,7 +222,7 @@ export function SiteRenderer({
             {business.name}
           </Link>
           <nav
-            className="hidden items-center gap-6 text-sm md:flex"
+            className={`hidden items-center gap-6 text-sm md:flex ${headerVariant === "centered" ? "justify-self-center" : ""}`}
             aria-label="Website navigation"
           >
             {nav.map((item) => (
@@ -205,11 +236,15 @@ export function SiteRenderer({
             ))}
           </nav>
           <Link
-            href={href(basePath, "/contact")}
+            href={href(basePath, text(header, "ctaHref", "/contact"))}
             data-cta
             className="site-primary-action hidden min-h-10 items-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-accent)] px-4 text-sm font-semibold sm:inline-flex"
           >
-            {text(cro, "defaultBookingCta", "Contact us")}
+            {text(
+              header,
+              "ctaLabel",
+              text(cro, "defaultBookingCta", "Contact us"),
+            )}
           </Link>
           <details className="relative md:hidden">
             <summary
@@ -240,6 +275,7 @@ export function SiteRenderer({
               <Section
                 section={section}
                 experiences={experiences}
+                rentals={rentals}
                 basePath={basePath}
                 business={business}
                 siteId={site.id}
@@ -304,11 +340,16 @@ export function SiteRenderer({
           basePath={basePath}
         />
       )}
-      <footer className="bg-[var(--site-primary)] px-5 py-14 text-white">
-        <div className="mx-auto grid max-w-7xl gap-9 sm:grid-cols-3">
+      <footer
+        data-layout={footerVariant}
+        className={`${footerVariant === "editorial" ? "border-t border-black/10 bg-[var(--site-surface)] text-[var(--site-text)]" : "bg-[var(--site-primary)] text-white"} px-5 ${footerVariant === "compact" ? "py-8" : "py-14"}`}
+      >
+        <div
+          className={`mx-auto grid max-w-7xl gap-9 ${footerVariant === "compact" ? "items-center sm:grid-cols-[1fr_auto]" : "sm:grid-cols-3"}`}
+        >
           <div>
             <p className="text-xl font-bold">{business.name}</p>
-            <p className="mt-3 text-sm text-white/60">
+            <p className="mt-3 text-sm opacity-60">
               {text(
                 footer,
                 "description",
@@ -316,8 +357,8 @@ export function SiteRenderer({
               )}
             </p>
           </div>
-          <div>
-            <p className="text-xs uppercase tracking-widest text-white/40">
+          <div className={footerVariant === "compact" ? "hidden" : "block"}>
+            <p className="text-xs uppercase tracking-widest opacity-40">
               Explore
             </p>
             <div className="mt-3 grid gap-2 text-sm">
@@ -328,8 +369,8 @@ export function SiteRenderer({
               ))}
             </div>
           </div>
-          <div>
-            <p className="text-xs uppercase tracking-widest text-white/40">
+          <div className={footerVariant === "compact" ? "hidden" : "block"}>
+            <p className="text-xs uppercase tracking-widest opacity-40">
               Contact
             </p>
             <a className="mt-3 block text-sm" href={`mailto:${business.email}`}>
@@ -351,7 +392,7 @@ export function SiteRenderer({
             </Link>
           )}
         </div>
-        <div className="mx-auto mt-10 max-w-7xl border-t border-white/10 pt-5 text-xs text-white/40">
+        <div className="mx-auto mt-10 max-w-7xl border-t border-current/10 pt-5 text-xs opacity-40">
           {text(
             footer,
             "copyright",
@@ -762,6 +803,7 @@ function object(value: unknown): Record<string, unknown> {
 function Section({
   section,
   experiences,
+  rentals,
   basePath,
   business,
   siteId,
@@ -770,6 +812,7 @@ function Section({
 }: {
   section: SiteSection;
   experiences: PublicExperience[];
+  rentals: PublicRental[];
   basePath: string;
   business: SiteRendererProps["business"];
   siteId: string;
@@ -848,6 +891,29 @@ function Section({
             ) : (
               <p className="mt-8 rounded-[var(--site-radius)] bg-[var(--site-surface)] p-8 text-[var(--site-muted)]">
                 Experiences are being prepared. Contact us for current options.
+              </p>
+            )}
+          </div>
+        </section>
+      );
+    case "rentalGrid":
+      return (
+        <section className="px-5 py-20">
+          <div className="mx-auto max-w-7xl">
+            <Heading settings={s} />
+            {rentals.length ? (
+              <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {rentals.map((rental) => (
+                  <RentalCard
+                    key={rental.id}
+                    rental={rental}
+                    basePath={basePath}
+                  />
+                ))}
+              </div>
+            ) : (
+              <p className="mt-8 rounded-[var(--site-radius)] bg-[var(--site-surface)] p-6 text-[var(--site-muted)]">
+                Rental inventory will appear here when it is ready.
               </p>
             )}
           </div>
@@ -1226,6 +1292,53 @@ function ExperienceCard({
             {item.price_from
               ? `From ${item.currency} ${item.price_from}`
               : "Enquire for price"}
+          </span>
+          <ArrowRight size={17} />
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function RentalCard({
+  rental,
+  basePath,
+}: {
+  rental: PublicRental;
+  basePath: string;
+}) {
+  const rate = rental.rates.find((item) => item.amount != null);
+  return (
+    <Link
+      href={href(basePath, `/rentals/${rental.slug}`)}
+      className="group overflow-hidden rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-surface)] shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+    >
+      <div className="grid aspect-[4/3] place-items-center overflow-hidden bg-[var(--site-primary)] text-white/30">
+        {rental.featured_image_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={rental.featured_image_url}
+            alt={rental.name}
+            className="site-media h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <Box size={32} />
+        )}
+      </div>
+      <div className="p-5">
+        <p className="text-xs capitalize text-[var(--site-muted)]">
+          {rental.rental_type.replaceAll("_", " ")}
+          {rental.location_name ? ` · ${rental.location_name}` : ""}
+        </p>
+        <h3 className="mt-3 text-xl font-semibold">{rental.name}</h3>
+        <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--site-muted)]">
+          {rental.short_description}
+        </p>
+        <div className="mt-5 flex items-center justify-between">
+          <span className="font-semibold">
+            {rental.quote_only || !rate
+              ? "Request a quote"
+              : `From ${rate.currency} ${rate.amount} / ${rate.pricing_unit}`}
           </span>
           <ArrowRight size={17} />
         </div>

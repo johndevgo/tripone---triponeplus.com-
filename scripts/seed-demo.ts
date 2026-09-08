@@ -1,5 +1,8 @@
 import { createClient } from "@supabase/supabase-js";
-import { generateSite } from "../src/lib/site-generator/generate-site";
+import {
+  generateSite,
+  recommendedPageSelections,
+} from "../src/lib/site-generator";
 import { slugify } from "../src/lib/utils";
 import type { OnboardingInput } from "../src/lib/types";
 
@@ -16,6 +19,7 @@ if (!url || !anonKey || !email || !password) {
 const input: OnboardingInput = {
   businessType: "jetski",
   capabilities: ["jetski"],
+  pageSelections: recommendedPageSelections(["jetski"]),
   name: "Dubai Wave Jetski",
   slug: "dubai-wave-jetski-demo",
   shortDescription: "Demo jet ski experiences departing from Dubai Marina.",
@@ -59,6 +63,19 @@ const input: OnboardingInput = {
     shortDescription: String(shortDescription),
     extraDetails: { safetyEquipment: "Demo detail: confirm with the operator" },
   })),
+  rentals: [
+    {
+      name: "Demo Yamaha Jet Ski Rental",
+      rentalType: "jet_ski",
+      shortDescription:
+        "A demo rental product with a transparent hourly starting rate.",
+      currency: "AED",
+      quoteOnly: false,
+      rateAmount: 400,
+      rateUnit: "hour",
+      locationName: "Dubai Marina",
+    },
+  ],
 };
 
 const supabase = createClient(url, anonKey);
@@ -71,8 +88,12 @@ const experiences = input.experiences.map((experience) => ({
   ...experience,
   slug: slugify(`${experience.name} ${experience.locationName ?? ""}`),
 }));
+const rentals = input.rentals.map((rental) => ({
+  ...rental,
+  slug: slugify(`${rental.name} ${rental.locationName ?? ""}`),
+}));
 const { data, error } = await supabase.rpc("create_generated_site", {
-  payload: { ...input, experiences, generated: generateSite(input) },
+  payload: { ...input, experiences, rentals, generated: generateSite(input) },
 });
 if (error) throw error;
 console.log(`Demo site ready: ${data}`);

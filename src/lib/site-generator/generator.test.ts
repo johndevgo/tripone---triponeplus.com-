@@ -10,11 +10,13 @@ import {
   getBusinessPreset,
   getTheme,
   createExperienceSeo,
+  recommendedPageSelections,
 } from ".";
 
 const input: OnboardingInput = {
   businessType: "jetski",
   capabilities: ["jetski"],
+  pageSelections: recommendedPageSelections(["jetski"]),
   name: "Dubai Wave Jetski",
   slug: "dubai-wave-jetski",
   shortDescription: "Guided jet ski experiences around Dubai Marina.",
@@ -25,6 +27,7 @@ const input: OnboardingInput = {
   email: "demo@example.com",
   brand: { primary: "#063D2E", secondary: "#087A5A", accent: "#F5A623" },
   experiences: [],
+  rentals: [],
   themeId: "horizon",
 };
 
@@ -52,13 +55,23 @@ describe("deterministic generation", () => {
     }
   });
   it("uses category-specific homepage recipes and catalogue links", () => {
-    const safari = generateSite({ ...input, businessType: "safari" });
+    const safari = generateSite({
+      ...input,
+      businessType: "safari",
+      capabilities: ["safari"],
+      pageSelections: recommendedPageSelections(["safari"]),
+    });
     expect(
       safari.pages[0]?.sections.some(
         (section) => section.type === "wildlifeHighlights",
       ),
     ).toBe(true);
-    const agency = generateSite({ ...input, businessType: "travel_agency" });
+    const agency = generateSite({
+      ...input,
+      businessType: "travel_agency",
+      capabilities: ["travel_agency"],
+      pageSelections: recommendedPageSelections(["travel_agency"]),
+    });
     expect(
       agency.pages[0]?.sections.find((section) => section.type === "hero")
         ?.settings.primaryHref,

@@ -6,9 +6,8 @@ import {
 } from "@/components/site/site-renderer";
 import { getAppUrl } from "@/lib/app-url";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/structured-data";
-import { createPublicClient } from "@/lib/supabase/public";
 import {
-  decodePublishedSnapshot,
+  loadPublishedSiteBySlug,
   rendererData,
   resolvePublishedRoute,
   type PublishedSite,
@@ -17,12 +16,7 @@ import {
 type Props = { params: Promise<{ siteSlug: string; path?: string[] }> };
 
 async function load(siteSlug: string) {
-  const supabase = createPublicClient();
-  const { data, error } = await supabase.rpc("get_published_site_snapshot", {
-    identifier: siteSlug,
-  });
-  if (error || !data) return null;
-  return decodePublishedSnapshot(data);
+  return loadPublishedSiteBySlug(siteSlug);
 }
 
 function envelope(
@@ -119,6 +113,7 @@ export default async function PublishedFallbackPage({ params }: Props) {
         {...data}
         page={resolved.page}
         experiences={resolved.experiences}
+        rentals={resolved.rentals}
         testimonials={snapshot.testimonials as unknown as PublicTestimonial[]}
         activeExperience={resolved.experience}
         activeRental={resolved.activeRental}

@@ -70,6 +70,7 @@ export const sectionTypes = [
   "trustBar",
   "featuredExperiences",
   "experienceGrid",
+  "rentalGrid",
   "destinations",
   "whyChooseUs",
   "features",
@@ -128,9 +129,45 @@ export type ExperienceInput = {
   extraDetails?: Record<string, unknown>;
 };
 
+export type RentalInput = {
+  name: string;
+  rentalType: RentalProductType;
+  shortDescription: string;
+  currency: string;
+  quoteOnly: boolean;
+  rateAmount?: number | null;
+  rateUnit: "hour" | "day" | "week";
+  locationName?: string | null;
+  bookingUrl?: string | null;
+  featuredImageUrl?: string | null;
+};
+
+export const websitePageKeys = [
+  "home",
+  "experiences",
+  "rentals",
+  "destinations",
+  "about",
+  "gallery",
+  "guides",
+  "testimonials",
+  "faq",
+  "contact",
+] as const;
+export type WebsitePageKey = (typeof websitePageKeys)[number];
+export type WebsitePageSelection = {
+  key: WebsitePageKey;
+  title: string;
+  slug: string;
+  selected: boolean;
+  showInNavigation: boolean;
+  sections: SiteSection["type"][];
+};
+
 export type OnboardingInput = {
   businessType: BusinessType;
   capabilities: BusinessCapability[];
+  pageSelections: WebsitePageSelection[];
   name: string;
   slug: string;
   shortDescription: string;
@@ -147,5 +184,6 @@ export type OnboardingInput = {
   logoUrl?: string;
   brand: { primary: string; secondary: string; accent: string };
   experiences: ExperienceInput[];
+  rentals: RentalInput[];
   themeId: ThemeId;
 };

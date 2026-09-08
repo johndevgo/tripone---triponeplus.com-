@@ -198,6 +198,71 @@ export async function createTaxonomyTerm(formData: FormData) {
   redirect(`${path}&message=Taxonomy%20term%20created`);
 }
 
+export async function saveTaxonomyTerm(formData: FormData) {
+  const siteId = z.uuid().parse(formData.get("siteId"));
+  const termId = z.uuid().parse(formData.get("termId"));
+  const taxonomyType = String(formData.get("taxonomyType") ?? "activity");
+  const path = `/dashboard/sites/${siteId}/taxonomies?type=${encodeURIComponent(taxonomyType)}`;
+  const parsed = taxonomyTermFormSchema.safeParse({
+    ...Object.fromEntries(formData),
+    siteId,
+    slug: slugify(String(formData.get("slug") || formData.get("name") || "")),
+  });
+  const heroImageUrl = z
+    .union([z.literal(""), z.url()])
+    .safeParse(String(formData.get("heroImageUrl") ?? ""));
+  const seo = z
+    .object({
+      title: z.string().trim().max(70),
+      description: z.string().trim().max(180),
+    })
+    .safeParse({
+      title: String(formData.get("seoTitle") ?? ""),
+      description: String(formData.get("seoDescription") ?? ""),
+    });
+  if (!parsed.success || !heroImageUrl.success || !seo.success)
+    redirect(
+      `${path}&error=${encodeURIComponent(parsed.error?.issues[0]?.message ?? "Invalid landing page")}`,
+    );
+  const supabase = await authenticatedClient(path);
+  const { data: existing } = await supabase
+    .from("taxonomy_terms")
+    .select("id,source_location_id")
+    .eq("id", termId)
+    .eq("site_id", siteId)
+    .single();
+  if (!existing) redirect(`${path}&error=Landing%20page%20not%20found`);
+  if (existing.source_location_id)
+    redirect(
+      `${path}&error=Edit%20this%20destination%20from%20the%20Locations%20workspace`,
+    );
+  const { error } = await supabase
+    .from("taxonomy_terms")
+    .update({
+      taxonomy_id: parsed.data.taxonomyId,
+      parent_id: parsed.data.parentId || null,
+      name: parsed.data.name,
+      slug: parsed.data.slug,
+      description: parsed.data.description,
+      hero_image_url: heroImageUrl.data || null,
+      listing_mode: parsed.data.listingMode,
+      status: parsed.data.status,
+      seo_settings: {
+        title: seo.data.title || undefined,
+        description: seo.data.description || undefined,
+      },
+    })
+    .eq("id", termId)
+    .eq("site_id", siteId);
+  if (error)
+    redirect(
+      `${path}&error=${encodeURIComponent(error.code === "23505" ? "That landing-page slug is already used." : error.message)}`,
+    );
+  revalidatePath(`/dashboard/sites/${siteId}/taxonomies`);
+  revalidatePath(`/preview/${siteId}`);
+  redirect(`${path}&message=Landing%20page%20saved`);
+}
+
 export async function archiveTaxonomyTerm(formData: FormData) {
   const siteId = z.uuid().parse(formData.get("siteId"));
   const termId = z.uuid().parse(formData.get("termId"));

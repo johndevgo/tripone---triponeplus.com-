@@ -3,6 +3,7 @@ import { useState, useTransition } from "react";
 import { ArrowDown, ArrowUp, Plus, Save, Trash2 } from "lucide-react";
 import {
   saveFooter,
+  saveHeader,
   saveNavigation,
 } from "@/app/dashboard/sites/[siteId]/pages/actions";
 import type { NavigationItem } from "@/lib/types";
@@ -13,10 +14,12 @@ export function StructureEditor({
   siteId,
   initialNavigation,
   initialFooter,
+  initialHeader,
 }: {
   siteId: string;
   initialNavigation: NavigationItem[];
   initialFooter: Record<string, unknown>;
+  initialHeader: Record<string, unknown>;
 }) {
   const [items, setItems] = useState(initialNavigation);
   const [footer, setFooter] = useState({
@@ -25,6 +28,17 @@ export function StructureEditor({
     variant: String(initialFooter.variant ?? "columns"),
     bookingCta: String(initialFooter.bookingCta ?? ""),
     bookingHref: String(initialFooter.bookingHref ?? "/experiences"),
+  });
+  const [header, setHeader] = useState({
+    variant: String(initialHeader.variant ?? "standard") as
+      "standard" | "centered" | "compact",
+    logoSize: String(initialHeader.logoSize ?? "medium") as
+      "small" | "medium" | "large",
+    ctaLabel: String(initialHeader.ctaLabel ?? "Contact us"),
+    ctaHref: String(initialHeader.ctaHref ?? "/contact"),
+    sticky: initialHeader.sticky !== false,
+    transparentOverHero: initialHeader.transparentOverHero === true,
+    showContactBar: initialHeader.showContactBar === true,
   });
   const [message, setMessage] = useState("");
   const [, start] = useTransition();
@@ -45,6 +59,82 @@ export function StructureEditor({
     });
   return (
     <div className="mt-8 grid gap-6 lg:grid-cols-2">
+      <section className="glass rounded-3xl p-6">
+        <h2 className="text-xl font-semibold">Global header</h2>
+        <p className="mt-2 text-sm text-white/40">
+          These settings affect every generated page after publishing.
+        </p>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          <label className="text-sm text-white/55">
+            Layout
+            <select
+              value={header.variant}
+              onChange={(event) =>
+                setHeader({
+                  ...header,
+                  variant: event.target.value as typeof header.variant,
+                })
+              }
+              className={`${input} mt-2 w-full`}
+            >
+              <option className="text-black">standard</option>
+              <option className="text-black">centered</option>
+              <option className="text-black">compact</option>
+            </select>
+          </label>
+          <label className="text-sm text-white/55">
+            Logo size
+            <select
+              value={header.logoSize}
+              onChange={(event) =>
+                setHeader({
+                  ...header,
+                  logoSize: event.target.value as typeof header.logoSize,
+                })
+              }
+              className={`${input} mt-2 w-full`}
+            >
+              <option className="text-black">small</option>
+              <option className="text-black">medium</option>
+              <option className="text-black">large</option>
+            </select>
+          </label>
+          <Field
+            label="CTA label"
+            value={header.ctaLabel}
+            set={(ctaLabel) => setHeader({ ...header, ctaLabel })}
+          />
+          <Field
+            label="CTA link"
+            value={header.ctaHref}
+            set={(ctaHref) => setHeader({ ...header, ctaHref })}
+          />
+          {(
+            [
+              ["sticky", "Sticky navigation"],
+              ["transparentOverHero", "Transparent over hero"],
+              ["showContactBar", "Show contact bar"],
+            ] as const
+          ).map(([key, label]) => (
+            <label className="flex items-center gap-2 text-sm" key={key}>
+              <input
+                type="checkbox"
+                checked={header[key as keyof typeof header] as boolean}
+                onChange={(event) =>
+                  setHeader({ ...header, [key]: event.target.checked })
+                }
+              />
+              {label}
+            </label>
+          ))}
+        </div>
+        <button
+          onClick={() => run(() => saveHeader({ siteId, ...header }))}
+          className="mt-5 flex min-h-10 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+        >
+          <Save size={15} /> Save header
+        </button>
+      </section>
       <section className="glass rounded-3xl p-6">
         <h2 className="text-xl font-semibold">Website navigation</h2>
         <p className="mt-2 text-sm text-white/40">

@@ -114,6 +114,12 @@ const definitions: Record<(typeof sectionTypes)[number], SectionDefinition> = {
     "featured",
     "compact-list",
   ]),
+  rentalGrid: cards(
+    "Rental collection",
+    "Show rentable vehicles, watercraft or equipment with honest rates.",
+    "Tours & Experiences",
+    ["product-grid", "rate-cards", "compact-list"],
+  ),
   featuredPackages: experience("Featured packages", [
     "grid",
     "cards",

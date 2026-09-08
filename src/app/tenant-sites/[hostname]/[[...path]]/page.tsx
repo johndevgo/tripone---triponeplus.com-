@@ -145,6 +145,7 @@ export default async function TenantPage({ params }: Props) {
         {...data}
         page={resolved.page}
         experiences={resolved.experiences}
+        rentals={resolved.rentals}
         testimonials={
           published.snapshot
             .testimonials as unknown as import("@/components/site/site-renderer").PublicTestimonial[]

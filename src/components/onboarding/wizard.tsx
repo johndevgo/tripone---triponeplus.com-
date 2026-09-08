@@ -26,12 +26,18 @@ import { Button } from "@/components/ui/button";
 import {
   businessCapabilities,
   businessTypes,
+  rentalProductTypes,
   type BusinessCapability,
   type BusinessType,
   type OnboardingInput,
+  type WebsitePageSelection,
 } from "@/lib/types";
 import { onboardingSchema } from "@/lib/validation";
-import { businessPresets, themes } from "@/lib/site-generator";
+import {
+  businessPresets,
+  recommendedPageSelections,
+  themes,
+} from "@/lib/site-generator";
 import { slugify, cn } from "@/lib/utils";
 import { buildWebsite, checkSlug } from "@/app/onboarding/actions";
 
@@ -110,8 +116,9 @@ const capabilityLabels: Record<BusinessCapability, string> = {
 const steps = [
   "Business type",
   "Details",
+  "Website structure",
   "Brand",
-  "Experiences",
+  "Bookable content",
   "Theme",
   "Review",
 ];
@@ -134,6 +141,7 @@ const label = "text-sm font-medium text-white/80";
 const defaults: OnboardingInput = {
   businessType: "tour_operator",
   capabilities: ["tour_operator"],
+  pageSelections: recommendedPageSelections(["tour_operator"]),
   name: "",
   slug: "",
   shortDescription: "",
@@ -150,6 +158,7 @@ const defaults: OnboardingInput = {
   logoUrl: "",
   brand: { primary: "#063D2E", secondary: "#087A5A", accent: "#F5A623" },
   experiences: [],
+  rentals: [],
   themeId: "horizon",
 };
 
@@ -175,13 +184,21 @@ export function OnboardingWizard() {
     trigger,
     formState: { errors },
   } = form;
-  const fields = useFieldArray({ control, name: "experiences" });
+  const experienceFields = useFieldArray({ control, name: "experiences" });
+  const rentalFields = useFieldArray({ control, name: "rentals" });
   const values = useWatch({ control });
   useEffect(() => {
     const stored = localStorage.getItem("tripone-onboarding");
     if (stored) {
       try {
         const value = JSON.parse(stored) as Partial<OnboardingInput>;
+        if (!value.pageSelections?.length) {
+          const capabilities = value.capabilities?.length
+            ? value.capabilities
+            : [value.businessType ?? "tour_operator"];
+          value.pageSelections = recommendedPageSelections(capabilities);
+        }
+        if (!value.rentals) value.rentals = [];
         Object.entries(value).forEach(([key, val]) =>
           setValue(key as keyof OnboardingInput, val as never),
         );
@@ -215,9 +232,10 @@ export function OnboardingWizard() {
         "currency",
         "email",
       ];
-    if (step === 2) names = ["brand"];
-    if (step === 3) names = ["experiences"];
-    if (step === 4) names = ["themeId"];
+    if (step === 2) names = ["pageSelections"];
+    if (step === 3) names = ["brand"];
+    if (step === 4) names = ["experiences", "rentals"];
+    if (step === 5) names = ["themeId"];
     const valid = await trigger(names);
     if (!valid) return;
     if (step === 1) {
@@ -229,7 +247,7 @@ export function OnboardingWizard() {
         return;
       }
     }
-    setStep((s) => Math.min(5, s + 1));
+    setStep((s) => Math.min(6, s + 1));
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
   async function create() {
@@ -282,6 +300,13 @@ export function OnboardingWizard() {
         shouldDirty: true,
       });
   }
+  async function uploadRental(index: number, file?: File) {
+    const url = await uploadFile(file);
+    if (url)
+      setValue(`rentals.${index}.featuredImageUrl`, url, {
+        shouldDirty: true,
+      });
+  }
   function businessName(value: string) {
     const previousGeneratedSlug = slugify(getValues("name"));
     const currentSlug = getValues("slug");
@@ -326,6 +351,11 @@ export function OnboardingWizard() {
                 setValue("capabilities", [...current, v], {
                   shouldValidate: true,
                 });
+              if (!current.includes(v))
+                setValue(
+                  "pageSelections",
+                  recommendedPageSelections([...current, v]),
+                );
             }}
             toggle={(v) => {
               const current = (getValues("capabilities") ??
@@ -335,6 +365,7 @@ export function OnboardingWizard() {
                 : [...current, v];
               if (v === getValues("businessType") && !next.includes(v)) return;
               setValue("capabilities", next, { shouldValidate: true });
+              setValue("pageSelections", recommendedPageSelections(next));
             }}
           />
         )}{" "}
@@ -350,30 +381,43 @@ export function OnboardingWizard() {
           />
         )}{" "}
         {step === 2 && (
+          <StructureStep
+            capabilities={(values.capabilities as BusinessCapability[]) ?? []}
+            value={(values.pageSelections as WebsitePageSelection[]) ?? []}
+            change={(next) =>
+              setValue("pageSelections", next, { shouldValidate: true })
+            }
+          />
+        )}{" "}
+        {step === 3 && (
           <BrandStep
             register={register}
             logo={values.logoUrl}
             upload={uploadLogo}
           />
         )}{" "}
-        {step === 3 && (
+        {step === 4 && (
           <ExperienceStep
             register={register}
-            fields={fields.fields}
-            append={fields.append}
-            remove={fields.remove}
+            fields={experienceFields.fields}
+            append={experienceFields.append}
+            remove={experienceFields.remove}
             currency={values.currency || "USD"}
             preset={preset}
             upload={uploadExperience}
+            rentalFields={rentalFields.fields}
+            appendRental={rentalFields.append}
+            removeRental={rentalFields.remove}
+            uploadRental={uploadRental}
           />
         )}{" "}
-        {step === 4 && (
+        {step === 5 && (
           <ThemeStep
             value={values.themeId}
             select={(v) => setValue("themeId", v, { shouldValidate: true })}
           />
         )}{" "}
-        {step === 5 && <Review values={getValues()} preset={preset} />}{" "}
+        {step === 6 && <Review values={getValues()} preset={preset} />}{" "}
         {error && (
           <p
             role="alert"
@@ -391,7 +435,7 @@ export function OnboardingWizard() {
             <ArrowLeft size={17} />
             {step ? "Back" : "Exit"}
           </Button>
-          {step < 5 ? (
+          {step < 6 ? (
             <Button type="button" onClick={next}>
               Next <ArrowRight size={17} />
             </Button>
@@ -589,6 +633,143 @@ function DetailsStep({
 function valuesafe(name: string) {
   return slugify(name) || "your-business";
 }
+function StructureStep({
+  capabilities,
+  value,
+  change,
+}: {
+  capabilities: BusinessCapability[];
+  value: WebsitePageSelection[];
+  change: (value: WebsitePageSelection[]) => void;
+}) {
+  const pages = value.length ? value : recommendedPageSelections(capabilities);
+  const update = (
+    key: WebsitePageSelection["key"],
+    patch: Partial<WebsitePageSelection>,
+  ) =>
+    change(
+      pages.map((page) => (page.key === key ? { ...page, ...patch } : page)),
+    );
+  const sectionOptions = [
+    "hero",
+    "featuredExperiences",
+    "experienceGrid",
+    "rentalGrid",
+    "features",
+    "destinations",
+    "gallery",
+    "testimonials",
+    "faq",
+    "contact",
+    "finalCta",
+  ] as const;
+  return (
+    <>
+      <Title
+        eyebrow="Website structure"
+        title="Choose the pages your business needs."
+        copy="Home is required. Every other recommendation can be removed, renamed, hidden from navigation, or given a different starting section recipe."
+      />
+      <div className="grid gap-4 lg:grid-cols-2">
+        {pages.map((page) => (
+          <article
+            key={page.key}
+            className={cn(
+              "rounded-2xl border p-5",
+              page.selected
+                ? "border-[#FFC857]/40 bg-[#FFC857]/[.06]"
+                : "border-white/10 bg-white/[.025]",
+            )}
+          >
+            <div className="flex items-center justify-between gap-4">
+              <label className="flex items-center gap-3 font-semibold">
+                <input
+                  type="checkbox"
+                  checked={page.selected}
+                  disabled={page.key === "home"}
+                  onChange={(event) =>
+                    update(page.key, { selected: event.target.checked })
+                  }
+                  className="size-4 accent-[#F5A623]"
+                />
+                {page.title}
+              </label>
+              <span className="text-[11px] uppercase tracking-wider text-white/30">
+                {page.key === "home" ? "Required" : "Optional"}
+              </span>
+            </div>
+            {page.selected && (
+              <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                <label className="text-xs text-white/50">
+                  Navigation label
+                  <input
+                    value={page.title}
+                    onChange={(event) =>
+                      update(page.key, { title: event.target.value })
+                    }
+                    className={input}
+                  />
+                </label>
+                <label className="text-xs text-white/50">
+                  Path
+                  <input
+                    value={page.slug}
+                    disabled={page.key === "home"}
+                    onChange={(event) =>
+                      update(page.key, { slug: slugify(event.target.value) })
+                    }
+                    className={input}
+                  />
+                </label>
+                <label className="flex items-center gap-2 text-xs text-white/55 sm:col-span-2">
+                  <input
+                    type="checkbox"
+                    checked={page.showInNavigation}
+                    onChange={(event) =>
+                      update(page.key, {
+                        showInNavigation: event.target.checked,
+                      })
+                    }
+                  />{" "}
+                  Show in navigation
+                </label>
+                <details className="sm:col-span-2">
+                  <summary className="cursor-pointer text-xs text-white/50">
+                    Starting sections ({page.sections.length})
+                  </summary>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    {sectionOptions.map((section) => (
+                      <label
+                        key={section}
+                        className="flex items-center gap-2 text-xs text-white/50"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={page.sections.includes(section)}
+                          onChange={(event) =>
+                            update(page.key, {
+                              sections: event.target.checked
+                                ? [...page.sections, section]
+                                : page.sections.filter(
+                                    (item) => item !== section,
+                                  ),
+                            })
+                          }
+                        />
+                        {section.replace(/([A-Z])/g, " $1")}
+                      </label>
+                    ))}
+                  </div>
+                </details>
+              </div>
+            )}
+          </article>
+        ))}
+      </div>
+    </>
+  );
+}
+
 function BrandStep({
   register,
   logo,
@@ -662,6 +843,10 @@ function ExperienceStep({
   currency,
   preset,
   upload,
+  rentalFields,
+  appendRental,
+  removeRental,
+  uploadRental,
 }: {
   register: Register;
   fields: Array<{ id: string }>;
@@ -670,6 +855,10 @@ function ExperienceStep({
   currency: string;
   preset: (typeof businessPresets)[BusinessType];
   upload: (index: number, file?: File) => void;
+  rentalFields: Array<{ id: string }>;
+  appendRental: (v: OnboardingInput["rentals"][number]) => void;
+  removeRental: (i: number) => void;
+  uploadRental: (index: number, file?: File) => void;
 }) {
   return (
     <>
@@ -830,6 +1019,156 @@ function ExperienceStep({
           Add {preset.singular}
         </button>
       </div>
+      <div className="my-8 border-t border-white/10" />
+      <div className="mb-5">
+        <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#FFC857]">
+          Rental products
+        </p>
+        <h2 className="mt-2 text-2xl font-semibold">
+          What can guests rent from you?
+        </h2>
+        <p className="mt-2 text-sm text-white/45">
+          Keep physical rentals separate from guided experiences. You can skip
+          this and add inventory later.
+        </p>
+      </div>
+      <div className="grid gap-4">
+        {rentalFields.map((field, index) => (
+          <article
+            key={field.id}
+            className="rounded-2xl border border-white/10 bg-white/[.035] p-5"
+          >
+            <div className="mb-5 flex items-center justify-between">
+              <h3 className="font-semibold">Rental {index + 1}</h3>
+              <button
+                type="button"
+                onClick={() => removeRental(index)}
+                aria-label="Remove rental"
+                className="rounded-lg p-2 text-white/40 hover:bg-red-400/10 hover:text-red-200"
+              >
+                <Trash2 size={17} />
+              </button>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <label className={`${label} sm:col-span-2`}>
+                Name
+                <input
+                  {...register(`rentals.${index}.name`)}
+                  className={input}
+                />
+              </label>
+              <label className={label}>
+                Rental type
+                <select
+                  {...register(`rentals.${index}.rentalType`)}
+                  className={input}
+                >
+                  {rentalProductTypes.map((type) => (
+                    <option className="text-black" value={type} key={type}>
+                      {fieldLabel(type)}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className={label}>
+                Currency
+                <input
+                  {...register(`rentals.${index}.currency`)}
+                  className={input}
+                />
+              </label>
+              <label className={label}>
+                Starting rate
+                <input
+                  {...register(`rentals.${index}.rateAmount`, {
+                    setValueAs: (value) =>
+                      value === "" ? null : Number(value),
+                  })}
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  className={input}
+                />
+              </label>
+              <label className={label}>
+                Rate unit
+                <select
+                  {...register(`rentals.${index}.rateUnit`)}
+                  className={input}
+                >
+                  {(["hour", "day", "week"] as const).map((unit) => (
+                    <option className="text-black" value={unit} key={unit}>
+                      Per {unit}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <label className={`${label} flex items-end gap-2 pb-3`}>
+                <input
+                  {...register(`rentals.${index}.quoteOnly`)}
+                  type="checkbox"
+                  className="size-4 accent-[#F5A623]"
+                />
+                Request a quote
+              </label>
+              <label className={label}>
+                Location
+                <input
+                  {...register(`rentals.${index}.locationName`)}
+                  className={input}
+                />
+              </label>
+              <label className={`${label} sm:col-span-2`}>
+                Short description
+                <textarea
+                  {...register(`rentals.${index}.shortDescription`)}
+                  rows={2}
+                  className={`${input} py-3`}
+                />
+              </label>
+              <label className={`${label} sm:col-span-2`}>
+                Booking URL
+                <input
+                  {...register(`rentals.${index}.bookingUrl`)}
+                  type="url"
+                  className={input}
+                />
+              </label>
+              <label className={`${label} sm:col-span-2`}>
+                Featured image
+                <input
+                  type="file"
+                  accept="image/jpeg,image/png,image/webp,image/avif"
+                  className={`${input} cursor-pointer py-2 file:mr-3 file:rounded-lg file:border-0 file:bg-[#F5A623] file:px-3 file:py-1.5 file:font-semibold file:text-[#173028]`}
+                  onChange={(event) =>
+                    uploadRental(index, event.target.files?.[0])
+                  }
+                />
+              </label>
+            </div>
+          </article>
+        ))}
+        <button
+          type="button"
+          onClick={() =>
+            appendRental({
+              name: "",
+              rentalType: "equipment",
+              shortDescription: "",
+              currency,
+              quoteOnly: true,
+              rateAmount: null,
+              rateUnit: "day",
+              locationName: "",
+              bookingUrl: "",
+              featuredImageUrl: "",
+            })
+          }
+          className="flex min-h-24 items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 text-sm font-medium text-white/65 hover:border-[#FFC857]/60 hover:bg-white/[.04]"
+        >
+          <Plus size={18} /> Add rental product
+        </button>
+      </div>
     </>
   );
 }
@@ -954,12 +1293,30 @@ function Review({
             )}
           </div>
         </ReviewCard>
+        <ReviewCard title={`${values.rentals.length} rental products`}>
+          <div className="space-y-2">
+            {values.rentals.length ? (
+              values.rentals.map((rental) => (
+                <p className="flex items-center gap-2" key={rental.name}>
+                  <Check size={15} className="text-[#FFC857]" />
+                  {rental.name}
+                </p>
+              ))
+            ) : (
+              <p>Add rental inventory from the dashboard later.</p>
+            )}
+          </div>
+        </ReviewCard>
         <ReviewCard title="Proposed website">
           <p className="font-medium text-[#FFC857]">
             tools.neurerohan.com.np/s/{values.slug}
           </p>
           <p className="mt-3">
-            Pages: {preset.pages.map((p) => p.title).join(", ")}
+            Pages:{" "}
+            {values.pageSelections
+              .filter((page) => page.selected)
+              .map((page) => page.title)
+              .join(", ")}
           </p>
         </ReviewCard>
       </div>

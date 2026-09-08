@@ -119,5 +119,14 @@ describe("structured discovery outputs", () => {
     expect(buildRobots("https://example.com", true)).toContain(
       "Sitemap: https://example.com/sitemap.xml",
     );
+    expect(
+      buildRobots(
+        "https://tools.neurerohan.com.np",
+        true,
+        "/s/nepal-rides/sitemap",
+      ),
+    ).toContain(
+      "Sitemap: https://tools.neurerohan.com.np/s/nepal-rides/sitemap",
+    );
   });
 });

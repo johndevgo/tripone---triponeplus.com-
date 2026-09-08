@@ -10,6 +10,10 @@ import {
   type PublicRental,
 } from "@/components/site/site-renderer";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/structured-data";
+import {
+  hydrateLinkedSections,
+  resolveTemplateSections,
+} from "@/lib/templates/bindings";
 
 async function load(siteSlug: string, path: string[]) {
   const supabase = await createClient();
@@ -37,6 +41,8 @@ async function load(siteSlug: string, path: string[]) {
     { data: experiences },
     { data: rentals },
     { data: rentalRates },
+    { data: templates },
+    { data: savedSections },
   ] = await Promise.all([
     supabase
       .from("pages")
@@ -45,7 +51,7 @@ async function load(siteSlug: string, path: string[]) {
     supabase
       .from("experiences")
       .select(
-        "id,name,slug,short_description,description,price_from,currency,pricing_label,duration_value,duration_unit,location_name,meeting_point,max_guests,min_guests,minimum_age,cancellation_policy,booking_url,booking_button_label,featured_image_url,gallery,highlights,inclusions,exclusions,itinerary,faqs,seo_settings",
+        "id,name,slug,experience_type,short_description,description,price_from,currency,pricing_label,duration_value,duration_unit,location_name,meeting_point,max_guests,min_guests,minimum_age,cancellation_policy,booking_url,booking_button_label,featured_image_url,gallery,highlights,inclusions,exclusions,itinerary,faqs,seo_settings,template_id,sections_override",
       )
       .eq("site_id", site.id)
       .order("sort_order"),
@@ -60,6 +66,15 @@ async function load(siteSlug: string, path: string[]) {
       .select("*")
       .eq("site_id", site.id)
       .order("sort_order"),
+    supabase
+      .from("site_templates")
+      .select("id,template_kind,subtype,sections,version")
+      .eq("site_id", site.id),
+    supabase
+      .from("saved_sections")
+      .select("id,section_type,variant,settings,revision")
+      .eq("site_id", site.id)
+      .eq("save_mode", "linked"),
   ]);
   const page =
     pages?.find((p) => p.slug === route) ||
@@ -77,45 +92,94 @@ async function load(siteSlug: string, path: string[]) {
     ? site.businesses[0]
     : site.businesses;
   if (!business) return null;
+  const detailTemplate = experience
+    ? findTemplate(
+        templates ?? [],
+        "experience_detail",
+        experience.experience_type,
+        experience.template_id,
+      )
+    : rental
+      ? findTemplate(
+          templates ?? [],
+          "rental_detail",
+          rental.rental_type,
+          rental.template_id,
+        )
+      : undefined;
+  const templateSections = detailTemplate
+    ? resolveTemplateSections(
+        detailTemplate.sections,
+        experience?.sections_override ?? rental?.sections_override,
+        {
+          business,
+          experience: experience ?? undefined,
+          rental: rental ?? undefined,
+        },
+        savedSections ?? [],
+      )
+    : [];
+  const storedSections = page ? sectionsSchema.safeParse(page.sections) : null;
   return {
     site,
     business,
-    page: page ?? {
-      title: experience?.name ?? rental!.name,
-      slug: route,
-      sections: [
-        {
-          id: "detail-hero",
-          type: "hero",
-          variant: "immersive",
-          visible: true,
-          settings: {
-            eyebrow:
-              experience?.location_name ??
-              rental?.location_name ??
-              business.name,
-            title: experience?.name ?? rental!.name,
-            description:
-              experience?.short_description ?? rental!.short_description,
-            primaryCta: experience
-              ? experience.booking_url
-                ? "Book now"
-                : "Contact us"
-              : rental!.booking_button_label,
-            primaryHref:
-              experience?.booking_url ?? rental?.booking_url ?? "/contact",
-          },
+    page: page
+      ? {
+          ...page,
+          sections: storedSections?.success
+            ? hydrateLinkedSections(
+                storedSections.data,
+                (savedSections ?? []) as Record<string, unknown>[],
+              )
+            : [],
+        }
+      : {
+          title: experience?.name ?? rental!.name,
+          slug: route,
+          sections: templateSections.length
+            ? templateSections
+            : [
+                {
+                  id: "detail-hero",
+                  type: "hero",
+                  variant: "immersive",
+                  visible: true,
+                  settings: {
+                    eyebrow:
+                      experience?.location_name ??
+                      rental?.location_name ??
+                      business.name,
+                    title: experience?.name ?? rental!.name,
+                    description:
+                      experience?.short_description ??
+                      rental!.short_description,
+                    primaryCta: experience
+                      ? experience.booking_url
+                        ? "Book now"
+                        : "Contact us"
+                      : rental!.booking_button_label,
+                    primaryHref:
+                      experience?.booking_url ??
+                      rental?.booking_url ??
+                      "/contact",
+                  },
+                },
+              ],
+          seo_settings: experience
+            ? createExperienceSeo(
+                experience.name,
+                business.name,
+                experience.location_name ?? business.city,
+              )
+            : rental!.seo_settings,
         },
-      ],
-      seo_settings: experience
-        ? createExperienceSeo(
-            experience.name,
-            business.name,
-            experience.location_name ?? business.city,
-          )
-        : rental!.seo_settings,
-    },
     experiences: experiences ?? [],
+    rentals: (rentals ?? []).map((item) => ({
+      ...item,
+      rates: (rentalRates ?? []).filter(
+        (rate) => rate.rental_product_id === item.id,
+      ),
+    })) as PublicRental[],
     experience,
     rental: rental
       ? ({
@@ -126,6 +190,33 @@ async function load(siteSlug: string, path: string[]) {
         } as PublicRental)
       : null,
   };
+}
+
+function findTemplate(
+  templates: Array<{
+    id: string;
+    template_kind: string;
+    subtype: string;
+    sections: unknown;
+  }>,
+  kind: string,
+  subtype?: string | null,
+  assignedId?: string | null,
+) {
+  return (
+    templates.find(
+      (template) =>
+        template.id === assignedId && template.template_kind === kind,
+    ) ??
+    templates.find(
+      (template) =>
+        template.template_kind === kind && template.subtype === subtype,
+    ) ??
+    templates.find(
+      (template) =>
+        template.template_kind === kind && template.subtype === "default",
+    )
+  );
 }
 
 export function fromSnapshot(
@@ -309,6 +400,7 @@ export default async function Preview({
         page={{ ...data.page, sections: parsed.data }}
         theme={theme}
         experiences={data.experiences as PublicExperience[]}
+        rentals={data.rentals}
         activeExperience={
           data.experience ? (data.experience as PublicExperience) : undefined
         }

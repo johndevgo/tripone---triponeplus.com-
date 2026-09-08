@@ -2,6 +2,7 @@ import type { OnboardingInput, SiteSection } from "@/lib/types";
 import { getBusinessPreset } from "./presets";
 import { createPageSeo } from "./seo";
 import { getTheme } from "./themes";
+import { normalizePageSelections, pageTypeFor } from "./page-structure";
 
 export type GeneratedPage = {
   title: string;
@@ -26,20 +27,27 @@ const sectionVariant: Record<string, string> = {
   faq: "accordion",
   featuredExperiences: "cards",
   experienceGrid: "cards",
+  rentalGrid: "product-grid",
   finalCta: "banner",
 };
 
 export function generateSite(input: OnboardingInput): GeneratedSite {
   const preset = getBusinessPreset(input.businessType);
   const location = [input.city, input.region].filter(Boolean).join(", ");
-  const catalogue = preset.pages.find((page) => page.type === "experiences");
-  const catalogueHref = catalogue?.slug ? `/${catalogue.slug}` : "/experiences";
-  const pages = preset.pages.map((recipe, sortOrder) => ({
+  const selectedPages = normalizePageSelections(
+    input.capabilities,
+    input.pageSelections,
+  );
+  const catalogue =
+    selectedPages.find((page) => page.key === "experiences") ??
+    selectedPages.find((page) => page.key === "rentals");
+  const catalogueHref = catalogue?.slug ? `/${catalogue.slug}` : "/contact";
+  const pages = selectedPages.map((recipe, sortOrder) => ({
     title: recipe.title,
     slug: recipe.slug,
-    pageType: recipe.type,
+    pageType: pageTypeFor(recipe.key),
     sortOrder,
-    showInNavigation: recipe.type !== "experience_detail_system",
+    showInNavigation: recipe.showInNavigation,
     seoSettings: createPageSeo(recipe.title, input.name, location),
     sections: recipe.sections.map((type, index) => ({
       id: `${recipe.slug || "home"}-${type}-${index}`,
@@ -120,6 +128,11 @@ function sectionSettings(
           ? `Featured ${plural}`
           : `Explore our ${plural}`,
       description: `Choose the right ${plural} for your trip.`,
+    };
+  if (type === "rentalGrid")
+    return {
+      title: "Featured rentals",
+      description: `Browse rental options from ${input.name}.`,
     };
   if (type === "whyChooseUs")
     return {
