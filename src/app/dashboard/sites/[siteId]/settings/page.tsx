@@ -244,6 +244,10 @@ export default async function Settings({
             />
           </Fields>
           <p className="text-xs leading-5 text-white/35">
+            Provider scripts run only on a verified, isolated customer domain.
+            They stay disabled in the dashboard, authenticated preview and the
+            shared tools.neurerohan.com.np/s/ fallback. First-party aggregate
+            events can still be collected there after consent. <br />
             The banner is a technical consent control, not a guarantee of legal
             compliance. Site owners must review applicable privacy and cookie
             laws.

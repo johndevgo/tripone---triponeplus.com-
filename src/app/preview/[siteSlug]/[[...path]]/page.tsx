@@ -406,7 +406,7 @@ export default async function Preview({
         }
         activeRental={data.rental ?? undefined}
         basePath={`/preview/${data.site.slug}`}
-        preview={data.site.status !== "published"}
+        preview
       />
     </>
   );

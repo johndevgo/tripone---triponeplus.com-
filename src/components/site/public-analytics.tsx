@@ -18,10 +18,12 @@ export function PublicAnalytics({
   experienceId,
   consentMode,
   integrations,
+  allowThirdPartyScripts = false,
 }: {
   experienceId?: string;
   consentMode: "disabled" | "basic";
   integrations: Integrations;
+  allowThirdPartyScripts?: boolean;
 }) {
   const [consent, setConsent] = useState<"pending" | "accepted" | "declined">(
     consentMode === "disabled" ? "accepted" : "pending",
@@ -65,7 +67,7 @@ export function PublicAnalytics({
     setConsent(value);
   }
 
-  const canLoad = consent === "accepted";
+  const canLoad = consent === "accepted" && allowThirdPartyScripts;
   return (
     <>
       {canLoad && integrations.googleTagManagerId && (
@@ -119,6 +121,15 @@ export function PublicAnalytics({
             </button>
           </div>
         </aside>
+      )}
+      {consentMode === "basic" && consent !== "pending" && (
+        <button
+          type="button"
+          onClick={() => setConsent("pending")}
+          className="fixed bottom-3 left-3 z-40 rounded-lg border border-black/10 bg-[var(--site-surface)] px-3 py-2 text-xs text-[var(--site-muted)] shadow-lg"
+        >
+          Cookie preferences
+        </button>
       )}
     </>
   );

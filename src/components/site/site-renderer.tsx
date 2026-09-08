@@ -112,6 +112,7 @@ export type SiteRendererProps = {
   };
   activeExperience?: PublicExperience;
   activeRental?: PublicRental;
+  allowThirdPartyScripts?: boolean;
 };
 
 function href(base: string, path: string) {
@@ -133,6 +134,7 @@ export function SiteRenderer({
   editor,
   activeExperience,
   activeRental,
+  allowThirdPartyScripts = false,
 }: SiteRendererProps) {
   const nav = Array.isArray(site.navigation)
     ? (site.navigation as Array<{ label: string; href: string }>)
@@ -415,6 +417,7 @@ export function SiteRenderer({
             metaPixelId: text(integrations, "metaPixelId") || undefined,
             tiktokPixelId: text(integrations, "tiktokPixelId") || undefined,
           }}
+          allowThirdPartyScripts={allowThirdPartyScripts}
         />
       )}
     </div>

@@ -152,6 +152,7 @@ export default async function TenantPage({ params }: Props) {
         }
         activeExperience={resolved.experience}
         activeRental={resolved.activeRental}
+        allowThirdPartyScripts
         basePath=""
       />
     </>
