@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Logo } from "@/components/logo";
 import { OnboardingWizard } from "@/components/onboarding/wizard";
 import { createClient } from "@/lib/supabase/server";
+
+export const metadata: Metadata = {
+  title: "Create your website",
+  robots: { index: false, follow: false, noarchive: true },
+};
+
 export default async function Onboarding() {
   const supabase = await createClient();
   const {

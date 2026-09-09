@@ -19,12 +19,17 @@
 }
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
 }
 body {
   margin: 0;
   color: var(--ink);
   background: var(--paper);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+::selection {
+  color: #022c22;
+  background: #ffc857;
 }
 button,
 input,
@@ -74,6 +79,70 @@ a {
 }
 .text-balance {
   text-wrap: balance;
+}
+.marketing-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.055);
+  padding: 0.5rem 0.8rem;
+  color: #ffc857;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.marketing-kicker-light {
+  border-color: rgba(6, 61, 46, 0.1);
+  background: rgba(8, 122, 90, 0.07);
+  color: #087a5a;
+}
+.marketing-title,
+.marketing-title-light {
+  text-wrap: balance;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 650;
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+}
+.marketing-title-light {
+  color: #09271f;
+}
+.article-body {
+  color: rgba(255, 255, 255, 0.64);
+}
+.article-body section {
+  scroll-margin-top: 7rem;
+}
+.article-body section + section {
+  margin-top: 3.25rem;
+}
+.article-body h2 {
+  color: white;
+  font-size: clamp(1.65rem, 3vw, 2.15rem);
+  font-weight: 650;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+}
+.article-body p {
+  margin-top: 1.2rem;
+  font-size: 1.0625rem;
+  line-height: 1.85;
+}
+.article-body ul {
+  margin-top: 1.35rem;
+  display: grid;
+  gap: 0.8rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.article-body li {
+  padding-left: 0.35rem;
+  line-height: 1.7;
 }
 .generated-site[data-button-style="pill"] .site-primary-action {
   border-radius: 9999px;

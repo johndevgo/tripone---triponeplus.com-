@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Logo } from "@/components/logo";
 export function AuthCard({
   title,
@@ -9,7 +10,16 @@ export function AuthCard({
   children: React.ReactNode;
 }) {
   return (
-    <main className="app-bg grid min-h-screen place-items-center px-5 py-16 text-white">
+    <main className="app-bg relative isolate grid min-h-screen place-items-center overflow-hidden px-5 py-16 text-white">
+      <Image
+        src="/images/marketing/coastal-yacht.webp"
+        alt=""
+        fill
+        preload
+        sizes="100vw"
+        className="-z-20 object-cover object-center opacity-45"
+      />
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(4,28,22,.96),rgba(4,28,22,.72),rgba(4,28,22,.93))]" />
       <div className="ambient" />
       <div className="w-full max-w-md">
         <div className="mb-8 text-center">

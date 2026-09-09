@@ -18,7 +18,14 @@ No AI or LLM API is used. Pages and copy come from typed category presets, page 
 
 ## Route map
 
-Marketing: `/`, `/features`, `/templates`, `/pricing`, `/privacy`, `/terms`, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
+Marketing: `/`, `/features`, `/templates`, `/pricing`, `/resources`, `/resources/[slug]`, `/privacy`, `/terms`, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
+
+The public marketing site includes original responsive travel photography,
+eight visual theme previews, generated Open Graph/Twitter images, structured
+software/article/FAQ/breadcrumb data, and a typed resource library with durable
+guides and fair competitor comparisons. Marketing images live in
+`public/images/marketing/`; treat their filenames as immutable because they are
+served with long-lived cache headers.
 
 Product: `/onboarding`, `/dashboard`, `/dashboard/account`, `/dashboard/sites/[siteId]`, plus `builder`, `experiences`, `rentals`, `taxonomies`, `services`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `leads`, `analytics`, `domains` and `settings`.
 

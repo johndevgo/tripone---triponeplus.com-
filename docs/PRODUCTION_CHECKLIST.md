@@ -29,6 +29,7 @@
 - [x] Builder autosave and preview are browser-tested; immutable publish is database-tested
 - [x] Published site and unknown site/page responses are tested in production
 - [x] Canonical path, metadata, sitemap and robots output are inspected in production
+- [x] Resource articles, comparison sources, social images and internal links are validated
 - [ ] Custom domain add, DNS instructions, verification and primary switching are tested
 - [ ] Lead submission appears in the owner dashboard
 - [ ] Analytics events and 7/30/90-day dashboard ranges are verified

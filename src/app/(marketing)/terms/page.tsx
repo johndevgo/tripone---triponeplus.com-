@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Terms",
+  robots: { index: false, follow: true },
+};
+
 export default function Terms() {
   return (
     <article className="glass mx-auto max-w-3xl rounded-3xl p-7 sm:p-10">

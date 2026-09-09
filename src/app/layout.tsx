@@ -21,12 +21,36 @@ export const metadata: Metadata = {
     "Build a fast, SEO-ready website structured for your tourism or activity business.",
   metadataBase: new URL(getAppUrl()),
   applicationName: "TripOne+",
+  authors: [{ name: "TripOne+" }],
+  creator: "TripOne+",
+  publisher: "TripOne+",
+  category: "business",
+  keywords: [
+    "tourism website builder",
+    "tour operator website builder",
+    "activity website builder",
+    "travel website builder",
+    "rental website builder",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "TripOne+ — Websites built to sell experiences",
     description:
       "A website platform built around tours, activities and experiences.",
     type: "website",
     siteName: "TripOne+",
+    locale: "en_US",
+    url: "/",
   },
   twitter: {
     card: "summary_large_image",

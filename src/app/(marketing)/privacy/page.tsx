@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Privacy notice",
+  robots: { index: false, follow: true },
+};
+
 export default function Privacy() {
   return (
     <Legal title="Privacy notice placeholder">

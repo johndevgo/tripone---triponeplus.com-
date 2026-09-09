@@ -12,7 +12,7 @@ const styles = {
   danger: "bg-red-600 text-white hover:bg-red-500",
 };
 const base =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition duration-200 disabled:cursor-not-allowed disabled:opacity-50";
+  "inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition duration-200 active:translate-y-px disabled:cursor-not-allowed disabled:opacity-50";
 export function Button({
   variant = "primary",
   className,

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
@@ -23,6 +24,7 @@ import {
   Waves,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { themeMarketingImages } from "@/content/marketing-assets";
 import {
   businessCapabilities,
   businessTypes,
@@ -1189,7 +1191,7 @@ function ThemeStep({
       <Title
         eyebrow="Choose a theme"
         title="Select the character of your website."
-        copy="All four themes share the same accessible renderer. You can refine design tokens later."
+        copy="All eight themes share the same accessible renderer. You can refine design tokens later."
       />
       <div className="grid gap-5 md:grid-cols-2">
         {Object.values(themes).map((theme) => {
@@ -1198,6 +1200,7 @@ function ThemeStep({
             <button
               type="button"
               aria-pressed={active}
+              aria-label={`Choose ${theme.name} theme`}
               onClick={() => select(theme.id)}
               key={theme.id}
               className={cn(
@@ -1207,13 +1210,21 @@ function ThemeStep({
                   : "border-white/10 hover:border-white/25",
               )}
             >
-              <div
-                className="h-52 p-4"
-                style={{
-                  background: `linear-gradient(135deg,${theme.colors.primary},${theme.colors.secondary})`,
-                }}
-              >
-                <div className="h-full rounded-2xl border border-white/15 bg-white/10 p-5 backdrop-blur">
+              <div className="relative h-52 overflow-hidden p-4">
+                <Image
+                  src={themeMarketingImages[theme.id]}
+                  alt=""
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    background: `linear-gradient(0deg,${theme.colors.primary}e8,${theme.colors.primary}25)`,
+                  }}
+                />
+                <div className="relative h-full rounded-2xl border border-white/20 bg-white/10 p-5 backdrop-blur-sm">
                   <div className="flex justify-between">
                     <div className="h-2 w-20 rounded bg-white/80" />
                     {active && (

@@ -9,13 +9,14 @@ export function MarketingHeader() {
   const mobileLinks: Array<[string, string]> = [
     ["Features", "/features"],
     ["Templates", "/templates"],
+    ["Resources", "/resources"],
     ["Pricing", "/pricing"],
     ["Log in", "/login"],
     ["Build your website", "/signup"],
   ];
   return (
-    <header className="absolute inset-x-0 top-0 z-40">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-5 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-40 border-b border-white/[.07] bg-[#041c16]/80 backdrop-blur-2xl">
+      <div className="mx-auto flex min-h-[4.75rem] max-w-7xl items-center justify-between px-5 lg:px-8">
         <Logo light />
         <nav
           aria-label="Main navigation"
@@ -27,6 +28,9 @@ export function MarketingHeader() {
           <Link href="/templates" className="hover:text-white">
             Templates
           </Link>
+          <Link href="/resources" className="hover:text-white">
+            Resources
+          </Link>
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
@@ -37,8 +41,9 @@ export function MarketingHeader() {
         </nav>
         <button
           type="button"
-          aria-label="Toggle navigation"
+          aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
+          aria-controls="mobile-navigation"
           onClick={() => setOpen(!open)}
           className="grid size-11 place-items-center rounded-xl border border-white/15 bg-white/10 text-white md:hidden"
         >
@@ -46,11 +51,15 @@ export function MarketingHeader() {
         </button>
       </div>
       {open && (
-        <nav className="glass mx-4 grid gap-2 rounded-2xl p-3 text-white md:hidden">
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+          className="glass mx-4 mb-4 grid gap-1 rounded-2xl p-3 text-white md:hidden"
+        >
           {mobileLinks.map(([label, href]) => (
             <Link
               onClick={() => setOpen(false)}
-              className="rounded-xl px-4 py-3 hover:bg-white/10"
+              className="rounded-xl px-4 py-3.5 text-sm font-medium hover:bg-white/10"
               key={href}
               href={href}
             >
