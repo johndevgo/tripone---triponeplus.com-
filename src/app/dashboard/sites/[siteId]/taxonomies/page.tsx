@@ -233,10 +233,16 @@ export default async function TaxonomiesPage({
                           Save landing page
                         </button>
                         <Link
-                          href={`/dashboard/sites/${siteId}/builder?target=${term.template_id ?? defaultTemplate?.id ?? ""}`}
+                          href={`/dashboard/sites/${siteId}/builder?target=${term.id}`}
                           className="inline-flex min-h-10 items-center rounded-xl border border-white/10 px-4 text-sm"
                         >
-                          Edit layout template
+                          Customize this page
+                        </Link>
+                        <Link
+                          href={`/dashboard/sites/${siteId}/builder?target=${term.template_id ?? defaultTemplate?.id ?? ""}`}
+                          className="inline-flex min-h-10 items-center rounded-xl border border-white/10 px-4 text-sm text-white/60"
+                        >
+                          Edit shared template
                         </Link>
                       </div>
                     </form>

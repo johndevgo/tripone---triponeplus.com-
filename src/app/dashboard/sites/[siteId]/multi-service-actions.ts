@@ -111,17 +111,23 @@ export async function saveRentalProduct(formData: FormData) {
     );
   const supabase = await authenticatedClient(editorPath);
   let previousSlug: string | null = null;
+  let previousSeo: Record<string, unknown> = {};
   if (id) {
     const { data } = await supabase
       .from("rental_products")
-      .select("slug")
+      .select("slug,seo_settings")
       .eq("id", id)
       .eq("site_id", siteId)
       .single();
     previousSlug = data?.slug ?? null;
+    previousSeo = object(data?.seo_settings);
   }
+  const rpcPayload = {
+    ...parsed.data,
+    seoSettings: { ...previousSeo, ...parsed.data.seoSettings },
+  };
   const { data: savedId, error } = await supabase.rpc("save_rental_product", {
-    payload: parsed.data,
+    payload: rpcPayload,
   });
   if (error) {
     const friendly =
@@ -227,7 +233,7 @@ export async function saveTaxonomyTerm(formData: FormData) {
   const supabase = await authenticatedClient(path);
   const { data: existing } = await supabase
     .from("taxonomy_terms")
-    .select("id,source_location_id")
+    .select("id,source_location_id,seo_settings")
     .eq("id", termId)
     .eq("site_id", siteId)
     .single();
@@ -236,24 +242,25 @@ export async function saveTaxonomyTerm(formData: FormData) {
     redirect(
       `${path}&error=Edit%20this%20destination%20from%20the%20Locations%20workspace`,
     );
-  const { error } = await supabase
-    .from("taxonomy_terms")
-    .update({
-      taxonomy_id: parsed.data.taxonomyId,
-      parent_id: parsed.data.parentId || null,
+  const { error } = await supabase.rpc("save_taxonomy_term_with_redirects", {
+    payload: {
+      termId,
+      siteId,
+      taxonomyId: parsed.data.taxonomyId,
+      parentId: parsed.data.parentId || "",
       name: parsed.data.name,
       slug: parsed.data.slug,
       description: parsed.data.description,
-      hero_image_url: heroImageUrl.data || null,
-      listing_mode: parsed.data.listingMode,
+      heroImageUrl: heroImageUrl.data || "",
+      listingMode: parsed.data.listingMode,
       status: parsed.data.status,
-      seo_settings: {
+      seoSettings: {
+        ...object(existing.seo_settings),
         title: seo.data.title || undefined,
         description: seo.data.description || undefined,
       },
-    })
-    .eq("id", termId)
-    .eq("site_id", siteId);
+    },
+  });
   if (error)
     redirect(
       `${path}&error=${encodeURIComponent(error.code === "23505" ? "That landing-page slug is already used." : error.message)}`,
@@ -275,4 +282,10 @@ export async function archiveTaxonomyTerm(formData: FormData) {
     .eq("id", termId)
     .eq("site_id", siteId);
   revalidatePath(`/dashboard/sites/${siteId}/taxonomies`);
+}
+
+function object(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
 }

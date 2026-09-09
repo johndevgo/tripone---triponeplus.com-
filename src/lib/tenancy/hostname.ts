@@ -9,7 +9,19 @@ const defaultAppHosts = new Set([
 
 export function normalizeRequestHostname(headers: Headers) {
   const forwarded = headers.get("x-forwarded-host")?.split(",")[0]?.trim();
-  return normalizeHost(headers.get("host") || forwarded || "");
+  return normalizeHost(forwarded || headers.get("host") || "");
+}
+
+export function isSameOriginMutation(headers: Headers) {
+  const requestedHost = normalizeRequestHostname(headers);
+  const origin = headers.get("origin");
+  const fetchSite = headers.get("sec-fetch-site");
+  if (!origin) return fetchSite == null || fetchSite === "same-origin";
+  try {
+    return normalizeHost(new URL(origin).hostname) === requestedHost;
+  } catch {
+    return false;
+  }
 }
 
 export function normalizeHost(value: string) {

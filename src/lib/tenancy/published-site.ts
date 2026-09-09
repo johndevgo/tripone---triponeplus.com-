@@ -164,8 +164,21 @@ export const loadPublishedSite = cache(async (hostname: string) => {
   const { data, error } = await supabase.rpc("get_published_site_by_hostname", {
     input_hostname: hostname,
   });
-  if (error || !data) return null;
+  if (error) {
+    console.error("Published hostname lookup failed", {
+      hostname,
+      code: error.code,
+      message: error.message,
+    });
+    return null;
+  }
+  if (!data) return null;
   const parsed = envelopeSchema.safeParse(data);
+  if (!parsed.success)
+    console.error("Published hostname snapshot validation failed", {
+      hostname,
+      issues: parsed.error.issues.map(({ code, path }) => ({ code, path })),
+    });
   return parsed.success ? parsed.data : null;
 });
 
@@ -174,14 +187,29 @@ export const loadPublishedSiteBySlug = cache(async (siteSlug: string) => {
   const { data, error } = await supabase.rpc("get_published_site_snapshot", {
     identifier: siteSlug,
   });
-  if (error || !data) return null;
-  return decodePublishedSnapshot(data);
+  if (error) {
+    console.error("Published fallback lookup failed", {
+      siteSlug,
+      code: error.code,
+      message: error.message,
+    });
+    return null;
+  }
+  if (!data) return null;
+  const parsed = publishedSnapshotSchema.safeParse(data);
+  if (!parsed.success)
+    console.error("Published fallback snapshot validation failed", {
+      siteSlug,
+      issues: parsed.error.issues.map(({ code, path }) => ({ code, path })),
+    });
+  return parsed.success ? parsed.data : null;
 });
 
 export function publishedSitemapEntries(
   snapshot: PublishedSnapshot,
   prefix = "",
 ) {
+  if (snapshot.site.seoSettings.indexingEnabled === false) return [];
   const normalizedPrefix = prefix.replace(/\/$/, "");
   const entries: Array<{ path: string; updatedAt?: string }> = [];
   const add = (path: string, updatedAt?: string) =>
@@ -191,15 +219,15 @@ export function publishedSitemapEntries(
     });
 
   for (const page of snapshot.pages) {
-    if (page.seo_settings.indexable === false) continue;
+    if (!isIndexable(page.seo_settings)) continue;
     add(page.slug ? `/${page.slug.replace(/^\/+/, "")}` : "/", page.updated_at);
   }
   for (const experience of snapshot.experiences) {
-    if (experience.seo_settings.indexable === false) continue;
+    if (!isIndexable(experience.seo_settings)) continue;
     add(`/experiences/${experience.slug}`, experience.updated_at);
   }
   for (const rental of snapshot.rentals) {
-    if (rental.seo_settings.indexable === false) continue;
+    if (!isIndexable(rental.seo_settings)) continue;
     add(`/rentals/${rental.slug}`, rental.updated_at);
   }
   for (const location of snapshot.locations) {
@@ -210,7 +238,7 @@ export function publishedSitemapEntries(
     )
       continue;
     const seo = objectRecord(location.seo_settings);
-    if (seo.indexable === false) continue;
+    if (!isIndexable(seo)) continue;
     add(
       `/locations/${location.slug}`,
       typeof location.updated_at === "string" ? location.updated_at : undefined,
@@ -220,13 +248,17 @@ export function publishedSitemapEntries(
     const path = taxonomyTermPath(snapshot, term);
     if (!path) continue;
     const seo = objectRecord(term.seo_settings);
-    if (seo.indexable === false) continue;
+    if (!isIndexable(seo)) continue;
     add(
       path,
       typeof term.updated_at === "string" ? term.updated_at : undefined,
     );
   }
   return [...new Map(entries.map((entry) => [entry.path, entry])).values()];
+}
+
+function isIndexable(seo: Record<string, unknown>) {
+  return seo.indexable !== false && seo.noindex !== true;
 }
 
 export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {

@@ -243,7 +243,7 @@ export function OnboardingWizard() {
       const result = await checkSlug(getValues("slug"));
       setSlugState(result.available ? "available" : "taken");
       if (!result.available) {
-        setError(result.error || "That subdomain is already in use.");
+        setError(result.error || "That site address is already in use.");
         return;
       }
     }
@@ -908,7 +908,7 @@ function ExperienceStep({
                 <input
                   {...register(`experiences.${index}.priceFrom`, {
                     setValueAs: (value) =>
-                      value === "" ? null : Number(value),
+                      value == null || value === "" ? null : Number(value),
                   })}
                   type="number"
                   min="0"
@@ -928,7 +928,7 @@ function ExperienceStep({
                 <input
                   {...register(`experiences.${index}.durationValue`, {
                     setValueAs: (value) =>
-                      value === "" ? null : Number(value),
+                      value == null || value === "" ? null : Number(value),
                   })}
                   type="number"
                   min="0"
@@ -1082,7 +1082,7 @@ function ExperienceStep({
                 <input
                   {...register(`rentals.${index}.rateAmount`, {
                     setValueAs: (value) =>
-                      value === "" ? null : Number(value),
+                      value == null || value === "" ? null : Number(value),
                   })}
                   type="number"
                   min="0"

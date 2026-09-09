@@ -39,6 +39,12 @@ describe("experience category schemas", () => {
         .success,
     ).toBe(false);
     expect(
+      experienceDetailsSchema("motorcycle_tour").parse({
+        minimumLicenseYears: "2",
+        licenseRequired: true,
+      }),
+    ).toMatchObject({ minimumLicenseYears: 2, licenseRequired: true });
+    expect(
       itinerarySchema.safeParse([
         { title: "Marina briefing", description: "Meet the guide." },
       ]).success,

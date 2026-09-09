@@ -2,6 +2,7 @@ import { CheckCircle2, CircleDashed, Globe2, ShieldCheck } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getDnsFallback } from "@/lib/domains/validation";
 import { isDomainProviderConfigured } from "@/lib/domains/provider";
+import { fallbackSiteUrl } from "@/lib/tenancy/public-url";
 import { PageHead } from "../experiences/page";
 import {
   addDomain,
@@ -20,15 +21,19 @@ export default async function Domains({
   const { siteId } = await params;
   const notice = await searchParams;
   const supabase = await createClient();
-  const { data: domains } = await supabase
-    .from("domains")
-    .select(
-      "id,hostname,domain_type,verification_status,is_primary,provider_data,last_checked_at,last_error",
-    )
-    .eq("site_id", siteId)
-    .order("domain_type")
-    .order("created_at");
+  const [{ data: domains }, { data: site }] = await Promise.all([
+    supabase
+      .from("domains")
+      .select(
+        "id,hostname,domain_type,verification_status,is_primary,provider_data,last_checked_at,last_error",
+      )
+      .eq("site_id", siteId)
+      .eq("domain_type", "custom")
+      .order("created_at"),
+    supabase.from("sites").select("slug").eq("id", siteId).single(),
+  ]);
   const configured = isDomainProviderConfigured();
+  const hostedUrl = site?.slug ? fallbackSiteUrl(site.slug) : null;
   return (
     <>
       <PageHead eyebrow="Publishing" title="Domains" />
@@ -36,7 +41,7 @@ export default async function Domains({
       <section className="glass mt-8 rounded-3xl p-6">
         <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
           <div>
-            <h2 className="text-xl font-semibold">Connected hostnames</h2>
+            <h2 className="text-xl font-semibold">Website addresses</h2>
             <p className="mt-1 text-sm text-white/45">
               One verified hostname drives canonicals, sitemaps and social
               sharing.
@@ -48,6 +53,21 @@ export default async function Domains({
             Vercel API {configured ? "connected" : "not configured"}
           </span>
         </div>
+        {hostedUrl && (
+          <a
+            href={hostedUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-6 block rounded-2xl border border-emerald-300/15 bg-emerald-300/[.06] p-5 transition hover:border-emerald-300/30"
+          >
+            <span className="text-xs font-semibold uppercase tracking-[.16em] text-emerald-200">
+              Live hosted address
+            </span>
+            <span className="mt-2 block break-all text-sm text-white/75">
+              {hostedUrl}
+            </span>
+          </a>
+        )}
         <div className="mt-6 grid gap-4">
           {(domains ?? []).map((domain) => {
             const dns = getDnsFallback(domain.hostname);
@@ -142,6 +162,12 @@ export default async function Domains({
               </article>
             );
           })}
+          {(domains ?? []).length === 0 && (
+            <p className="rounded-2xl border border-dashed border-white/10 p-5 text-sm text-white/45">
+              No custom domain is connected. Your hosted address above remains
+              live and fully functional.
+            </p>
+          )}
         </div>
       </section>
       <section className="glass mt-5 rounded-3xl p-6">

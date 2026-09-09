@@ -10,7 +10,6 @@ import {
   itinerarySchema,
   repeatableTextSchema,
 } from "@/lib/experiences/schemas";
-import { businessTypes, type BusinessType } from "@/lib/types";
 import { slugify } from "@/lib/utils";
 
 const optionalNumber = z.union([
@@ -70,18 +69,10 @@ export async function saveExperience(formData: FormData) {
     redirect(`/login?next=/dashboard/sites/${value.siteId}/experiences`);
   const { data: site } = await supabase
     .from("sites")
-    .select("id,business_id,status,businesses(business_type)")
+    .select("id,business_id,status")
     .eq("id", value.siteId)
     .single();
   if (!site) redirect(`/dashboard?error=Access%20denied`);
-  const business = Array.isArray(site.businesses)
-    ? site.businesses[0]
-    : site.businesses;
-  const businessType = businessTypes.includes(
-    business?.business_type as BusinessType,
-  )
-    ? (business!.business_type as BusinessType)
-    : "other";
   const detailsRaw = Object.fromEntries(
     [...formData.entries()]
       .filter(([key]) => key.startsWith("extra_"))
@@ -90,12 +81,23 @@ export async function saveExperience(formData: FormData) {
         field === "on" ? true : String(field),
       ]),
   );
-  const details = experienceDetailsSchema(businessType).safeParse(detailsRaw);
+  const details = experienceDetailsSchema(value.experienceType).safeParse(
+    detailsRaw,
+  );
   if (!details.success)
     redirect(
       `/dashboard/sites/${value.siteId}/experiences/${value.experienceId || "new"}?error=Invalid%20category-specific%20details`,
     );
   const slug = slugify(value.slug || `${value.name} ${value.locationName}`);
+  const { data: previous } = value.experienceId
+    ? await supabase
+        .from("experiences")
+        .select("slug,seo_settings")
+        .eq("id", value.experienceId)
+        .eq("site_id", value.siteId)
+        .single()
+    : { data: null };
+  const previousSeo = object(previous?.seo_settings);
   const record = {
     name: value.name,
     slug,
@@ -129,18 +131,13 @@ export async function saveExperience(formData: FormData) {
     faqs: faq(value.faqs),
     extra_details: details.data,
     seo_settings: {
+      ...previousSeo,
       title: value.seoTitle || undefined,
       description: value.seoDescription || undefined,
     },
   };
   let error: { message: string; code?: string } | null = null;
   if (value.experienceId) {
-    const { data: previous } = await supabase
-      .from("experiences")
-      .select("slug")
-      .eq("id", value.experienceId)
-      .eq("site_id", value.siteId)
-      .single();
     ({ error } = await supabase
       .from("experiences")
       .update(record)
@@ -210,6 +207,11 @@ export async function publishSite(formData: FormData) {
 
 function empty(value: string | number) {
   return value === "" ? null : value;
+}
+function object(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
 }
 function lines(value: string) {
   return repeatableTextSchema.parse(

@@ -3,6 +3,7 @@ node_modules/
 coverage/
 playwright-report/
 test-results/
+.qa/
 supabase/.temp/
 .env*
 !.env.example

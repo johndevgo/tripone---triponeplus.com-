@@ -24,7 +24,7 @@ export default function Pricing() {
           "Four starter themes",
           "Draft preview and dashboard",
           "Publishing, analytics and leads",
-          "TripOne+ subdomain",
+          "Hosted TripOne+ website address",
         ].map((x) => (
           <p className="mt-3 flex gap-2" key={x}>
             <Check className="text-[#FFC857]" size={20} />

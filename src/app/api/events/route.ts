@@ -2,9 +2,18 @@ import { createHash } from "node:crypto";
 import { NextResponse } from "next/server";
 import { analyticsEventSchema } from "@/lib/analytics/schema";
 import { createPublicClient } from "@/lib/supabase/public";
-import { normalizeRequestHostname } from "@/lib/tenancy/hostname";
+import {
+  isAppHostname,
+  isSameOriginMutation,
+  normalizeRequestHostname,
+} from "@/lib/tenancy/hostname";
 
 export async function POST(request: Request) {
+  if (!isSameOriginMutation(request.headers))
+    return NextResponse.json(
+      { error: "Invalid request origin." },
+      { status: 403 },
+    );
   const parsed = analyticsEventSchema.safeParse(
     await request.json().catch(() => null),
   );
@@ -19,6 +28,15 @@ export async function POST(request: Request) {
       { error: "Invalid site origin." },
       { status: 400 },
     );
+  const fallback = isAppHostname(hostname) && Boolean(parsed.data.siteSlug);
+  if (
+    fallback &&
+    !parsed.data.pagePath.startsWith(`/s/${parsed.data.siteSlug}`)
+  )
+    return NextResponse.json(
+      { error: "Invalid fallback website path." },
+      { status: 400 },
+    );
   const forwarded =
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "local";
   const fingerprint = createHash("sha256")
@@ -26,7 +44,11 @@ export async function POST(request: Request) {
     .digest("hex");
   const supabase = createPublicClient();
   const { error } = await supabase.rpc("submit_analytics_event", {
-    payload: { ...parsed.data, hostname },
+    payload: {
+      ...parsed.data,
+      hostname,
+      deliveryMode: fallback ? "fallback" : "verified_hostname",
+    },
     fingerprint,
   });
   if (error) {

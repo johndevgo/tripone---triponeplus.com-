@@ -79,7 +79,7 @@ const platform: Array<[LucideIcon, string, string]> = [
   [
     Globe2,
     "Your domain",
-    "Start on a TripOne+ subdomain and connect a verified custom hostname when ready.",
+    "Launch on a hosted TripOne+ address and connect a verified custom hostname when ready.",
   ],
 ];
 export default function Home() {

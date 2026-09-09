@@ -13,6 +13,7 @@ test("builder edits, reorders, previews and autosaves", async ({ page }) => {
   await page.getByLabel("Email").fill(email!);
   await page.getByLabel("Password").fill(password!);
   await page.getByRole("button", { name: /sign in/i }).click();
+  await page.waitForURL(/\/(dashboard|onboarding)/, { timeout: 15_000 });
   await page.goto(`/dashboard/sites/${siteId}/builder`);
   await page.getByRole("button", { name: "Add section" }).click();
   await page.getByPlaceholder("Search sections").fill("rich text");

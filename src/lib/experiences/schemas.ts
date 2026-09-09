@@ -1,14 +1,14 @@
 import { z } from "zod";
-import type { BusinessType } from "@/lib/types";
 
 const optionalText = z.string().trim().max(500).optional();
 const optionalBoolean = z.boolean().optional();
-const optionalNumber = z.number().nonnegative().optional();
+const optionalNumber = z.preprocess(
+  (value) => (value === "" ? undefined : value),
+  z.coerce.number().nonnegative().optional(),
+);
 
 const generic = z.object({ notes: optionalText }).catchall(z.unknown());
-const schemas: Partial<
-  Record<BusinessType, z.ZodType<Record<string, unknown>>>
-> = {
+const schemas: Record<string, z.ZodType<Record<string, unknown>>> = {
   jetski: z.object({
     maximumRiders: optionalNumber,
     driverMinimumAge: optionalNumber,
@@ -43,13 +43,21 @@ const schemas: Partial<
     captainIncluded: optionalBoolean,
     fuelIncluded: optionalBoolean,
   }),
+  motorcycle_tour: z.object({
+    routeSummary: optionalText,
+    distance: optionalText,
+    licenseRequired: optionalBoolean,
+    minimumLicenseYears: optionalNumber,
+    supportVehicle: optionalBoolean,
+    ridingEquipment: optionalText,
+  }),
 };
 
-export function experienceDetailsSchema(type: BusinessType) {
+export function experienceDetailsSchema(type: string) {
   return schemas[type] ?? generic;
 }
 
-export function parseExperienceDetails(type: BusinessType, value: unknown) {
+export function parseExperienceDetails(type: string, value: unknown) {
   return experienceDetailsSchema(type).parse(value);
 }
 

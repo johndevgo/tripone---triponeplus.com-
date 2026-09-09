@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { MediaUploadField } from "@/components/media/media-manager";
 import { saveExperience } from "@/app/dashboard/sites/[siteId]/actions";
 import type { BusinessType } from "@/lib/types";
@@ -10,6 +13,27 @@ export type ExperienceRecord = Record<string, unknown> & {
 };
 const input =
   "mt-2 min-h-11 w-full rounded-xl border border-white/15 bg-white/[.06] px-3.5 text-white outline-none focus:border-[#FFC857]";
+const experienceTypeOptions = [
+  "tour",
+  "day_tour",
+  "multi_day_tour",
+  "package",
+  "excursion",
+  "adventure_activity",
+  "local_guide",
+  "jetski",
+  "boat_tour",
+  "safari",
+  "trekking",
+  "hiking",
+  "diving",
+  "snorkelling",
+  "rafting",
+  "atv_buggy",
+  "water_sports",
+  "motorcycle_tour",
+  "other",
+];
 
 export function ExperienceForm({
   siteId,
@@ -26,6 +50,11 @@ export function ExperienceForm({
     experience?.[key] == null ? fallback : String(experience[key]);
   const extra = (experience?.extra_details ?? {}) as Record<string, unknown>;
   const seo = (experience?.seo_settings ?? {}) as Record<string, unknown>;
+  const storedType = v("experience_type", businessType);
+  const [experienceType, setExperienceType] = useState(storedType);
+  const typeOptions = experienceTypeOptions.includes(storedType)
+    ? experienceTypeOptions
+    : [storedType, ...experienceTypeOptions];
   const textArray = (key: string) =>
     Array.isArray(experience?.[key])
       ? (experience![key] as Array<string | Record<string, unknown>>)
@@ -49,10 +78,12 @@ export function ExperienceForm({
       <Group title="Basic">
         <Field label="Name" name="name" defaultValue={v("name")} span />
         <Field label="Slug" name="slug" defaultValue={v("slug")} />
-        <Field
+        <Select
           label="Experience type"
           name="experienceType"
-          defaultValue={v("experience_type", businessType.replaceAll("_", " "))}
+          value={experienceType}
+          options={typeOptions}
+          onChange={setExperienceType}
         />
         <Select
           label="Status"
@@ -242,7 +273,7 @@ export function ExperienceForm({
           span
         />
       </Group>
-      <CategoryFields type={businessType} extra={extra} />
+      <CategoryFields type={experienceType} extra={extra} />
       <Group title="SEO overrides">
         <Field
           label="SEO title"
@@ -351,16 +382,26 @@ function Select({
   name,
   value,
   options,
+  onChange,
 }: {
   label: string;
   name: string;
   value: string;
   options: string[];
+  onChange?: (value: string) => void;
 }) {
   return (
     <label className="text-sm text-white/70">
       {label}
-      <select className={input} name={name} defaultValue={value}>
+      <select
+        className={input}
+        name={name}
+        value={onChange ? value : undefined}
+        defaultValue={onChange ? undefined : value}
+        onChange={
+          onChange ? (event) => onChange(event.target.value) : undefined
+        }
+      >
         {options.map((option) => (
           <option className="text-black" key={option}>
             {option}
@@ -375,14 +416,12 @@ function CategoryFields({
   type,
   extra,
 }: {
-  type: BusinessType;
+  type: string;
   extra: Record<string, unknown>;
 }) {
-  const configs: Partial<
-    Record<
-      BusinessType,
-      Array<[string, string, "text" | "number" | "checkbox"]>
-    >
+  const configs: Record<
+    string,
+    Array<[string, string, "text" | "number" | "checkbox"]>
   > = {
     jetski: [
       ["maximumRiders", "Maximum riders", "number"],
@@ -416,6 +455,14 @@ function CategoryFields({
       ["capacity", "Boat capacity", "number"],
       ["captainIncluded", "Captain included", "checkbox"],
       ["fuelIncluded", "Fuel included", "checkbox"],
+    ],
+    motorcycle_tour: [
+      ["routeSummary", "Route summary", "text"],
+      ["distance", "Distance", "text"],
+      ["licenseRequired", "License required", "checkbox"],
+      ["minimumLicenseYears", "Minimum licence years", "number"],
+      ["supportVehicle", "Support vehicle", "checkbox"],
+      ["ridingEquipment", "Riding equipment", "text"],
     ],
   };
   const fields = configs[type];

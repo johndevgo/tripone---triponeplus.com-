@@ -9,7 +9,7 @@ import {
 import type { SiteSection } from "@/lib/types";
 import {
   saveCroSettings,
-  savePageSeo,
+  saveResourceSeo,
   saveSiteSeo,
 } from "@/app/dashboard/sites/[siteId]/seo/actions";
 
@@ -19,6 +19,7 @@ type Page = {
   slug: string;
   sections: SiteSection[];
   seo_settings: Record<string, unknown>;
+  resourceKind: "page" | "experience" | "rental" | "taxonomy" | "location";
 };
 const input =
   "mt-2 min-h-10 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#FFC857]";
@@ -30,6 +31,7 @@ export function SeoDashboard({
   cro,
   experienceStats,
   hasContact,
+  publicBaseUrl,
 }: {
   siteId: string;
   pages: Page[];
@@ -46,6 +48,7 @@ export function SeoDashboard({
     hasInclusions: boolean;
   };
   hasContact: boolean;
+  publicBaseUrl: string;
 }) {
   const [active, setActive] = useState(pages[0]);
   const [message, setMessage] = useState("");
@@ -104,8 +107,14 @@ export function SeoDashboard({
               className="min-h-10 rounded-xl bg-white/10 px-3 text-sm"
             >
               {pages.map((page) => (
-                <option className="text-black" value={page.id} key={page.id}>
-                  {page.title}
+                <option
+                  className="text-black"
+                  value={page.id}
+                  key={`${page.resourceKind}-${page.id}`}
+                >
+                  {page.resourceKind === "page"
+                    ? page.title
+                    : `${page.resourceKind} · ${page.title}`}
                 </option>
               ))}
             </select>
@@ -114,8 +123,16 @@ export function SeoDashboard({
             key={active.id}
             page={active}
             save={(value) =>
-              run(() => savePageSeo({ siteId, pageId: active.id, ...value }))
+              run(() =>
+                saveResourceSeo({
+                  siteId,
+                  resourceId: active.id,
+                  resourceKind: active.resourceKind,
+                  ...value,
+                }),
+              )
             }
+            publicBaseUrl={publicBaseUrl}
           />
         </div>
         <CroSettings
@@ -202,13 +219,24 @@ function SiteSeoForm({
 function PageSeoForm({
   page,
   save,
+  publicBaseUrl,
 }: {
   page: Page;
+  publicBaseUrl: string;
   save: (value: {
     title: string;
     description: string;
     canonical: string;
     indexable: boolean;
+    follow: boolean;
+    noarchive: boolean;
+    noimageindex: boolean;
+    nosnippet: boolean;
+    socialTitle: string;
+    socialDescription: string;
+    socialImage: string;
+    breadcrumbLabel: string;
+    focusTopic: string;
   }) => void;
 }) {
   const s = page.seo_settings;
@@ -217,6 +245,15 @@ function PageSeoForm({
     description: String(s.description ?? ""),
     canonical: String(s.canonicalPath ?? `/${page.slug}`),
     indexable: s.indexable !== false,
+    follow: s.follow !== false,
+    noarchive: s.noarchive === true,
+    noimageindex: s.noimageindex === true,
+    nosnippet: s.nosnippet === true,
+    socialTitle: String(s.socialTitle ?? ""),
+    socialDescription: String(s.socialDescription ?? ""),
+    socialImage: String(s.socialImage ?? ""),
+    breadcrumbLabel: String(s.breadcrumbLabel ?? ""),
+    focusTopic: String(s.focusTopic ?? ""),
   });
   return (
     <div className="mt-5 grid gap-4">
@@ -243,8 +280,61 @@ function PageSeoForm({
         />{" "}
         Allow indexing
       </label>
+      <div className="grid gap-3 sm:grid-cols-2">
+        {(
+          [
+            ["follow", "Allow link following"],
+            ["noarchive", "Prevent cached copies"],
+            ["noimageindex", "Prevent image indexing"],
+            ["nosnippet", "Prevent search snippets"],
+          ] as const
+        ).map(([key, label]) => (
+          <label className="flex items-center gap-2 text-sm" key={key}>
+            <input
+              type="checkbox"
+              checked={v[key]}
+              onChange={(event) => set({ ...v, [key]: event.target.checked })}
+            />
+            {label}
+          </label>
+        ))}
+      </div>
+      <details className="rounded-2xl border border-white/10 p-4">
+        <summary className="cursor-pointer text-sm font-semibold text-[#FFC857]">
+          Social, breadcrumbs & editorial checks
+        </summary>
+        <div className="mt-4 grid gap-4">
+          <Field
+            label="Social title"
+            value={v.socialTitle}
+            set={(x) => set({ ...v, socialTitle: x })}
+          />
+          <Field
+            label="Social description"
+            value={v.socialDescription}
+            set={(x) => set({ ...v, socialDescription: x })}
+          />
+          <Field
+            label="Social image URL"
+            value={v.socialImage}
+            set={(x) => set({ ...v, socialImage: x })}
+          />
+          <Field
+            label="Breadcrumb label"
+            value={v.breadcrumbLabel}
+            set={(x) => set({ ...v, breadcrumbLabel: x })}
+          />
+          <Field
+            label="Focus topic (local guidance only)"
+            value={v.focusTopic}
+            set={(x) => set({ ...v, focusTopic: x })}
+          />
+        </div>
+      </details>
       <div className="rounded-xl bg-white p-4 text-[#173028]">
-        <p className="text-xs text-emerald-700">triponeplus.com/{page.slug}</p>
+        <p className="break-all text-xs text-emerald-700">
+          {publicBaseUrl.replace(/\/$/, "")}/{page.slug}
+        </p>
         <p className="mt-1 text-lg text-blue-800">{v.title || page.title}</p>
         <p className="mt-1 text-sm text-slate-600">
           {v.description || "Add a useful description for this page."}

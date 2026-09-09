@@ -10,10 +10,12 @@ import { buildRobots, buildSitemap } from "./seo/site-files";
 import { experienceJsonLd, organizationJsonLd } from "./seo/structured-data";
 import {
   isAppHostname,
+  isSameOriginMutation,
   isTenantHostname,
   normalizeHost,
   safeTenantPath,
 } from "./tenancy/hostname";
+import { tenantContentSecurityPolicy } from "./tenancy/csp";
 
 describe("production hostname rules", () => {
   it("normalizes customer domains and rejects reserved hosts", () => {
@@ -34,6 +36,31 @@ describe("production hostname rules", () => {
     expect(isTenantHostname("dubai-wave-jetski.triponeplus.com")).toBe(true);
     expect(isAppHostname("tools.neurerohan.com.np")).toBe(true);
     expect(safeTenantPath("//evil.example")).toBeNull();
+    expect(
+      isSameOriginMutation(
+        new Headers({
+          host: "internal.vercel",
+          "x-forwarded-host": "tools.neurerohan.com.np",
+          origin: "https://tools.neurerohan.com.np",
+        }),
+      ),
+    ).toBe(true);
+    expect(
+      isSameOriginMutation(
+        new Headers({
+          host: "tools.neurerohan.com.np",
+          origin: "https://attacker.example",
+          "sec-fetch-site": "cross-site",
+        }),
+      ),
+    ).toBe(false);
+  });
+
+  it("builds a nonce-bound tenant policy without weakening the app", () => {
+    const policy = tenantContentSecurityPolicy("request-nonce");
+    expect(policy).toContain("'nonce-request-nonce'");
+    expect(policy).toContain("frame-ancestors 'none'");
+    expect(policy).not.toContain("'unsafe-eval'");
   });
 });
 
@@ -85,6 +112,7 @@ describe("privacy-first analytics", () => {
         ["page_view", "s2"],
         ["booking_click", "s2"],
         ["lead_submit", "s2"],
+        ["rental_view", "s2"],
       ] as const
     ).map(([event_name, session_id]) => ({
       event_name,
@@ -97,6 +125,7 @@ describe("privacy-first analytics", () => {
       pageViews: 2,
       bookingClicks: 1,
       leads: 1,
+      rentalViews: 1,
       bookingCtr: 50,
       leadConversion: 50,
     });
@@ -122,5 +151,16 @@ describe("tenant SEO output", () => {
     );
     expect(trip).not.toHaveProperty("offers");
     expect(business).not.toHaveProperty("telephone");
+    const pricedTrip = experienceJsonLd(
+      {
+        name: "Marina tour",
+        description: "A guided route.",
+        price: 100,
+        currency: "USD",
+      },
+      "https://example.com/tour",
+    );
+    expect(pricedTrip).toHaveProperty("offers.price", 100);
+    expect(pricedTrip).not.toHaveProperty("offers.availability");
   });
 });

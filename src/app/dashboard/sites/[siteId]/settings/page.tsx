@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
+import { AdvancedScriptsEditor } from "@/components/settings/advanced-scripts-editor";
 import { publishSite } from "../actions";
 import { PageHead } from "../experiences/page";
 import {
@@ -32,6 +33,7 @@ export default async function Settings({
   const global = object(site?.global_settings);
   const cro = object(site?.cro_settings);
   const integrations = object(global.integrations);
+  const verification = object(global.verificationMeta);
   if (!site || !business) return null;
   return (
     <>
@@ -206,7 +208,7 @@ export default async function Settings({
         </SettingsSection>
         <SettingsSection
           title="Privacy & integrations"
-          copy="Only typed tracking IDs are accepted. Arbitrary JavaScript is never executed."
+          copy="Prefer controlled provider IDs. Advanced code is isolated to a verified customer origin."
         >
           <label className="text-sm">
             Cookie consent mode
@@ -242,6 +244,21 @@ export default async function Settings({
               label="TikTok Pixel ID"
               value={text(integrations.tiktokPixelId)}
             />
+            <Field
+              name="googleVerification"
+              label="Google site verification token"
+              value={text(verification.google)}
+            />
+            <Field
+              name="bingVerification"
+              label="Bing site verification token"
+              value={text(verification.bing)}
+            />
+            <Field
+              name="pinterestVerification"
+              label="Pinterest verification token"
+              value={text(verification.pinterest)}
+            />
           </Fields>
           <p className="text-xs leading-5 text-white/35">
             Provider scripts run only on a verified, isolated customer domain.
@@ -252,6 +269,19 @@ export default async function Settings({
             compliance. Site owners must review applicable privacy and cookie
             laws.
           </p>
+        </SettingsSection>
+        <SettingsSection
+          title="Advanced tenant scripts"
+          copy="Add code only when a supported provider ID is not sufficient."
+        >
+          <div className="rounded-2xl border border-amber-200/15 bg-amber-300/[.06] p-4 text-xs leading-5 text-amber-50/70">
+            Advanced JavaScript executes only after this site is published on a
+            verified custom domain. It never runs in TripOne+ management,
+            preview, or the shared hosted address. Code is not made safe by a
+            sanitizer—review it as carefully as application code. Avoid adding a
+            provider here when its typed ID is already configured above.
+          </div>
+          <AdvancedScriptsEditor initial={integrations.advancedScripts} />
         </SettingsSection>
         <button className="min-h-12 justify-self-start rounded-xl bg-[#f5a623] px-6 font-semibold text-[#173028]">
           Save settings

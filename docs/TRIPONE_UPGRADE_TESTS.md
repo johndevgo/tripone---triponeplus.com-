@@ -15,7 +15,7 @@ pnpm test:e2e
 
 Database tests must run inside a transaction and roll back their fixtures. They cover ownership, cross-tenant rejection, nested-term cycle prevention, capability backfill, rental rates, assignments, concurrent generation, public snapshot isolation, leads, and legacy snapshot decoding.
 
-Latest local result (2026-09-08): TypeScript, ESLint, 37 unit tests, and the Next.js 16.3.4 production build pass. The new template/rental-onboarding database test is present but cannot be executed remotely until this checkout receives official Supabase CLI authentication or `TRIPONE_DATABASE_URL`; it is not counted as passed.
+Latest result (2026-09-09): formatting, strict TypeScript, ESLint, 43 unit tests, the Next.js 16.3.4 production build, six rollback database suites, authenticated onboarding/builder tests, an isolated tenant-script proof, mobile navigation and the 375/430/768/1024/1440 public-site matrix pass. The optional live-snapshot unit contract skips when its fixture environment variable is absent.
 
 ## Required operator fixtures
 

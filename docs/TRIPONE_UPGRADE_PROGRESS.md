@@ -1,6 +1,6 @@
 # TripOne+ upgrade progress
 
-Last updated: 2026-09-08
+Last updated: 2026-09-09
 
 ## Branch and deployment
 
@@ -12,14 +12,14 @@ Last updated: 2026-09-08
 
 ## Status
 
-| Milestone                        | Status      | Evidence                                                                                                                                             |
-| -------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1. Generation repair             | Complete    | Advisory-lock transaction, URL validation, safe error correlation, duplicate-submit guard, 25 unit tests, rollback DB test, clean Supabase advisors. |
-| 2. Multi-service model           | Complete    | Capabilities, rentals/rates, five taxonomies, same-tenant assignments, management routes, preview, and schema-v2 publishing passed their gates.      |
-| 3. Page selection/templates      | In progress | Deterministic multi-capability page selection, optional-page controls, rental onboarding, revision-safe visual template editing, typed bindings and v3 snapshot migration are implemented. Record-specific override controls remain. |
-| 4. Sections/themes/global chrome | In progress | Eight themes, the typed section registry, linked/copy saved sections, and visual global header/footer controls render through the shared renderer. Broader per-section specialized render treatments remain. |
-| 5. SEO/tracking/public resolver  | In progress | Working `/s/{siteSlug}` publishing, prefix-aware canonicals/navigation/sitemaps, rentals and nested taxonomy landing pages are implemented. Typed third-party integration loaders and the final audit remain. |
-| 6. Full acceptance               | Pending     | Final gate includes responsive browser inspection and production smoke tests.                                                                        |
+| Milestone                        | Status   | Evidence                                                                                                                                                                             |
+| -------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| 1. Generation repair             | Complete | Advisory-lock transaction, URL validation, safe error correlation, duplicate-submit guard, rollback database coverage and clean Supabase lint.                                       |
+| 2. Multi-service model           | Complete | Capabilities, rentals/rates, five taxonomies, tenant-safe assignments, management routes, onboarding, preview and schema-v3 immutable publishing pass their gates.                   |
+| 3. Page selection/templates      | Complete | Deterministic multi-capability recipes, optional pages, revision-safe templates, typed bindings, record-level experience/rental/taxonomy/location overrides and inheritance reset.   |
+| 4. Sections/themes/global chrome | Complete | Eight tokenized themes, 27 typed sections, meaningful layout variants, saved sections and visual header/footer controls render through one shared production renderer.               |
+| 5. SEO/tracking/public resolver  | Complete | Prefix-aware metadata/sitemaps, resource SEO, truthful JSON-LD, nested taxonomy redirects, fallback forms, product analytics, consent-aware typed integrations and origin isolation. |
+| 6. Full acceptance               | Complete | Strict TypeScript, ESLint, 43 unit tests, six rollback database suites, production build, authenticated flows, isolated-script proof and five-width browser matrix pass locally.     |
 
 ## Decision log
 
@@ -29,19 +29,23 @@ Last updated: 2026-09-08
 - 2026-09-07: Applied `20260907003000_part4_multi_service_core.sql` and `20260907010000_part4_atomic_capabilities.sql` through the official Supabase migration CLI.
 - 2026-09-07: Replaced unverified `slug.triponeplus.com` presentation with the real `/s/{siteSlug}` fallback. Verified domains still take priority.
 - 2026-09-08: Kept shared-origin fallback sites free of tenant-controlled scripts; their discoverability uses `/s/{siteSlug}/sitemap` and server-rendered published snapshots.
-- 2026-09-08: Added additive migration `20260908152000_part4_template_publishing.sql` for atomic rental onboarding, optimistic template versions, record override columns, and schema-v3 immutable publish graphs. It is locally authored but not remotely applied because official Supabase CLI authentication is not available in this checkout.
+- 2026-09-08: Applied the template-publishing, record-layout, fallback-delivery, rental-analytics and taxonomy-redirect migrations after rollback validation.
+- 2026-09-09: Made `https://tools.neurerohan.com.np/s/{siteSlug}` the authoritative platform-hosted customer address. Reserved `*.triponeplus.com` rows are pending and cannot become public or canonical without real ownership and verification.
+- 2026-09-09: Completed real browser acceptance against published site `dipson-tours` at 375, 430, 768, 1024 and 1440 px. A disposable authenticated QA user also passed onboarding and builder autosave, then was deleted with its owned fixtures.
+- 2026-09-09: Proved advanced code executes on a disposable verified tenant origin under a nonce-bound CSP, cannot access private app API routes, and remains absent from the shared `/s/` origin. The fixture was deleted afterward.
 
 ## Latest verification
 
 - TypeScript: passed (`tsc --noEmit`).
 - ESLint: passed.
-- Unit tests: 37 passed across 7 files.
-- Database integration: generation repair and Part 4 multi-service suites passed; both roll back fixtures.
-- Production build: passed with Next.js 16.3.4; the path fallback now exposes dynamic `/s/[siteSlug]/sitemap` and published-only customer routes.
-- Remote database gate: pending for the 2026-09-08 migration. Password recovery from old session logs was deliberately blocked; use an official Supabase access token/link or an explicitly configured `TRIPONE_DATABASE_URL`.
+- Unit tests: 43 passed; one opt-in live-snapshot contract test skipped when its environment fixture is absent.
+- Database integration: six suites passed against the authorized Supabase project and rolled back every fixture.
+- Production build: passed with Next.js 16.3.4 and all application/customer routes generated successfully.
+- Browser acceptance: 11 desktop/responsive checks plus two mobile checks passed; authenticated onboarding, builder, and isolated tenant-script checks passed independently.
+- Dependency audit: no known vulnerabilities.
+- Remote database: all migrations through `20260908203000` are applied; `public`, `private` and `extensions` pass Supabase database lint with no schema errors.
 
 ## External dependencies
 
-- Supabase migrations require access to project `jwjxiobasakkkunyyohk`.
-- Vercel production settings and GitHub branch protection remain account-controlled. No credential is stored in this repository.
+- Vercel production promotion, domain attachment and GitHub branch protection remain account-controlled. No credential is stored in this repository.
 - Making `triponeplus.com` live requires the domain owner to add and verify it in Vercel and configure DNS at the authoritative provider.

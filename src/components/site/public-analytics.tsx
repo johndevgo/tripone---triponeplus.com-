@@ -16,14 +16,18 @@ type Integrations = {
 
 export function PublicAnalytics({
   experienceId,
+  rentalProductId,
   consentMode,
   integrations,
   allowThirdPartyScripts = false,
+  scriptNonce,
 }: {
   experienceId?: string;
+  rentalProductId?: string;
   consentMode: "disabled" | "basic";
   integrations: Integrations;
   allowThirdPartyScripts?: boolean;
+  scriptNonce?: string;
 }) {
   const [consent, setConsent] = useState<"pending" | "accepted" | "declined">(
     consentMode === "disabled" ? "accepted" : "pending",
@@ -41,8 +45,11 @@ export function PublicAnalytics({
 
   useEffect(() => {
     if (consent !== "accepted") return;
-    void trackPublicEvent("page_view", experienceId);
-    if (experienceId) void trackPublicEvent("experience_view", experienceId);
+    void trackPublicEvent("page_view", experienceId, rentalProductId);
+    if (experienceId)
+      void trackPublicEvent("experience_view", experienceId, rentalProductId);
+    if (rentalProductId)
+      void trackPublicEvent("rental_view", experienceId, rentalProductId);
     const click = (event: MouseEvent) => {
       const link = (event.target as Element | null)?.closest("a");
       if (!link) return;
@@ -56,14 +63,21 @@ export function PublicAnalytics({
             : link.hasAttribute("data-cta")
               ? "cta_click"
               : "page_view";
-      if (name !== "page_view") void trackPublicEvent(name, experienceId);
+      if (name !== "page_view")
+        void trackPublicEvent(name, experienceId, rentalProductId);
     };
     document.addEventListener("click", click);
     return () => document.removeEventListener("click", click);
-  }, [consent, experienceId]);
+  }, [consent, experienceId, rentalProductId]);
 
   function choose(value: "accepted" | "declined") {
+    const wasAccepted = consent === "accepted";
     localStorage.setItem("tripone-cookie-consent", value);
+    window.dispatchEvent(new Event("tripone:consent"));
+    if (value === "declined" && wasAccepted) {
+      window.location.reload();
+      return;
+    }
     setConsent(value);
   }
 
@@ -71,7 +85,11 @@ export function PublicAnalytics({
   return (
     <>
       {canLoad && integrations.googleTagManagerId && (
-        <Script id="tripone-gtm" strategy="afterInteractive">
+        <Script
+          id="tripone-gtm"
+          strategy="afterInteractive"
+          nonce={scriptNonce}
+        >
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${integrations.googleTagManagerId}');`}
         </Script>
       )}
@@ -80,19 +98,32 @@ export function PublicAnalytics({
           <Script
             src={`https://www.googletagmanager.com/gtag/js?id=${integrations.googleAnalyticsId}`}
             strategy="afterInteractive"
+            nonce={scriptNonce}
           />
-          <Script id="tripone-ga4" strategy="afterInteractive">
+          <Script
+            id="tripone-ga4"
+            strategy="afterInteractive"
+            nonce={scriptNonce}
+          >
             {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${integrations.googleAnalyticsId}',{anonymize_ip:true});`}
           </Script>
         </>
       )}
       {canLoad && integrations.metaPixelId && (
-        <Script id="tripone-meta-pixel" strategy="afterInteractive">
+        <Script
+          id="tripone-meta-pixel"
+          strategy="afterInteractive"
+          nonce={scriptNonce}
+        >
           {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${integrations.metaPixelId}');fbq('track','PageView');`}
         </Script>
       )}
       {canLoad && integrations.tiktokPixelId && (
-        <Script id="tripone-tiktok-pixel" strategy="afterInteractive">
+        <Script
+          id="tripone-tiktok-pixel"
+          strategy="afterInteractive"
+          nonce={scriptNonce}
+        >
           {`!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=['page'];ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.load=function(e){var n=d.createElement('script');n.async=!0;n.src='https://analytics.tiktok.com/i18n/pixel/events.js?sdkid='+e;var a=d.getElementsByTagName('script')[0];a.parentNode.insertBefore(n,a)};ttq.load('${integrations.tiktokPixelId}');ttq.page()}(window,document,'ttq');`}
         </Script>
       )}
@@ -138,6 +169,7 @@ export function PublicAnalytics({
 export async function trackPublicEvent(
   eventName: AnalyticsEventName,
   experienceId?: string,
+  rentalProductId?: string,
 ) {
   try {
     if (localStorage.getItem("tripone-cookie-consent") === "declined") return;
@@ -153,6 +185,8 @@ export async function trackPublicEvent(
         eventName,
         pagePath: window.location.pathname,
         experienceId: experienceId ?? "",
+        rentalProductId: rentalProductId ?? "",
+        siteSlug: fallbackSlugFromPath(window.location.pathname) ?? "",
         referrerDomain,
         sessionId,
         deviceCategory: deviceCategory(window.innerWidth),
@@ -161,6 +195,11 @@ export async function trackPublicEvent(
   } catch {
     // Analytics must never interrupt the visitor's journey.
   }
+}
+
+function fallbackSlugFromPath(pathname: string) {
+  const match = pathname.match(/^\/s\/([a-z0-9]+(?:-[a-z0-9]+)*)(?:\/|$)/);
+  return match?.[1];
 }
 
 function getSessionId() {

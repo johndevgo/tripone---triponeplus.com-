@@ -26,6 +26,7 @@ export function LeadForm({
         siteId,
         experienceId: experienceId ?? "",
         sourcePage,
+        siteSlug: fallbackSlugFromPath(window.location.pathname) ?? "",
       }),
     });
     const body = (await response.json()) as { error?: string };
@@ -85,6 +86,10 @@ export function LeadForm({
       </button>
     </form>
   );
+}
+function fallbackSlugFromPath(pathname: string) {
+  const match = pathname.match(/^\/s\/([a-z0-9]+(?:-[a-z0-9]+)*)(?:\/|$)/);
+  return match?.[1];
 }
 function Field({
   name,

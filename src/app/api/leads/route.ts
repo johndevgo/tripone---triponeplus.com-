@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import {
+  isAppHostname,
+  isSameOriginMutation,
   normalizeRequestHostname,
   productionHostname,
 } from "@/lib/tenancy/hostname";
@@ -20,9 +22,17 @@ const schema = z.object({
   message: z.string().max(3000).optional(),
   sourcePage: z.string().max(300).optional(),
   website: z.string().max(0).optional(),
+  siteSlug: z
+    .union([z.literal(""), z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)])
+    .optional(),
 });
 
 export async function POST(request: Request) {
+  if (!isSameOriginMutation(request.headers))
+    return NextResponse.json(
+      { error: "Invalid request origin." },
+      { status: 403 },
+    );
   const body = schema.safeParse(await request.json());
   if (!body.success)
     return NextResponse.json(
@@ -43,8 +53,13 @@ export async function POST(request: Request) {
       { error: "Invalid website origin." },
       { status: 400 },
     );
+  const fallback = isAppHostname(hostname) && Boolean(body.data.siteSlug);
   const { error } = await supabase.rpc("submit_public_lead", {
-    payload: { ...body.data, hostname },
+    payload: {
+      ...body.data,
+      hostname,
+      deliveryMode: fallback ? "fallback" : "verified_hostname",
+    },
     fingerprint,
   });
   if (error)

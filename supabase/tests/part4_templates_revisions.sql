@@ -11,7 +11,7 @@ declare
   owner_a constant uuid := '375704f5-6484-4e39-8e91-144fd4381501';
   owner_b constant uuid := '82046867-681a-49f8-b7f7-44bdd6713502';
   business_a uuid; site_a uuid; page_a uuid; saved_a uuid; template_a uuid;
-  next_revision bigint; next_version integer; snapshot jsonb;
+  experience_a uuid; next_revision bigint; next_version integer; snapshot jsonb;
   rejected boolean := false;
 begin
   insert into public.businesses(owner_id,name,slug,business_type,country,city,timezone,currency,email)
@@ -46,6 +46,39 @@ begin
   exception when others then rejected := sqlerrm like 'This template changed in another tab%';
   end;
   if not rejected then raise exception 'Stale template version was not rejected'; end if;
+
+  insert into public.experiences(
+    site_id,business_id,name,slug,experience_type,short_description,currency
+  ) values (
+    site_a,business_a,'Record layout test','record-layout-test','tour',
+    'A safe fixture for record-specific layout testing.','USD'
+  ) returning id into experience_a;
+  select revision into next_revision from public.save_record_layout_draft(
+    site_a,'experience',experience_a,1,
+    '[{"id":"record-hero","type":"hero","variant":"split","visible":true,"settings":{"title":"Private layout"}}]'::jsonb,
+    2
+  );
+  if next_revision <> 2 then raise exception 'Record layout revision did not advance'; end if;
+  if not exists (
+    select 1 from public.experiences
+    where id = experience_a and template_version = 2 and sections_override is not null
+  ) then raise exception 'Record layout override was not stored'; end if;
+  rejected := false;
+  begin
+    perform public.save_record_layout_draft(
+      site_a,'experience',experience_a,1,'[]'::jsonb,2
+    );
+  exception when others then
+    rejected := sqlerrm like 'This record layout changed in another tab%';
+  end;
+  if not rejected then raise exception 'Stale record layout revision was not rejected'; end if;
+  select revision into next_revision from public.save_record_layout_draft(
+    site_a,'experience',experience_a,2,null,null
+  );
+  if next_revision <> 3 or exists (
+    select 1 from public.experiences
+    where id = experience_a and sections_override is not null
+  ) then raise exception 'Record layout did not reset to template inheritance'; end if;
 
   insert into public.saved_sections(site_id,name,section_type,variant,settings,save_mode)
   values(site_a,'Reusable call to action','finalCta','banner','{"title":"Plan your trip"}'::jsonb,'linked') returning id into saved_a;

@@ -5,7 +5,17 @@ import {
   type PublicTestimonial,
 } from "@/components/site/site-renderer";
 import { getAppUrl } from "@/lib/app-url";
-import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/structured-data";
+import {
+  breadcrumbJsonLd,
+  experienceJsonLd,
+  organizationJsonLd,
+  rentalJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo/structured-data";
+import {
+  canonicalUrl,
+  createPublishedMetadata,
+} from "@/lib/seo/published-metadata";
 import {
   loadPublishedSiteBySlug,
   rendererData,
@@ -42,35 +52,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!resolved)
     return { title: "Page not found", robots: { index: false, follow: false } };
   const seo = resolved.page.seo_settings as Record<string, unknown>;
-  const title = typeof seo.title === "string" ? seo.title : resolved.page.title;
-  const description =
-    typeof seo.description === "string" ? seo.description : undefined;
-  const canonical = `${getAppUrl()}/s/${encodeURIComponent(siteSlug)}${routePath(path) || "/"}`;
-  return {
-    title,
-    description,
-    alternates: { canonical },
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: snapshot.site.defaultOgImageUrl
-        ? [snapshot.site.defaultOgImageUrl]
-        : undefined,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: snapshot.site.defaultOgImageUrl
-        ? [snapshot.site.defaultOgImageUrl]
-        : undefined,
-    },
-    robots:
-      snapshot.site.seoSettings.indexingEnabled === false
-        ? { index: false, follow: false }
-        : { index: true, follow: true },
-  };
+  return createPublishedMetadata({
+    pageTitle: resolved.page.title,
+    seo,
+    publicBaseUrl: `${getAppUrl()}/s/${encodeURIComponent(siteSlug)}`,
+    requestedPath: routePath(path) || "/",
+    siteIndexingEnabled: snapshot.site.seoSettings.indexingEnabled !== false,
+    defaultImage: snapshot.site.defaultOgImageUrl,
+    resourceImage:
+      resolved.experience?.featured_image_url ??
+      resolved.activeRental?.featured_image_url,
+    favicon: snapshot.site.faviconUrl,
+  });
 }
 
 export default async function PublishedFallbackPage({ params }: Props) {
@@ -83,7 +76,13 @@ export default async function PublishedFallbackPage({ params }: Props) {
   const data = rendererData(published);
   const basePath = `/s/${siteSlug}`;
   const publicUrl = `${getAppUrl()}${basePath}`;
-  const jsonLd = [
+  const seo = resolved.page.seo_settings as Record<string, unknown>;
+  const canonical = canonicalUrl(
+    typeof seo.canonicalPath === "string" ? seo.canonicalPath : undefined,
+    publicUrl,
+    routePath(path) || "/",
+  );
+  const jsonLd: unknown[] = [
     websiteJsonLd(snapshot.site.name, publicUrl),
     organizationJsonLd(
       {
@@ -98,6 +97,56 @@ export default async function PublishedFallbackPage({ params }: Props) {
       publicUrl,
     ),
   ];
+  if (resolved.experience) {
+    jsonLd.push(
+      breadcrumbJsonLd([
+        { name: "Home", url: publicUrl },
+        { name: "Experiences", url: `${publicUrl}/experiences` },
+        { name: resolved.experience.name, url: canonical },
+      ]),
+      experienceJsonLd(
+        {
+          name: resolved.experience.name,
+          description:
+            resolved.experience.description ||
+            resolved.experience.short_description,
+          image: resolved.experience.featured_image_url,
+          price: resolved.experience.price_from,
+          currency: resolved.experience.currency,
+          bookingUrl: resolved.experience.booking_url,
+          location: resolved.experience.location_name,
+        },
+        canonical,
+      ),
+    );
+  }
+  if (resolved.activeRental) {
+    const rental = resolved.activeRental;
+    const rate = rental.rates.find((item) => item.amount != null);
+    jsonLd.push(
+      breadcrumbJsonLd([
+        { name: "Home", url: publicUrl },
+        { name: "Rentals", url: `${publicUrl}/rentals` },
+        { name: rental.name, url: canonical },
+      ]),
+      rentalJsonLd(
+        {
+          name: rental.name,
+          description: rental.description || rental.short_description,
+          image: rental.featured_image_url,
+          bookingUrl: rental.booking_url,
+          rate: rate
+            ? {
+                amount: rate.amount,
+                currency: rate.currency,
+                pricingUnit: rate.pricing_unit,
+              }
+            : undefined,
+        },
+        canonical,
+      ),
+    );
+  }
   return (
     <>
       {jsonLd.map((item, index) => (

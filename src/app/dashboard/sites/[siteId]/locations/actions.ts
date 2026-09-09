@@ -33,13 +33,22 @@ export async function saveLocation(formData: FormData) {
   const supabase = await createClient();
   const { data: site } = await supabase
     .from("sites")
-    .select("business_id")
+    .select("business_id,status")
     .eq("id", value.siteId)
     .single();
   if (!site) fail(value.siteId, "Website not found.");
+  const { data: previous } = value.locationId
+    ? await supabase
+        .from("locations")
+        .select("slug,seo_settings")
+        .eq("id", value.locationId)
+        .eq("site_id", value.siteId)
+        .single()
+    : { data: null };
+  const nextSlug = slugify(value.slug || value.name);
   const record = {
     name: value.name,
-    slug: slugify(value.slug || value.name),
+    slug: nextSlug,
     description: value.description,
     city: value.city || null,
     region: value.region || null,
@@ -48,6 +57,7 @@ export async function saveLocation(formData: FormData) {
     longitude: value.longitude === "" ? null : value.longitude,
     image_url: value.imageUrl || null,
     seo_settings: {
+      ...object(previous?.seo_settings),
       title: value.seoTitle || undefined,
       description: value.seoDescription || undefined,
       indexable: value.description.length >= 120,
@@ -72,6 +82,21 @@ export async function saveLocation(formData: FormData) {
         ? "That location slug is already used."
         : error.message,
     );
+  if (
+    value.locationId &&
+    site.status === "published" &&
+    previous?.slug &&
+    previous.slug !== nextSlug
+  )
+    await supabase.from("redirects").upsert(
+      {
+        site_id: value.siteId,
+        source_path: `/locations/${previous.slug}`,
+        destination_path: `/locations/${nextSlug}`,
+        status_code: 301,
+      },
+      { onConflict: "site_id,source_path" },
+    );
   revalidatePath(`/dashboard/sites/${value.siteId}/locations`);
   redirect(
     `/dashboard/sites/${value.siteId}/locations?message=Location%20saved`,
@@ -93,4 +118,9 @@ function fail(siteId: string, message: string): never {
   redirect(
     `/dashboard/sites/${siteId}/locations?error=${encodeURIComponent(message)}`,
   );
+}
+function object(value: unknown): Record<string, unknown> {
+  return value && typeof value === "object" && !Array.isArray(value)
+    ? (value as Record<string, unknown>)
+    : {};
 }

@@ -21,7 +21,9 @@ export default async function Analytics({
   const [{ data: events }, { data: experiences }] = await Promise.all([
     supabase
       .from("analytics_events")
-      .select("event_name,page_path,session_id,created_at,experience_id")
+      .select(
+        "event_name,page_path,session_id,created_at,experience_id,rental_product_id",
+      )
       .eq("site_id", siteId)
       .gte("created_at", since)
       .order("created_at", { ascending: true })
@@ -93,6 +95,10 @@ export default async function Analytics({
           hint="Lead submissions ÷ page views"
         />
       </div>
+      <p className="mt-4 text-sm text-white/45">
+        {summary.experienceViews} experience views · {summary.rentalViews}{" "}
+        rental product views
+      </p>
       {rows.length === 0 ? (
         <section className="glass mt-5 grid min-h-72 place-items-center rounded-3xl p-8 text-center">
           <div>

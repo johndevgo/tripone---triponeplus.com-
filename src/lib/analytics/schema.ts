@@ -3,6 +3,7 @@ import { z } from "zod";
 export const analyticsEventNames = [
   "page_view",
   "experience_view",
+  "rental_view",
   "booking_click",
   "whatsapp_click",
   "phone_click",
@@ -20,6 +21,10 @@ export const analyticsEventSchema = z.object({
     .max(500)
     .regex(/^\/(?!\/)/),
   experienceId: z.union([z.literal(""), z.uuid()]).optional(),
+  rentalProductId: z.union([z.literal(""), z.uuid()]).optional(),
+  siteSlug: z
+    .union([z.literal(""), z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)])
+    .optional(),
   referrerDomain: z.string().max(253).optional(),
   sessionId: z
     .string()
@@ -42,6 +47,7 @@ export function summarizeEvents(
     session_id: string;
     created_at: string;
     experience_id?: string | null;
+    rental_product_id?: string | null;
   }>,
 ) {
   const count = (name: AnalyticsEventName) =>
@@ -53,6 +59,7 @@ export function summarizeEvents(
     sessions: new Set(events.map((event) => event.session_id)).size,
     pageViews,
     experienceViews: count("experience_view"),
+    rentalViews: count("rental_view"),
     bookingClicks,
     leads,
     whatsappClicks: count("whatsapp_click"),

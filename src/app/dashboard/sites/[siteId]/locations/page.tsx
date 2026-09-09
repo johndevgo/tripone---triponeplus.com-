@@ -1,4 +1,5 @@
 import { MapPin, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { PageHead } from "../experiences/page";
 import { deleteLocation, saveLocation } from "./actions";
@@ -119,6 +120,12 @@ export default async function Locations({
                       </div>
                     </div>
                     <div className="flex gap-2">
+                      <Link
+                        href={`/dashboard/sites/${siteId}/builder?target=${item.id}`}
+                        className="rounded-lg border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]"
+                      >
+                        Layout
+                      </Link>
                       <a
                         href={`?edit=${item.id}`}
                         className="rounded-lg border border-white/10 px-3 py-2 text-xs"

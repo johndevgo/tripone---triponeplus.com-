@@ -3,27 +3,57 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 
-export async function savePageSeo(input: {
+const resourceKind = z.enum([
+  "page",
+  "experience",
+  "rental",
+  "taxonomy",
+  "location",
+]);
+
+export async function saveResourceSeo(input: {
   siteId: string;
-  pageId: string;
+  resourceId: string;
+  resourceKind: z.infer<typeof resourceKind>;
   title: string;
   description: string;
   canonical: string;
   indexable: boolean;
+  follow: boolean;
+  noarchive: boolean;
+  noimageindex: boolean;
+  nosnippet: boolean;
+  socialTitle: string;
+  socialDescription: string;
+  socialImage: string;
+  breadcrumbLabel: string;
+  focusTopic: string;
 }) {
   const parsed = z
     .object({
       siteId: z.uuid(),
-      pageId: z.uuid(),
-      title: z.string().max(70),
-      description: z.string().max(180),
-      canonical: z.string().max(300),
+      resourceId: z.uuid(),
+      resourceKind,
+      title: z.string().trim().max(160),
+      description: z.string().trim().max(500),
+      canonical: z.string().trim().max(500),
       indexable: z.boolean(),
+      follow: z.boolean(),
+      noarchive: z.boolean(),
+      noimageindex: z.boolean(),
+      nosnippet: z.boolean(),
+      socialTitle: z.string().trim().max(160),
+      socialDescription: z.string().trim().max(500),
+      socialImage: z.union([z.literal(""), z.url()]),
+      breadcrumbLabel: z.string().trim().max(120),
+      focusTopic: z.string().trim().max(120),
     })
     .safeParse(input);
   if (
     !parsed.success ||
-    (parsed.data.canonical && !parsed.data.canonical.startsWith("/"))
+    (parsed.data.canonical &&
+      !parsed.data.canonical.startsWith("/") &&
+      !/^https:\/\//i.test(parsed.data.canonical))
   )
     return { ok: false, error: "Invalid SEO settings." };
   const supabase = await createClient();
@@ -31,17 +61,48 @@ export async function savePageSeo(input: {
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) return { ok: false, error: "Authentication required." };
+  const table = {
+    page: "pages",
+    experience: "experiences",
+    rental: "rental_products",
+    taxonomy: "taxonomy_terms",
+    location: "locations",
+  }[parsed.data.resourceKind];
+  const { data: current } = await supabase
+    .from(table)
+    .select("seo_settings")
+    .eq("id", parsed.data.resourceId)
+    .eq("site_id", parsed.data.siteId)
+    .maybeSingle();
+  if (!current) return { ok: false, error: "SEO resource not found." };
+  const existing =
+    current.seo_settings &&
+    typeof current.seo_settings === "object" &&
+    !Array.isArray(current.seo_settings)
+      ? (current.seo_settings as Record<string, unknown>)
+      : {};
+  const value = parsed.data;
   const { error } = await supabase
-    .from("pages")
+    .from(table)
     .update({
       seo_settings: {
-        title: parsed.data.title || undefined,
-        description: parsed.data.description || undefined,
-        canonicalPath: parsed.data.canonical || undefined,
-        indexable: parsed.data.indexable,
+        ...existing,
+        title: value.title || undefined,
+        description: value.description || undefined,
+        canonicalPath: value.canonical || undefined,
+        indexable: value.indexable,
+        follow: value.follow,
+        noarchive: value.noarchive,
+        noimageindex: value.noimageindex,
+        nosnippet: value.nosnippet,
+        socialTitle: value.socialTitle || undefined,
+        socialDescription: value.socialDescription || undefined,
+        socialImage: value.socialImage || undefined,
+        breadcrumbLabel: value.breadcrumbLabel || undefined,
+        focusTopic: value.focusTopic || undefined,
       },
     })
-    .eq("id", parsed.data.pageId)
+    .eq("id", parsed.data.resourceId)
     .eq("site_id", parsed.data.siteId);
   if (error) return { ok: false, error: error.message };
   revalidatePath(`/dashboard/sites/${parsed.data.siteId}/seo`);

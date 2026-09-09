@@ -104,6 +104,19 @@ describe("Part 4 catalogue", () => {
         "nepal-rides",
         [
           {
+            hostname: "nepal-rides.triponeplus.com",
+            verification_status: "verified",
+            is_primary: true,
+          },
+        ],
+        "https://tools.neurerohan.com.np",
+      ),
+    ).toBe("https://tools.neurerohan.com.np/s/nepal-rides");
+    expect(
+      currentPublicSiteUrl(
+        "nepal-rides",
+        [
+          {
             hostname: "nepalrides.example",
             verification_status: "verified",
             is_primary: true,

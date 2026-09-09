@@ -11,8 +11,13 @@ import {
   breadcrumbJsonLd,
   experienceJsonLd,
   organizationJsonLd,
+  rentalJsonLd,
   websiteJsonLd,
 } from "@/lib/seo/structured-data";
+import {
+  canonicalUrl,
+  createPublishedMetadata,
+} from "@/lib/seo/published-metadata";
 import {
   isAppHostname,
   normalizeRequestHostname,
@@ -38,45 +43,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!resolved)
     return { title: "Page not found", robots: { index: false, follow: false } };
   const seo = resolved.page.seo_settings as Record<string, unknown>;
-  const title = text(seo.title) || resolved.page.title;
-  const description = text(seo.description) || text(seo.metaDescription);
-  const canonical = `https://${published.primaryHostname}${routePath(path)}`;
-  const image =
-    text(seo.ogImage) ||
-    resolved.experience?.featured_image_url ||
-    published.snapshot.site.defaultOgImageUrl ||
-    undefined;
-  const indexable =
-    published.snapshot.site.seoSettings.indexingEnabled !== false &&
-    seo.indexable !== false;
-  return {
-    title,
-    description,
-    alternates: { canonical },
-    icons: published.snapshot.site.faviconUrl
-      ? { icon: published.snapshot.site.faviconUrl }
-      : undefined,
-    openGraph: {
-      title,
-      description,
-      url: canonical,
-      images: image ? [image] : undefined,
-      type: "website",
-    },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: image ? [image] : undefined,
-    },
-    robots: indexable
-      ? { index: true, follow: true }
-      : { index: false, follow: false },
-  };
+  const metadata = createPublishedMetadata({
+    pageTitle: resolved.page.title,
+    seo,
+    publicBaseUrl: `https://${published.primaryHostname}`,
+    requestedPath: routePath(path),
+    siteIndexingEnabled:
+      published.snapshot.site.seoSettings.indexingEnabled !== false,
+    defaultImage: published.snapshot.site.defaultOgImageUrl,
+    resourceImage:
+      resolved.experience?.featured_image_url ??
+      resolved.activeRental?.featured_image_url,
+    favicon: published.snapshot.site.faviconUrl,
+  });
+  const verification = verificationMetadata(
+    published.snapshot.site.globalSettings.verificationMeta,
+  );
+  return verification ? { ...metadata, verification } : metadata;
 }
 
 export default async function TenantPage({ params }: Props) {
-  const requestHostname = normalizeRequestHostname(await headers());
+  const requestHeaders = await headers();
+  const requestHostname = normalizeRequestHostname(requestHeaders);
+  const nonce = requestHeaders.get("x-nonce") ?? undefined;
   if (isAppHostname(requestHostname)) notFound();
   const { hostname, path = [] } = await params;
   const published = await loadPublishedSite(hostname);
@@ -86,7 +75,12 @@ export default async function TenantPage({ params }: Props) {
   const resolved = resolvePublishedRoute(published, path);
   if (!resolved) notFound();
   const data = rendererData(published);
-  const canonical = `https://${published.primaryHostname}${routePath(path)}`;
+  const seo = resolved.page.seo_settings as Record<string, unknown>;
+  const canonical = canonicalUrl(
+    typeof seo.canonicalPath === "string" ? seo.canonicalPath : undefined,
+    `https://${published.primaryHostname}`,
+    routePath(path),
+  );
   const jsonLd: unknown[] = [
     websiteJsonLd(
       published.snapshot.site.name,
@@ -132,12 +126,43 @@ export default async function TenantPage({ params }: Props) {
       ),
     );
   }
+  if (resolved.activeRental) {
+    const rental = resolved.activeRental;
+    const rate = rental.rates.find((item) => item.amount != null);
+    jsonLd.push(
+      breadcrumbJsonLd([
+        { name: "Home", url: `https://${published.primaryHostname}` },
+        {
+          name: "Rentals",
+          url: `https://${published.primaryHostname}/rentals`,
+        },
+        { name: rental.name, url: canonical },
+      ]),
+      rentalJsonLd(
+        {
+          name: rental.name,
+          description: rental.description || rental.short_description,
+          image: rental.featured_image_url,
+          bookingUrl: rental.booking_url,
+          rate: rate
+            ? {
+                amount: rate.amount,
+                currency: rate.currency,
+                pricingUnit: rate.pricing_unit,
+              }
+            : undefined,
+        },
+        canonical,
+      ),
+    );
+  }
   return (
     <>
       {jsonLd.map((item, index) => (
         <script
           key={index}
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: safeJson(item) }}
         />
       ))}
@@ -153,6 +178,7 @@ export default async function TenantPage({ params }: Props) {
         activeExperience={resolved.experience}
         activeRental={resolved.activeRental}
         allowThirdPartyScripts
+        scriptNonce={nonce}
         basePath=""
       />
     </>
@@ -161,9 +187,6 @@ export default async function TenantPage({ params }: Props) {
 
 function routePath(parts: string[]) {
   return parts.length ? `/${parts.map(encodeURIComponent).join("/")}` : "/";
-}
-function text(value: unknown) {
-  return typeof value === "string" ? value : undefined;
 }
 function safeJson(value: unknown) {
   return JSON.stringify(value).replaceAll("<", "\\u003c");
@@ -178,4 +201,28 @@ function socialUrls(business: Record<string, unknown>) {
     (item): item is string =>
       typeof item === "string" && /^https?:\/\//.test(item),
   );
+}
+
+function verificationMetadata(value: unknown): Metadata["verification"] | null {
+  const source =
+    value && typeof value === "object" && !Array.isArray(value)
+      ? (value as Record<string, unknown>)
+      : {};
+  const google = token(source.google);
+  const bing = token(source.bing);
+  const pinterest = token(source.pinterest);
+  if (!google && !bing && !pinterest) return null;
+  return {
+    google: google || undefined,
+    other: {
+      ...(bing ? { "msvalidate.01": bing } : {}),
+      ...(pinterest ? { "p:domain_verify": pinterest } : {}),
+    },
+  };
+}
+
+function token(value: unknown) {
+  return typeof value === "string" && /^[A-Za-z0-9._:-]{1,250}$/.test(value)
+    ? value
+    : "";
 }

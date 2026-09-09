@@ -18,6 +18,20 @@ const saveTemplateInput = z.object({
   expectedVersion: z.number().int().positive(),
   sections: sectionsSchema.max(60),
 });
+const recordKindSchema = z.enum([
+  "experience",
+  "rental",
+  "taxonomy",
+  "location",
+]);
+const saveRecordInput = z.object({
+  siteId: z.uuid(),
+  recordId: z.uuid(),
+  recordKind: recordKindSchema,
+  expectedRevision: z.number().int().positive(),
+  templateVersion: z.number().int().positive().nullable(),
+  sections: sectionsSchema.max(60),
+});
 
 export type SaveResult =
   | { ok: true; savedAt: string; revision: number }
@@ -108,6 +122,80 @@ export async function saveTemplateDraft(input: {
     ok: true,
     savedAt: String(saved.saved_at ?? new Date().toISOString()),
     revision: Number(saved.version),
+  };
+}
+
+export async function saveRecordLayoutDraft(input: {
+  siteId: string;
+  recordId: string;
+  recordKind: z.infer<typeof recordKindSchema>;
+  expectedRevision: number;
+  templateVersion: number | null;
+  sections: SiteSection[];
+}): Promise<SaveResult> {
+  const parsed = saveRecordInput.safeParse(input);
+  if (!parsed.success)
+    return { ok: false, error: "The record layout contains invalid data." };
+  for (const section of parsed.data.sections) {
+    if (!validateSection(section).success)
+      return {
+        ok: false,
+        error: `The ${section.type} section contains invalid settings.`,
+      };
+  }
+  return persistRecordLayout(parsed.data, parsed.data.sections);
+}
+
+export async function resetRecordLayout(input: {
+  siteId: string;
+  recordId: string;
+  recordKind: z.infer<typeof recordKindSchema>;
+  expectedRevision: number;
+}): Promise<SaveResult> {
+  const parsed = saveRecordInput
+    .omit({ sections: true, templateVersion: true })
+    .safeParse(input);
+  if (!parsed.success) return { ok: false, error: "Invalid record layout." };
+  return persistRecordLayout({ ...parsed.data, templateVersion: null }, null);
+}
+
+async function persistRecordLayout(
+  input: {
+    siteId: string;
+    recordId: string;
+    recordKind: z.infer<typeof recordKindSchema>;
+    expectedRevision: number;
+    templateVersion: number | null;
+  },
+  sections: SiteSection[] | null,
+): Promise<SaveResult> {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user)
+    return { ok: false, error: "Your session expired. Sign in and try again." };
+  const { data, error } = await supabase.rpc("save_record_layout_draft", {
+    target_site: input.siteId,
+    target_kind: input.recordKind,
+    target_record: input.recordId,
+    expected_revision: input.expectedRevision,
+    new_sections: sections,
+    source_template_version: input.templateVersion,
+  });
+  if (error) return { ok: false, error: error.message };
+  const saved = Array.isArray(data) ? data[0] : data;
+  if (!saved)
+    return {
+      ok: false,
+      error: "The record layout could not be saved. Refresh and try again.",
+    };
+  revalidatePath(`/dashboard/sites/${input.siteId}/builder`);
+  revalidatePath(`/preview/${input.siteId}`);
+  return {
+    ok: true,
+    savedAt: String(saved.saved_at ?? new Date().toISOString()),
+    revision: Number(saved.revision),
   };
 }
 

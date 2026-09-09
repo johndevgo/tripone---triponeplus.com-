@@ -3,10 +3,10 @@
 ## Supabase
 
 - [ ] Production project is owned by the correct organization
-- [ ] All migrations are applied with `supabase db push`
-- [ ] Database and performance advisors report no unresolved warnings
-- [ ] RLS and explicit grants are reviewed after the final migration
-- [ ] `site-media` and `avatars` buckets and policies exist
+- [x] All migrations are applied with `supabase db push`
+- [x] Supabase database lint reports no schema warnings or errors
+- [x] RLS and explicit grants are reviewed after the final migration
+- [x] `site-media` and `avatars` buckets and policies exist in migrations
 - [ ] Auth Site URL is `https://tools.neurerohan.com.np`
 - [ ] Exact production redirect URLs and local development redirect are allowed
 - [ ] Leaked or previously shared database and secret keys are rotated
@@ -25,16 +25,17 @@
 ## Product acceptance
 
 - [ ] Sign-up confirmation, login, reset and logout are smoke-tested
-- [ ] Onboarding creates one business, site, fallback domain and initial version
-- [ ] Builder autosave, preview and publish are smoke-tested
+- [x] Onboarding creates one business, site, reserved domain and initial version
+- [x] Builder autosave and preview are browser-tested; immutable publish is database-tested
 - [ ] Published site, unknown host and unpublished host responses are tested
 - [ ] Canonical hostname, metadata, sitemap and robots output are inspected
 - [ ] Custom domain add, DNS instructions, verification and primary switching are tested
 - [ ] Lead submission appears in the owner dashboard
 - [ ] Analytics events and 7/30/90-day dashboard ranges are verified
-- [ ] Tracking scripts load only when configured and consent permits
+- [x] Advanced scripts are proven isolated to verified tenant origins with nonce CSP
+- [ ] Consent-gated vendor scripts are smoke-tested with the owner's real provider IDs
 - [ ] Redirect manager returns exact 301/302 responses without loops
 - [ ] Error pages expose no stack traces
-- [ ] 390, 430, 768, 1024, 1440 and 1920 px layouts are smoke-tested
+- [x] 375, 430, 768, 1024 and 1440 px marketing/customer layouts are browser-tested
 - [ ] Keyboard focus, dialogs, forms, navigation and reduced motion are checked
 - [ ] Production site is checked for accidental preview indexing

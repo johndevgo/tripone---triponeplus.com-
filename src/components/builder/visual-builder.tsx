@@ -49,6 +49,8 @@ import { getTheme, type ThemeTokens } from "@/lib/site-generator";
 import { useBuilderStore } from "./store";
 import {
   publishFromBuilder,
+  resetRecordLayout,
+  saveRecordLayoutDraft,
   saveReusableSection,
   savePageDraft,
   saveTemplateDraft,
@@ -61,8 +63,14 @@ type BuilderPage = {
   slug: string;
   sections: SiteSection[];
   revision: number;
-  editorKind?: "page" | "template";
+  editorKind?: "page" | "template" | "record";
   templateKind?: string;
+  recordKind?: "experience" | "rental" | "taxonomy" | "location";
+  templateVersion?: number | null;
+  inheritedSections?: SiteSection[];
+  isOverride?: boolean;
+  activeExperienceId?: string;
+  activeRentalId?: string;
 };
 type Props = {
   site: {
@@ -117,6 +125,15 @@ export function VisualBuilder({
   const [publishOpen, setPublishOpen] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [savedSections, setSavedSections] = useState(initialSavedSections);
+  const [recordOverrides, setRecordOverrides] = useState<
+    Record<string, boolean>
+  >(() =>
+    Object.fromEntries(
+      pages
+        .filter((page) => page.editorKind === "record")
+        .map((page) => [page.id, page.isOverride === true]),
+    ),
+  );
   const store = useBuilderStore();
   const activePage = pages.find((page) => page.id === activePageId) ?? pages[0];
   const sensors = useSensors(
@@ -146,20 +163,37 @@ export function VisualBuilder({
               expectedVersion: store.revision,
               sections: savingSections,
             })
-          : await savePageDraft({
-              siteId: site.id,
-              pageId: store.pageId,
-              expectedRevision: store.revision,
-              sections: savingSections,
-            });
+          : activePage?.editorKind === "record" && activePage.recordKind
+            ? await saveRecordLayoutDraft({
+                siteId: site.id,
+                recordId: store.pageId,
+                recordKind: activePage.recordKind,
+                expectedRevision: store.revision,
+                templateVersion: activePage.templateVersion ?? null,
+                sections: savingSections,
+              })
+            : await savePageDraft({
+                siteId: site.id,
+                pageId: store.pageId,
+                expectedRevision: store.revision,
+                sections: savingSections,
+              });
       const current = useBuilderStore.getState();
-      if (result.ok)
+      if (result.ok) {
         current.markSaved(result.revision, current.sections === savingSections);
-      else if (!result.ok) current.markFailed(result.error);
+        if (activePage?.editorKind === "record")
+          setRecordOverrides((value) => ({
+            ...value,
+            [activePage.id]: true,
+          }));
+      } else current.markFailed(result.error);
     }, 900);
     return () => window.clearTimeout(timer);
   }, [
     activePage?.editorKind,
+    activePage?.id,
+    activePage?.recordKind,
+    activePage?.templateVersion,
     site.id,
     store.dirty,
     store.pageId,
@@ -251,20 +285,57 @@ export function VisualBuilder({
               expectedVersion: store.revision,
               sections: store.sections,
             })
-          : await savePageDraft({
-              siteId: site.id,
-              pageId: store.pageId,
-              expectedRevision: store.revision,
-              sections: store.sections,
-            });
+          : activePage.editorKind === "record" && activePage.recordKind
+            ? await saveRecordLayoutDraft({
+                siteId: site.id,
+                recordId: store.pageId,
+                recordKind: activePage.recordKind,
+                expectedRevision: store.revision,
+                templateVersion: activePage.templateVersion ?? null,
+                sections: store.sections,
+              })
+            : await savePageDraft({
+                siteId: site.id,
+                pageId: store.pageId,
+                expectedRevision: store.revision,
+                sections: store.sections,
+              });
       if (!saved.ok) return store.markFailed(saved.error);
       store.markSaved(saved.revision);
+      if (activePage.editorKind === "record")
+        setRecordOverrides((value) => ({
+          ...value,
+          [activePage.id]: true,
+        }));
     }
     setPublishing(true);
     const result = await publishFromBuilder(site.id);
     setPublishing(false);
     if (result.ok) setPublishOpen(false);
     else store.markFailed(result.error);
+  }
+
+  async function resetActiveRecord() {
+    if (
+      activePage?.editorKind !== "record" ||
+      !activePage.recordKind ||
+      !activePage.inheritedSections
+    )
+      return;
+    store.markSaving();
+    const result = await resetRecordLayout({
+      siteId: site.id,
+      recordId: activePage.id,
+      recordKind: activePage.recordKind,
+      expectedRevision: store.revision,
+    });
+    if (!result.ok) return store.markFailed(result.error);
+    store.initialize(
+      activePage.id,
+      activePage.inheritedSections,
+      result.revision,
+    );
+    setRecordOverrides((value) => ({ ...value, [activePage.id]: false }));
   }
 
   if (!activePage)
@@ -355,6 +426,30 @@ export function VisualBuilder({
           <span className="rounded-xl border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]">
             Global {activePage.templateKind?.replaceAll("_", " ")} template
           </span>
+        ) : activePage.editorKind === "record" ? (
+          <div className="flex items-center gap-2">
+            <span className="rounded-xl border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]">
+              {recordOverrides[activePage.id]
+                ? "Custom record layout"
+                : "Inheriting shared template"}
+            </span>
+            {recordOverrides[activePage.id] && (
+              <button
+                type="button"
+                onClick={resetActiveRecord}
+                className="min-h-10 rounded-xl border border-white/10 px-3 text-xs text-white/65 hover:bg-white/[.06]"
+              >
+                Reset to template
+              </button>
+            )}
+            <Link
+              target="_blank"
+              href={`/preview/${site.id}/${activePage.slug}`}
+              className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm"
+            >
+              <ExternalLink size={15} /> Preview
+            </Link>
+          </div>
         ) : (
           <Link
             target="_blank"
@@ -426,6 +521,12 @@ export function VisualBuilder({
               theme={theme}
               experiences={experiences}
               rentals={rentals}
+              activeExperience={experiences.find(
+                (item) => item.id === activePage.activeExperienceId,
+              )}
+              activeRental={rentals.find(
+                (item) => item.id === activePage.activeRentalId,
+              )}
               basePath={`/preview/${site.id}`}
               preview
               editor={{

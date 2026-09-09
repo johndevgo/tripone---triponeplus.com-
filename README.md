@@ -14,6 +14,7 @@ No AI or LLM API is used. Pages and copy come from typed category presets, page 
 - Verified `domains` rows resolve hostnames and select one primary canonical hostname.
 - Public enquiries and analytics are accepted only through validated, fingerprint-rate-limited database functions. Analytics stores no full IP address or lead contents.
 - Custom domain provider logic is isolated in `src/lib/domains/provider.ts`; missing Vercel credentials produce manual setup guidance, not fake verification.
+- Typed analytics providers and optional advanced placements are versioned with the site. Advanced code runs only on a verified tenant origin under a request nonce and tenant CSP; it is disabled on management, preview and shared `/s/` routes.
 
 ## Route map
 
@@ -63,8 +64,7 @@ Optional server-only:
    npx supabase@latest link --project-ref YOUR_PROJECT_REF
    npx supabase@latest db push
    npx supabase@latest migration list
-   npx supabase@latest db advisors --linked --type security
-   npx supabase@latest db advisors --linked --type performance
+   npx supabase@latest db lint --linked --level warning
    ```
 
 2. In Authentication → URL Configuration, set Site URL to `https://tools.neurerohan.com.np`. Add exact redirects:
@@ -92,6 +92,16 @@ Optional server-only:
 10. `20260906181535_fix_create_generated_site_advisory_lock.sql`: fixes JSON extraction precedence in the transactional onboarding lock without changing the function's business logic.
 11. `20260907003000_part4_multi_service_core.sql`: adds multi-service capabilities, rentals and rates, taxonomies, tenant-safe assignments, RLS, and schema-v2 publishing.
 12. `20260907010000_part4_atomic_capabilities.sql`: keeps multi-capability onboarding inside the idempotent generation transaction.
+13. `20260907055059_part4_templates_saved_sections_revisions.sql`: adds reusable templates, saved sections and optimistic revisions.
+14. `20260908152000_part4_template_publishing.sql`: publishes the full schema-v3 graph and supports atomic rental onboarding.
+15. `20260908190000_part4_record_layout_revisions.sql`: adds revision-safe record layouts with resettable template inheritance.
+16. `20260908193000_part4_fallback_forms_analytics.sql`: enables validated leads and analytics on the path-based hosted address.
+17. `20260908194500_fix_public_rate_limit_conflict_targets.sql`: removes ambiguous PostgreSQL conflict targets.
+18. `20260908200000_part4_rental_analytics.sql`: adds validated rental product-view analytics.
+19. `20260908200500_part4_taxonomy_redirects.sql`: atomically redirects changed taxonomy paths and their descendants.
+20. `20260908201500_account_deletion_fk.sql`: preserves correct cascading account deletion behavior.
+21. `20260908202000_public_fallback_sitemap_discovery.sql`: advertises published customer sitemaps from the application robots file.
+22. `20260908203000_honest_path_based_publishing.sql`: prevents unowned platform subdomains from becoming verified or canonical.
 
 ## Demo data
 
@@ -133,7 +143,7 @@ The included `.github/workflows/ci.yml` runs install, lint, typecheck, unit test
 
 2. Add server-only Supabase and Vercel domain variables in Project Settings → Environment Variables. Apply them to Production and only to Preview when genuinely needed.
 3. In Project Settings → Domains, keep `tools.neurerohan.com.np` and the existing Vercel alias attached. `triponeplus.com` is a future domain and must not be presented as currently owned or live.
-4. Create a least-privilege Vercel token for this project, set project/team IDs, and redeploy. New TripOne+ subdomains and customer custom domains will then be attached and verified through the provider adapter.
+4. Create a least-privilege Vercel token for this project, set project/team IDs, and redeploy. Customer custom domains can then be attached and verified through the provider adapter. Until then, every published customer site uses `https://tools.neurerohan.com.np/s/{siteSlug}`.
 
 ## Cloudflare DNS
 
@@ -144,7 +154,7 @@ If `triponeplus.com` is acquired later and Cloudflare remains authoritative DNS:
 - `tools` in the `neurerohan.com.np` zone → Vercel’s displayed CNAME
 - `*` in the `triponeplus.com` zone → the Vercel project CNAME
 
-Use DNS-only (grey cloud) until Vercel has issued certificates and every hostname passes `vercel domains inspect`. TripOne+ also attaches each created `slug.triponeplus.com` to the Vercel project, so Cloudflare can keep authority while Vercel issues a certificate for each real tenant. This avoids depending on Vercel’s wildcard-certificate workflow, which currently requires Vercel nameservers. Do not create a conflicting wildcard domain in the Vercel dashboard unless you intentionally move nameservers.
+Use DNS-only (grey cloud) until Vercel has issued certificates and every hostname passes `vercel domains inspect`. If platform subdomains are enabled after acquiring `triponeplus.com`, each hostname must be attached and verified before it can serve traffic or become canonical. Until then, path-based customer publishing remains authoritative.
 
 For customer domains, the Domains screen displays provider verification TXT records when Vercel returns them, otherwise the appropriate apex A or subdomain CNAME fallback. Verification is never faked.
 
@@ -167,7 +177,7 @@ Playwright public desktop/mobile smoke tests need no credentials. Authenticated 
 
 - Anonymous users cannot select management tables, drafts, leads or analytics. Published delivery uses narrow security-definer accessors with explicit grants.
 - Every mutation revalidates input; server actions still depend on RLS instead of trusting route parameters.
-- User HTML, JavaScript and CSS are not accepted. URLs reject unsafe protocols; uploaded SVG is disabled.
+- Content and visual editors never accept executable HTML, JavaScript or CSS. The separate advanced-integration editor accepts bounded JavaScript/HTTPS sources only for verified isolated tenant origins; URLs reject unsafe protocols and uploaded SVG is disabled.
 - Public lead and event endpoints hash a short-lived request fingerprint for rate limiting but do not store the source IP.
 - Preview is authenticated and emits noindex/noarchive metadata.
 - Legal pages are conspicuously marked placeholders and require professional review before launch.

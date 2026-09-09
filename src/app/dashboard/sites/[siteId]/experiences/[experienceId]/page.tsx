@@ -39,7 +39,15 @@ export default async function EditExperience({
       >
         ← Back to experiences
       </Link>
-      <h1 className="mt-5 text-3xl font-semibold">Edit {experience.name}</h1>
+      <div className="mt-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+        <h1 className="text-3xl font-semibold">Edit {experience.name}</h1>
+        <Link
+          href={`/dashboard/sites/${siteId}/builder?target=${experience.id}`}
+          className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#FFC857]/25 bg-[#FFC857]/[.06] px-4 text-sm font-medium text-[#FFC857]"
+        >
+          Customize page layout
+        </Link>
+      </div>
       <p className="mt-2 text-white/45">
         Changes remain in the working draft until you publish them.
       </p>

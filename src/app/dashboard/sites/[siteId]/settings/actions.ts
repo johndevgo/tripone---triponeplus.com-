@@ -4,10 +4,19 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { advancedScriptsSchema } from "@/lib/integrations/advanced-scripts";
 
 const optionalUrl = z.union([
   z.literal(""),
   z.url().refine((value) => /^https?:\/\//i.test(value), "Use an http(s) URL."),
+]);
+const verificationToken = z.union([
+  z.literal(""),
+  z
+    .string()
+    .trim()
+    .max(250)
+    .regex(/^[A-Za-z0-9._:-]+$/, "Use only the provider verification token."),
 ]);
 const settingsSchema = z.object({
   siteId: z.uuid(),
@@ -49,6 +58,9 @@ const settingsSchema = z.object({
     z.literal(""),
     z.string().regex(/^[A-Z0-9]{8,30}$/i),
   ]),
+  googleVerification: verificationToken,
+  bingVerification: verificationToken,
+  pinterestVerification: verificationToken,
 });
 
 export async function saveSettings(formData: FormData) {
@@ -56,6 +68,14 @@ export async function saveSettings(formData: FormData) {
   const parsed = settingsSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success)
     fail(siteId, parsed.error.issues[0]?.message ?? "Invalid settings.");
+  const advancedScripts = advancedScriptsSchema.safeParse(
+    parseJson(String(formData.get("advancedScripts") ?? "[]")),
+  );
+  if (!advancedScripts.success)
+    fail(
+      siteId,
+      advancedScripts.error.issues[0]?.message ?? "Invalid advanced script.",
+    );
   const value = parsed.data;
   const supabase = await createClient();
   const { data: site } = await supabase
@@ -84,6 +104,12 @@ export async function saveSettings(formData: FormData) {
             googleAnalyticsId: value.googleAnalyticsId,
             metaPixelId: value.metaPixelId,
             tiktokPixelId: value.tiktokPixelId,
+            advancedScripts: advancedScripts.data,
+          },
+          verificationMeta: {
+            google: value.googleVerification,
+            bing: value.bingVerification,
+            pinterest: value.pinterestVerification,
           },
         },
         cro_settings: {
@@ -118,8 +144,16 @@ export async function saveSettings(formData: FormData) {
       siteError?.message ?? businessError?.message ?? "Save failed.",
     );
   revalidatePath(`/dashboard/sites/${value.siteId}`, "layout");
+  const duplicateWarning = detectsDuplicateProvider(
+    advancedScripts.data,
+    value,
+  );
   redirect(
-    `/dashboard/sites/${value.siteId}/settings?message=Settings%20saved`,
+    `/dashboard/sites/${value.siteId}/settings?message=${encodeURIComponent(
+      duplicateWarning
+        ? "Settings saved. Review possible duplicate direct and advanced tracking setup."
+        : "Settings saved",
+    )}`,
   );
 }
 
@@ -182,4 +216,27 @@ function object(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, unknown>)
     : {};
+}
+
+function parseJson(value: string): unknown {
+  try {
+    return JSON.parse(value) as unknown;
+  } catch {
+    return null;
+  }
+}
+
+function detectsDuplicateProvider(
+  scripts: z.infer<typeof advancedScriptsSchema>,
+  typed: z.infer<typeof settingsSchema>,
+) {
+  const source = scripts
+    .map((script) => `${script.sourceUrl}\n${script.code}`.toLowerCase())
+    .join("\n");
+  return Boolean(
+    (typed.googleTagManagerId && source.includes("googletagmanager.com")) ||
+    (typed.googleAnalyticsId && source.includes("google-analytics.com")) ||
+    (typed.metaPixelId && source.includes("connect.facebook.net")) ||
+    (typed.tiktokPixelId && source.includes("analytics.tiktok.com")),
+  );
 }

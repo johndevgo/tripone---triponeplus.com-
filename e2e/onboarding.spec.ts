@@ -20,11 +20,16 @@ test("authenticated onboarding creates a real draft website", async ({
     "The configured user already has a website.",
   );
 
-  await page.getByRole("button", { name: /Jet Ski Rental/i }).click();
-  await page.getByRole("button", { name: /Next/i }).click();
+  const jetSkiCard = page.getByRole("button", { name: /Jet Ski Rental/i });
+  await jetSkiCard.click();
+  await jetSkiCard
+    .locator("..")
+    .getByRole("button", { name: "Make primary" })
+    .click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   const slug = `playwright-wave-${Date.now()}`;
   await page.getByLabel("Business name").fill("Playwright Wave Tours");
-  await page.getByLabel("Subdomain").fill(slug);
+  await page.getByLabel(/Site slug/).fill(slug);
   await page
     .getByLabel("Short description")
     .fill(
@@ -34,8 +39,9 @@ test("authenticated onboarding creates a real draft website", async ({
   await page.getByLabel("City").fill("Dubai Marina");
   await page.getByLabel("Currency (3 letters)").fill("AED");
   await page.getByLabel("Business email").fill(email!);
-  await page.getByRole("button", { name: /Next/i }).click();
-  await page.getByRole("button", { name: /Next/i }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: /Add jet ski experience/i }).click();
   await page.getByLabel("Name").last().fill("60 Minute Test Experience");
   await page
@@ -44,12 +50,14 @@ test("authenticated onboarding creates a real draft website", async ({
     .fill(
       "A test-only experience used to verify the complete website generation flow.",
     );
-  await page.getByRole("button", { name: /Next/i }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: /Horizon/i }).click();
-  await page.getByRole("button", { name: /Next/i }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: /Build My Website/i }).click();
-  await expect(page).toHaveURL(/\/dashboard\/sites\/[0-9a-f-]+\/created/);
+  await expect(page).toHaveURL(/\/dashboard\/sites\/[0-9a-f-]+\/created/, {
+    timeout: 15_000,
+  });
   await expect(
-    page.getByRole("heading", { name: /website is ready/i }),
+    page.getByRole("heading", { name: /draft is ready to explore/i }),
   ).toBeVisible();
 });

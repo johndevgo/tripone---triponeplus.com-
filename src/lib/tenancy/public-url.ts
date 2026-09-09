@@ -20,7 +20,11 @@ export function currentPublicSiteUrl(
   origin = getAppUrl(),
 ) {
   const verified = domains
-    .filter((domain) => domain.verification_status === "verified")
+    .filter(
+      (domain) =>
+        domain.verification_status === "verified" &&
+        !domain.hostname.endsWith(".triponeplus.com"),
+    )
     .sort(
       (left, right) => Number(right.is_primary) - Number(left.is_primary),
     )[0];

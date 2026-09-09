@@ -18,6 +18,7 @@ import type { SiteSection } from "@/lib/types";
 import type { ThemeTokens } from "@/lib/site-generator";
 import { LeadForm } from "@/components/site/lead-form";
 import { PublicAnalytics } from "@/components/site/public-analytics";
+import { ResilientImage } from "@/components/site/resilient-image";
 
 export type PublicExperience = {
   id: string;
@@ -113,6 +114,7 @@ export type SiteRendererProps = {
   activeExperience?: PublicExperience;
   activeRental?: PublicRental;
   allowThirdPartyScripts?: boolean;
+  scriptNonce?: string;
 };
 
 function href(base: string, path: string) {
@@ -135,6 +137,7 @@ export function SiteRenderer({
   activeExperience,
   activeRental,
   allowThirdPartyScripts = false,
+  scriptNonce,
 }: SiteRendererProps) {
   const nav = Array.isArray(site.navigation)
     ? (site.navigation as Array<{ label: string; href: string }>)
@@ -209,11 +212,10 @@ export function SiteRenderer({
         >
           <Link href={basePath} className="flex items-center gap-2 font-bold">
             {business.logo_url ? (
-              // Site logos may use a user-provided remote URL; do not widen the image proxy allowlist.
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <ResilientImage
                 src={business.logo_url}
                 alt=""
+                hideFallback
                 className={`${logoSize === "small" ? "h-7 max-w-24" : logoSize === "large" ? "h-12 max-w-40" : "h-9 max-w-32"} object-contain`}
               />
             ) : (
@@ -406,6 +408,7 @@ export function SiteRenderer({
       {!preview && !editor && (
         <PublicAnalytics
           experienceId={activeExperience?.id}
+          rentalProductId={activeRental?.id}
           consentMode={
             global.cookieConsentMode === "basic" ? "basic" : "disabled"
           }
@@ -418,6 +421,7 @@ export function SiteRenderer({
             tiktokPixelId: text(integrations, "tiktokPixelId") || undefined,
           }}
           allowThirdPartyScripts={allowThirdPartyScripts}
+          scriptNonce={scriptNonce}
         />
       )}
     </div>
@@ -665,8 +669,7 @@ function ExperienceDetail({
                     className="aspect-[4/3] overflow-hidden rounded-[var(--site-radius)]"
                     key={`${url}-${index}`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <ResilientImage
                       src={url}
                       alt={
                         typeof image === "string"
@@ -1017,9 +1020,7 @@ function Section({
                   className={`${i === 0 ? "col-span-2 row-span-2" : ""} overflow-hidden rounded-[var(--site-radius)] bg-[var(--site-primary)]`}
                 >
                   {item.featured_image_url ? (
-                    // User media is already constrained by the upload route and storage bucket.
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
+                    <ResilientImage
                       src={item.featured_image_url}
                       alt={item.name}
                       className="site-media h-full w-full object-cover"
@@ -1260,9 +1261,7 @@ function ExperienceCard({
     >
       <div className="grid aspect-[4/3] place-items-center overflow-hidden bg-[var(--site-primary)] text-white/30">
         {item.featured_image_url ? (
-          // User media is already constrained by the upload route and storage bucket.
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <ResilientImage
             src={item.featured_image_url}
             alt={item.name}
             className="site-media h-full w-full object-cover transition duration-500 group-hover:scale-105"
@@ -1318,8 +1317,7 @@ function RentalCard({
     >
       <div className="grid aspect-[4/3] place-items-center overflow-hidden bg-[var(--site-primary)] text-white/30">
         {rental.featured_image_url ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <ResilientImage
             src={rental.featured_image_url}
             alt={rental.name}
             className="site-media h-full w-full object-cover transition duration-500 group-hover:scale-105"

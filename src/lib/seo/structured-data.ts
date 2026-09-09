@@ -77,7 +77,37 @@ export function experienceJsonLd(
             price: experience.price,
             priceCurrency: experience.currency,
             url: experience.bookingUrl || url,
-            availability: "https://schema.org/InStock",
+          }
+        : undefined,
+  });
+}
+
+export function rentalJsonLd(
+  rental: {
+    name: string;
+    description: string;
+    image?: string | null;
+    rate?: { amount: number | null; currency: string; pricingUnit: string };
+    bookingUrl?: string | null;
+  },
+  url: string,
+) {
+  const rate = rental.rate;
+  return compact({
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: rental.name,
+    description: rental.description,
+    image: rental.image || undefined,
+    url,
+    offers:
+      rate?.amount != null
+        ? {
+            "@type": "Offer",
+            price: rate.amount,
+            priceCurrency: rate.currency,
+            url: rental.bookingUrl || url,
+            unitText: rate.pricingUnit,
           }
         : undefined,
   });
