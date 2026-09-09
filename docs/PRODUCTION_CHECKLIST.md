@@ -27,8 +27,8 @@
 - [ ] Sign-up confirmation, login, reset and logout are smoke-tested
 - [x] Onboarding creates one business, site, reserved domain and initial version
 - [x] Builder autosave and preview are browser-tested; immutable publish is database-tested
-- [ ] Published site, unknown host and unpublished host responses are tested
-- [ ] Canonical hostname, metadata, sitemap and robots output are inspected
+- [x] Published site and unknown site/page responses are tested in production
+- [x] Canonical path, metadata, sitemap and robots output are inspected in production
 - [ ] Custom domain add, DNS instructions, verification and primary switching are tested
 - [ ] Lead submission appears in the owner dashboard
 - [ ] Analytics events and 7/30/90-day dashboard ranges are verified
