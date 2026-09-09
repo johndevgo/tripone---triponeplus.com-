@@ -6,7 +6,7 @@ Last updated: 2026-09-10
 
 - Production branch: `main`
 - Part 4 branch: `feature/part4-multi-service`
-- Part 4 production baseline: `589553f` (pushed to `origin/main`)
+- Current production release: `23bff4f` (pushed to `origin/main`)
 - Production host currently configured by the repository: `tools.neurerohan.com.np`
 - `triponeplus.com` is not treated as an available tenant domain until ownership and DNS verification exist.
 
@@ -36,6 +36,7 @@ Last updated: 2026-09-10
 - 2026-09-09: Proved advanced code executes on a disposable verified tenant origin under a nonce-bound CSP, cannot access private app API routes, and remains absent from the shared `/s/` origin. The fixture was deleted afterward.
 - 2026-09-09: Fast-forwarded the fully accepted Part 4 branch to `main`. GitHub CI passed and Vercel deployed the release at `https://tools.neurerohan.com.np`; the customer example is live at `/s/dipson-tours`.
 - 2026-09-10: Rebuilt the SaaS marketing experience around six original, optimized travel photographs; expanded all public product pages; added eight typed long-form guides and fair competitor comparisons; generated social-sharing images; expanded sitemap and structured data; and added browser coverage for internal destinations, imagery and discovery surfaces.
+- 2026-09-10: Released the growth and visual upgrade as `23bff4f`. GitHub CI passed, Vercel served every checked release URL, and the production public plus five-width browser suites passed against `tools.neurerohan.com.np`.
 
 ## Latest verification
 
@@ -45,7 +46,7 @@ Last updated: 2026-09-10
 - Database integration: six suites passed against the authorized Supabase project and rolled back every fixture.
 - Production build: passed with Next.js 16.3.4 and all application/customer routes generated successfully.
 - Browser acceptance: 21 current desktop/mobile checks passed and 17 fixture-specific or intentionally duplicate matrix checks skipped; authenticated onboarding, builder, and isolated tenant-script checks passed independently in the Part 4 release audit.
-- Production smoke: the same 13 applicable browser checks passed against `tools.neurerohan.com.np`; home, login, customer site and customer sitemap return 200, unknown site/page routes return 404, and root robots advertises the customer sitemap.
+- Production smoke: 11 desktop/mobile public-flow checks and 10 five-width marketing/customer checks passed against `tools.neurerohan.com.np`; the homepage, resources, article, social image, sitemap and `dipson-tours` customer site all return 200.
 - Dependency audit: no known vulnerabilities.
 - Remote database: all migrations through `20260908203000` are applied; `public`, `private` and `extensions` pass Supabase database lint with no schema errors.
 

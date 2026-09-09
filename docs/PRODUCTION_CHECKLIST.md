@@ -14,13 +14,13 @@
 
 ## GitHub and Vercel
 
-- [ ] Repository default branch is `main` and GitHub Actions passes
-- [ ] Vercel project is connected to the GitHub repository
-- [ ] Production environment variables are configured
-- [ ] `tools.neurerohan.com.np` and the existing Vercel production alias are attached
+- [x] Repository default branch is `main` and GitHub Actions passes
+- [x] Vercel project is connected to the GitHub repository
+- [x] Production environment variables required by the deployed application are configured
+- [x] `tools.neurerohan.com.np` and the existing Vercel production alias are attached
 - [ ] Wildcard Cloudflare DNS or per-subdomain DNS strategy is configured
 - [ ] `VERCEL_TOKEN`, project ID and optional team ID enable domain provisioning
-- [ ] Production deployment protection does not block customer websites
+- [x] Production deployment protection does not block customer websites
 
 ## Product acceptance
 
