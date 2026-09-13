@@ -316,7 +316,8 @@ begin
   ) then
     alter table public.leads add constraint leads_id_site_unique unique (id, site_id);
   end if;
-end $$;
+end;
+$$;
 
 alter table public.leads
   drop constraint if exists leads_status_check,
@@ -534,7 +535,8 @@ begin
     values (new.site_id, new.id, (select auth.uid()), 'schedule_changed');
   end if;
   return new;
-end $$;
+end;
+$$;
 create trigger bookings_audit after update on public.bookings
 for each row execute function public.audit_booking_change();
 
@@ -565,7 +567,8 @@ begin
     target_business,selected_capabilities,primary_capability
   );
   return target_site;
-end $$;
+end;
+$$;
 revoke all on function public.create_generated_site_v2(jsonb) from public;
 grant execute on function public.create_generated_site_v2(jsonb) to authenticated;
 
@@ -641,7 +644,8 @@ begin
     );
   end loop;
   return target_package;
-end $$;
+end;
+$$;
 revoke all on function public.save_package(jsonb) from public;
 grant execute on function public.save_package(jsonb) to authenticated;
 
@@ -677,7 +681,8 @@ begin
     description,optional,sort_order
   from public.package_items where package_id = target_package;
   return new_package;
-end $$;
+end;
+$$;
 revoke all on function public.duplicate_package(uuid) from public;
 grant execute on function public.duplicate_package(uuid) to authenticated;
 
@@ -710,6 +715,7 @@ begin
       if allocated + requested_guests > target_departure.capacity then
         raise exception 'Not enough capacity remains for this departure';
       end if;
+    end if;
   end if;
 
   if clean_email is not null then
@@ -766,7 +772,8 @@ begin
     end if;
   end if;
   return target_booking;
-end $$;
+end;
+$$;
 revoke all on function public.create_booking(jsonb) from public;
 grant execute on function public.create_booking(jsonb) to authenticated;
 
@@ -851,7 +858,8 @@ begin
   insert into public.booking_activities(site_id,booking_id,actor_id,action,details)
   values(selected_booking.site_id,selected_booking.id,(select auth.uid()),'details_updated',
     jsonb_build_object('startsAt',new_start,'endsAt',new_end,'guests',requested_guests));
-end $$;
+end;
+$$;
 revoke all on function public.update_booking(jsonb) from public;
 grant execute on function public.update_booking(jsonb) to authenticated;
 
@@ -883,7 +891,8 @@ begin
     'Converted into customer',jsonb_build_object('customerId',target_customer)
   );
   return target_customer;
-end $$;
+end;
+$$;
 revoke all on function public.convert_lead_to_customer(uuid) from public;
 grant execute on function public.convert_lead_to_customer(uuid) to authenticated;
 
@@ -909,7 +918,8 @@ begin
     internal_notes = case when trim(note) = '' then internal_notes
       else concat_ws(E'\n',nullif(internal_notes,''),trim(note)) end
   where id = target_booking;
-end $$;
+end;
+$$;
 revoke all on function public.transition_booking(uuid, public.booking_status, text) from public;
 grant execute on function public.transition_booking(uuid, public.booking_status, text) to authenticated;
 
@@ -954,7 +964,8 @@ begin
   insert into public.booking_activities(site_id,booking_id,actor_id,action,details)
   values(selected_booking.site_id,target_booking,(select auth.uid()),'resource_assigned',
     jsonb_build_object('resourceId',target_resource,'quantity',requested_quantity));
-end $$;
+end;
+$$;
 revoke all on function public.assign_booking_resource(uuid, uuid, integer) from public;
 grant execute on function public.assign_booking_resource(uuid, uuid, integer) to authenticated;
 
@@ -975,7 +986,8 @@ begin
   insert into public.booking_activities(site_id,booking_id,actor_id,action,details)
   values(selected_booking.site_id,target_booking,(select auth.uid()),'resource_unassigned',
     jsonb_build_object('resourceId',target_resource));
-end $$;
+end;
+$$;
 revoke all on function public.unassign_booking_resource(uuid, uuid) from public;
 grant execute on function public.unassign_booking_resource(uuid, uuid) to authenticated;
 
@@ -1170,7 +1182,8 @@ begin
       jsonb_build_object('sourcePage',left(coalesce(payload->>'sourcePage','/'),300)));
   end if;
   return target_booking;
-end $$;
+end;
+$$;
 revoke all on function public.submit_public_booking(jsonb,text) from public;
 grant execute on function public.submit_public_booking(jsonb,text) to anon, authenticated;
 
@@ -1245,7 +1258,8 @@ begin
     nullif(trim(payload->>'budgetRange'),'')
   ) returning id into created_lead;
   return created_lead;
-end $$;
+end;
+$$;
 revoke all on function public.submit_public_lead(jsonb,text) from public;
 grant execute on function public.submit_public_lead(jsonb,text) to anon, authenticated;
 
@@ -1278,7 +1292,8 @@ returns trigger language plpgsql security definer set search_path = '' as $$
 begin
   new.published_snapshot := private.with_operations_snapshot(new.id,new.published_snapshot);
   return new;
-end $$;
+end;
+$$;
 revoke all on function private.augment_site_publish() from public, anon, authenticated;
 create trigger sites_operations_publish
 before update of published_snapshot on public.sites
@@ -1290,7 +1305,8 @@ returns trigger language plpgsql security definer set search_path = '' as $$
 begin
   new.snapshot := private.with_operations_snapshot(new.site_id,new.snapshot);
   return new;
-end $$;
+end;
+$$;
 revoke all on function private.augment_version_snapshot() from public, anon, authenticated;
 create trigger site_versions_operations_snapshot
 before insert on public.site_versions
@@ -1389,7 +1405,8 @@ begin
     target_site,event_name,clean_path,target_experience,target_rental,target_package,
     clean_referrer,payload->>'sessionId',payload->>'deviceCategory'
   );
-end $$;
+end;
+$$;
 revoke all on function public.submit_analytics_event(jsonb,text) from public;
 grant execute on function public.submit_analytics_event(jsonb,text) to anon, authenticated;
 
