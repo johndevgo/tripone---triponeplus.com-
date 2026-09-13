@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import { ArrowRight, Check, Palette } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import { themeMarketingImages } from "@/content/marketing-assets";
 import { themes } from "@/lib/site-generator";
 
 export const metadata: Metadata = {
   title: "Tourism website themes",
   description:
-    "Explore eight professional website themes for tours, rentals, safaris, trekking, water sports and travel businesses.",
+    "Explore ten professional website themes for tours, rentals, safaris, trekking, water sports and travel businesses.",
   alternates: { canonical: "/templates" },
   openGraph: {
     title: "Tourism website themes | TripOne+",
     description:
-      "Eight professional, tokenized design directions for tourism businesses.",
+      "Ten professional, tokenized design directions for tourism businesses.",
     url: "/templates",
   },
 };
@@ -27,7 +27,7 @@ export default function Templates() {
             <Palette size={15} /> Theme system
           </p>
           <h1 className="marketing-title mt-6">
-            Eight distinct directions. One flexible renderer.
+            Ten distinct directions. One flexible renderer.
           </h1>
         </div>
         <div className="lg:pb-2">
@@ -138,9 +138,9 @@ export default function Templates() {
           Your selected theme becomes editable tokens—not a locked template or a
           separate codebase.
         </p>
-        <ButtonLink href="/signup" className="mt-7">
-          Choose your theme <ArrowRight size={17} />
-        </ButtonLink>
+        <MarketingPrimaryCta guestLabel="Choose your theme" className="mt-7">
+          <ArrowRight size={17} />
+        </MarketingPrimaryCta>
       </section>
     </>
   );

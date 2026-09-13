@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpen, CheckCircle2, Compass } from "lucide-react";
 import { ResourceExplorer } from "@/components/marketing/resource-explorer";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import {
   resourceCategories,
   resourceCategorySlugs,
@@ -122,12 +123,9 @@ export default function ResourcesPage() {
             platform generate a complete draft you can inspect before it goes
             live.
           </p>
-          <Link
-            href="/signup"
-            className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[#f5a623] px-6 text-sm font-semibold text-[#173028] transition hover:bg-[#ffc857]"
-          >
-            Build your website <ArrowRight size={17} />
-          </Link>
+          <MarketingPrimaryCta guestLabel="Build your website" className="mt-7">
+            <ArrowRight size={17} />
+          </MarketingPrimaryCta>
         </div>
       </section>
     </>

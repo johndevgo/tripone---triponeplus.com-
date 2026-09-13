@@ -74,13 +74,31 @@ export async function updateEntitlement(formData: FormData) {
 }
 
 export async function grantPlatformRole(formData: FormData) {
-  const email = z.email().parse(String(formData.get("email") ?? "").trim());
-  const role = z
-    .enum(["super_admin", "support", "analyst"])
-    .parse(formData.get("role"));
+  const parsed = z
+    .object({
+      email: z.email(),
+      role: z.enum(["super_admin", "support", "analyst"]),
+    })
+    .safeParse({
+      email: String(formData.get("email") ?? "")
+        .trim()
+        .toLowerCase(),
+      role: formData.get("role"),
+    });
+  if (!parsed.success) fail("Enter a valid account email and platform role.");
+  const { email, role } = parsed.data;
   const { admin, user } = await requirePlatformMember(["super_admin"]);
   const target = await findAuthUserByEmail(admin, email);
   if (!target) fail("No confirmed account uses that email address.");
+  const { data: existing } = await admin
+    .from("platform_members")
+    .select("role")
+    .eq("user_id", target.id)
+    .maybeSingle();
+  if (target.id === user.id && role !== "super_admin")
+    fail("You cannot reduce your own super-admin access.");
+  if (existing?.role === "super_admin" && role !== "super_admin")
+    await ensureAnotherSuperAdmin(admin);
   const { error } = await admin.from("platform_members").upsert({
     user_id: target.id,
     role,
@@ -92,7 +110,9 @@ export async function grantPlatformRole(formData: FormData) {
 }
 
 export async function revokePlatformRole(formData: FormData) {
-  const targetId = z.uuid().parse(formData.get("userId"));
+  const parsed = z.uuid().safeParse(formData.get("userId"));
+  if (!parsed.success) fail("Invalid platform member.");
+  const targetId = parsed.data;
   const { admin, user } = await requirePlatformMember(["super_admin"]);
   if (targetId === user.id) fail("You cannot remove your own platform access.");
   const { data: target } = await admin
@@ -101,11 +121,7 @@ export async function revokePlatformRole(formData: FormData) {
     .eq("user_id", targetId)
     .single();
   if (target?.role === "super_admin") {
-    const { count } = await admin
-      .from("platform_members")
-      .select("user_id", { count: "exact", head: true })
-      .eq("role", "super_admin");
-    if ((count ?? 0) <= 1) fail("The final super admin cannot be removed.");
+    await ensureAnotherSuperAdmin(admin);
   }
   const { error } = await admin
     .from("platform_members")
@@ -117,7 +133,9 @@ export async function revokePlatformRole(formData: FormData) {
 }
 
 export async function sendManagedPasswordReset(formData: FormData) {
-  const userId = z.uuid().parse(formData.get("userId"));
+  const parsed = z.uuid().safeParse(formData.get("userId"));
+  if (!parsed.success) fail("Invalid account.");
+  const userId = parsed.data;
   const { admin, user } = await requirePlatformMember(["super_admin"]);
   const { data, error } = await admin.auth.admin.getUserById(userId);
   if (error || !data.user.email) fail("User email is unavailable.");
@@ -131,7 +149,9 @@ export async function sendManagedPasswordReset(formData: FormData) {
 }
 
 export async function deleteManagedAccount(formData: FormData) {
-  const userId = z.uuid().parse(formData.get("userId"));
+  const parsed = z.uuid().safeParse(formData.get("userId"));
+  if (!parsed.success) fail("Invalid account.");
+  const userId = parsed.data;
   const confirmation = String(formData.get("confirmation") ?? "").trim();
   const { admin, user } = await requirePlatformMember(["super_admin"]);
   if (userId === user.id)
@@ -160,7 +180,13 @@ export async function deleteManagedAccount(formData: FormData) {
 }
 
 export async function unsubscribeRetainedContact(formData: FormData) {
-  const email = z.email().parse(String(formData.get("email") ?? "").trim());
+  const parsed = z.email().safeParse(
+    String(formData.get("email") ?? "")
+      .trim()
+      .toLowerCase(),
+  );
+  if (!parsed.success) fail("Invalid contact email.");
+  const email = parsed.data;
   const { admin, user } = await requirePlatformMember(["super_admin"]);
   const { error } = await admin
     .from("retained_contacts")
@@ -190,6 +216,18 @@ async function audit(
     details,
   });
   if (error) throw error;
+}
+
+async function ensureAnotherSuperAdmin(
+  admin: Awaited<ReturnType<typeof requirePlatformMember>>["admin"],
+) {
+  const { count, error } = await admin
+    .from("platform_members")
+    .select("user_id", { count: "exact", head: true })
+    .eq("role", "super_admin");
+  if (error) fail(error.message);
+  if ((count ?? 0) <= 1)
+    fail("The final super admin cannot be removed or demoted.");
 }
 
 function done(message: string): never {

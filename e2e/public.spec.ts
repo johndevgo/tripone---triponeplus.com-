@@ -32,6 +32,29 @@ test("founding pricing and protected consoles are explicit", async ({
   await expect(page).toHaveURL(/\/login/);
 });
 
+test("growth studio is useful, honest and connected to the platform", async ({
+  page,
+}) => {
+  const response = await page.goto("/growth-services");
+  expect(response?.status()).toBe(200);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: /platform to run your website.*people to help grow it/i,
+    }),
+  ).toBeVisible();
+  await expect(page.getByText(/do you guarantee rankings/i)).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /discuss growth services/i }),
+  ).toHaveAttribute("href", /^mailto:neurerohan@gmail\.com/);
+  const schemas = await page
+    .locator('script[type="application/ld+json"]')
+    .allTextContents();
+  expect(schemas.some((schema) => schema.includes('"@type":"Service"'))).toBe(
+    true,
+  );
+});
+
 test("mobile navigation opens without horizontal overflow", async ({
   page,
 }, testInfo) => {
@@ -101,6 +124,7 @@ test("marketing navigation has no broken internal destinations", async ({
   for (const route of [
     "/",
     "/features",
+    "/growth-services",
     "/templates",
     "/pricing",
     "/resources",
@@ -128,6 +152,7 @@ test("SEO discovery files include the marketing resource library", async ({
   expect(sitemap.status()).toBe(200);
   const sitemapBody = await sitemap.text();
   expect(sitemapBody).toContain("/resources/tourism-website-seo-guide");
+  expect(sitemapBody).toContain("/growth-services");
   expect(sitemapBody).toContain("/resources/triponeplus-vs-wix-tour-operators");
   expect(sitemapBody).toContain("/resources/category/platform-comparisons");
   expect(

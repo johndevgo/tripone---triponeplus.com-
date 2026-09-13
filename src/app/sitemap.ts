@@ -11,6 +11,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const marketingPages = [
     "",
     "/features",
+    "/growth-services",
     "/templates",
     "/pricing",
     "/resources",

@@ -8,6 +8,7 @@ import {
   Boxes,
   CalendarDays,
   ChevronLeft,
+  ChevronsUpDown,
   Compass,
   FileText,
   Globe2,
@@ -131,15 +132,26 @@ export function DashboardShell({
             )}
           </button>
         </div>
-        <div
+        <Link
+          href="/admin/workspaces"
           className={cn(
-            "mx-3 mb-4 rounded-xl bg-white/[.06] p-3",
+            "group mx-3 mb-4 flex items-center justify-between gap-3 rounded-xl bg-white/[.06] p-3 transition hover:bg-white/[.1]",
             collapsed && "hidden",
           )}
         >
-          <p className="truncate text-sm font-medium">{siteName}</p>
-          <p className="text-xs text-white/40">Draft workspace</p>
-        </div>
+          <span className="min-w-0">
+            <span className="block truncate text-sm font-medium">
+              {siteName}
+            </span>
+            <span className="block text-xs text-white/40">
+              Switch workspace
+            </span>
+          </span>
+          <ChevronsUpDown
+            size={16}
+            className="shrink-0 text-white/35 transition group-hover:text-white/70"
+          />
+        </Link>
         <nav
           aria-label="Dashboard"
           className="flex-1 space-y-1 overflow-y-auto px-3"

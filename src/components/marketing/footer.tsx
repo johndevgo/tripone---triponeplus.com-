@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/logo";
-export function MarketingFooter() {
+import { getCurrentUser } from "@/lib/auth/current-user";
+
+export async function MarketingFooter() {
+  const user = await getCurrentUser();
   return (
     <footer className="bg-[#021912] px-5 pb-10 pt-16 text-white/60">
       <div className="mx-auto grid max-w-7xl gap-12 border-t border-white/10 pt-10 lg:grid-cols-[1.35fr_.65fr_.65fr_.65fr]">
@@ -12,16 +15,18 @@ export function MarketingFooter() {
             travel businesses.
           </p>
           <Link
-            href="/signup"
+            href={user ? "/admin/dashboard" : "/signup"}
             className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#ffc857] hover:text-white"
           >
-            Build your website <ArrowUpRight size={15} />
+            {user ? "Open your dashboard" : "Build your website"}{" "}
+            <ArrowUpRight size={15} />
           </Link>
         </div>
         <FooterGroup
           title="Product"
           links={[
             ["Features", "/features"],
+            ["Growth services", "/growth-services"],
             ["Templates", "/templates"],
             ["Pricing", "/pricing"],
             ["Log in", "/login"],
@@ -39,6 +44,7 @@ export function MarketingFooter() {
         <FooterGroup
           title="Company"
           links={[
+            ["Tourism growth", "/growth-services"],
             ["Privacy", "/privacy"],
             ["Terms", "/terms"],
           ]}

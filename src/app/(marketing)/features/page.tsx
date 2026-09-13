@@ -17,7 +17,7 @@ import {
   Smartphone,
   UsersRound,
 } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 
 export const metadata: Metadata = {
   title: "Tourism website builder and operations features",
@@ -109,9 +109,12 @@ export default function Features() {
             packages, bookings, availability, resources, CRM, publishing and
             useful performance signals.
           </p>
-          <ButtonLink href="/signup" className="mt-8">
-            Start building free <ArrowRight size={17} />
-          </ButtonLink>
+          <MarketingPrimaryCta
+            guestLabel="Start building free"
+            className="mt-8"
+          >
+            <ArrowRight size={17} />
+          </MarketingPrimaryCta>
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-white/10">
           <Image

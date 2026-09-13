@@ -18,10 +18,10 @@ No AI or LLM API is used. Pages and copy come from typed category presets, page 
 
 ## Route map
 
-Marketing: `/`, `/features`, `/templates`, `/pricing`, `/resources`, `/resources/category/[category]`, `/resources/[slug]`, `/privacy`, `/terms`, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
+Marketing: `/`, `/features`, `/growth-services`, `/templates`, `/pricing`, `/resources`, `/resources/category/[category]`, `/resources/[slug]`, `/privacy`, `/terms`, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
 
 The public marketing site includes original responsive travel photography,
-eight visual theme previews, generated Open Graph/Twitter images, structured
+ten visual theme previews, generated Open Graph/Twitter images, structured
 software/article/FAQ/breadcrumb data, and a typed library of 63 original
 industry guides, SEO/CRO/operations playbooks and fair competitor comparisons
 organized into six indexable collections. The library supports client-side
@@ -29,6 +29,10 @@ search and filtering without sending full article bodies to the browser.
 Marketing images live in
 `public/images/marketing/`; treat their filenames as immutable because they are
 served with long-lived cache headers.
+
+`/growth-services` gives the optional human-led tourism growth studio equal
+prominence without making ranking or booking guarantees. The SaaS remains fully
+usable as a self-service product.
 
 Product: `/onboarding`, `/admin/dashboard`, `/admin/account`, `/admin/workspaces`, plus clean `/admin/{feature}` routes for `offerings`, `experiences`, `rentals`, `packages`, `bookings`, `calendar`, `availability`, `resources`, `customers`, `leads`, `website`, `taxonomies`, `services`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `analytics`, `domains` and `settings`. The active workspace is held in a verified HTTP-only cookie, so browser URLs never expose the site UUID. `/super-admin` is a separate service-role-backed platform console.
 
@@ -183,6 +187,7 @@ corepack pnpm test
 corepack pnpm test:db
 corepack pnpm test:db:operations
 corepack pnpm test:db:platform
+corepack pnpm db:status
 corepack pnpm build
 corepack pnpm test:e2e
 ```
@@ -191,7 +196,7 @@ Playwright public desktop/mobile smoke tests need no credentials. Authenticated 
 
 The E2E command builds the application, starts that exact production build on a dedicated local port, waits for readiness, runs Playwright, and owns server teardown. Set `PLAYWRIGHT_BASE_URL` to test an already running authorized deployment instead.
 
-`test:db` requires `TRIPONE_DATABASE_URL` and runs its disposable authenticated fixtures inside a transaction that ends with `ROLLBACK`. Use only a disposable database or an explicitly authorized project.
+`test:db` requires `TRIPONE_DATABASE_URL` and runs its disposable authenticated fixtures inside a transaction that ends with `ROLLBACK`. Use only a disposable database or an explicitly authorized project. `db:status` uses the same server-only connection value for a read-only migration and release-table check.
 
 ## Security notes
 

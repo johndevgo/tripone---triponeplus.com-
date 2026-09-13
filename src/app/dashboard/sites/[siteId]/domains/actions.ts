@@ -14,7 +14,9 @@ import { createClient } from "@/lib/supabase/server";
 const identifiers = z.object({ siteId: z.uuid(), domainId: z.uuid() });
 
 export async function addDomain(formData: FormData) {
-  const siteId = z.uuid().parse(formData.get("siteId"));
+  const site = z.uuid().safeParse(formData.get("siteId"));
+  if (!site.success) failAtAdmin("Invalid website request.");
+  const siteId = site.data;
   const parsed = hostnameSchema.safeParse(
     String(formData.get("hostname") ?? ""),
   );
@@ -62,7 +64,7 @@ export async function addDomain(formData: FormData) {
 }
 
 export async function verifyDomain(formData: FormData) {
-  const { siteId, domainId } = identifiers.parse(Object.fromEntries(formData));
+  const { siteId, domainId } = parseIdentifiers(formData);
   const supabase = await createClient();
   const { data: domain } = await supabase
     .from("domains")
@@ -113,7 +115,7 @@ export async function verifyDomain(formData: FormData) {
 }
 
 export async function setPrimaryDomain(formData: FormData) {
-  const { siteId, domainId } = identifiers.parse(Object.fromEntries(formData));
+  const { siteId, domainId } = parseIdentifiers(formData);
   const supabase = await createClient();
   const { error } = await supabase.rpc("set_primary_domain", {
     target_domain: domainId,
@@ -126,7 +128,7 @@ export async function setPrimaryDomain(formData: FormData) {
 }
 
 export async function deleteDomain(formData: FormData) {
-  const { siteId, domainId } = identifiers.parse(Object.fromEntries(formData));
+  const { siteId, domainId } = parseIdentifiers(formData);
   const supabase = await createClient();
   const { data: domain } = await supabase
     .from("domains")
@@ -155,6 +157,14 @@ function fail(siteId: string, message = "Domain action failed."): never {
   redirect(
     `/dashboard/sites/${siteId}/domains?error=${encodeURIComponent(message)}`,
   );
+}
+function failAtAdmin(message: string): never {
+  redirect(`/admin/domains?error=${encodeURIComponent(message)}`);
+}
+function parseIdentifiers(formData: FormData) {
+  const parsed = identifiers.safeParse(Object.fromEntries(formData));
+  if (!parsed.success) failAtAdmin("Invalid domain request.");
+  return parsed.data;
 }
 function safeMessage(cause: unknown) {
   return cause instanceof Error

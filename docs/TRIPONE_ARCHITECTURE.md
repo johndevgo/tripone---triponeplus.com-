@@ -22,7 +22,10 @@ the narrow RPCs that coordinate multi-row or concurrency-sensitive changes.
   graph.
 - `src/lib/operations/`: booking, availability, package and resource schemas,
   relation normalization and mixed-industry fixtures.
-- `src/app/dashboard/sites/[siteId]/`: owner-facing CMS and operations routes.
+- `/admin/*`: clean owner-facing navigation backed by an authenticated,
+  HTTP-only active-workspace cookie. Requests rewrite to
+  `src/app/dashboard/sites/[siteId]/` so actions and renderers remain
+  tenant-scoped without exposing a UUID in the browser.
 - `src/lib/tenancy/`: immutable snapshot decoding, hostname/path resolution and
   canonical public URLs.
 - `supabase/migrations/`: additive schema, RLS, grants, triggers and RPC history.

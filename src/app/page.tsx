@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { MarketingHeader } from "@/components/marketing/header";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import { ResourceCard } from "@/components/marketing/resource-card";
 import { ButtonLink } from "@/components/ui/button";
 import { resources } from "@/content/resources";
@@ -240,9 +241,12 @@ export default function Home() {
               same tourism-native workspace.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/signup" className="min-h-13 px-7 text-base">
-                Start building free <ArrowRight size={18} />
-              </ButtonLink>
+              <MarketingPrimaryCta
+                guestLabel="Start building free"
+                className="min-h-13 px-7 text-base"
+              >
+                <ArrowRight size={18} />
+              </MarketingPrimaryCta>
               <ButtonLink
                 href="#how-it-works"
                 variant="secondary"
@@ -483,7 +487,7 @@ export default function Home() {
                 Design with range
               </p>
               <h2 className="marketing-title-light mt-5">
-                Eight directions. One coherent system.
+                Ten directions. One coherent system.
               </h2>
               <p className="mt-5 text-lg leading-8 text-[#60746d]">
                 Move from immersive coastal energy to restrained editorial
@@ -513,6 +517,57 @@ export default function Home() {
                 </div>
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="px-5 py-24 sm:py-28">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-stretch">
+          <div className="relative min-h-[30rem] overflow-hidden rounded-[2rem]">
+            <Image
+              src="/images/marketing/travel-planning.webp"
+              alt="A tourism specialist planning a traveller journey"
+              fill
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#041c16] via-[#041c16]/15 to-transparent" />
+            <div className="absolute inset-x-7 bottom-7 text-white sm:inset-x-9 sm:bottom-9">
+              <p className="text-xs font-semibold uppercase tracking-[.17em] text-[#ffc857]">
+                TripOne+ growth studio
+              </p>
+              <h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-[-.03em] sm:text-4xl">
+                Technology when you want control. People when you want support.
+              </h2>
+            </div>
+          </div>
+          <div className="app-bg flex flex-col justify-center rounded-[2rem] border border-white/10 p-8 text-white sm:p-10">
+            <p className="marketing-kicker">Platform + services</p>
+            <p className="mt-6 text-lg leading-8 text-white/60">
+              Use TripOne+ as a self-service tourism website and operations
+              platform, or work with our growth studio on search, conversion,
+              local discovery, campaigns and measurement.
+            </p>
+            <div className="mt-8 grid gap-3 text-sm text-white/65 sm:grid-cols-2">
+              {[
+                "Tourism-native website system",
+                "Search and destination content",
+                "Campaign landing journeys",
+                "Honest measurement foundations",
+              ].map((item) => (
+                <span key={item} className="flex items-center gap-3">
+                  <Check size={17} className="shrink-0 text-[#ffc857]" />
+                  {item}
+                </span>
+              ))}
+            </div>
+            <ButtonLink
+              href="/growth-services"
+              variant="secondary"
+              className="mt-9 w-fit"
+            >
+              Explore growth services <ArrowRight size={17} />
+            </ButtonLink>
           </div>
         </div>
       </section>
@@ -593,9 +648,12 @@ export default function Home() {
               Start with your real business details. Build the complete draft,
               inspect every page and publish when it is ready.
             </p>
-            <ButtonLink href="/signup" className="mt-8 min-h-13 px-7 text-base">
-              Build your website <ArrowRight size={18} />
-            </ButtonLink>
+            <MarketingPrimaryCta
+              guestLabel="Build your website"
+              className="mt-8 min-h-13 px-7 text-base"
+            >
+              <ArrowRight size={18} />
+            </MarketingPrimaryCta>
           </div>
         </div>
       </section>

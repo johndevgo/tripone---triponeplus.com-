@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ArrowRight, Check, ChevronRight, Sparkles } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import {
   defaultPlatformSettings,
   formatPlanPrice,
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 const included = [
   "Tourism-aware onboarding and deterministic generation",
-  "Eight professional themes and visual builder",
+  "Ten professional themes and visual builder",
   "Experiences, rentals, rates and destination content",
   "Draft preview and versioned publishing",
   "Technical SEO controls, sitemaps and redirects",
@@ -87,9 +87,12 @@ export default async function Pricing() {
               </p>
             ))}
           </div>
-          <ButtonLink href="/signup" className="mt-9 w-full min-h-13 text-base">
-            Start building <ArrowRight size={18} />
-          </ButtonLink>
+          <MarketingPrimaryCta
+            guestLabel="Start building"
+            className="mt-9 min-h-13 w-full text-base"
+          >
+            <ArrowRight size={18} />
+          </MarketingPrimaryCta>
         </div>
       </section>
 
