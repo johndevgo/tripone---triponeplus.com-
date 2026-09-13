@@ -5,7 +5,7 @@ import { createPublicClient } from "@/lib/supabase/public";
 export const revalidate = 300;
 
 export default async function robots(): Promise<MetadataRoute.Robots> {
-  const origin = getAppUrl("https://tools.neurerohan.com.np");
+  const origin = getAppUrl("https://triponeplus.com");
   const sitemaps = [`${origin.replace(/\/$/, "")}/sitemap.xml`];
   try {
     const { data } = await createPublicClient().rpc(
@@ -27,7 +27,14 @@ export default async function robots(): Promise<MetadataRoute.Robots> {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/dashboard/", "/onboarding/", "/preview/", "/tenant-sites/"],
+      disallow: [
+        "/admin/",
+        "/dashboard/",
+        "/super-admin/",
+        "/onboarding/",
+        "/preview/",
+        "/tenant-sites/",
+      ],
     },
     sitemap: sitemaps,
     host: origin,

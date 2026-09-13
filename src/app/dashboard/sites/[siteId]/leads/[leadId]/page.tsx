@@ -82,7 +82,7 @@ export default async function LeadDetailPage({
   return (
     <div className="mx-auto max-w-6xl">
       <Link
-        href={`/dashboard/sites/${siteId}/leads`}
+        href="/admin/leads"
         className="inline-flex items-center gap-2 text-sm text-white/45 hover:text-white"
       >
         <ArrowLeft size={16} /> Leads
@@ -108,7 +108,7 @@ export default async function LeadDetailPage({
             </form>
           )}
           <Link
-            href={`/dashboard/sites/${siteId}/bookings/new?leadId=${leadId}`}
+            href={`/admin/bookings/new?leadId=${leadId}`}
             className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
           >
             <CalendarPlus size={16} /> Create booking

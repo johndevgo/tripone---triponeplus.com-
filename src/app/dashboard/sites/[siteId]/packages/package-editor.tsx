@@ -74,7 +74,7 @@ export async function PackageEditor({
   return (
     <div className="mx-auto max-w-6xl">
       <Link
-        href={`/dashboard/sites/${siteId}/packages`}
+        href="/admin/packages"
         className="inline-flex items-center gap-2 text-sm text-white/45 transition hover:text-white"
       >
         <ArrowLeft size={16} /> Packages

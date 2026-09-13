@@ -171,7 +171,7 @@ const faqs = [
 ];
 
 export default function Home() {
-  const origin = getAppUrl("https://tools.neurerohan.com.np");
+  const origin = getAppUrl("https://triponeplus.com");
   const structuredData = [
     {
       "@context": "https://schema.org",
@@ -185,8 +185,8 @@ export default function Home() {
       offers: {
         "@type": "Offer",
         price: "0",
-        priceCurrency: "USD",
-        description: "Free during early access",
+        priceCurrency: "NPR",
+        description: "Free for the first three years, then NPR 4,999 per year",
       },
     },
     {
@@ -253,7 +253,7 @@ export default function Home() {
             </div>
             <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/65">
               {[
-                "Free during early access",
+                "Free for your first 3 years",
                 "No AI API",
                 "Preview before publishing",
               ].map((label) => (

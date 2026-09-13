@@ -86,7 +86,7 @@ export default async function BookingDetail({
   return (
     <div className="mx-auto max-w-6xl">
       <Link
-        href={`/dashboard/sites/${siteId}/bookings`}
+        href="/admin/bookings"
         className="inline-flex items-center gap-2 text-sm text-white/45"
       >
         <ArrowLeft size={16} />

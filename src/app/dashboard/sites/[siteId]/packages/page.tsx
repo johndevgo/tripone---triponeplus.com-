@@ -25,7 +25,7 @@ export default async function PackagesPage({
         title="Packages"
         action={
           <Link
-            href={`/dashboard/sites/${siteId}/packages/new`}
+            href="/admin/packages/new"
             className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
@@ -42,7 +42,7 @@ export default async function PackagesPage({
           {packages.map((item) => (
             <Link
               key={item.id}
-              href={`/dashboard/sites/${siteId}/packages/${item.id}`}
+              href={`/admin/packages/${item.id}`}
               className="glass rounded-2xl p-5 transition hover:border-[#FFC857]/40"
             >
               <div className="flex items-start justify-between gap-4">

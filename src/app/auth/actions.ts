@@ -14,12 +14,13 @@ const credentialsSchema = z.object({
 });
 const signupSchema = credentialsSchema.extend({
   name: z.string().trim().min(2).max(100),
+  marketingConsent: z.string().optional(),
 });
 
 function localPath(value: string) {
   return value.startsWith("/") && !value.startsWith("//")
     ? value
-    : "/dashboard";
+    : "/admin/dashboard";
 }
 
 export async function login(formData: FormData) {
@@ -38,7 +39,9 @@ export async function login(formData: FormData) {
   const { count } = await supabase
     .from("sites")
     .select("id", { count: "exact", head: true });
-  redirect(count ? localPath(value(formData, "next")) : "/onboarding");
+  const next = localPath(value(formData, "next"));
+  if (next.startsWith("/super-admin")) redirect(next);
+  redirect(count ? next : "/onboarding");
 }
 
 export async function signup(formData: FormData) {
@@ -46,6 +49,7 @@ export async function signup(formData: FormData) {
     email: value(formData, "email"),
     password: value(formData, "password"),
     name: value(formData, "name"),
+    marketingConsent: value(formData, "marketingConsent"),
   });
   if (!parsed.success)
     redirect(
@@ -58,7 +62,10 @@ export async function signup(formData: FormData) {
     email,
     password: parsed.data.password,
     options: {
-      data: { full_name: parsed.data.name },
+      data: {
+        full_name: parsed.data.name,
+        marketing_consent: parsed.data.marketingConsent === "on",
+      },
       emailRedirectTo: `${origin}/auth/callback?next=/onboarding`,
     },
   });
@@ -99,5 +106,5 @@ export async function resetPassword(formData: FormData) {
   const { error } = await supabase.auth.updateUser({ password });
   if (error)
     redirect(`/reset-password?error=${encodeURIComponent(error.message)}`);
-  redirect("/dashboard");
+  redirect("/admin/dashboard");
 }

@@ -31,7 +31,7 @@ export default async function EditRentalPage({
   return (
     <div className="mx-auto max-w-5xl">
       <Link
-        href={`/dashboard/sites/${siteId}/rentals`}
+        href="/admin/rentals"
         className="text-sm text-white/45 hover:text-white"
       >
         ← Back to rentals
@@ -39,7 +39,7 @@ export default async function EditRentalPage({
       <div className="mt-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
         <h1 className="text-3xl font-semibold">Edit {product.name}</h1>
         <Link
-          href={`/dashboard/sites/${siteId}/builder?target=${product.id}`}
+          href={`/admin/website?target=${product.id}`}
           className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#FFC857]/25 bg-[#FFC857]/[.06] px-4 text-sm font-medium text-[#FFC857]"
         >
           Customize page layout

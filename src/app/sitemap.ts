@@ -7,10 +7,7 @@ import {
 import { getAppUrl } from "@/lib/app-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const origin = getAppUrl("https://tools.neurerohan.com.np").replace(
-    /\/$/,
-    "",
-  );
+  const origin = getAppUrl("https://triponeplus.com").replace(/\/$/, "");
   const marketingPages = [
     "",
     "/features",

@@ -74,18 +74,18 @@ const nav = [
   },
 ] as const;
 export function DashboardShell({
-  siteId,
   siteName,
+  isSuperAdmin = false,
   children,
 }: {
-  siteId: string;
   siteName: string;
+  isSuperAdmin?: boolean;
   children: React.ReactNode;
 }) {
   const [mobile, setMobile] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const pathname = usePathname();
-  const base = `/dashboard/sites/${siteId}`;
+  const base = "/admin";
   return (
     <div className="app-bg min-h-screen text-white">
       <div className="ambient" />
@@ -152,11 +152,16 @@ export function DashboardShell({
                 </p>
               )}
               {group.items.map(([Icon, label, segment]) => {
-                const href = segment === "" ? base : `${base}/${segment}`;
+                const routeSegment =
+                  segment === "builder" ? "website" : segment;
+                const href =
+                  routeSegment === ""
+                    ? `${base}/dashboard`
+                    : `${base}/${routeSegment}`;
                 const active =
                   segment === ""
-                    ? pathname === base
-                    : pathname.includes(`/${segment}`);
+                    ? pathname === base || pathname === `${base}/dashboard`
+                    : pathname.includes(`/${routeSegment}`);
                 return (
                   <Link
                     onClick={() => setMobile(false)}
@@ -181,7 +186,7 @@ export function DashboardShell({
         </nav>
         <div className="border-t border-white/10 p-3">
           <Link
-            href="/dashboard/account"
+            href="/admin/account"
             className={cn(
               "mb-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-white/55 hover:bg-white/[.07] hover:text-white",
               collapsed && "justify-center",
@@ -190,6 +195,18 @@ export function DashboardShell({
             <UserCircle size={19} />
             {!collapsed && "Account"}
           </Link>
+          {isSuperAdmin && (
+            <Link
+              href="/super-admin"
+              className={cn(
+                "mb-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-[#FFC857] hover:bg-white/[.07] hover:text-white",
+                collapsed && "justify-center",
+              )}
+            >
+              <Settings size={19} />
+              {!collapsed && "Super admin"}
+            </Link>
+          )}
           <form action={logout}>
             <button
               className={cn(

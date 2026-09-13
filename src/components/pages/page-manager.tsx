@@ -116,7 +116,7 @@ export function PageManager({
                   </p>
                 </div>
                 <Link
-                  href={`/dashboard/sites/${siteId}/builder?target=${template.id}`}
+                  href={`/admin/website?target=${template.id}`}
                   className="inline-flex min-h-10 items-center gap-2 rounded-xl border border-white/10 px-3 text-sm hover:bg-white/[.06]"
                 >
                   Edit template <ExternalLink size={14} />
@@ -180,7 +180,7 @@ function PageCard({
         <div className="flex items-end gap-2">
           <Link
             aria-label={`Edit ${title}`}
-            href={`/dashboard/sites/${siteId}/builder?target=${page.id}`}
+            href={`/admin/website?target=${page.id}`}
             className="grid size-10 place-items-center rounded-xl border border-white/10"
           >
             <ExternalLink size={16} />

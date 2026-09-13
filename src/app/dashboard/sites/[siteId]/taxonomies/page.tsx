@@ -127,7 +127,7 @@ export default async function TaxonomiesPage({
                 </div>
                 {term.source_location_id ? (
                   <Link
-                    href={`/dashboard/sites/${siteId}/locations`}
+                    href="/admin/locations"
                     className="mt-4 inline-flex rounded-lg border border-white/10 px-3 py-2 text-xs text-[#FFC857]"
                   >
                     Edit from Locations
@@ -233,13 +233,13 @@ export default async function TaxonomiesPage({
                           Save landing page
                         </button>
                         <Link
-                          href={`/dashboard/sites/${siteId}/builder?target=${term.id}`}
+                          href={`/admin/website?target=${term.id}`}
                           className="inline-flex min-h-10 items-center rounded-xl border border-white/10 px-4 text-sm"
                         >
                           Customize this page
                         </Link>
                         <Link
-                          href={`/dashboard/sites/${siteId}/builder?target=${term.template_id ?? defaultTemplate?.id ?? ""}`}
+                          href={`/admin/website?target=${term.template_id ?? defaultTemplate?.id ?? ""}`}
                           className="inline-flex min-h-10 items-center rounded-xl border border-white/10 px-4 text-sm text-white/60"
                         >
                           Edit shared template

@@ -54,7 +54,7 @@ test("authenticated onboarding creates a real draft website", async ({
   await page.getByRole("button", { name: /Horizon/i }).click();
   await page.getByRole("button", { name: "Next", exact: true }).click();
   await page.getByRole("button", { name: /Build My Website/i }).click();
-  await expect(page).toHaveURL(/\/dashboard\/sites\/[0-9a-f-]+\/created/, {
+  await expect(page).toHaveURL(/\/admin\/created/, {
     timeout: 15_000,
   });
   await expect(

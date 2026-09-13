@@ -46,7 +46,7 @@ export default async function Experiences({
         title="Experiences"
         action={
           <Link
-            href={`/dashboard/sites/${siteId}/experiences/new`}
+            href="/admin/experiences/new"
             className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} /> Add experience
@@ -103,7 +103,7 @@ export default async function Experiences({
         <div className="mt-6 grid gap-4">
           {items.map((item) => (
             <Link
-              href={`/dashboard/sites/${siteId}/experiences/${item.id}`}
+              href={`/admin/experiences/${item.id}`}
               className="glass grid gap-4 rounded-2xl p-4 transition hover:border-[#FFC857]/40 sm:grid-cols-[96px_1fr_auto] sm:items-center"
               key={item.id}
             >

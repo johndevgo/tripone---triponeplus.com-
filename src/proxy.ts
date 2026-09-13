@@ -9,6 +9,12 @@ import {
   safeTenantPath,
 } from "@/lib/tenancy/hostname";
 import { tenantContentSecurityPolicy } from "@/lib/tenancy/csp";
+import {
+  ACTIVE_SITE_COOKIE,
+  activationPath,
+  adminPathFromLegacy,
+  legacyPathFromAdmin,
+} from "@/lib/admin-routing";
 
 export async function proxy(request: NextRequest) {
   const hostname = normalizeRequestHostname(request.headers);
@@ -18,8 +24,12 @@ export async function proxy(request: NextRequest) {
   cleanRequestHeaders.delete("x-tripone-path");
   cleanRequestHeaders.delete("x-tripone-isolated-origin");
   cleanRequestHeaders.delete("x-nonce");
+  cleanRequestHeaders.delete("x-tripone-admin-rewrite");
 
   if (!pathname) return new NextResponse("Bad request", { status: 400 });
+
+  const canonical = canonicalAppUrl(request, hostname);
+  if (canonical) return NextResponse.redirect(canonical, 308);
 
   if (isTenantHostname(hostname) && !pathname.startsWith("/tenant-sites/")) {
     if (
@@ -68,12 +78,74 @@ export async function proxy(request: NextRequest) {
   if (!isSupabaseConfigured()) {
     if (
       request.nextUrl.pathname.startsWith("/dashboard") ||
+      request.nextUrl.pathname.startsWith("/admin") ||
+      request.nextUrl.pathname.startsWith("/super-admin") ||
       request.nextUrl.pathname.startsWith("/onboarding")
     )
       return NextResponse.redirect(new URL("/login?error=setup", request.url));
     return NextResponse.next({ request: { headers: cleanRequestHeaders } });
   }
+
+  const internalAdminRewrite = request.headers.get("x-tripone-admin-rewrite");
+  const cleanAdminPath = adminPathFromLegacy(pathname);
+  if (cleanAdminPath && internalAdminRewrite !== "1") {
+    const match = pathname.match(
+      /^\/dashboard\/sites\/([0-9a-fA-F-]{36})(?:\/|$)/,
+    );
+    if (match?.[1]) {
+      const destination = request.nextUrl.clone();
+      destination.pathname = activationPath(match[1], cleanAdminPath);
+      destination.search = "";
+      return NextResponse.redirect(destination, 307);
+    }
+    const destination = request.nextUrl.clone();
+    destination.pathname = cleanAdminPath;
+    return NextResponse.redirect(destination, 307);
+  }
+
+  if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+    const siteId = request.cookies.get(ACTIVE_SITE_COOKIE)?.value;
+    const legacyPath = legacyPathFromAdmin(siteId, pathname);
+    if (!legacyPath) {
+      const destination = request.nextUrl.clone();
+      destination.pathname = "/dashboard";
+      destination.searchParams.set("next", pathname);
+      return NextResponse.redirect(destination, 307);
+    }
+    const destination = request.nextUrl.clone();
+    destination.pathname = legacyPath;
+    cleanRequestHeaders.set("x-tripone-admin-rewrite", "1");
+    return updateSession(request, cleanRequestHeaders, destination);
+  }
+
   return updateSession(request, cleanRequestHeaders);
+}
+
+function canonicalAppUrl(request: NextRequest, hostname: string) {
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+  if (!siteUrl) return null;
+  let destinationOrigin: URL;
+  try {
+    destinationOrigin = new URL(siteUrl);
+  } catch {
+    return null;
+  }
+  const configured = new Set(
+    (process.env.APP_REDIRECT_HOSTS ?? "")
+      .split(",")
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean),
+  );
+  if (destinationOrigin.hostname === "triponeplus.com") {
+    configured.add("www.triponeplus.com");
+    configured.add("tools.neurerohan.com.np");
+  }
+  if (!configured.has(hostname) || destinationOrigin.hostname === hostname)
+    return null;
+  return new URL(
+    request.nextUrl.pathname + request.nextUrl.search,
+    destinationOrigin,
+  );
 }
 
 async function resolveTenantRedirect(hostname: string, path: string) {

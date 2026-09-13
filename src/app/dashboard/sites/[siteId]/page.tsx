@@ -142,26 +142,11 @@ export default async function SiteOverview({
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <Quick
-              href={`/dashboard/sites/${siteId}/offerings`}
-              label="Add service"
-            />
-            <Quick
-              href={`/dashboard/sites/${siteId}/bookings/new`}
-              label="Add booking"
-            />
-            <Quick
-              href={`/dashboard/sites/${siteId}/leads#add-lead`}
-              label="Add lead"
-            />
-            <Quick
-              href={`/dashboard/sites/${siteId}/calendar`}
-              label="Open calendar"
-            />
-            <Quick
-              href={`/dashboard/sites/${siteId}/builder`}
-              label="Edit website"
-            />
+            <Quick href="/admin/offerings" label="Add service" />
+            <Quick href="/admin/bookings/new" label="Add booking" />
+            <Quick href="/admin/leads#add-lead" label="Add lead" />
+            <Quick href="/admin/calendar" label="Open calendar" />
+            <Quick href="/admin/website" label="Edit website" />
           </div>
         </div>
       </section>
@@ -199,7 +184,7 @@ export default async function SiteOverview({
                 upcomingBookings.map((booking) => (
                   <Link
                     key={booking.id}
-                    href={`/dashboard/sites/${siteId}/bookings/${booking.id}`}
+                    href={`/admin/bookings/${booking.id}`}
                     className="rounded-xl border border-white/10 p-3 text-sm hover:bg-white/[.04]"
                   >
                     <strong className="block">

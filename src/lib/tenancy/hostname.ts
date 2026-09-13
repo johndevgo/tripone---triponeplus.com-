@@ -66,9 +66,13 @@ export function productionHostname(hostname: string) {
 }
 
 export function safeTenantPath(pathname: string) {
-  const decoded = decodeURIComponent(pathname);
-  if (decoded.includes("\\") || decoded.includes("\0")) return null;
-  return pathname.startsWith("/") && !pathname.startsWith("//")
-    ? pathname
-    : null;
+  try {
+    const decoded = decodeURIComponent(pathname);
+    if (decoded.includes("\\") || decoded.includes("\0")) return null;
+    return pathname.startsWith("/") && !pathname.startsWith("//")
+      ? pathname
+      : null;
+  } catch {
+    return null;
+  }
 }

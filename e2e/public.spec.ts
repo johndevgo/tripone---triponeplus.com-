@@ -17,6 +17,21 @@ test("marketing and auth entry points are usable", async ({ page }) => {
   await expect(page.getByLabel("Email")).toBeEditable();
 });
 
+test("founding pricing and protected consoles are explicit", async ({
+  page,
+}) => {
+  await page.goto("/pricing");
+  await expect(
+    page.getByRole("heading", { name: /three years free/i }),
+  ).toBeVisible();
+  await expect(page.getByText(/NPR\s*4,999/i).first()).toBeVisible();
+
+  await page.goto("/admin/dashboard");
+  await expect(page).toHaveURL(/\/login/);
+  await page.goto("/super-admin");
+  await expect(page).toHaveURL(/\/login/);
+});
+
 test("mobile navigation opens without horizontal overflow", async ({
   page,
 }, testInfo) => {
@@ -122,7 +137,10 @@ test("SEO discovery files include the marketing resource library", async ({
 
   const robots = await request.get("/robots.txt");
   expect(robots.status()).toBe(200);
-  expect(await robots.text()).toContain("/sitemap.xml");
+  const robotsBody = await robots.text();
+  expect(robotsBody).toContain("/sitemap.xml");
+  expect(robotsBody).toContain("/admin/");
+  expect(robotsBody).toContain("/super-admin/");
 
   await page.goto("/");
   const socialImage = await page

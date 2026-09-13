@@ -62,7 +62,7 @@ export default async function BookingsPage({
         title="Bookings"
         action={
           <Link
-            href={`/dashboard/sites/${siteId}/bookings/new`}
+            href="/admin/bookings/new"
             className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
@@ -132,7 +132,7 @@ export default async function BookingsPage({
               "Service";
             return (
               <Link
-                href={`/dashboard/sites/${siteId}/bookings/${booking.id}`}
+                href={`/admin/bookings/${booking.id}`}
                 key={booking.id}
                 className="glass grid gap-3 rounded-2xl p-5 transition hover:border-[#FFC857]/40 md:grid-cols-[150px_1fr_180px_120px] md:items-center"
               >

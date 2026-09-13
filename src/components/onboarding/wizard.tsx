@@ -42,6 +42,7 @@ import {
 } from "@/lib/site-generator";
 import { slugify, cn } from "@/lib/utils";
 import { buildWebsite, checkSlug } from "@/app/onboarding/actions";
+import { activationPath } from "@/lib/admin-routing";
 
 const icons: Record<BusinessCapability, typeof Compass> = {
   jetski: Waves,
@@ -290,7 +291,7 @@ export function OnboardingWizard() {
       return;
     }
     localStorage.removeItem("tripone-onboarding");
-    router.push(`/dashboard/sites/${result.siteId}/created`);
+    router.push(activationPath(result.siteId, "/admin/created"));
     router.refresh();
   }
   async function uploadFile(file?: File) {
@@ -660,7 +661,7 @@ function DetailsStep({
               : slugState === "checking"
                 ? "Checking · "
                 : ""}
-            tools.neurerohan.com.np/s/{slug || valuesafe(name)}
+            triponeplus.com/s/{slug || valuesafe(name)}
           </span>
           <ErrorText>{errors.slug?.message}</ErrorText>
         </label>
@@ -1388,7 +1389,7 @@ function Review({
         </ReviewCard>
         <ReviewCard title="Proposed website">
           <p className="font-medium text-[#FFC857]">
-            tools.neurerohan.com.np/s/{values.slug}
+            triponeplus.com/s/{values.slug}
           </p>
           <p className="mt-3">
             Pages:{" "}

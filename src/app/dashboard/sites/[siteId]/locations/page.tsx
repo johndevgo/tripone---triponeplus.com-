@@ -121,7 +121,7 @@ export default async function Locations({
                     </div>
                     <div className="flex gap-2">
                       <Link
-                        href={`/dashboard/sites/${siteId}/builder?target=${item.id}`}
+                        href={`/admin/website?target=${item.id}`}
                         className="rounded-lg border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]"
                       >
                         Layout

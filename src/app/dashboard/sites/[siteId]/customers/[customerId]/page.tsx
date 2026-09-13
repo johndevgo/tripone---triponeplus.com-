@@ -50,7 +50,7 @@ export default async function CustomerDetail({
   return (
     <div className="mx-auto max-w-5xl">
       <Link
-        href={`/dashboard/sites/${siteId}/customers`}
+        href="/admin/customers"
         className="inline-flex items-center gap-2 text-sm text-white/45"
       >
         <ArrowLeft size={16} />
@@ -76,7 +76,7 @@ export default async function CustomerDetail({
                 .map((booking) => (
                   <Link
                     key={booking.id}
-                    href={`/dashboard/sites/${siteId}/bookings/${booking.id}`}
+                    href={`/admin/bookings/${booking.id}`}
                     className="rounded-xl border border-white/10 p-4 hover:bg-white/[.04]"
                   >
                     <div className="flex justify-between gap-3">

@@ -36,6 +36,7 @@ describe("production hostname rules", () => {
     expect(isTenantHostname("dubai-wave-jetski.triponeplus.com")).toBe(true);
     expect(isAppHostname("tools.neurerohan.com.np")).toBe(true);
     expect(safeTenantPath("//evil.example")).toBeNull();
+    expect(safeTenantPath("/%ZZ")).toBeNull();
     expect(
       isSameOriginMutation(
         new Headers({

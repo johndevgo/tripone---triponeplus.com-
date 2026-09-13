@@ -22,7 +22,7 @@ export default async function Redirects({
   return (
     <>
       <Link
-        href={`/dashboard/sites/${siteId}/seo`}
+        href="/admin/seo"
         className="inline-flex items-center gap-2 text-sm text-white/50"
       >
         <ArrowLeft size={16} />

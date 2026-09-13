@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { getAppUrl } from "@/lib/app-url";
+import { deleteUserCompletely } from "@/lib/platform/delete-user";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
@@ -12,6 +13,7 @@ const profileSchema = z.object({
     z.literal(""),
     z.url().refine((value) => /^https?:\/\//.test(value)),
   ]),
+  marketingConsent: z.string().optional(),
 });
 export async function saveProfile(formData: FormData) {
   const parsed = profileSchema.safeParse(Object.fromEntries(formData));
@@ -27,11 +29,12 @@ export async function saveProfile(formData: FormData) {
     .update({
       full_name: parsed.data.fullName,
       avatar_url: parsed.data.avatarUrl || null,
+      marketing_consent: parsed.data.marketingConsent === "on",
     })
     .eq("id", user.id);
   if (error) fail(error.message);
-  revalidatePath("/dashboard/account");
-  redirect("/dashboard/account?message=Profile%20saved");
+  revalidatePath("/admin/account");
+  redirect("/admin/account?message=Profile%20saved");
 }
 export async function sendPasswordReset() {
   const supabase = await createClient();
@@ -44,7 +47,7 @@ export async function sendPasswordReset() {
     redirectTo: `${origin}/reset-password`,
   });
   if (error) fail(error.message);
-  redirect("/dashboard/account?message=Password%20reset%20email%20sent");
+  redirect("/admin/account?message=Password%20reset%20email%20sent");
 }
 export async function deleteAccount(formData: FormData) {
   const confirmation = String(formData.get("confirmation") ?? "");
@@ -58,11 +61,20 @@ export async function deleteAccount(formData: FormData) {
   const admin = createAdminClient();
   if (!admin)
     fail("Account deletion requires SUPABASE_SECRET_KEY on the server.");
-  const { error } = await admin.auth.admin.deleteUser(user.id);
-  if (error) fail(error.message);
+  try {
+    await deleteUserCompletely({
+      admin,
+      userId: user.id,
+      email: user.email,
+      reason: "user_request",
+      actorId: user.id,
+    });
+  } catch (cause) {
+    fail(cause instanceof Error ? cause.message : "Account deletion failed.");
+  }
   await supabase.auth.signOut();
   redirect("/?message=Account%20deleted");
 }
 function fail(message: string): never {
-  redirect(`/dashboard/account?error=${encodeURIComponent(message)}`);
+  redirect(`/admin/account?error=${encodeURIComponent(message)}`);
 }

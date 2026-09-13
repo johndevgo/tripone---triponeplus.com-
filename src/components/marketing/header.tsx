@@ -1,19 +1,37 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Logo } from "@/components/logo";
 import { ButtonLink } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 export function MarketingHeader() {
   const [open, setOpen] = useState(false);
+  const [authenticated, setAuthenticated] = useState(false);
+  const supabase = useMemo(() => createClient(), []);
+  useEffect(() => {
+    let active = true;
+    void supabase.auth.getUser().then(({ data }) => {
+      if (active) setAuthenticated(Boolean(data.user));
+    });
+    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (active) setAuthenticated(Boolean(session?.user));
+    });
+    return () => {
+      active = false;
+      data.subscription.unsubscribe();
+    };
+  }, [supabase]);
   const mobileLinks: Array<[string, string]> = [
     ["Features", "/features"],
     ["Templates", "/templates"],
     ["Resources", "/resources"],
     ["Compare", "/resources/category/platform-comparisons"],
     ["Pricing", "/pricing"],
-    ["Log in", "/login"],
-    ["Build your website", "/signup"],
+    authenticated ? ["Dashboard", "/admin/dashboard"] : ["Log in", "/login"],
+    authenticated
+      ? ["Open workspace", "/admin/dashboard"]
+      : ["Build your website", "/signup"],
   ];
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-white/[.07] bg-[#041c16]/80 backdrop-blur-2xl">
@@ -41,10 +59,14 @@ export function MarketingHeader() {
           <Link href="/pricing" className="hover:text-white">
             Pricing
           </Link>
-          <Link href="/login" className="hover:text-white">
-            Log in
-          </Link>
-          <ButtonLink href="/signup">Build your website</ButtonLink>
+          {!authenticated && (
+            <Link href="/login" className="hover:text-white">
+              Log in
+            </Link>
+          )}
+          <ButtonLink href={authenticated ? "/admin/dashboard" : "/signup"}>
+            {authenticated ? "Dashboard" : "Build your website"}
+          </ButtonLink>
         </nav>
         <button
           type="button"

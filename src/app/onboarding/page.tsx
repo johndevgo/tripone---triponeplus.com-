@@ -18,7 +18,7 @@ export default async function Onboarding() {
   const { count } = await supabase
     .from("sites")
     .select("id", { count: "exact", head: true });
-  if (count) redirect("/dashboard");
+  if (count) redirect("/admin/dashboard");
   return (
     <main className="app-bg min-h-screen px-4 py-6 text-white sm:px-6 sm:py-8">
       <div className="ambient" />

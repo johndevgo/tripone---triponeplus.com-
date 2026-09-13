@@ -323,14 +323,14 @@ function LeadActions({ lead, siteId }: { lead: Lead; siteId: string }) {
   return (
     <div className="mt-3 flex flex-wrap gap-2 text-xs">
       <Link
-        href={`/dashboard/sites/${siteId}/leads/${lead.id}`}
+        href={`/admin/leads/${lead.id}`}
         className="rounded-lg border border-white/10 px-2.5 py-2 text-white/60 hover:text-white"
       >
         Open lead
       </Link>
       {lead.customer_id ? (
         <Link
-          href={`/dashboard/sites/${siteId}/customers/${lead.customer_id}`}
+          href={`/admin/customers/${lead.customer_id}`}
           className="rounded-lg border border-white/10 px-2.5 py-2 text-white/60 hover:text-white"
         >
           View customer
@@ -345,7 +345,7 @@ function LeadActions({ lead, siteId }: { lead: Lead; siteId: string }) {
         </form>
       )}
       <Link
-        href={`/dashboard/sites/${siteId}/bookings/new?leadId=${lead.id}`}
+        href={`/admin/bookings/new?leadId=${lead.id}`}
         className="rounded-lg bg-[#F5A623] px-2.5 py-2 font-semibold text-[#173028]"
       >
         Create booking

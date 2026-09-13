@@ -54,10 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ResourceArticlePage({ params }: Props) {
   const article = getResource((await params).slug);
   if (!article) notFound();
-  const origin = getAppUrl("https://tools.neurerohan.com.np").replace(
-    /\/$/,
-    "",
-  );
+  const origin = getAppUrl("https://triponeplus.com").replace(/\/$/, "");
   const canonical = `${origin}/resources/${article.slug}`;
   const related = getRelatedResources(article);
   const articleSchema = {

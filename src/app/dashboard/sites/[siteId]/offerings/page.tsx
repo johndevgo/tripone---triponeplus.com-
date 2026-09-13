@@ -55,7 +55,7 @@ export default async function OfferingsPage({
       price: item.price_from == null ? null : Number(item.price_from),
       currency: item.currency,
       updatedAt: item.updated_at,
-      href: `/dashboard/sites/${siteId}/experiences/${item.id}`,
+      href: `/admin/experiences/${item.id}`,
     })),
     ...(rentals ?? []).map((item) => ({
       id: item.id,
@@ -69,7 +69,7 @@ export default async function OfferingsPage({
           : Number(item.rental_rates[0].amount),
       currency: item.currency,
       updatedAt: item.updated_at,
-      href: `/dashboard/sites/${siteId}/rentals/${item.id}`,
+      href: `/admin/rentals/${item.id}`,
     })),
     ...(packages ?? []).map((item) => ({
       id: item.id,
@@ -80,7 +80,7 @@ export default async function OfferingsPage({
       price: item.price_from == null ? null : Number(item.price_from),
       currency: item.currency,
       updatedAt: item.updated_at,
-      href: `/dashboard/sites/${siteId}/packages/${item.id}`,
+      href: `/admin/packages/${item.id}`,
     })),
   ]
     .filter(
@@ -98,18 +98,9 @@ export default async function OfferingsPage({
         title="Products & Services"
         action={
           <div className="flex flex-wrap gap-2">
-            <AddLink
-              href={`/dashboard/sites/${siteId}/experiences/new`}
-              label="Tour / activity"
-            />
-            <AddLink
-              href={`/dashboard/sites/${siteId}/rentals/new`}
-              label="Rental"
-            />
-            <AddLink
-              href={`/dashboard/sites/${siteId}/packages/new`}
-              label="Package"
-            />
+            <AddLink href="/admin/experiences/new" label="Tour / activity" />
+            <AddLink href="/admin/rentals/new" label="Rental" />
+            <AddLink href="/admin/packages/new" label="Package" />
           </div>
         }
       />

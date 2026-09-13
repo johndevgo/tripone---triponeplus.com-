@@ -73,7 +73,7 @@ export default async function CustomersPage({
             return (
               <Link
                 key={customer.id}
-                href={`/dashboard/sites/${siteId}/customers/${customer.id}`}
+                href={`/admin/customers/${customer.id}`}
                 className="glass grid gap-3 rounded-2xl p-5 hover:border-[#FFC857]/40 md:grid-cols-[1fr_180px_160px] md:items-center"
               >
                 <div className="flex items-center gap-3">

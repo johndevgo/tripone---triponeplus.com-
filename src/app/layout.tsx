@@ -24,6 +24,10 @@ export const metadata: Metadata = {
   authors: [{ name: "TripOne+" }],
   creator: "TripOne+",
   publisher: "TripOne+",
+  icons: {
+    icon: "/images/logo annd branding/tripone 1isto1 photo logo .png",
+    apple: "/images/logo annd branding/tripone 1isto1 photo logo .png",
+  },
   category: "business",
   keywords: [
     "tourism website builder",

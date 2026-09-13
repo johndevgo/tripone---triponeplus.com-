@@ -30,7 +30,7 @@ export default async function Created({
           Preview website
         </Link>
         <Link
-          href={`/dashboard/sites/${siteId}`}
+          href="/admin/dashboard"
           className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-white/15 bg-white/[.06] px-5 text-sm font-semibold"
         >
           <LayoutDashboard size={17} />
