@@ -83,6 +83,20 @@ Optional server-only:
    npx supabase@latest db lint --linked --level warning
    ```
 
+   The current production history contains a later platform migration while
+   `20260910122440_operations_core.sql` is still absent. After creating and
+   confirming the `neurerohan@gmail.com` Auth account, preview and apply every
+   migration missing from remote history with:
+
+   ```powershell
+   npx supabase@latest db push --linked --include-all --dry-run
+   npx supabase@latest db push --linked --include-all
+   npx supabase@latest migration list --linked
+   npx supabase@latest db lint --linked --level warning
+   ```
+
+   Do not use `db reset --linked` on production; it deletes remote data.
+
 2. In Authentication → URL Configuration, set Site URL to `https://triponeplus.com`. Add exact redirects:
    - `https://triponeplus.com/auth/callback`
    - `https://triponeplus.com/reset-password`
@@ -120,6 +134,7 @@ Optional server-only:
 22. `20260908203000_honest_path_based_publishing.sql`: prevents unowned platform subdomains from becoming verified or canonical.
 23. `20260910122440_operations_core.sql`: adds packages, native booking requests, customers, availability, departures, resources, operations audit trails and tenant-safe RPCs.
 24. `20260913092023_platform_access_entitlements_retention.sql`: adds service-only platform roles, founding entitlements, editable commercial/retention policy, consent-limited retained contacts and privileged audit records. If `neurerohan@gmail.com` already exists in Supabase Auth when this migration runs, it is bootstrapped as the initial super admin.
+25. `20260913170000_bootstrap_platform_owner.sql`: idempotently ensures the confirmed founding owner account has the initial `super_admin` role without storing a password.
 
 ## Demo data
 
