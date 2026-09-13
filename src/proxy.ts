@@ -22,7 +22,11 @@ export async function proxy(request: NextRequest) {
   if (!pathname) return new NextResponse("Bad request", { status: 400 });
 
   if (isTenantHostname(hostname) && !pathname.startsWith("/tenant-sites/")) {
-    if (pathname === "/api/events" || pathname === "/api/leads")
+    if (
+      pathname === "/api/events" ||
+      pathname === "/api/leads" ||
+      pathname === "/api/bookings"
+    )
       return NextResponse.next();
     if (pathname.startsWith("/api/") || pathname.startsWith("/auth/"))
       return new NextResponse("Not found", { status: 404 });

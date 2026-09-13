@@ -6,7 +6,9 @@ import { sectionsSchema, type ThemeId } from "@/lib/types";
 import { createExperienceSeo, getTheme } from "@/lib/site-generator";
 import {
   SiteRenderer,
+  type PublicDeparture,
   type PublicExperience,
+  type PublicPackage,
   type PublicRental,
 } from "@/components/site/site-renderer";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo/structured-data";
@@ -36,13 +38,17 @@ async function load(siteSlug: string, path: string[]) {
     ? route.slice(12)
     : null;
   const rentalRoute = route.startsWith("rentals/") ? route.slice(8) : null;
+  const packageRoute = route.startsWith("packages/") ? route.slice(9) : null;
   const [
     { data: pages },
     { data: experiences },
     { data: rentals },
     { data: rentalRates },
+    { data: packages },
+    { data: packageItems },
     { data: templates },
     { data: savedSections },
+    { data: departures },
   ] = await Promise.all([
     supabase
       .from("pages")
@@ -67,6 +73,17 @@ async function load(siteSlug: string, path: string[]) {
       .eq("site_id", site.id)
       .order("sort_order"),
     supabase
+      .from("packages")
+      .select("*")
+      .eq("site_id", site.id)
+      .neq("status", "archived")
+      .order("sort_order"),
+    supabase
+      .from("package_items")
+      .select("*")
+      .eq("site_id", site.id)
+      .order("sort_order"),
+    supabase
       .from("site_templates")
       .select("id,template_kind,subtype,sections,version")
       .eq("site_id", site.id),
@@ -75,6 +92,13 @@ async function load(siteSlug: string, path: string[]) {
       .select("id,section_type,variant,settings,revision")
       .eq("site_id", site.id)
       .eq("save_mode", "linked"),
+    supabase
+      .from("departures")
+      .select("id,experience_id,rental_product_id,package_id,starts_at,ends_at")
+      .eq("site_id", site.id)
+      .eq("status", "open")
+      .gte("starts_at", new Date().toISOString())
+      .order("starts_at"),
   ]);
   const page =
     pages?.find((p) => p.slug === route) ||
@@ -87,7 +111,10 @@ async function load(siteSlug: string, path: string[]) {
   const rental = rentalRoute
     ? rentals?.find((item) => item.slug === rentalRoute)
     : null;
-  if (!page && !experience && !rental) return null;
+  const activePackage = packageRoute
+    ? packages?.find((item) => item.slug === packageRoute)
+    : null;
+  if (!page && !experience && !rental && !activePackage) return null;
   const business = Array.isArray(site.businesses)
     ? site.businesses[0]
     : site.businesses;
@@ -134,7 +161,7 @@ async function load(siteSlug: string, path: string[]) {
             : [],
         }
       : {
-          title: experience?.name ?? rental!.name,
+          title: experience?.name ?? rental?.name ?? activePackage!.name,
           slug: route,
           sections: templateSections.length
             ? templateSections
@@ -148,19 +175,28 @@ async function load(siteSlug: string, path: string[]) {
                     eyebrow:
                       experience?.location_name ??
                       rental?.location_name ??
+                      (activePackage?.duration_days
+                        ? `${activePackage.duration_days} day package`
+                        : null) ??
                       business.name,
-                    title: experience?.name ?? rental!.name,
+                    title:
+                      experience?.name ?? rental?.name ?? activePackage!.name,
                     description:
                       experience?.short_description ??
-                      rental!.short_description,
+                      rental?.short_description ??
+                      activePackage!.short_description,
                     primaryCta: experience
                       ? experience.booking_url
                         ? "Book now"
                         : "Contact us"
-                      : rental!.booking_button_label,
+                      : (rental?.booking_button_label ??
+                        activePackage!.booking_button_label),
                     primaryHref:
                       experience?.booking_url ??
                       rental?.booking_url ??
+                      (activePackage
+                        ? `/packages/${activePackage.slug}#booking-request`
+                        : null) ??
                       "/contact",
                   },
                 },
@@ -171,7 +207,7 @@ async function load(siteSlug: string, path: string[]) {
                 business.name,
                 experience.location_name ?? business.city,
               )
-            : rental!.seo_settings,
+            : (rental?.seo_settings ?? activePackage!.seo_settings),
         },
     experiences: experiences ?? [],
     rentals: (rentals ?? []).map((item) => ({
@@ -189,6 +225,21 @@ async function load(siteSlug: string, path: string[]) {
           ),
         } as PublicRental)
       : null,
+    packages: (packages ?? []).map((item) => ({
+      ...item,
+      items: (packageItems ?? []).filter(
+        (entry) => entry.package_id === item.id,
+      ),
+    })) as PublicPackage[],
+    activePackage: activePackage
+      ? ({
+          ...activePackage,
+          items: (packageItems ?? []).filter(
+            (entry) => entry.package_id === activePackage.id,
+          ),
+        } as PublicPackage)
+      : null,
+    departures: (departures ?? []) as PublicDeparture[],
   };
 }
 
@@ -401,10 +452,13 @@ export default async function Preview({
         theme={theme}
         experiences={data.experiences as PublicExperience[]}
         rentals={data.rentals}
+        packages={data.packages}
+        departures={data.departures}
         activeExperience={
           data.experience ? (data.experience as PublicExperience) : undefined
         }
         activeRental={data.rental ?? undefined}
+        activePackage={data.activePackage ?? undefined}
         basePath={`/preview/${data.site.slug}`}
         preview
       />

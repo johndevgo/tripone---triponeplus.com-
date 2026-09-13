@@ -45,6 +45,14 @@ const destinationCapabilities = new Set<BusinessCapability>([
   "local_guide",
   "motorcycle_tour",
 ]);
+const packageCapabilities = new Set<BusinessCapability>([
+  "travel_agency",
+  "tour_operator",
+  "multi_day_tour",
+  "safari",
+  "trekking",
+  "hiking",
+]);
 
 const catalogue: Record<
   WebsitePageKey,
@@ -76,6 +84,13 @@ const catalogue: Record<
     slug: "rentals",
     showInNavigation: true,
     sections: ["hero", "rentalGrid", "contact", "finalCta"],
+  },
+  packages: {
+    key: "packages",
+    title: "Packages",
+    slug: "packages",
+    showInNavigation: true,
+    sections: ["hero", "packageGrid", "contact", "finalCta"],
   },
   destinations: {
     key: "destinations",
@@ -131,6 +146,7 @@ const order: WebsitePageKey[] = [
   "home",
   "experiences",
   "rentals",
+  "packages",
   "destinations",
   "about",
   "gallery",
@@ -149,6 +165,8 @@ export function recommendedPageSelections(
     recommended.add("experiences");
   if (normalized.some((item) => rentalCapabilities.has(item)))
     recommended.add("rentals");
+  if (normalized.some((item) => packageCapabilities.has(item)))
+    recommended.add("packages");
   if (normalized.some((item) => destinationCapabilities.has(item)))
     recommended.add("destinations");
   if (normalized.some((item) => item !== "travel_agency"))
@@ -213,12 +231,10 @@ export function recommendedPageSelections(
           ] as const);
   return order.map((key) => ({
     ...catalogue[key],
-    ...(key === "experiences" && normalized.includes("travel_agency")
-      ? { title: "Packages", slug: "packages" }
-      : key === "experiences" &&
-          normalized.some((item) => item === "trekking" || item === "hiking")
-        ? { title: "Treks", slug: "treks" }
-        : {}),
+    ...(key === "experiences" &&
+    normalized.some((item) => item === "trekking" || item === "hiking")
+      ? { title: "Treks", slug: "treks" }
+      : {}),
     ...(key === "home" ? { sections: [...homeSections] } : {}),
     selected: recommended.has(key),
   }));
@@ -249,6 +265,7 @@ export function pageTypeFor(key: WebsitePageKey): string {
   const known: Partial<Record<WebsitePageKey, string>> = {
     home: "home",
     experiences: "experiences",
+    packages: "custom",
     destinations: "locations",
     about: "about",
     gallery: "gallery",

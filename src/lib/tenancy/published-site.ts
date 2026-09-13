@@ -15,6 +15,8 @@ import {
 } from "@/lib/templates/bindings";
 import type {
   PublicExperience,
+  PublicDeparture,
+  PublicPackage,
   PublicRental,
 } from "@/components/site/site-renderer";
 
@@ -63,6 +65,8 @@ const rentalSchema = z
     booking_button_label: z.string().nullable().optional(),
     quote_only: z.boolean().default(false),
     featured_image_url: z.string().nullable().optional(),
+    gallery: z.array(z.string()).default([]),
+    details: z.record(z.string(), z.unknown()).default({}),
     specifications: z.unknown().optional(),
     inclusions: z.unknown().optional(),
     exclusions: z.unknown().optional(),
@@ -81,6 +85,48 @@ const rentalRateSchema = z
     pricing_unit: z.string(),
     minimum_quantity: z.coerce.number().nullable().optional(),
     maximum_quantity: z.coerce.number().nullable().optional(),
+  })
+  .passthrough();
+
+const packageSchema = z
+  .object({
+    id: z.string(),
+    name: z.string(),
+    slug: z.string(),
+    short_description: z.string().default(""),
+    description: z.string().default(""),
+    duration_days: z.coerce.number().nullable().default(null),
+    price_from: z.coerce.number().nullable().default(null),
+    currency: z.string().default("USD"),
+    pricing_label: z.string().nullable().optional(),
+    booking_mode: z.enum(["request", "enquiry", "external"]).default("request"),
+    booking_url: z.string().nullable().optional(),
+    booking_button_label: z.string().default("Request this package"),
+    featured_image_url: z.string().nullable().optional(),
+    gallery: z.array(z.string()).default([]),
+    details: z.record(z.string(), z.unknown()).default({}),
+    highlights: z.unknown().optional(),
+    inclusions: z.unknown().optional(),
+    exclusions: z.unknown().optional(),
+    itinerary: z.unknown().optional(),
+    faqs: z.unknown().optional(),
+    policies: z.unknown().optional(),
+    seo_settings: z.record(z.string(), z.unknown()).default({}),
+    updated_at: z.string().optional(),
+  })
+  .passthrough();
+
+const packageItemSchema = z
+  .object({
+    id: z.string(),
+    package_id: z.string(),
+    experience_id: z.string().nullable().optional(),
+    rental_product_id: z.string().nullable().optional(),
+    day_number: z.coerce.number().nullable().optional(),
+    title: z.string(),
+    description: z.string().default(""),
+    optional: z.boolean().default(false),
+    sort_order: z.coerce.number().default(0),
   })
   .passthrough();
 
@@ -131,6 +177,9 @@ export const publishedSnapshotSchema = z.object({
   experiences: z.array(experienceSchema).default([]),
   rentals: z.array(rentalSchema).default([]),
   rentalRates: z.array(rentalRateSchema).default([]),
+  packages: z.array(packageSchema).default([]),
+  packageItems: z.array(packageItemSchema).default([]),
+  departures: z.array(z.record(z.string(), z.unknown())).default([]),
   taxonomies: z.array(z.record(z.string(), z.unknown())).default([]),
   taxonomyTerms: z.array(z.record(z.string(), z.unknown())).default([]),
   experienceTaxonomyTerms: z
@@ -230,6 +279,10 @@ export function publishedSitemapEntries(
     if (!isIndexable(rental.seo_settings)) continue;
     add(`/rentals/${rental.slug}`, rental.updated_at);
   }
+  for (const item of snapshot.packages) {
+    if (!isIndexable(item.seo_settings)) continue;
+    add(`/packages/${item.slug}`, item.updated_at);
+  }
   for (const location of snapshot.locations) {
     if (
       typeof location.slug !== "string" ||
@@ -272,6 +325,7 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
     : null;
   const locationSlug = route.startsWith("locations/") ? route.slice(10) : null;
   const rentalSlug = route.startsWith("rentals/") ? route.slice(8) : null;
+  const packageSlug = route.startsWith("packages/") ? route.slice(9) : null;
   const experience = experienceSlug
     ? snapshot.experiences.find((item) => item.slug === experienceSlug)
     : undefined;
@@ -281,11 +335,21 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
   const rental = rentalSlug
     ? snapshot.rentals.find((item) => item.slug === rentalSlug)
     : undefined;
+  const activePackageRecord = packageSlug
+    ? snapshot.packages.find((item) => item.slug === packageSlug)
+    : undefined;
   const taxonomyMatch = resolveTaxonomyTerm(snapshot, route);
   const storedPage = snapshot.pages.find(
     (item) => item.slug.replace(/^\/+|\/+$/g, "") === route,
   );
-  if (!storedPage && !experience && !location && !rental && !taxonomyMatch)
+  if (
+    !storedPage &&
+    !experience &&
+    !location &&
+    !rental &&
+    !activePackageRecord &&
+    !taxonomyMatch
+  )
     return null;
 
   const page = storedPage
@@ -323,32 +387,34 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
             snapshot.savedSections,
             snapshot.business,
           )
-        : taxonomyMatch
-          ? taxonomyPage(
-              taxonomyMatch.term,
-              taxonomyMatch.path,
-              snapshot.business.name,
-              templateFor(
-                snapshot,
-                "taxonomy_landing",
-                String(taxonomyMatch.taxonomy.taxonomy_type ?? "default"),
-                stringField(taxonomyMatch.term, "template_id"),
-              ),
-              snapshot.savedSections,
-              snapshot.business,
-            )
-          : locationPage(
-              location!,
-              snapshot.business.name,
-              templateFor(
-                snapshot,
-                "location_detail",
-                "default",
-                stringField(location!, "template_id"),
-              ),
-              snapshot.savedSections,
-              snapshot.business,
-            );
+        : activePackageRecord
+          ? packagePage(activePackageRecord, snapshot.business.name)
+          : taxonomyMatch
+            ? taxonomyPage(
+                taxonomyMatch.term,
+                taxonomyMatch.path,
+                snapshot.business.name,
+                templateFor(
+                  snapshot,
+                  "taxonomy_landing",
+                  String(taxonomyMatch.taxonomy.taxonomy_type ?? "default"),
+                  stringField(taxonomyMatch.term, "template_id"),
+                ),
+                snapshot.savedSections,
+                snapshot.business,
+              )
+            : locationPage(
+                location!,
+                snapshot.business.name,
+                templateFor(
+                  snapshot,
+                  "location_detail",
+                  "default",
+                  stringField(location!, "template_id"),
+                ),
+                snapshot.savedSections,
+                snapshot.business,
+              );
   if (!page) return null;
   const allExperiences = snapshot.experiences as unknown as PublicExperience[];
   const rentals = snapshot.rentals.map((item) => ({
@@ -357,6 +423,12 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
       (rate) => rate.rental_product_id === item.id,
     ),
   })) as PublicRental[];
+  const packages = snapshot.packages.map((item) => ({
+    ...item,
+    items: snapshot.packageItems.filter(
+      (packageItem) => packageItem.package_id === item.id,
+    ),
+  })) as PublicPackage[];
   const relatedTermIds = taxonomyMatch
     ? descendantTermIds(snapshot.taxonomyTerms, String(taxonomyMatch.term.id))
     : null;
@@ -391,11 +463,16 @@ export function resolvePublishedRoute(site: PublishedSite, rawPath: string[]) {
     experience: experience as unknown as PublicExperience | undefined,
     experiences,
     rentals: visibleRentals,
+    packages,
     location,
     rental,
     activeRental: rental
       ? rentals.find((item) => item.id === rental.id)
       : undefined,
+    activePackage: activePackageRecord
+      ? packages.find((item) => item.id === activePackageRecord.id)
+      : undefined,
+    departures: snapshot.departures as PublicDeparture[],
   };
 }
 
@@ -424,6 +501,7 @@ export function rendererData(site: PublishedSite) {
       ...stored,
       colors: { ...preset.colors, ...stored.colors },
     },
+    departures: snapshot.departures as PublicDeparture[],
   };
 }
 
@@ -605,6 +683,44 @@ function rentalPage(
             canonicalPath: `/rentals/${rental.slug}`,
           },
     updated_at: rental.updated_at,
+  };
+}
+
+function packagePage(
+  item: z.infer<typeof packageSchema>,
+  businessName: string,
+) {
+  return {
+    title: item.name,
+    slug: `packages/${item.slug}`,
+    sections: [
+      {
+        id: "package-detail-hero",
+        type: "hero" as const,
+        variant: "cinematic",
+        visible: true,
+        settings: {
+          eyebrow: item.duration_days
+            ? `${item.duration_days} day package`
+            : businessName,
+          title: item.name,
+          description: item.short_description,
+          imageUrl: item.featured_image_url,
+          primaryCta: item.booking_button_label,
+          primaryHref:
+            item.booking_url ?? `/packages/${item.slug}#booking-request`,
+        },
+      },
+    ],
+    seo_settings:
+      Object.keys(item.seo_settings).length > 0
+        ? item.seo_settings
+        : {
+            title: `${item.name} | ${businessName}`,
+            description: item.short_description,
+            canonicalPath: `/packages/${item.slug}`,
+          },
+    updated_at: item.updated_at,
   };
 }
 

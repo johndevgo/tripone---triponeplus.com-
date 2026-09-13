@@ -31,7 +31,8 @@ export async function POST(request: Request) {
   const fallback = isAppHostname(hostname) && Boolean(parsed.data.siteSlug);
   if (
     fallback &&
-    !parsed.data.pagePath.startsWith(`/s/${parsed.data.siteSlug}`)
+    parsed.data.pagePath !== `/s/${parsed.data.siteSlug}` &&
+    !parsed.data.pagePath.startsWith(`/s/${parsed.data.siteSlug}/`)
   )
     return NextResponse.json(
       { error: "Invalid fallback website path." },

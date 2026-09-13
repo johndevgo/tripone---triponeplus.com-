@@ -27,7 +27,7 @@ guides and fair competitor comparisons. Marketing images live in
 `public/images/marketing/`; treat their filenames as immutable because they are
 served with long-lived cache headers.
 
-Product: `/onboarding`, `/dashboard`, `/dashboard/account`, `/dashboard/sites/[siteId]`, plus `builder`, `experiences`, `rentals`, `taxonomies`, `services`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `leads`, `analytics`, `domains` and `settings`.
+Product: `/onboarding`, `/dashboard`, `/dashboard/account`, `/dashboard/sites/[siteId]`, plus `offerings`, `experiences`, `rentals`, `packages`, `bookings`, `calendar`, `availability`, `resources`, `customers`, `leads`, `builder`, `taxonomies`, `services`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `analytics`, `domains` and `settings`.
 
 Delivery: `/preview/[siteSlug]/[[...path]]` is authenticated and noindex. Live hostnames are internally rewritten to `/tenant-sites/[hostname]/[[...path]]`; tenant `/sitemap.xml` and `/robots.txt` use the same host-aware snapshot.
 
@@ -109,6 +109,7 @@ Optional server-only:
 20. `20260908201500_account_deletion_fk.sql`: preserves correct cascading account deletion behavior.
 21. `20260908202000_public_fallback_sitemap_discovery.sql`: advertises published customer sitemaps from the application robots file.
 22. `20260908203000_honest_path_based_publishing.sql`: prevents unowned platform subdomains from becoming verified or canonical.
+23. `20260910122440_operations_core.sql`: adds packages, native booking requests, customers, availability, departures, resources, operations audit trails and tenant-safe RPCs.
 
 ## Demo data
 
@@ -172,11 +173,14 @@ corepack pnpm lint
 corepack pnpm typecheck
 corepack pnpm test
 corepack pnpm test:db
+corepack pnpm test:db:operations
 corepack pnpm build
 corepack pnpm test:e2e
 ```
 
 Playwright public desktop/mobile smoke tests need no credentials. Authenticated onboarding/builder flows skip unless disposable E2E credentials exist. Complete the manual production checks in `docs/PRODUCTION_CHECKLIST.md` after DNS and provider credentials are configured.
+
+The E2E command builds the application, starts that exact production build on a dedicated local port, waits for readiness, runs Playwright, and owns server teardown. Set `PLAYWRIGHT_BASE_URL` to test an already running authorized deployment instead.
 
 `test:db` requires `TRIPONE_DATABASE_URL` and runs its disposable authenticated fixtures inside a transaction that ends with `ROLLBACK`. Use only a disposable database or an explicitly authorized project.
 

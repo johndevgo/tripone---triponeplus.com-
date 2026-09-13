@@ -3,10 +3,12 @@ import { expect, test } from "@playwright/test";
 test("marketing and auth entry points are usable", async ({ page }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: /websites built to/i }),
+    page.getByRole("heading", {
+      name: /sell the experience.*run the operation/i,
+    }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: /build your website/i }).first(),
+    page.getByRole("link", { name: /start building free/i }).first(),
   ).toHaveAttribute("href", "/signup");
   await page.goto("/login");
   await expect(

@@ -17,6 +17,7 @@ type Integrations = {
 export function PublicAnalytics({
   experienceId,
   rentalProductId,
+  packageId,
   consentMode,
   integrations,
   allowThirdPartyScripts = false,
@@ -24,6 +25,7 @@ export function PublicAnalytics({
 }: {
   experienceId?: string;
   rentalProductId?: string;
+  packageId?: string;
   consentMode: "disabled" | "basic";
   integrations: Integrations;
   allowThirdPartyScripts?: boolean;
@@ -45,11 +47,23 @@ export function PublicAnalytics({
 
   useEffect(() => {
     if (consent !== "accepted") return;
-    void trackPublicEvent("page_view", experienceId, rentalProductId);
+    void trackPublicEvent(
+      "page_view",
+      experienceId,
+      rentalProductId,
+      packageId,
+    );
     if (experienceId)
       void trackPublicEvent("experience_view", experienceId, rentalProductId);
     if (rentalProductId)
       void trackPublicEvent("rental_view", experienceId, rentalProductId);
+    if (packageId)
+      void trackPublicEvent(
+        "package_view",
+        experienceId,
+        rentalProductId,
+        packageId,
+      );
     const click = (event: MouseEvent) => {
       const link = (event.target as Element | null)?.closest("a");
       if (!link) return;
@@ -64,11 +78,11 @@ export function PublicAnalytics({
               ? "cta_click"
               : "page_view";
       if (name !== "page_view")
-        void trackPublicEvent(name, experienceId, rentalProductId);
+        void trackPublicEvent(name, experienceId, rentalProductId, packageId);
     };
     document.addEventListener("click", click);
     return () => document.removeEventListener("click", click);
-  }, [consent, experienceId, rentalProductId]);
+  }, [consent, experienceId, rentalProductId, packageId]);
 
   function choose(value: "accepted" | "declined") {
     const wasAccepted = consent === "accepted";
@@ -170,6 +184,7 @@ export async function trackPublicEvent(
   eventName: AnalyticsEventName,
   experienceId?: string,
   rentalProductId?: string,
+  packageId?: string,
 ) {
   try {
     if (localStorage.getItem("tripone-cookie-consent") === "declined") return;
@@ -186,6 +201,7 @@ export async function trackPublicEvent(
         pagePath: window.location.pathname,
         experienceId: experienceId ?? "",
         rentalProductId: rentalProductId ?? "",
+        packageId: packageId ?? "",
         siteSlug: fallbackSlugFromPath(window.location.pathname) ?? "",
         referrerDomain,
         sessionId,

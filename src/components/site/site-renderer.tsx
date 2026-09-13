@@ -1,7 +1,9 @@
 import Link from "next/link";
+import type { ReactNode } from "react";
 import {
   ArrowRight,
   Box,
+  CalendarDays,
   Check,
   Clock3,
   Compass,
@@ -17,12 +19,14 @@ import {
 import type { SiteSection } from "@/lib/types";
 import type { ThemeTokens } from "@/lib/site-generator";
 import { LeadForm } from "@/components/site/lead-form";
+import { BookingRequestForm } from "@/components/site/booking-request-form";
 import { PublicAnalytics } from "@/components/site/public-analytics";
 import { ResilientImage } from "@/components/site/resilient-image";
 
 export type PublicExperience = {
   id: string;
   name: string;
+  experience_type?: string;
   slug: string;
   short_description: string;
   price_from: number | null;
@@ -69,6 +73,8 @@ export type PublicRental = {
   booking_button_label?: string | null;
   quote_only: boolean;
   featured_image_url?: string | null;
+  gallery?: string[];
+  details?: Record<string, unknown>;
   specifications?: unknown;
   inclusions?: unknown;
   exclusions?: unknown;
@@ -81,6 +87,44 @@ export type PublicRental = {
     minimum_quantity?: number | null;
     maximum_quantity?: number | null;
   }>;
+};
+export type PublicPackage = {
+  id: string;
+  name: string;
+  slug: string;
+  short_description: string;
+  description: string;
+  duration_days: number | null;
+  price_from: number | null;
+  currency: string;
+  pricing_label?: string | null;
+  booking_mode: "request" | "enquiry" | "external";
+  booking_url?: string | null;
+  booking_button_label: string;
+  featured_image_url?: string | null;
+  gallery?: string[];
+  details?: Record<string, unknown>;
+  highlights?: unknown;
+  inclusions?: unknown;
+  exclusions?: unknown;
+  itinerary?: unknown;
+  faqs?: unknown;
+  policies?: unknown;
+  items: Array<{
+    id: string;
+    title: string;
+    description: string;
+    day_number?: number | null;
+    optional: boolean;
+  }>;
+};
+export type PublicDeparture = {
+  id: string;
+  experience_id?: string | null;
+  rental_product_id?: string | null;
+  package_id?: string | null;
+  starts_at: string;
+  ends_at?: string | null;
 };
 export type SiteRendererProps = {
   site: {
@@ -104,6 +148,8 @@ export type SiteRendererProps = {
   theme: ThemeTokens;
   experiences: PublicExperience[];
   rentals?: PublicRental[];
+  packages?: PublicPackage[];
+  departures?: PublicDeparture[];
   testimonials?: PublicTestimonial[];
   basePath: string;
   preview?: boolean;
@@ -113,6 +159,7 @@ export type SiteRendererProps = {
   };
   activeExperience?: PublicExperience;
   activeRental?: PublicRental;
+  activePackage?: PublicPackage;
   allowThirdPartyScripts?: boolean;
   scriptNonce?: string;
 };
@@ -130,12 +177,15 @@ export function SiteRenderer({
   theme,
   experiences,
   rentals = [],
+  packages = [],
+  departures = [],
   testimonials = [],
   basePath,
   preview,
   editor,
   activeExperience,
   activeRental,
+  activePackage,
   allowThirdPartyScripts = false,
   scriptNonce,
 }: SiteRendererProps) {
@@ -280,11 +330,13 @@ export function SiteRenderer({
                 section={section}
                 experiences={experiences}
                 rentals={rentals}
+                packages={packages}
                 basePath={basePath}
                 business={business}
                 siteId={site.id}
                 sourcePage={page.slug ? `/${page.slug}` : "/"}
                 testimonials={testimonials}
+                preview={Boolean(preview || editor)}
               />
             );
             return editor ? (
@@ -335,6 +387,10 @@ export function SiteRenderer({
           siteId={site.id}
           globalSettings={global}
           croSettings={cro}
+          preview={Boolean(preview || editor)}
+          departures={departures.filter(
+            (departure) => departure.experience_id === activeExperience.id,
+          )}
         />
       )}
       {activeRental && (
@@ -342,6 +398,21 @@ export function SiteRenderer({
           rental={activeRental}
           siteId={site.id}
           basePath={basePath}
+          preview={Boolean(preview || editor)}
+          departures={departures.filter(
+            (departure) => departure.rental_product_id === activeRental.id,
+          )}
+        />
+      )}
+      {activePackage && (
+        <PackageDetail
+          item={activePackage}
+          siteId={site.id}
+          basePath={basePath}
+          preview={Boolean(preview || editor)}
+          departures={departures.filter(
+            (departure) => departure.package_id === activePackage.id,
+          )}
         />
       )}
       <footer
@@ -409,6 +480,7 @@ export function SiteRenderer({
         <PublicAnalytics
           experienceId={activeExperience?.id}
           rentalProductId={activeRental?.id}
+          packageId={activePackage?.id}
           consentMode={
             global.cookieConsentMode === "basic" ? "basic" : "disabled"
           }
@@ -432,10 +504,14 @@ function RentalDetail({
   rental,
   siteId,
   basePath,
+  departures,
+  preview = false,
 }: {
   rental: PublicRental;
   siteId: string;
   basePath: string;
+  departures: PublicDeparture[];
+  preview?: boolean;
 }) {
   const specifications = Array.isArray(rental.specifications)
     ? rental.specifications.filter(
@@ -512,16 +588,42 @@ function RentalDetail({
             Confirm availability, dates, pickup details, and any requirements
             before booking.
           </p>
-          <a
-            href={bookingHref}
-            target={rental.booking_url ? "_blank" : undefined}
-            rel={rental.booking_url ? "noopener noreferrer" : undefined}
-            className="mt-7 inline-flex min-h-12 items-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-accent)] px-6 font-semibold text-[var(--site-text)]"
-          >
-            {rental.booking_button_label || "Request rental"}
-          </a>
           <div className="mx-auto mt-8 max-w-xl text-left">
-            <LeadForm siteId={siteId} sourcePage={`/rentals/${rental.slug}`} />
+            {rental.booking_url ? (
+              <>
+                <a
+                  href={bookingHref}
+                  data-booking-link
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="site-primary-action flex min-h-12 items-center justify-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-accent)] px-6 font-semibold text-[var(--site-text)]"
+                >
+                  {rental.booking_button_label || "Request rental"}
+                </a>
+                <div className="mt-6">
+                  <LeadForm
+                    siteId={siteId}
+                    sourcePage={`/rentals/${rental.slug}`}
+                    preview={preview}
+                  />
+                </div>
+              </>
+            ) : (
+              <BookingRequestForm
+                siteId={siteId}
+                targetType="rental"
+                targetId={rental.id}
+                currency={rental.currency}
+                sourcePage={`/rentals/${rental.slug}`}
+                flow="rental"
+                departures={departures.map((departure) => ({
+                  id: departure.id,
+                  startsAt: departure.starts_at,
+                  endsAt: departure.ends_at,
+                }))}
+                preview={preview}
+              />
+            )}
           </div>
         </div>
       </section>
@@ -536,6 +638,8 @@ function ExperienceDetail({
   siteId,
   globalSettings,
   croSettings,
+  departures,
+  preview = false,
 }: {
   experience: PublicExperience;
   related: PublicExperience[];
@@ -543,6 +647,8 @@ function ExperienceDetail({
   siteId: string;
   globalSettings: Record<string, unknown>;
   croSettings: Record<string, unknown>;
+  departures: PublicDeparture[];
+  preview?: boolean;
 }) {
   const highlights = stringList(experience.highlights);
   const inclusions = stringList(experience.inclusions);
@@ -564,6 +670,8 @@ function ExperienceDetail({
     experience.booking_url ||
     text(globalSettings, "bookingUrl") ||
     `${basePath}/contact`;
+  const nativeBooking =
+    !experience.booking_url && !text(globalSettings, "bookingUrl");
   const externalBooking = /^https?:\/\//i.test(bookingHref);
   const bookingTarget =
     externalBooking && globalSettings.openBookingInNewTab === true
@@ -729,14 +837,40 @@ function ExperienceDetail({
       <section className="px-5 py-16">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-3xl font-semibold">
-            Enquire about this experience
+            {nativeBooking
+              ? "Request this experience"
+              : "Enquire about this experience"}
           </h2>
           <div className="mt-7">
-            <LeadForm
-              siteId={siteId}
-              experienceId={experience.id}
-              sourcePage={`/experiences/${experience.slug}`}
-            />
+            {nativeBooking ? (
+              <BookingRequestForm
+                siteId={siteId}
+                targetType="experience"
+                targetId={experience.id}
+                currency={experience.currency}
+                sourcePage={`/experiences/${experience.slug}`}
+                flow={
+                  /transfer|shuttle|chauffeur/i.test(
+                    experience.experience_type ?? "",
+                  )
+                    ? "transfer"
+                    : "tour"
+                }
+                departures={departures.map((departure) => ({
+                  id: departure.id,
+                  startsAt: departure.starts_at,
+                  endsAt: departure.ends_at,
+                }))}
+                preview={preview}
+              />
+            ) : (
+              <LeadForm
+                siteId={siteId}
+                experienceId={experience.id}
+                sourcePage={`/experiences/${experience.slug}`}
+                preview={preview}
+              />
+            )}
           </div>
         </div>
       </section>
@@ -810,20 +944,24 @@ function Section({
   section,
   experiences,
   rentals,
+  packages,
   basePath,
   business,
   siteId,
   sourcePage,
   testimonials,
+  preview = false,
 }: {
   section: SiteSection;
   experiences: PublicExperience[];
   rentals: PublicRental[];
+  packages: PublicPackage[];
   basePath: string;
   business: SiteRendererProps["business"];
   siteId: string;
   sourcePage: string;
   testimonials: PublicTestimonial[];
+  preview?: boolean;
 }) {
   const s = section.settings;
   switch (section.type) {
@@ -879,7 +1017,6 @@ function Section({
       );
     case "featuredExperiences":
     case "experienceGrid":
-    case "featuredPackages":
       return (
         <section className="px-5 py-20">
           <div className="mx-auto max-w-7xl">
@@ -897,6 +1034,26 @@ function Section({
             ) : (
               <p className="mt-8 rounded-[var(--site-radius)] bg-[var(--site-surface)] p-8 text-[var(--site-muted)]">
                 Experiences are being prepared. Contact us for current options.
+              </p>
+            )}
+          </div>
+        </section>
+      );
+    case "featuredPackages":
+    case "packageGrid":
+      return (
+        <section className="px-5 py-20">
+          <div className="mx-auto max-w-7xl">
+            <Heading settings={s} />
+            {packages.length ? (
+              <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+                {packages.map((item) => (
+                  <PackageCard key={item.id} item={item} basePath={basePath} />
+                ))}
+              </div>
+            ) : (
+              <p className="mt-8 rounded-[var(--site-radius)] bg-[var(--site-surface)] p-8 text-[var(--site-muted)]">
+                Packages are being prepared. Contact us for current itineraries.
               </p>
             )}
           </div>
@@ -1115,7 +1272,11 @@ function Section({
                 )}
               </div>
               <div className="mt-5">
-                <LeadForm siteId={siteId} sourcePage={sourcePage} />
+                <LeadForm
+                  siteId={siteId}
+                  sourcePage={sourcePage}
+                  preview={preview}
+                />
               </div>
             </div>
           </div>
@@ -1187,6 +1348,185 @@ function Section({
         </section>
       );
     }
+    case "itinerary": {
+      const steps = packages
+        .flatMap((item) => item.items)
+        .filter((item) => item.title)
+        .slice(0, 6);
+      return (
+        <section className="px-5 py-20">
+          <div className="mx-auto max-w-5xl">
+            <Heading settings={s} />
+            {steps.length > 0 ? (
+              <ol className="mt-10 grid gap-4">
+                {steps.map((step, index) => (
+                  <li
+                    className="grid gap-4 rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-surface)] p-6 sm:grid-cols-[auto_1fr]"
+                    key={step.id}
+                  >
+                    <span className="grid size-10 place-items-center rounded-full bg-[var(--site-primary)] font-semibold text-white">
+                      {step.day_number ?? index + 1}
+                    </span>
+                    <div>
+                      <h3 className="font-semibold">{step.title}</h3>
+                      {step.description && (
+                        <p className="mt-2 leading-7 text-[var(--site-muted)]">
+                          {step.description}
+                        </p>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            ) : (
+              <EmptySectionCopy>
+                Detailed itineraries will appear here when they are published.
+              </EmptySectionCopy>
+            )}
+          </div>
+        </section>
+      );
+    }
+    case "inclusions": {
+      const included = packages.flatMap((item) => stringList(item.inclusions));
+      const excluded = packages.flatMap((item) => stringList(item.exclusions));
+      return (
+        <section className="bg-[var(--site-surface)] px-5 py-20">
+          <div className="mx-auto max-w-5xl">
+            <Heading settings={s} />
+            {included.length + excluded.length > 0 ? (
+              <div className="mt-10 grid gap-5 md:grid-cols-2">
+                <OfferingList title="Included" items={included.slice(0, 8)} />
+                <OfferingList
+                  title="Not included"
+                  items={excluded.slice(0, 8)}
+                />
+              </div>
+            ) : (
+              <EmptySectionCopy>
+                Inclusions and exclusions will be shown after the operator
+                publishes them.
+              </EmptySectionCopy>
+            )}
+          </div>
+        </section>
+      );
+    }
+    case "pricing": {
+      const offers = [
+        ...experiences.map((item) => ({
+          id: `experience-${item.id}`,
+          name: item.name,
+          price:
+            item.price_from == null
+              ? "Request a quote"
+              : `From ${item.currency} ${item.price_from}`,
+        })),
+        ...rentals.map((item) => {
+          const rate = item.rates.find((candidate) => candidate.amount != null);
+          return {
+            id: `rental-${item.id}`,
+            name: item.name,
+            price:
+              item.quote_only || !rate
+                ? "Request a quote"
+                : `From ${rate.currency} ${rate.amount} / ${rate.pricing_unit}`,
+          };
+        }),
+        ...packages.map((item) => ({
+          id: `package-${item.id}`,
+          name: item.name,
+          price:
+            item.price_from == null
+              ? "Request a quote"
+              : `${item.pricing_label || "From"} ${item.currency} ${item.price_from}`,
+        })),
+      ].slice(0, 6);
+      return (
+        <section className="px-5 py-20">
+          <div className="mx-auto max-w-7xl">
+            <Heading settings={s} />
+            {offers.length > 0 ? (
+              <div className="mt-10 grid gap-4 md:grid-cols-3">
+                {offers.map((offer) => (
+                  <article
+                    className="rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-surface)] p-6"
+                    key={offer.id}
+                  >
+                    <h3 className="font-semibold">{offer.name}</h3>
+                    <p className="mt-6 text-lg font-semibold text-[var(--site-secondary)]">
+                      {offer.price}
+                    </p>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <EmptySectionCopy>
+                Published prices and quote options will appear here.
+              </EmptySectionCopy>
+            )}
+          </div>
+        </section>
+      );
+    }
+    case "availabilityPreview":
+      return (
+        <section className="px-5 py-20">
+          <div className="mx-auto grid max-w-5xl gap-7 rounded-[var(--site-radius)] bg-[var(--site-primary)] p-8 text-white sm:grid-cols-[auto_1fr_auto] sm:items-center sm:p-10">
+            <CalendarDays className="text-[var(--site-accent)]" size={34} />
+            <div>
+              <h2 className="font-[family-name:var(--site-heading)] text-3xl font-semibold">
+                {text(s, "title", "Choose a preferred date")}
+              </h2>
+              <p className="mt-2 text-white/65">
+                {text(
+                  s,
+                  "description",
+                  "Send a booking request and the operator will confirm availability.",
+                )}
+              </p>
+            </div>
+            <Link
+              href={href(basePath, text(s, "href", "/contact"))}
+              className="site-primary-action inline-flex min-h-12 items-center justify-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-accent)] px-5 font-semibold text-[var(--site-text)]"
+            >
+              {text(s, "label", "Request a date")}
+            </Link>
+          </div>
+        </section>
+      );
+    case "relatedOfferings": {
+      const hasOfferings =
+        experiences.length > 0 || rentals.length > 0 || packages.length > 0;
+      return (
+        <section className="bg-[var(--site-surface)] px-5 py-20">
+          <div className="mx-auto max-w-7xl">
+            <Heading settings={s} />
+            {hasOfferings ? (
+              <div className="mt-10 grid gap-5 md:grid-cols-3">
+                {experiences.slice(0, 1).map((item) => (
+                  <ExperienceCard
+                    key={item.id}
+                    item={item}
+                    basePath={basePath}
+                  />
+                ))}
+                {rentals.slice(0, 1).map((item) => (
+                  <RentalCard key={item.id} rental={item} basePath={basePath} />
+                ))}
+                {packages.slice(0, 1).map((item) => (
+                  <PackageCard key={item.id} item={item} basePath={basePath} />
+                ))}
+              </div>
+            ) : (
+              <EmptySectionCopy>
+                More services will appear here when they are published.
+              </EmptySectionCopy>
+            )}
+          </div>
+        </section>
+      );
+    }
     case "divider":
       return (
         <div
@@ -1218,6 +1558,32 @@ function Section({
         </section>
       );
   }
+}
+function EmptySectionCopy({ children }: { children: ReactNode }) {
+  return (
+    <p className="mt-8 rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-surface)] p-7 text-[var(--site-muted)]">
+      {children}
+    </p>
+  );
+}
+
+function OfferingList({ title, items }: { title: string; items: string[] }) {
+  return (
+    <article className="rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-bg)] p-6">
+      <h3 className="font-semibold">{title}</h3>
+      <ul className="mt-5 grid gap-3">
+        {items.map((item) => (
+          <li className="flex gap-2 text-[var(--site-muted)]" key={item}>
+            <Check
+              className="mt-0.5 shrink-0 text-[var(--site-secondary)]"
+              size={17}
+            />
+            {item}
+          </li>
+        ))}
+      </ul>
+    </article>
+  );
 }
 function videoEmbed(url: string) {
   try {
@@ -1345,5 +1711,307 @@ function RentalCard({
         </div>
       </div>
     </Link>
+  );
+}
+
+function PackageCard({
+  item,
+  basePath,
+}: {
+  item: PublicPackage;
+  basePath: string;
+}) {
+  return (
+    <Link
+      href={href(basePath, `/packages/${item.slug}`)}
+      className="group overflow-hidden rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-surface)] shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+    >
+      <div className="grid aspect-[4/3] place-items-center overflow-hidden bg-[var(--site-primary)] text-white/30">
+        {item.featured_image_url ? (
+          <ResilientImage
+            src={item.featured_image_url}
+            alt={item.name}
+            className="site-media h-full w-full object-cover transition duration-500 group-hover:scale-105"
+          />
+        ) : (
+          <Compass size={34} />
+        )}
+      </div>
+      <div className="p-5">
+        <p className="text-xs uppercase tracking-[.14em] text-[var(--site-muted)]">
+          {item.duration_days ? `${item.duration_days} days` : "Travel package"}
+        </p>
+        <h3 className="mt-3 text-xl font-semibold">{item.name}</h3>
+        <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--site-muted)]">
+          {item.short_description}
+        </p>
+        <div className="mt-5 flex items-center justify-between">
+          <span className="font-semibold">
+            {item.price_from == null
+              ? "Request a quote"
+              : `${item.pricing_label || "From"} ${item.currency} ${item.price_from}`}
+          </span>
+          <ArrowRight size={17} />
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function PackageDetail({
+  item,
+  siteId,
+  departures,
+  preview = false,
+}: {
+  item: PublicPackage;
+  siteId: string;
+  basePath: string;
+  departures: PublicDeparture[];
+  preview?: boolean;
+}) {
+  const highlights = stringList(item.highlights);
+  const inclusions = stringList(item.inclusions);
+  const exclusions = stringList(item.exclusions);
+  const policies = stringList(item.policies);
+  const itinerary = Array.isArray(item.itinerary)
+    ? (item.itinerary as Array<{
+        title?: string;
+        description?: string;
+        accommodation?: string;
+        meals?: string;
+        distance?: string;
+        hours?: string;
+      }>)
+    : [];
+  const faqs = Array.isArray(item.faqs)
+    ? (item.faqs as Array<{ question?: string; answer?: string }>).filter(
+        (faq) => faq.question && faq.answer,
+      )
+    : [];
+  const details = item.details ?? {};
+  const facts = [
+    ["Start", details.startPoint],
+    ["Finish", details.endPoint],
+    ["Difficulty", details.difficulty],
+    ["Best season", details.bestSeason],
+    ["Group size", details.groupSize],
+    ["Maximum altitude", details.maxAltitude],
+    ["Accommodation", details.accommodation],
+    ["Meals", details.meals],
+  ].filter(
+    (entry): entry is [string, string] =>
+      typeof entry[1] === "string" && Boolean(entry[1]),
+  );
+  const gallery = [item.featured_image_url, ...(item.gallery ?? [])].filter(
+    (url, index, entries): url is string =>
+      typeof url === "string" && Boolean(url) && entries.indexOf(url) === index,
+  );
+  return (
+    <div className="border-t border-black/5" data-package-detail>
+      {gallery.length > 0 && (
+        <section className="px-5 pt-8">
+          <div className="mx-auto grid max-w-7xl gap-2 overflow-hidden rounded-[var(--site-radius)] md:grid-cols-[2fr_1fr]">
+            <ResilientImage
+              src={gallery[0]!}
+              alt={`${item.name} featured view`}
+              className="site-media aspect-[16/10] h-full w-full object-cover md:row-span-2"
+            />
+            {gallery.slice(1, 3).map((image, index) => (
+              <ResilientImage
+                key={image}
+                src={image}
+                alt={`${item.name} gallery image ${index + 2}`}
+                className="site-media hidden aspect-[16/8] h-full w-full object-cover md:block"
+              />
+            ))}
+          </div>
+        </section>
+      )}
+      <section className="px-5 py-16">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1fr_360px]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[.18em] text-[var(--site-secondary)]">
+              Package overview
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold">
+              A complete itinerary
+            </h2>
+            <p className="mt-5 text-lg leading-8 text-[var(--site-muted)]">
+              {item.description || item.short_description}
+            </p>
+            {facts.length > 0 && (
+              <dl className="mt-8 grid gap-3 sm:grid-cols-2">
+                {facts.map(([label, value]) => (
+                  <div
+                    key={label}
+                    className="rounded-[calc(var(--site-radius)*.7)] border border-black/5 bg-[var(--site-surface)] p-4"
+                  >
+                    <dt className="text-xs font-semibold uppercase tracking-[.12em] text-[var(--site-secondary)]">
+                      {label}
+                    </dt>
+                    <dd className="mt-1 font-medium">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
+            {highlights.length > 0 && (
+              <ListBlock title="Highlights" items={highlights} />
+            )}
+          </div>
+          <aside className="h-fit rounded-[var(--site-radius)] bg-[var(--site-surface)] p-6 shadow-lg">
+            <p className="text-3xl font-semibold">
+              {item.price_from == null
+                ? "Request a quote"
+                : `${item.currency} ${item.price_from}`}
+            </p>
+            <p className="mt-2 text-sm text-[var(--site-muted)]">
+              {item.duration_days
+                ? `${item.duration_days} days`
+                : "Flexible duration"}
+            </p>
+            <a
+              href="#booking-request"
+              className="site-primary-action mt-6 flex min-h-12 items-center justify-center rounded-xl bg-[var(--site-accent)] font-semibold"
+            >
+              {item.booking_button_label}
+            </a>
+          </aside>
+        </div>
+      </section>
+      {(item.items.length > 0 || itinerary.length > 0) && (
+        <section className="bg-[var(--site-surface)] px-5 py-16">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="text-3xl font-semibold">Your itinerary</h2>
+            <ol className="mt-8 grid gap-4">
+              {(itinerary.length ? itinerary : item.items).map(
+                (step, index) => (
+                  <li
+                    key={`${step.title}-${index}`}
+                    className="rounded-[var(--site-radius)] bg-[var(--site-bg)] p-6"
+                  >
+                    <p className="text-xs uppercase tracking-[.14em] text-[var(--site-secondary)]">
+                      Day{" "}
+                      {"day_number" in step &&
+                      typeof step.day_number === "number"
+                        ? step.day_number
+                        : index + 1}
+                    </p>
+                    <h3 className="mt-2 text-lg font-semibold">{step.title}</h3>
+                    {step.description && (
+                      <p className="mt-2 leading-7 text-[var(--site-muted)]">
+                        {step.description}
+                      </p>
+                    )}
+                    {"accommodation" in step && (
+                      <dl className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-[var(--site-muted)]">
+                        {[
+                          ["Duration", step.hours],
+                          ["Distance", step.distance],
+                          ["Stay", step.accommodation],
+                          ["Meals", step.meals],
+                        ]
+                          .filter((entry) => Boolean(entry[1]))
+                          .map(([label, value]) => (
+                            <div key={label} className="flex gap-1.5">
+                              <dt className="font-semibold text-[var(--site-text)]">
+                                {label}:
+                              </dt>
+                              <dd>{value}</dd>
+                            </div>
+                          ))}
+                      </dl>
+                    )}
+                  </li>
+                ),
+              )}
+            </ol>
+          </div>
+        </section>
+      )}
+      {(inclusions.length > 0 || exclusions.length > 0) && (
+        <section className="px-5 py-16">
+          <div className="mx-auto grid max-w-7xl gap-8 md:grid-cols-2">
+            {inclusions.length > 0 && (
+              <ListBlock title="What's included" items={inclusions} />
+            )}
+            {exclusions.length > 0 && (
+              <ListBlock title="What's not included" items={exclusions} />
+            )}
+          </div>
+        </section>
+      )}
+      {(faqs.length > 0 || policies.length > 0) && (
+        <section className="bg-[var(--site-surface)] px-5 py-16">
+          <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-2">
+            {faqs.length > 0 && (
+              <div>
+                <h2 className="text-3xl font-semibold">Questions, answered</h2>
+                <div className="mt-7 grid gap-3">
+                  {faqs.map((faq) => (
+                    <details
+                      key={faq.question}
+                      className="rounded-[calc(var(--site-radius)*.7)] border border-black/5 bg-[var(--site-bg)] p-5"
+                    >
+                      <summary className="cursor-pointer font-semibold">
+                        {faq.question}
+                      </summary>
+                      <p className="mt-3 leading-7 text-[var(--site-muted)]">
+                        {faq.answer}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            )}
+            {policies.length > 0 && (
+              <ListBlock title="Policies & practical notes" items={policies} />
+            )}
+          </div>
+        </section>
+      )}
+      <section
+        id="booking-request"
+        className="scroll-mt-24 bg-[var(--site-primary)] px-5 py-16 text-[var(--site-text)]"
+      >
+        <div className="mx-auto max-w-2xl">
+          <h2 className="text-center text-3xl font-semibold text-white">
+            Request {item.name}
+          </h2>
+          <p className="mx-auto mt-3 max-w-xl text-center text-white/65">
+            Send preferred dates and group details. The operator will confirm
+            availability.
+          </p>
+          <div className="mt-8">
+            {item.booking_mode === "external" && item.booking_url ? (
+              <a
+                href={item.booking_url}
+                data-booking-link
+                target="_blank"
+                rel="noopener noreferrer"
+                className="site-primary-action flex min-h-12 items-center justify-center rounded-xl bg-[var(--site-accent)] font-semibold"
+              >
+                {item.booking_button_label}
+              </a>
+            ) : (
+              <BookingRequestForm
+                siteId={siteId}
+                targetType="package"
+                targetId={item.id}
+                currency={item.currency}
+                sourcePage={`/packages/${item.slug}`}
+                flow="package"
+                departures={departures.map((departure) => ({
+                  id: departure.id,
+                  startsAt: departure.starts_at,
+                  endsAt: departure.ends_at,
+                }))}
+                preview={preview}
+              />
+            )}
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

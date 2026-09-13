@@ -5,6 +5,8 @@ import { usePathname } from "next/navigation";
 import {
   BarChart3,
   Box,
+  Boxes,
+  CalendarDays,
   ChevronLeft,
   Compass,
   FileText,
@@ -14,6 +16,7 @@ import {
   Images,
   MapPin,
   Palette,
+  Package,
   PanelLeftClose,
   Search,
   Settings,
@@ -28,22 +31,47 @@ import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 import { logout } from "@/app/auth/actions";
 const nav = [
-  [LayoutDashboard, "Overview", ""],
-  [Compass, "Website", "builder"],
-  [Compass, "Experiences", "experiences"],
-  [Box, "Rentals", "rentals"],
-  [Tags, "Taxonomies", "taxonomies"],
-  [FileText, "Pages", "pages"],
-  [Images, "Media", "media"],
-  [MapPin, "Locations", "locations"],
-  [Quote, "Testimonials", "testimonials"],
-  [Palette, "Design", "design"],
-  [Search, "SEO", "seo"],
-  [Users, "Leads", "leads"],
-  [BarChart3, "Analytics", "analytics"],
-  [Globe2, "Domains", "domains"],
-  [Settings, "Settings", "settings"],
-  [Wrench, "Service lines", "services"],
+  { label: "Workspace", items: [[LayoutDashboard, "Overview", ""]] },
+  {
+    label: "Sales",
+    items: [
+      [CalendarDays, "Bookings", "bookings"],
+      [CalendarDays, "Calendar", "calendar"],
+      [Users, "Leads", "leads"],
+      [UserCircle, "Customers", "customers"],
+    ],
+  },
+  {
+    label: "Operations",
+    items: [
+      [Boxes, "Products & Services", "offerings"],
+      [Package, "Packages", "packages"],
+      [CalendarDays, "Availability", "availability"],
+      [Box, "Resources", "resources"],
+    ],
+  },
+  {
+    label: "Website",
+    items: [
+      [Compass, "Builder", "builder"],
+      [FileText, "Pages", "pages"],
+      [Tags, "Collections", "taxonomies"],
+      [MapPin, "Locations", "locations"],
+      [Images, "Media", "media"],
+      [Quote, "Testimonials", "testimonials"],
+      [Palette, "Design", "design"],
+      [Search, "SEO", "seo"],
+      [Globe2, "Domains", "domains"],
+    ],
+  },
+  { label: "Insights", items: [[BarChart3, "Analytics", "analytics"]] },
+  {
+    label: "Settings",
+    items: [
+      [Wrench, "Service lines", "services"],
+      [Settings, "Site settings", "settings"],
+    ],
+  },
 ] as const;
 export function DashboardShell({
   siteId,
@@ -116,31 +144,40 @@ export function DashboardShell({
           aria-label="Dashboard"
           className="flex-1 space-y-1 overflow-y-auto px-3"
         >
-          {nav.map(([Icon, label, segment]) => {
-            const href = segment === "" ? base : `${base}/${segment}`;
-            const active =
-              segment === ""
-                ? pathname === base
-                : pathname.includes(`/${segment}`);
-            return (
-              <Link
-                onClick={() => setMobile(false)}
-                key={label}
-                href={href}
-                title={label}
-                className={cn(
-                  "flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm transition",
-                  active
-                    ? "bg-[#F5A623] font-semibold text-[#173028]"
-                    : "text-white/60 hover:bg-white/[.07] hover:text-white",
-                  collapsed && "justify-center",
-                )}
-              >
-                <Icon size={19} />
-                {!collapsed && label}
-              </Link>
-            );
-          })}
+          {nav.map((group) => (
+            <div key={group.label} className="pb-3">
+              {!collapsed && (
+                <p className="px-3 pb-1 pt-2 text-[10px] font-semibold uppercase tracking-[.15em] text-white/25">
+                  {group.label}
+                </p>
+              )}
+              {group.items.map(([Icon, label, segment]) => {
+                const href = segment === "" ? base : `${base}/${segment}`;
+                const active =
+                  segment === ""
+                    ? pathname === base
+                    : pathname.includes(`/${segment}`);
+                return (
+                  <Link
+                    onClick={() => setMobile(false)}
+                    key={label}
+                    href={href}
+                    title={label}
+                    className={cn(
+                      "flex min-h-10 items-center gap-3 rounded-xl px-3 text-sm transition",
+                      active
+                        ? "bg-[#F5A623] font-semibold text-[#173028]"
+                        : "text-white/60 hover:bg-white/[.07] hover:text-white",
+                      collapsed && "justify-center",
+                    )}
+                  >
+                    <Icon size={18} />
+                    {!collapsed && label}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </nav>
         <div className="border-t border-white/10 p-3">
           <Link

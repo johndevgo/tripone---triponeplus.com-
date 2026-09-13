@@ -116,7 +116,7 @@ const capabilityLabels: Record<BusinessCapability, string> = {
   other: "Other",
 };
 const steps = [
-  "Business type",
+  "What you offer",
   "Details",
   "Website structure",
   "Brand",
@@ -142,6 +142,7 @@ const label = "text-sm font-medium text-white/80";
 
 const defaults: OnboardingInput = {
   businessType: "tour_operator",
+  primaryCapability: "tour_operator",
   capabilities: ["tour_operator"],
   pageSelections: recommendedPageSelections(["tour_operator"]),
   name: "",
@@ -201,6 +202,8 @@ export function OnboardingWizard() {
           value.pageSelections = recommendedPageSelections(capabilities);
         }
         if (!value.rentals) value.rentals = [];
+        if (!value.primaryCapability)
+          value.primaryCapability = value.businessType ?? "tour_operator";
         Object.entries(value).forEach(([key, val]) =>
           setValue(key as keyof OnboardingInput, val as never),
         );
@@ -222,7 +225,8 @@ export function OnboardingWizard() {
   async function next() {
     setError("");
     let names: (keyof OnboardingInput)[] = [];
-    if (step === 0) names = ["businessType", "capabilities"];
+    if (step === 0)
+      names = ["businessType", "primaryCapability", "capabilities"];
     if (step === 1)
       names = [
         "name",
@@ -343,10 +347,16 @@ export function OnboardingWizard() {
       <section className="glass rounded-[1.75rem] p-5 sm:p-8 lg:p-10">
         {step === 0 && (
           <BusinessStep
-            value={values.businessType as BusinessType}
+            value={
+              (values.primaryCapability as BusinessCapability) ??
+              (values.businessType as BusinessType)
+            }
             selected={(values.capabilities as BusinessCapability[]) ?? []}
             selectPrimary={(v) => {
-              setValue("businessType", v, { shouldValidate: true });
+              setValue("primaryCapability", v, { shouldValidate: true });
+              setValue("businessType", legacyBusinessType(v), {
+                shouldValidate: true,
+              });
               const current = (getValues("capabilities") ??
                 []) as BusinessCapability[];
               if (!current.includes(v))
@@ -365,7 +375,8 @@ export function OnboardingWizard() {
               const next = current.includes(v)
                 ? current.filter((item) => item !== v)
                 : [...current, v];
-              if (v === getValues("businessType") && !next.includes(v)) return;
+              if (v === getValues("primaryCapability") && !next.includes(v))
+                return;
               setValue("capabilities", next, { shouldValidate: true });
               setValue("pageSelections", recommendedPageSelections(next));
             }}
@@ -484,16 +495,16 @@ function BusinessStep({
   selectPrimary,
   toggle,
 }: {
-  value: BusinessType;
+  value: BusinessCapability;
   selected: BusinessCapability[];
-  selectPrimary: (v: BusinessType) => void;
+  selectPrimary: (v: BusinessCapability) => void;
   toggle: (v: BusinessCapability) => void;
 }) {
   return (
     <>
       <Title
         eyebrow="Start with your structure"
-        title="What kind of business are you building a website for?"
+        title="What does your business offer?"
         copy="Select every service line you offer. Your primary service shapes the initial terminology and recommendations."
       />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -528,15 +539,13 @@ function BusinessStep({
                   {descriptions[type]}
                 </p>
               </button>
-              {businessTypes.includes(type as BusinessType) && (
-                <button
-                  type="button"
-                  onClick={() => selectPrimary(type as BusinessType)}
-                  className={`mt-3 text-xs font-medium ${primary ? "text-[#FFC857]" : "text-white/40 hover:text-white"}`}
-                >
-                  {primary ? "Primary service" : "Make primary"}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => selectPrimary(type)}
+                className={`mt-3 text-xs font-medium ${primary ? "text-[#FFC857]" : "text-white/40 hover:text-white"}`}
+              >
+                {primary ? "Primary service" : "Make primary"}
+              </button>
             </div>
           );
         })}
@@ -634,6 +643,12 @@ function DetailsStep({
 }
 function valuesafe(name: string) {
   return slugify(name) || "your-business";
+}
+function legacyBusinessType(capability: BusinessCapability): BusinessType {
+  if (businessTypes.includes(capability as BusinessType))
+    return capability as BusinessType;
+  if (capability === "motorcycle_tour") return "tour_operator";
+  return "other";
 }
 function StructureStep({
   capabilities,
@@ -1274,7 +1289,8 @@ function Review({
         <ReviewCard title="Business">
           <p className="text-xl font-semibold">{values.name}</p>
           <p>
-            {preset.label} · {values.city}, {values.country}
+            {capabilityLabels[values.primaryCapability]} · {values.city},{" "}
+            {values.country}
           </p>
           <p className="mt-3">{values.shortDescription}</p>
         </ReviewCard>

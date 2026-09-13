@@ -4,9 +4,11 @@ import Link from "next/link";
 import {
   ArrowRight,
   BarChart3,
+  Boxes,
   BookOpen,
   Brush,
   Check,
+  CalendarCheck2,
   ChevronRight,
   Compass,
   Gauge,
@@ -14,6 +16,7 @@ import {
   Inbox,
   Layers3,
   MousePointerClick,
+  PackageOpen,
   Search,
   ShieldCheck,
   Sparkles,
@@ -27,9 +30,9 @@ import { resources } from "@/content/resources";
 import { getAppUrl } from "@/lib/app-url";
 
 export const metadata: Metadata = {
-  title: "Tourism website builder for tours, activities and rentals",
+  title: "Tourism website builder and booking operations platform",
   description:
-    "Build a polished, SEO-ready website for your tour, activity or rental business with structured services, visual editing, leads and analytics.",
+    "Build an SEO-ready tourism website and manage tours, rentals, packages, booking requests, availability, resources, leads and customers in one platform.",
   alternates: { canonical: "/" },
 };
 
@@ -64,6 +67,23 @@ const categoryCards = [
     description: "Trip types, requirements, equipment and locations.",
     image: "/images/marketing/reef-diving.webp",
   },
+  {
+    label: "Transfers",
+    description: "Routes, pickup details, vehicles, passengers and luggage.",
+    image: "/images/marketing/airport-transfer.webp",
+  },
+  {
+    label: "ATV adventures",
+    description:
+      "Time slots, safety requirements, guides and finite resources.",
+    image: "/images/marketing/desert-atv.webp",
+  },
+  {
+    label: "Travel packages",
+    description:
+      "Multi-day itineraries, destinations, inclusions and enquiries.",
+    image: "/images/marketing/travel-planning.webp",
+  },
 ];
 
 const platformFeatures = [
@@ -97,6 +117,21 @@ const platformFeatures = [
     "Safe publishing",
     "Preview drafts, publish immutable snapshots and connect a verified domain when ready.",
   ],
+  [
+    PackageOpen,
+    "Packages & offerings",
+    "Compose multi-day packages from existing tours and rentals without duplicating source content.",
+  ],
+  [
+    CalendarCheck2,
+    "Bookings & availability",
+    "Capture payment-free requests, protect departure capacity and manage schedules in the business timezone.",
+  ],
+  [
+    Boxes,
+    "Resources & fulfilment",
+    "Assign guides, vehicles and equipment with transactional overlap protection.",
+  ],
 ] as const;
 
 const proofPoints: Array<[LucideIcon, string]> = [
@@ -126,7 +161,7 @@ const faqs = [
   {
     question: "Can I use my existing booking system?",
     answer:
-      "Yes. Add the booking URL for an experience or rental and TripOne+ will route high-intent visitors to that booking flow while measuring the outbound click.",
+      "Yes. Use TripOne+'s payment-free request workflow or link an external booking URL. TripOne+ does not collect payments in this release.",
   },
   {
     question: "Can I publish before connecting a custom domain?",
@@ -146,7 +181,7 @@ export default function Home() {
       operatingSystem: "Web",
       url: origin,
       description:
-        "A tourism website builder for tour, activity and rental businesses.",
+        "A tourism website builder and booking operations platform for tours, activities, rentals, transfers and travel packages.",
       offers: {
         "@type": "Offer",
         price: "0",
@@ -196,17 +231,17 @@ export default function Home() {
               tourism, not everything
             </p>
             <h1 className="mt-7 max-w-4xl text-balance text-5xl font-semibold leading-[.98] tracking-[-.052em] sm:text-6xl lg:text-[5.25rem]">
-              Websites built to{" "}
-              <span className="text-[#ffc857]">sell experiences.</span>
+              Sell the experience.{" "}
+              <span className="text-[#ffc857]">Run the operation.</span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70 sm:text-xl">
-              Turn your tours, activities and rentals into a fast, polished
-              website—with the pages, SEO and booking journey already
-              structured.
+              Build a fast, polished website—then manage packages, booking
+              requests, availability, resources, leads and customers from the
+              same tourism-native workspace.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <ButtonLink href="/signup" className="min-h-13 px-7 text-base">
-                Build your website <ArrowRight size={18} />
+                Start building free <ArrowRight size={18} />
               </ButtonLink>
               <ButtonLink
                 href="#how-it-works"
@@ -379,7 +414,7 @@ export default function Home() {
               [
                 "03",
                 "Choose a direction",
-                "Select one of eight themes, then apply your logo and brand colors.",
+                "Select one of ten themes, then apply your logo and brand colors.",
               ],
               [
                 "04",

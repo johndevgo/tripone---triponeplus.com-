@@ -18,6 +18,7 @@ if (!url || !anonKey || !email || !password) {
 
 const input: OnboardingInput = {
   businessType: "jetski",
+  primaryCapability: "jetski",
   capabilities: ["jetski"],
   pageSelections: recommendedPageSelections(["jetski"]),
   name: "Dubai Wave Jetski",

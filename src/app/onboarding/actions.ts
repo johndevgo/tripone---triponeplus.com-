@@ -44,7 +44,7 @@ export async function buildWebsite(raw: unknown): Promise<ActionResult> {
     ...item,
     slug: slugify(`${item.name} ${item.locationName ?? ""}`),
   }));
-  const { data, error } = await supabase.rpc("create_generated_site", {
+  const { data, error } = await supabase.rpc("create_generated_site_v2", {
     payload: { ...parsed.data, experiences, rentals, generated },
   });
   if (error) {

@@ -41,6 +41,7 @@ import {
 import {
   SiteRenderer,
   type PublicExperience,
+  type PublicPackage,
   type PublicRental,
 } from "@/components/site/site-renderer";
 import { sectionRegistry, createDefaultSection } from "@/lib/sections/registry";
@@ -95,6 +96,7 @@ type Props = {
   pages: BuilderPage[];
   experiences: PublicExperience[];
   rentals: PublicRental[];
+  packages: PublicPackage[];
   savedSections: SavedSectionRecord[];
   initialTargetId?: string;
 };
@@ -109,6 +111,7 @@ export function VisualBuilder({
   pages,
   experiences,
   rentals,
+  packages,
   savedSections: initialSavedSections,
   initialTargetId,
 }: Props) {
@@ -521,6 +524,7 @@ export function VisualBuilder({
               theme={theme}
               experiences={experiences}
               rentals={rentals}
+              packages={packages}
               activeExperience={experiences.find(
                 (item) => item.id === activePage.activeExperienceId,
               )}
