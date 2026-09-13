@@ -10,6 +10,7 @@ export function MarketingHeader() {
     ["Features", "/features"],
     ["Templates", "/templates"],
     ["Resources", "/resources"],
+    ["Compare", "/resources/category/platform-comparisons"],
     ["Pricing", "/pricing"],
     ["Log in", "/login"],
     ["Build your website", "/signup"],
@@ -30,6 +31,12 @@ export function MarketingHeader() {
           </Link>
           <Link href="/resources" className="hover:text-white">
             Resources
+          </Link>
+          <Link
+            href="/resources/category/platform-comparisons"
+            className="hover:text-white"
+          >
+            Compare
           </Link>
           <Link href="/pricing" className="hover:text-white">
             Pricing

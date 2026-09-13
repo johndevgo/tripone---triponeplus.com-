@@ -14,6 +14,7 @@ import { ResourceCard } from "@/components/marketing/resource-card";
 import {
   getRelatedResources,
   getResource,
+  resourceCategorySlugs,
   resources,
 } from "@/content/resources";
 import { getAppUrl } from "@/lib/app-url";
@@ -121,7 +122,12 @@ export default async function ResourceArticlePage({ params }: Props) {
         </Link>
         <header className="mt-8 grid gap-10 lg:grid-cols-[.9fr_1.1fr] lg:items-end">
           <div>
-            <p className="marketing-kicker">{article.category}</p>
+            <Link
+              href={`/resources/category/${resourceCategorySlugs[article.category]}`}
+              className="marketing-kicker transition hover:border-emerald-300/30"
+            >
+              {article.category}
+            </Link>
             <h1 className="marketing-title mt-6">{article.title}</h1>
             <p className="mt-6 text-lg leading-8 text-white/60">
               {article.description}
@@ -131,7 +137,8 @@ export default async function ResourceArticlePage({ params }: Props) {
                 <Clock3 size={16} /> {article.readTime}
               </span>
               <span className="inline-flex items-center gap-2">
-                <CalendarDays size={16} /> Updated September 10, 2026
+                <CalendarDays size={16} /> Updated{" "}
+                {formatDate(article.updatedAt)}
               </span>
             </div>
           </div>
@@ -276,4 +283,13 @@ function headingId(value: string) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function formatDate(value: string) {
+  return new Intl.DateTimeFormat("en", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${value}T12:00:00Z`));
 }

@@ -527,6 +527,11 @@ export default function Home() {
               <h2 className="mt-5 max-w-2xl text-4xl font-semibold tracking-[-.035em] sm:text-5xl">
                 Make better website decisions.
               </h2>
+              <p className="mt-4 max-w-xl leading-7 text-white/50">
+                Explore {resources.length} practical guides, operating playbooks
+                and source-linked platform comparisons written for tourism
+                teams.
+              </p>
             </div>
             <Link
               href="/resources"

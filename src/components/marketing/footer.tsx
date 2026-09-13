@@ -33,7 +33,7 @@ export function MarketingFooter() {
             ["Resources", "/resources"],
             ["SEO guide", "/resources/tourism-website-seo-guide"],
             ["Launch checklist", "/resources/tour-operator-website-checklist"],
-            ["Comparisons", "/resources/triponeplus-vs-wix-tour-operators"],
+            ["Comparisons", "/resources/category/platform-comparisons"],
           ]}
         />
         <FooterGroup

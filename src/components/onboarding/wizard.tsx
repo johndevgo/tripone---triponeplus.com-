@@ -171,6 +171,9 @@ export function OnboardingWizard() {
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [building, setBuilding] = useState(false);
+  const [saveState, setSaveState] = useState<"ready" | "saving" | "saved">(
+    "ready",
+  );
   const [slugState, setSlugState] = useState<
     "idle" | "checking" | "available" | "taken"
   >("idle");
@@ -214,11 +217,20 @@ export function OnboardingWizard() {
   }, [setValue]);
   useEffect(() => {
     // React Hook Form intentionally exposes an imperative subscription for autosave.
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     // eslint-disable-next-line react-hooks/incompatible-library
-    const subscription = form.watch((value) =>
-      localStorage.setItem("tripone-onboarding", JSON.stringify(value)),
-    );
-    return () => subscription.unsubscribe();
+    const subscription = form.watch((value) => {
+      setSaveState("saving");
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        localStorage.setItem("tripone-onboarding", JSON.stringify(value));
+        setSaveState("saved");
+      }, 350);
+    });
+    return () => {
+      subscription.unsubscribe();
+      if (timeout) clearTimeout(timeout);
+    };
   }, [form]);
   const preset =
     businessPresets[(values.businessType as BusinessType) || "other"];
@@ -284,16 +296,27 @@ export function OnboardingWizard() {
   async function uploadFile(file?: File) {
     if (!file) return undefined;
     setError("");
-    const data = new FormData();
-    data.set("file", file);
-    data.set("siteId", "pending");
-    const response = await fetch("/api/media", { method: "POST", body: data });
-    const body = (await response.json()) as { url?: string; error?: string };
-    if (!response.ok || !body.url) {
-      setError(body.error || "Upload failed.");
+    try {
+      const data = new FormData();
+      data.set("file", file);
+      data.set("siteId", "pending");
+      const response = await fetch("/api/media", {
+        method: "POST",
+        body: data,
+      });
+      const body = (await response.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
+      };
+      if (!response.ok || !body.url) {
+        setError(body.error || "Upload failed. Please try again.");
+        return undefined;
+      }
+      return body.url;
+    } catch {
+      setError("Upload failed. Check your connection and try again.");
       return undefined;
     }
-    return body.url;
   }
   async function uploadLogo(file?: File) {
     const url = await uploadFile(file);
@@ -342,6 +365,35 @@ export function OnboardingWizard() {
             className="h-full rounded-full bg-[#F5A623] transition-all duration-300"
             style={{ width: `${((step + 1) / steps.length) * 100}%` }}
           />
+        </div>
+        <ol className="mt-3 hidden grid-cols-7 gap-2 text-[11px] lg:grid">
+          {steps.map((item, index) => (
+            <li
+              key={item}
+              className={cn(
+                "truncate transition",
+                index === step
+                  ? "font-semibold text-[#FFC857]"
+                  : index < step
+                    ? "text-emerald-200/70"
+                    : "text-white/30",
+              )}
+            >
+              {index < step ? "✓ " : ""}
+              {item}
+            </li>
+          ))}
+        </ol>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-white/35">
+          <p>Private draft · preview before publishing · no card required</p>
+          <p aria-live="polite" className="inline-flex items-center gap-1.5">
+            {saveState === "saving" ? (
+              <LoaderCircle className="animate-spin" size={13} />
+            ) : (
+              <Check size={13} className="text-emerald-300" />
+            )}
+            {saveState === "saving" ? "Saving progress" : "Progress saved"}
+          </p>
         </div>
       </div>
       <section className="glass rounded-[1.75rem] p-5 sm:p-8 lg:p-10">
@@ -1206,7 +1258,7 @@ function ThemeStep({
       <Title
         eyebrow="Choose a theme"
         title="Select the character of your website."
-        copy="All eight themes share the same accessible renderer. You can refine design tokens later."
+        copy="All ten themes share the same accessible renderer. You can refine design tokens later."
       />
       <div className="grid gap-5 md:grid-cols-2">
         {Object.values(themes).map((theme) => {

@@ -10,8 +10,14 @@ export default async function Signup({
   const p = await searchParams;
   return (
     <AuthCard
-      title="Build your travel website"
-      description="Create your workspace first. Business setup comes next."
+      title="Start your TripOne+ workspace"
+      description="No card required. Create your account, then build from your real services and brand."
+      benefits={[
+        "A guided multi-service setup for tours, rentals, packages and transfers",
+        "Ten premium directions with one consistent, responsive renderer",
+        "Structured SEO, enquiry and booking-request foundations",
+        "A private draft and preview before you decide to publish",
+      ]}
     >
       <AuthMessage {...p} />
       <form action={signup} className="mt-6 grid gap-5">
@@ -49,7 +55,7 @@ export default async function Signup({
             At least 8 characters.
           </span>
         </label>
-        <Button type="submit">Create account</Button>
+        <Button type="submit">Create my workspace</Button>
       </form>
       <p className="mt-6 text-center text-sm text-white/55">
         Already have an account?{" "}

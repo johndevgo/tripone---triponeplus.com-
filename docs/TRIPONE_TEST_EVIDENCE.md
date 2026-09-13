@@ -4,20 +4,22 @@ Updated: 2026-09-13
 
 ## Automated local evidence
 
-| Command          | Result                                                                                                                   |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `pnpm lint`      | Passed with zero errors and zero warnings after operations fixes.                                                        |
-| `pnpm typecheck` | Passed under strict TypeScript.                                                                                          |
-| `pnpm test`      | Passed: 13 files, 60 tests; one credential-dependent suite skipped.                                                      |
-| `pnpm build`     | Passed with Next.js 16.3.4; all 36 static pages and operational routes compiled.                                         |
-| `pnpm test:e2e`  | Passed: production build plus 16 public desktop/mobile browser tests; 22 credential or published-fixture cases skipped.  |
-| visual review    | Passed: full-page 375px and 1440px captures inspected for hierarchy, image loading, overflow and responsive composition. |
+| Command          | Result                                                                                                                                 |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `pnpm lint`      | Passed with zero errors and zero warnings after operations fixes.                                                                      |
+| `pnpm typecheck` | Passed under strict TypeScript.                                                                                                        |
+| `pnpm test`      | Passed: 13 files, 60 tests; one credential-dependent suite skipped.                                                                    |
+| `pnpm build`     | Passed with Next.js 16.3.4; all 97 static pages and operational routes compiled.                                                       |
+| `pnpm test:e2e`  | Passed: production build plus 18 public desktop/mobile browser tests; 22 credential or published-fixture cases skipped.                |
+| visual review    | Passed: resource discovery and signup inspected at 390px and 1440px for hierarchy, image loading, overflow and responsive composition. |
 
 The unit suite covers slug generation, deterministic presets and page recipes,
 theme completeness, section registry/schema validation, SEO/structured-data
 constraints, safe public URLs, operation forms and state transitions, package
 references, timezone boundary conversion, calendar-date arithmetic, and five
-mixed-industry fixtures.
+mixed-industry fixtures. Resource coverage additionally enforces at least 60
+unique, internally linked articles with valid metadata, content sections and
+comparison-source references.
 
 ## Database integration specification
 

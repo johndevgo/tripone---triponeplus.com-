@@ -61,6 +61,23 @@ test("resource library publishes useful metadata and structured content", async 
   );
 });
 
+test("resource library search and category controls work", async ({ page }) => {
+  await page.goto("/resources");
+  await expect(page.getByText(/Showing 18 of \d+ resources/)).toBeVisible();
+  await page
+    .getByRole("searchbox", { name: "Search the resource library" })
+    .fill("airport transfer");
+  await expect(
+    page.getByRole("heading", {
+      name: "Website planning guide for airport transfer companies",
+    }),
+  ).toBeVisible();
+  await page.getByRole("button", { name: "Comparison", exact: true }).click();
+  await expect(
+    page.getByRole("link", { name: /Open the comparison collection/i }),
+  ).toHaveAttribute("href", "/resources/category/platform-comparisons");
+});
+
 test("marketing navigation has no broken internal destinations", async ({
   page,
   request,
@@ -97,6 +114,10 @@ test("SEO discovery files include the marketing resource library", async ({
   const sitemapBody = await sitemap.text();
   expect(sitemapBody).toContain("/resources/tourism-website-seo-guide");
   expect(sitemapBody).toContain("/resources/triponeplus-vs-wix-tour-operators");
+  expect(sitemapBody).toContain("/resources/category/platform-comparisons");
+  expect(
+    (sitemapBody.match(/<loc>[^<]*\/resources\//g) ?? []).length,
+  ).toBeGreaterThanOrEqual(60);
   expect(sitemapBody).not.toContain("/privacy</loc>");
 
   const robots = await request.get("/robots.txt");

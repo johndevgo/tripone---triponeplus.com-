@@ -3,7 +3,18 @@ import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { ResourceArticle } from "@/content/resources";
 
-export function ResourceCard({ article }: { article: ResourceArticle }) {
+export type ResourceCardArticle = Pick<
+  ResourceArticle,
+  | "slug"
+  | "category"
+  | "title"
+  | "description"
+  | "image"
+  | "imageAlt"
+  | "readTime"
+>;
+
+export function ResourceCard({ article }: { article: ResourceCardArticle }) {
   return (
     <article className="group overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/[.055] shadow-[0_20px_70px_rgba(0,0,0,.16)] transition duration-300 hover:-translate-y-1 hover:border-emerald-300/25 hover:bg-white/[.075]">
       <Link href={`/resources/${article.slug}`} className="block">
