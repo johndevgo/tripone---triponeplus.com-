@@ -20,6 +20,9 @@ const schema = z.object({
     .union([z.literal(""), z.coerce.number().int().positive().max(1000)])
     .optional(),
   message: z.string().max(3000).optional(),
+  requestedDestination: z.string().trim().max(200).optional(),
+  interests: z.string().trim().max(500).optional(),
+  budgetRange: z.string().trim().max(120).optional(),
   sourcePage: z.string().max(300).optional(),
   website: z.string().max(0).optional(),
   siteSlug: z
@@ -33,7 +36,7 @@ export async function POST(request: Request) {
       { error: "Invalid request origin." },
       { status: 403 },
     );
-  const body = schema.safeParse(await request.json());
+  const body = schema.safeParse(await request.json().catch(() => null));
   if (!body.success)
     return NextResponse.json(
       { error: body.error.issues[0]?.message ?? "Invalid enquiry." },

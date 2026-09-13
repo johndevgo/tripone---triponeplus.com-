@@ -1,15 +1,17 @@
 import type { MetadataRoute } from "next";
-import { resources } from "@/content/resources";
+import {
+  resourceCategories,
+  resourceCategorySlugs,
+  resources,
+} from "@/content/resources";
 import { getAppUrl } from "@/lib/app-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const origin = getAppUrl("https://tools.neurerohan.com.np").replace(
-    /\/$/,
-    "",
-  );
+  const origin = getAppUrl("https://triponeplus.com").replace(/\/$/, "");
   const marketingPages = [
     "",
     "/features",
+    "/growth-services",
     "/templates",
     "/pricing",
     "/resources",
@@ -27,5 +29,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       images: [`${origin}${article.image}`],
     }),
   );
-  return [...marketingPages, ...resourcePages];
+  const resourceCollections = resourceCategories.map(
+    (category): MetadataRoute.Sitemap[number] => ({
+      url: `${origin}/resources/category/${resourceCategorySlugs[category]}`,
+      changeFrequency: "monthly",
+      priority: 0.76,
+    }),
+  );
+  return [...marketingPages, ...resourceCollections, ...resourcePages];
 }

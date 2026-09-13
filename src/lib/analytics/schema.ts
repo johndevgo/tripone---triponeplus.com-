@@ -4,7 +4,11 @@ export const analyticsEventNames = [
   "page_view",
   "experience_view",
   "rental_view",
+  "package_view",
+  "booking_started",
+  "booking_submitted",
   "booking_click",
+  "enquiry_started",
   "whatsapp_click",
   "phone_click",
   "lead_submit",
@@ -22,6 +26,7 @@ export const analyticsEventSchema = z.object({
     .regex(/^\/(?!\/)/),
   experienceId: z.union([z.literal(""), z.uuid()]).optional(),
   rentalProductId: z.union([z.literal(""), z.uuid()]).optional(),
+  packageId: z.union([z.literal(""), z.uuid()]).optional(),
   siteSlug: z
     .union([z.literal(""), z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)])
     .optional(),
@@ -48,6 +53,7 @@ export function summarizeEvents(
     created_at: string;
     experience_id?: string | null;
     rental_product_id?: string | null;
+    package_id?: string | null;
   }>,
 ) {
   const count = (name: AnalyticsEventName) =>
@@ -60,6 +66,8 @@ export function summarizeEvents(
     pageViews,
     experienceViews: count("experience_view"),
     rentalViews: count("rental_view"),
+    packageViews: count("package_view"),
+    bookingRequests: count("booking_submitted"),
     bookingClicks,
     leads,
     whatsappClicks: count("whatsapp_click"),

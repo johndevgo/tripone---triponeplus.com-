@@ -62,6 +62,8 @@ export const themeIds = [
   "marina",
   "dune",
   "nomad",
+  "urban",
+  "escape",
 ] as const;
 export type ThemeId = (typeof themeIds)[number];
 
@@ -71,6 +73,7 @@ export const sectionTypes = [
   "featuredExperiences",
   "experienceGrid",
   "rentalGrid",
+  "packageGrid",
   "destinations",
   "whyChooseUs",
   "features",
@@ -92,6 +95,11 @@ export const sectionTypes = [
   "whyTravelWithUs",
   "logoRow",
   "video",
+  "itinerary",
+  "inclusions",
+  "pricing",
+  "availabilityPreview",
+  "relatedOfferings",
   "divider",
 ] as const;
 
@@ -146,6 +154,7 @@ export const websitePageKeys = [
   "home",
   "experiences",
   "rentals",
+  "packages",
   "destinations",
   "about",
   "gallery",
@@ -166,6 +175,7 @@ export type WebsitePageSelection = {
 
 export type OnboardingInput = {
   businessType: BusinessType;
+  primaryCapability: BusinessCapability;
   capabilities: BusinessCapability[];
   pageSelections: WebsitePageSelection[];
   name: string;

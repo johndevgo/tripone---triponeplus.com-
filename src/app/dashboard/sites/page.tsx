@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Globe2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { fallbackSiteUrl } from "@/lib/tenancy/public-url";
+import { activationPath } from "@/lib/admin-routing";
 
 export default async function SitesPage() {
   const supabase = await createClient();
@@ -18,7 +19,7 @@ export default async function SitesPage() {
           {sites?.map((site) => (
             <Link
               key={site.id}
-              href={`/dashboard/sites/${site.id}`}
+              href={activationPath(site.id)}
               className="glass rounded-3xl p-6 hover:bg-white/[.09]"
             >
               <Globe2 className="text-[#FFC857]" />

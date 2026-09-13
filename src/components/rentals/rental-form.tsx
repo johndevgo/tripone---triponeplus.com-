@@ -321,7 +321,7 @@ export function RentalForm({
       </Group>
       <div className="sticky bottom-4 flex justify-end gap-3 rounded-2xl border border-white/10 bg-[#07271f]/95 p-3 backdrop-blur-xl">
         <Link
-          href={`/dashboard/sites/${siteId}/rentals`}
+          href="/admin/rentals"
           className="inline-flex min-h-11 items-center px-4 text-sm text-white/55"
         >
           Cancel

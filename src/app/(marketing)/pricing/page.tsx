@@ -1,23 +1,29 @@
 import type { Metadata } from "next";
 import { ArrowRight, Check, ChevronRight, Sparkles } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
+import {
+  defaultPlatformSettings,
+  formatPlanPrice,
+} from "@/lib/platform/config";
+import { createPublicClient } from "@/lib/supabase/public";
+import { isSupabaseConfigured } from "@/lib/supabase/env";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Build, customize and publish a tourism website free during TripOne+ early access. No payment details required.",
+    "Get TripOne+ free for three years, then continue for NPR 4,999 per year. No payment details required to start.",
   alternates: { canonical: "/pricing" },
   openGraph: {
-    title: "TripOne+ early-access pricing",
+    title: "TripOne+ founding plan pricing",
     description:
-      "Build, customize and publish free during early access. No payment details required.",
+      "Three years free, then NPR 4,999 per year. No payment details required to start.",
     url: "/pricing",
   },
 };
 
 const included = [
   "Tourism-aware onboarding and deterministic generation",
-  "Eight professional themes and visual builder",
+  "Ten professional themes and visual builder",
   "Experiences, rentals, rates and destination content",
   "Draft preview and versioned publishing",
   "Technical SEO controls, sitemaps and redirects",
@@ -25,19 +31,22 @@ const included = [
   "Hosted TripOne+ customer website path",
 ];
 
-export default function Pricing() {
+export default async function Pricing() {
+  const settings = await getPricing();
+  const renewal = formatPlanPrice(settings.annualPrice, settings.currency);
   return (
     <>
       <section className="mx-auto max-w-4xl text-center">
         <p className="marketing-kicker mx-auto">
-          <Sparkles size={15} /> Early access
+          <Sparkles size={15} /> Founding access
         </p>
         <h1 className="marketing-title mt-6">
-          One complete plan. Free while we learn with operators.
+          Three years free. One simple annual price after that.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/60">
-          Build, customize and publish without entering payment information.
-          Future paid plans will be communicated before billing is introduced.
+          Build, customize and publish for {settings.foundingFreeYears} full
+          years without entering payment information. Continue afterward for{" "}
+          {renewal} per year.
         </p>
       </section>
 
@@ -47,13 +56,15 @@ export default function Pricing() {
           <div className="relative flex flex-col justify-between gap-8 sm:flex-row sm:items-start">
             <div>
               <p className="text-sm font-semibold text-[#ffc857]">
-                TripOne+ Early Access
+                TripOne+ Founding Plan
               </p>
               <div className="mt-4 flex items-end gap-3">
                 <span className="text-6xl font-semibold tracking-[-.05em]">
                   $0
                 </span>
-                <span className="pb-2 text-white/45">during early access</span>
+                <span className="pb-2 text-white/45">
+                  for your first {settings.foundingFreeYears} years
+                </span>
               </div>
             </div>
             <span className="w-fit rounded-full border border-emerald-300/20 bg-emerald-300/10 px-4 py-2 text-xs font-semibold text-emerald-100">
@@ -61,6 +72,10 @@ export default function Pricing() {
             </span>
           </div>
           <div className="my-8 border-t border-white/10" />
+          <p className="mb-7 rounded-2xl border border-[#ffc857]/15 bg-[#ffc857]/[.06] p-4 text-sm leading-6 text-white/65">
+            After your free period, continued access is {renewal} per year. We
+            do not auto-charge you in the current release.
+          </p>
           <div className="grid gap-4 sm:grid-cols-2">
             {included.map((item) => (
               <p
@@ -72,9 +87,12 @@ export default function Pricing() {
               </p>
             ))}
           </div>
-          <ButtonLink href="/signup" className="mt-9 w-full min-h-13 text-base">
-            Start building <ArrowRight size={18} />
-          </ButtonLink>
+          <MarketingPrimaryCta
+            guestLabel="Start building"
+            className="mt-9 min-h-13 w-full text-base"
+          >
+            <ArrowRight size={18} />
+          </MarketingPrimaryCta>
         </div>
       </section>
 
@@ -86,7 +104,7 @@ export default function Pricing() {
           {[
             [
               "Will TripOne+ always be free?",
-              "Early access is free. Pricing may be introduced later, but it will be communicated before any billing begins.",
+              `Your founding access is free for ${settings.foundingFreeYears} years. Continued access is currently set at ${renewal} per year after that period.`,
             ],
             [
               "Do I need a credit card?",
@@ -116,4 +134,24 @@ export default function Pricing() {
       </section>
     </>
   );
+}
+
+async function getPricing() {
+  if (!isSupabaseConfigured()) return defaultPlatformSettings;
+  try {
+    const { data } = await createPublicClient()
+      .from("platform_settings")
+      .select("founding_free_years,annual_price,currency")
+      .eq("id", 1)
+      .single();
+    if (!data) return defaultPlatformSettings;
+    return {
+      ...defaultPlatformSettings,
+      foundingFreeYears: data.founding_free_years,
+      annualPrice: Number(data.annual_price),
+      currency: data.currency,
+    };
+  } catch {
+    return defaultPlatformSettings;
+  }
 }

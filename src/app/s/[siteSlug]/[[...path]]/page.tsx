@@ -61,7 +61,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     defaultImage: snapshot.site.defaultOgImageUrl,
     resourceImage:
       resolved.experience?.featured_image_url ??
-      resolved.activeRental?.featured_image_url,
+      resolved.activeRental?.featured_image_url ??
+      resolved.activePackage?.featured_image_url,
     favicon: snapshot.site.faviconUrl,
   });
 }
@@ -147,6 +148,27 @@ export default async function PublishedFallbackPage({ params }: Props) {
       ),
     );
   }
+  if (resolved.activePackage) {
+    const item = resolved.activePackage;
+    jsonLd.push(
+      breadcrumbJsonLd([
+        { name: "Home", url: publicUrl },
+        { name: "Packages", url: `${publicUrl}/packages` },
+        { name: item.name, url: canonical },
+      ]),
+      experienceJsonLd(
+        {
+          name: item.name,
+          description: item.description || item.short_description,
+          image: item.featured_image_url,
+          price: item.price_from,
+          currency: item.currency,
+          bookingUrl: item.booking_url,
+        },
+        canonical,
+      ),
+    );
+  }
   return (
     <>
       {jsonLd.map((item, index) => (
@@ -163,9 +185,11 @@ export default async function PublishedFallbackPage({ params }: Props) {
         page={resolved.page}
         experiences={resolved.experiences}
         rentals={resolved.rentals}
+        packages={resolved.packages}
         testimonials={snapshot.testimonials as unknown as PublicTestimonial[]}
         activeExperience={resolved.experience}
         activeRental={resolved.activeRental}
+        activePackage={resolved.activePackage}
         basePath={basePath}
       />
     </>

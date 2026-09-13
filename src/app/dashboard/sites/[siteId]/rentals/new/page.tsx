@@ -13,7 +13,7 @@ export default async function NewRentalPage({
   return (
     <div className="mx-auto max-w-5xl">
       <Link
-        href={`/dashboard/sites/${siteId}/rentals`}
+        href="/admin/rentals"
         className="text-sm text-white/45 hover:text-white"
       >
         ← Back to rentals

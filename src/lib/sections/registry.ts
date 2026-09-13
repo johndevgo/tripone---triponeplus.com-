@@ -120,6 +120,12 @@ const definitions: Record<(typeof sectionTypes)[number], SectionDefinition> = {
     "Tours & Experiences",
     ["product-grid", "rate-cards", "compact-list"],
   ),
+  packageGrid: cards(
+    "Package collection",
+    "Present complete itineraries without duplicating their linked services.",
+    "Tours & Experiences",
+    ["package-grid", "editorial", "compact-list"],
+  ),
   featuredPackages: experience("Featured packages", [
     "grid",
     "cards",
@@ -270,6 +276,36 @@ const definitions: Record<(typeof sectionTypes)[number], SectionDefinition> = {
     ["wide", "contained"],
     videoSettings,
     () => ({ title: "Watch the experience", url: "", spacing: "standard" }),
+  ),
+  itinerary: cards(
+    "Itinerary",
+    "Explain the planned sequence without promising unconfirmed details.",
+    "Tours & Experiences",
+    ["timeline", "numbered-cards", "compact"],
+  ),
+  inclusions: cards(
+    "Inclusions and exclusions",
+    "Make what is and is not included easy to compare.",
+    "Tours & Experiences",
+    ["split-checklist", "cards", "compact"],
+  ),
+  pricing: cards(
+    "Pricing",
+    "Summarize published starting rates and quote-only services.",
+    "Conversion",
+    ["cards", "comparison", "compact"],
+  ),
+  availabilityPreview: cards(
+    "Availability preview",
+    "Set clear expectations for booking requests and date confirmation.",
+    "Conversion",
+    ["request-panel", "calendar-note", "compact"],
+  ),
+  relatedOfferings: cards(
+    "Related offerings",
+    "Help visitors continue exploring relevant services.",
+    "Tours & Experiences",
+    ["mixed-grid", "compact-list", "cards"],
   ),
   divider: define(
     "Spacer / divider",

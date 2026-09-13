@@ -4,13 +4,15 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
-  const next = url.searchParams.get("next") ?? "/dashboard";
+  const next = url.searchParams.get("next") ?? "/admin/dashboard";
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       const destination =
-        next.startsWith("/") && !next.startsWith("//") ? next : "/dashboard";
+        next.startsWith("/") && !next.startsWith("//")
+          ? next
+          : "/admin/dashboard";
       return NextResponse.redirect(new URL(destination, url.origin));
     }
   }

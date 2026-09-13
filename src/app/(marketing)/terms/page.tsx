@@ -36,6 +36,13 @@ export default function Terms() {
           optional analytics providers. Production service levels and support
           terms must be stated in the final reviewed agreement.
         </p>
+        <h2>Founding access and inactivity</h2>
+        <p>
+          Founding accounts receive three years of free access. The stated
+          continuation price is NPR 4,999 per year, and the current product does
+          not auto-charge. Accounts that do not sign in for 60 days may be
+          permanently deleted under the disclosed retention policy.
+        </p>
       </div>
     </article>
   );

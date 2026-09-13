@@ -21,6 +21,7 @@ export default async function Builder({
     { data: templates },
     { data: experiences },
     { data: rentals },
+    { data: packages },
     { data: taxonomyTerms },
     { data: taxonomies },
     { data: locations },
@@ -62,6 +63,12 @@ export default async function Builder({
       .select(
         "*,rental_rates(label,amount,currency,pricing_unit,minimum_quantity,maximum_quantity)",
       )
+      .eq("site_id", siteId)
+      .neq("status", "archived")
+      .order("sort_order"),
+    supabase
+      .from("packages")
+      .select("*,package_items(*)")
       .eq("site_id", siteId)
       .neq("status", "archived")
       .order("sort_order"),
@@ -277,6 +284,10 @@ export default async function Builder({
       rentals={(rentals ?? []).map((rental) => ({
         ...rental,
         rates: rental.rental_rates ?? [],
+      }))}
+      packages={(packages ?? []).map((item) => ({
+        ...item,
+        items: item.package_items ?? [],
       }))}
       savedSections={savedSections ?? []}
       initialTargetId={target}

@@ -1,4 +1,7 @@
-export type ResourceCategory = "Guide" | "SEO" | "Conversion" | "Comparison";
+import { supplementalResources } from "./supplemental-resources";
+
+export type ResourceCategory =
+  "Guide" | "SEO" | "Conversion" | "Operations" | "Growth" | "Comparison";
 
 export type ResourceSection = {
   heading: string;
@@ -32,7 +35,7 @@ export type ResourceArticle = {
   sources?: ResourceSource[];
 };
 
-export const resources: ResourceArticle[] = [
+const cornerstoneResources: ResourceArticle[] = [
   {
     slug: "tour-operator-website-checklist",
     category: "Guide",
@@ -505,6 +508,39 @@ export const resources: ResourceArticle[] = [
     ],
   },
 ];
+
+export const resources: ResourceArticle[] = [
+  ...cornerstoneResources,
+  ...supplementalResources,
+];
+
+export const resourceCategories: ResourceCategory[] = [
+  "Guide",
+  "SEO",
+  "Conversion",
+  "Operations",
+  "Growth",
+  "Comparison",
+];
+
+export const resourceCategorySlugs: Record<ResourceCategory, string> = {
+  Guide: "industry-guides",
+  SEO: "tourism-seo",
+  Conversion: "website-conversion",
+  Operations: "tour-operations",
+  Growth: "tourism-growth",
+  Comparison: "platform-comparisons",
+};
+
+export function getResourceCategory(slug: string) {
+  return resourceCategories.find(
+    (category) => resourceCategorySlugs[category] === slug,
+  );
+}
+
+export function getResourcesByCategory(category: ResourceCategory) {
+  return resources.filter((resource) => resource.category === category);
+}
 
 export function getResource(slug: string) {
   return resources.find((resource) => resource.slug === slug);

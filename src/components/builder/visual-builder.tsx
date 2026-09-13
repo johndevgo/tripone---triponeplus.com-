@@ -41,6 +41,7 @@ import {
 import {
   SiteRenderer,
   type PublicExperience,
+  type PublicPackage,
   type PublicRental,
 } from "@/components/site/site-renderer";
 import { sectionRegistry, createDefaultSection } from "@/lib/sections/registry";
@@ -95,6 +96,7 @@ type Props = {
   pages: BuilderPage[];
   experiences: PublicExperience[];
   rentals: PublicRental[];
+  packages: PublicPackage[];
   savedSections: SavedSectionRecord[];
   initialTargetId?: string;
 };
@@ -109,6 +111,7 @@ export function VisualBuilder({
   pages,
   experiences,
   rentals,
+  packages,
   savedSections: initialSavedSections,
   initialTargetId,
 }: Props) {
@@ -350,7 +353,7 @@ export function VisualBuilder({
         className={`sticky top-0 z-30 flex min-h-16 flex-wrap items-center gap-3 border-b px-4 ${panel}`}
       >
         <Link
-          href={`/dashboard/sites/${site.id}`}
+          href="/admin/dashboard"
           aria-label="Back to dashboard"
           className="grid size-10 place-items-center rounded-xl hover:bg-white/10"
         >
@@ -502,7 +505,7 @@ export function VisualBuilder({
             </SortableContext>
           </DndContext>
           <Link
-            href={`/dashboard/sites/${site.id}/pages`}
+            href="/admin/pages"
             className="mt-5 block rounded-xl border border-white/10 p-3 text-center text-sm text-white/60"
           >
             Manage pages & navigation
@@ -521,6 +524,7 @@ export function VisualBuilder({
               theme={theme}
               experiences={experiences}
               rentals={rentals}
+              packages={packages}
               activeExperience={experiences.find(
                 (item) => item.id === activePage.activeExperienceId,
               )}

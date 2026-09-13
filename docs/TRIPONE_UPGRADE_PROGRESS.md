@@ -17,10 +17,10 @@ Last updated: 2026-09-10
 | 1. Generation repair             | Complete | Advisory-lock transaction, URL validation, safe error correlation, duplicate-submit guard, rollback database coverage and clean Supabase lint.                                                     |
 | 2. Multi-service model           | Complete | Capabilities, rentals/rates, five taxonomies, tenant-safe assignments, management routes, onboarding, preview and schema-v3 immutable publishing pass their gates.                                 |
 | 3. Page selection/templates      | Complete | Deterministic multi-capability recipes, optional pages, revision-safe templates, typed bindings, record-level experience/rental/taxonomy/location overrides and inheritance reset.                 |
-| 4. Sections/themes/global chrome | Complete | Eight tokenized themes, 27 typed sections, meaningful layout variants, saved sections and visual header/footer controls render through one shared production renderer.                             |
+| 4. Sections/themes/global chrome | Complete | Ten tokenized themes, 27 typed sections, meaningful layout variants, saved sections and visual header/footer controls render through one shared production renderer.                               |
 | 5. SEO/tracking/public resolver  | Complete | Prefix-aware metadata/sitemaps, resource SEO, truthful JSON-LD, nested taxonomy redirects, fallback forms, product analytics, consent-aware typed integrations and origin isolation.               |
-| 6. Full acceptance               | Complete | Strict TypeScript, ESLint, 47 unit tests, six rollback database suites, production build, authenticated flows, isolated-script proof and five-width browser matrix pass locally and in production. |
-| 7. Growth and visual release     | Complete | Original optimized photography, expanded product pages, eight durable resources, comparison-source disclosure, rich metadata, social images and link/image browser coverage.                       |
+| 6. Full acceptance               | Complete | Strict TypeScript, ESLint, 67 unit tests, six rollback database suites, production build, authenticated flows, isolated-script proof and five-width browser matrix pass locally and in production. |
+| 7. Growth and visual release     | Complete | Original optimized photography, expanded product pages, more than 60 durable resources, comparison-source disclosure, rich metadata, social images and link/image browser coverage.                |
 
 ## Decision log
 
@@ -37,20 +37,21 @@ Last updated: 2026-09-10
 - 2026-09-09: Fast-forwarded the fully accepted Part 4 branch to `main`. GitHub CI passed and Vercel deployed the release at `https://tools.neurerohan.com.np`; the customer example is live at `/s/dipson-tours`.
 - 2026-09-10: Rebuilt the SaaS marketing experience around six original, optimized travel photographs; expanded all public product pages; added eight typed long-form guides and fair competitor comparisons; generated social-sharing images; expanded sitemap and structured data; and added browser coverage for internal destinations, imagery and discovery surfaces.
 - 2026-09-10: Released the growth and visual upgrade as `23bff4f`. GitHub CI passed, Vercel served every checked release URL, and the production public plus five-width browser suites passed against `tools.neurerohan.com.np`.
+- 2026-09-13: Added clean active-workspace `/admin/*` navigation, service-role-backed platform administration, consent-limited inactive-account retention, three-year founding entitlements, custom-domain provider controls and the tourism growth studio. The feature branch remains behind a database release gate because the production REST schema reports `public.packages` missing.
 
 ## Latest verification
 
 - TypeScript: passed (`tsc --noEmit`).
 - ESLint: passed.
-- Unit tests: 47 passed; one opt-in live-snapshot contract test skipped when its environment fixture is absent.
-- Database integration: six suites passed against the authorized Supabase project and rolled back every fixture.
-- Production build: passed with Next.js 16.3.4 and all application/customer routes generated successfully.
-- Browser acceptance: 21 current desktop/mobile checks passed and 17 fixture-specific or intentionally duplicate matrix checks skipped; authenticated onboarding, builder, and isolated tenant-script checks passed independently in the Part 4 release audit.
-- Production smoke: 11 desktop/mobile public-flow checks and 10 five-width marketing/customer checks passed against `tools.neurerohan.com.np`; the homepage, resources, article, social image, sitemap and `dipson-tours` customer site all return 200.
+- Unit tests: 67 passed; one opt-in live-snapshot contract test skipped when its environment fixture is absent.
+- Database integration: six rollback suites passed in the prior authorized database audit. The current environment does not contain the server-only database URL needed to rerun them.
+- Production build: passed with Next.js 16.3.4 and 101 application/customer pages generated successfully.
+- Browser acceptance: 22 desktop/mobile checks passed and 22 fixture-specific or intentionally duplicate matrix checks skipped. Authentication-required onboarding, builder and tenant-script suites remain opt-in because disposable credentials were not present.
+- Production smoke: `triponeplus.com` returns the current `main` release. `www.triponeplus.com` and `tools.neurerohan.com.np` do not currently resolve, and `/growth-services` remains unavailable until this feature branch is released.
 - Dependency audit: no known vulnerabilities.
-- Remote database: all migrations through `20260908203000` are applied; `public`, `private` and `extensions` pass Supabase database lint with no schema errors.
+- Remote database: `platform_settings` and `analytics_events` resolve, but `public.packages` returns PostgREST `PGRST205`. Apply `20260910122440_operations_core.sql` before merging this branch, then run the database suites and Supabase lint.
 
 ## External dependencies
 
-- Vercel environment management, future custom-domain attachment and GitHub branch protection remain account-controlled. No credential is stored in this repository.
-- Making `triponeplus.com` live requires the domain owner to add and verify it in Vercel and configure DNS at the authoritative provider.
+- Supabase migration deployment, Vercel environment management, customer registrar DNS and GitHub branch protection remain account-controlled. No credential is stored in this repository.
+- Restoring `www.triponeplus.com` and `tools.neurerohan.com.np` requires DNS records matching the values shown by the attached Vercel project. Keep `triponeplus.com` as the canonical production hostname.

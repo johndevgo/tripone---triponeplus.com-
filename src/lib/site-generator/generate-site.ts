@@ -28,6 +28,7 @@ const sectionVariant: Record<string, string> = {
   featuredExperiences: "cards",
   experienceGrid: "cards",
   rentalGrid: "product-grid",
+  packageGrid: "package-grid",
   finalCta: "banner",
 };
 
@@ -39,8 +40,12 @@ export function generateSite(input: OnboardingInput): GeneratedSite {
     input.pageSelections,
   );
   const catalogue =
+    (input.businessType === "travel_agency"
+      ? selectedPages.find((page) => page.key === "packages")
+      : undefined) ??
     selectedPages.find((page) => page.key === "experiences") ??
-    selectedPages.find((page) => page.key === "rentals");
+    selectedPages.find((page) => page.key === "rentals") ??
+    selectedPages.find((page) => page.key === "packages");
   const catalogueHref = catalogue?.slug ? `/${catalogue.slug}` : "/contact";
   const pages = selectedPages.map((recipe, sortOrder) => ({
     title: recipe.title,
@@ -133,6 +138,11 @@ function sectionSettings(
     return {
       title: "Featured rentals",
       description: `Browse rental options from ${input.name}.`,
+    };
+  if (type === "packageGrid")
+    return {
+      title: "Travel packages",
+      description: `Explore multi-service itineraries from ${input.name}.`,
     };
   if (type === "whyChooseUs")
     return {

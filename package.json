@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.17.1",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -12,7 +15,10 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:db": "tsx scripts/run-db-test.ts",
-    "test:e2e": "next build && start-server-and-test \"next start\" http://127.0.0.1:3000 \"playwright test\"",
+    "test:db:operations": "tsx scripts/run-db-test.ts supabase/tests/operations_core.sql",
+    "test:db:platform": "tsx scripts/run-db-test.ts supabase/tests/platform_access_retention.sql",
+    "db:status": "tsx scripts/check-db-state.ts",
+    "test:e2e": "next build && node scripts/run-e2e.mjs",
     "seed:demo": "node --env-file=.env.local --import tsx scripts/seed-demo.ts",
     "format": "prettier --write .",
     "format:check": "prettier --check ."
@@ -44,7 +50,6 @@
     "eslint-config-next": "16.3.4",
     "pg": "8.23.0",
     "prettier": "latest",
-    "start-server-and-test": "^3.0.12",
     "tailwindcss": "4.3.3",
     "tsx": "^4.23.13",
     "typescript": "6.0.3",

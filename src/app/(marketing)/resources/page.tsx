@@ -2,8 +2,13 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, BookOpen, CheckCircle2, Compass } from "lucide-react";
-import { ResourceCard } from "@/components/marketing/resource-card";
-import { resources } from "@/content/resources";
+import { ResourceExplorer } from "@/components/marketing/resource-explorer";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
+import {
+  resourceCategories,
+  resourceCategorySlugs,
+  resources,
+} from "@/content/resources";
 
 export const metadata: Metadata = {
   title: "Tourism website guides and comparisons",
@@ -21,6 +26,17 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   const featured = resources[0];
   if (!featured) return null;
+  const summaries = resources.map(
+    ({ slug, category, title, description, image, imageAlt, readTime }) => ({
+      slug,
+      category,
+      title,
+      description,
+      image,
+      imageAlt,
+      readTime,
+    }),
+  );
 
   return (
     <>
@@ -37,16 +53,15 @@ export default function ResourcesPage() {
             discovery and creating a clearer path from interest to enquiry.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 text-sm text-white/60">
-            {["Website strategy", "SEO", "Conversion", "Comparisons"].map(
-              (label) => (
-                <span
-                  key={label}
-                  className="rounded-full border border-white/10 bg-white/[.05] px-4 py-2"
-                >
-                  {label}
-                </span>
-              ),
-            )}
+            {resourceCategories.map((category) => (
+              <Link
+                key={category}
+                href={`/resources/category/${resourceCategorySlugs[category]}`}
+                className="rounded-full border border-white/10 bg-white/[.05] px-4 py-2 transition hover:bg-white/[.1] hover:text-white"
+              >
+                {category}
+              </Link>
+            ))}
           </div>
         </div>
         <Link
@@ -89,11 +104,7 @@ export default function ResourcesPage() {
             is reviewed for clear claims and actionable detail.
           </p>
         </div>
-        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {resources.map((article) => (
-            <ResourceCard key={article.slug} article={article} />
-          ))}
-        </div>
+        <ResourceExplorer articles={summaries} />
       </section>
 
       <section className="glass mt-24 grid gap-8 rounded-[2rem] p-7 sm:p-10 lg:grid-cols-[.7fr_1.3fr] lg:items-center">
@@ -112,12 +123,9 @@ export default function ResourcesPage() {
             platform generate a complete draft you can inspect before it goes
             live.
           </p>
-          <Link
-            href="/signup"
-            className="mt-7 inline-flex min-h-12 items-center gap-2 rounded-xl bg-[#f5a623] px-6 text-sm font-semibold text-[#173028] transition hover:bg-[#ffc857]"
-          >
-            Build your website <ArrowRight size={17} />
-          </Link>
+          <MarketingPrimaryCta guestLabel="Build your website" className="mt-7">
+            <ArrowRight size={17} />
+          </MarketingPrimaryCta>
         </div>
       </section>
     </>

@@ -1,42 +1,67 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { trackPublicEvent } from "@/components/site/public-analytics";
 
 export function LeadForm({
   siteId,
   experienceId,
   sourcePage,
+  preview = false,
 }: {
   siteId: string;
   experienceId?: string;
   sourcePage: string;
+  preview?: boolean;
 }) {
   const [state, setState] = useState<"idle" | "sending" | "sent" | "error">(
     "idle",
   );
   const [error, setError] = useState("");
+  const started = useRef(false);
+  if (preview)
+    return (
+      <div className="rounded-[var(--site-radius)] border border-black/10 bg-[var(--site-surface)] p-6">
+        <h3 className="font-semibold">Enquiry form preview</h3>
+        <p className="mt-2 text-sm text-[var(--site-muted)]">
+          Visitors can send this form after the website is published. Preview
+          mode never creates lead records.
+        </p>
+      </div>
+    );
   async function submit(formData: FormData) {
     setState("sending");
-    const payload = Object.fromEntries(formData);
-    const response = await fetch("/api/leads", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({
-        ...payload,
-        siteId,
-        experienceId: experienceId ?? "",
-        sourcePage,
-        siteSlug: fallbackSlugFromPath(window.location.pathname) ?? "",
-      }),
-    });
-    const body = (await response.json()) as { error?: string };
-    if (response.ok) {
+    try {
+      const payload = Object.fromEntries(formData);
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          ...payload,
+          siteId,
+          experienceId: experienceId ?? "",
+          sourcePage,
+          siteSlug: fallbackSlugFromPath(window.location.pathname) ?? "",
+        }),
+      });
+      const body = (await response.json().catch(() => ({}))) as {
+        error?: string;
+      };
+      if (!response.ok) throw new Error(body.error);
       setState("sent");
       void trackPublicEvent("lead_submit", experienceId);
-    } else {
+    } catch (requestError) {
       setState("error");
-      setError(body.error ?? "Could not send your enquiry.");
+      setError(
+        requestError instanceof Error && requestError.message
+          ? requestError.message
+          : "Could not send your enquiry. Please try again.",
+      );
     }
+  }
+  function trackStart() {
+    if (started.current) return;
+    started.current = true;
+    void trackPublicEvent("enquiry_started", experienceId);
   }
   if (state === "sent")
     return (
@@ -50,6 +75,7 @@ export function LeadForm({
   return (
     <form
       action={submit}
+      onFocus={trackStart}
       className="grid gap-3 rounded-[var(--site-radius)] bg-[var(--site-surface)] p-6 sm:grid-cols-2"
     >
       <input
@@ -64,6 +90,24 @@ export function LeadForm({
       <Field name="phone" label="Phone (optional)" />
       <Field name="desiredDate" label="Desired date (optional)" type="date" />
       <Field name="guests" label="Guests (optional)" type="number" />
+      <Field
+        name="requestedDestination"
+        label="Destination or route (optional)"
+      />
+      <Field
+        name="budgetRange"
+        label="Budget range (optional)"
+        placeholder="For example: USD 1,000–1,500"
+      />
+      <label className="text-sm sm:col-span-2">
+        Interests (optional)
+        <input
+          name="interests"
+          maxLength={500}
+          placeholder="Culture, hiking, wildlife, food"
+          className="mt-2 min-h-11 w-full rounded-xl border border-black/10 bg-[var(--site-bg)] px-3"
+        />
+      </label>
       <label className="text-sm sm:col-span-2">
         Message (optional)
         <textarea
@@ -96,11 +140,13 @@ function Field({
   label,
   type = "text",
   required,
+  placeholder,
 }: {
   name: string;
   label: string;
   type?: string;
   required?: boolean;
+  placeholder?: string;
 }) {
   return (
     <label className="text-sm">
@@ -109,6 +155,7 @@ function Field({
         name={name}
         type={type}
         required={required}
+        placeholder={placeholder}
         className="mt-2 min-h-11 w-full rounded-xl border border-black/10 bg-[var(--site-bg)] px-3"
       />
     </label>

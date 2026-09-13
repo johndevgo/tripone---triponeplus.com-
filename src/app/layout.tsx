@@ -14,16 +14,20 @@ import { loadPublishedSite } from "@/lib/tenancy/published-site";
 import "./globals.css";
 export const metadata: Metadata = {
   title: {
-    default: "TripOne+ — Websites built to sell experiences",
+    default: "TripOne+ — Sell the experience. Run the operation.",
     template: "%s | TripOne+",
   },
   description:
-    "Build a fast, SEO-ready website structured for your tourism or activity business.",
+    "Build an SEO-ready tourism website and manage packages, booking requests, availability, resources, leads and customers.",
   metadataBase: new URL(getAppUrl()),
   applicationName: "TripOne+",
   authors: [{ name: "TripOne+" }],
   creator: "TripOne+",
   publisher: "TripOne+",
+  icons: {
+    icon: "/images/logo annd branding/tripone 1isto1 photo logo .png",
+    apple: "/images/logo annd branding/tripone 1isto1 photo logo .png",
+  },
   category: "business",
   keywords: [
     "tourism website builder",
@@ -44,9 +48,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "TripOne+ — Websites built to sell experiences",
+    title: "TripOne+ — Sell the experience. Run the operation.",
     description:
-      "A website platform built around tours, activities and experiences.",
+      "A tourism-native website builder and booking operations platform.",
     type: "website",
     siteName: "TripOne+",
     locale: "en_US",
@@ -54,9 +58,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TripOne+ — Websites built to sell experiences",
+    title: "TripOne+ — Sell the experience. Run the operation.",
     description:
-      "A website platform built around tours, activities and experiences.",
+      "A tourism-native website builder and booking operations platform.",
   },
 };
 export default async function RootLayout({

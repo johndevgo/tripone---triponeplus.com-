@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { ArrowRight, Globe2 } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { fallbackSiteUrl } from "@/lib/tenancy/public-url";
+import { activationPath } from "@/lib/admin-routing";
 export default async function Dashboard() {
   const supabase = await createClient();
   const { data: sites } = await supabase
@@ -11,8 +12,7 @@ export default async function Dashboard() {
     .order("updated_at", { ascending: false });
   if (!sites?.length) redirect("/onboarding");
   const onlySite = sites[0];
-  if (sites.length === 1 && onlySite)
-    redirect(`/dashboard/sites/${onlySite.id}`);
+  if (sites.length === 1 && onlySite) redirect(activationPath(onlySite.id));
   return (
     <main className="app-bg min-h-screen px-5 py-12 text-white">
       <div className="mx-auto max-w-6xl">
@@ -24,7 +24,7 @@ export default async function Dashboard() {
           {sites.map((site) => (
             <Link
               key={site.id}
-              href={`/dashboard/sites/${site.id}`}
+              href={activationPath(site.id)}
               className="glass rounded-3xl p-6 hover:bg-white/[.09]"
             >
               <Globe2 className="text-[#FFC857]" />

@@ -33,6 +33,14 @@ export default function Privacy() {
         account deletion from the account page. Website visitors can decline
         optional tracking when a site owner enables the basic consent banner.
       </p>
+      <h2>Inactive accounts and contact retention</h2>
+      <p>
+        An account that has not signed in for 60 days may have its Auth account,
+        websites, operational records and uploaded files permanently deleted. An
+        email address is retained after deletion only when the person gave
+        explicit marketing consent; that retained contact can be unsubscribed
+        and is not used to restore the deleted account data.
+      </p>
     </Legal>
   );
 }

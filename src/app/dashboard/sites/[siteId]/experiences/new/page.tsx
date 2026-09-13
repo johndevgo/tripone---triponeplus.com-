@@ -26,7 +26,7 @@ export default async function NewExperience({
   return (
     <div className="mx-auto max-w-5xl">
       <Link
-        href={`/dashboard/sites/${siteId}/experiences`}
+        href="/admin/experiences"
         className="text-sm text-white/45 hover:text-white"
       >
         ← Back to experiences

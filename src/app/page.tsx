@@ -4,9 +4,11 @@ import Link from "next/link";
 import {
   ArrowRight,
   BarChart3,
+  Boxes,
   BookOpen,
   Brush,
   Check,
+  CalendarCheck2,
   ChevronRight,
   Compass,
   Gauge,
@@ -14,6 +16,7 @@ import {
   Inbox,
   Layers3,
   MousePointerClick,
+  PackageOpen,
   Search,
   ShieldCheck,
   Sparkles,
@@ -21,15 +24,16 @@ import {
 } from "lucide-react";
 import { MarketingFooter } from "@/components/marketing/footer";
 import { MarketingHeader } from "@/components/marketing/header";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import { ResourceCard } from "@/components/marketing/resource-card";
 import { ButtonLink } from "@/components/ui/button";
 import { resources } from "@/content/resources";
 import { getAppUrl } from "@/lib/app-url";
 
 export const metadata: Metadata = {
-  title: "Tourism website builder for tours, activities and rentals",
+  title: "Tourism website builder and booking operations platform",
   description:
-    "Build a polished, SEO-ready website for your tour, activity or rental business with structured services, visual editing, leads and analytics.",
+    "Build an SEO-ready tourism website and manage tours, rentals, packages, booking requests, availability, resources, leads and customers in one platform.",
   alternates: { canonical: "/" },
 };
 
@@ -64,6 +68,23 @@ const categoryCards = [
     description: "Trip types, requirements, equipment and locations.",
     image: "/images/marketing/reef-diving.webp",
   },
+  {
+    label: "Transfers",
+    description: "Routes, pickup details, vehicles, passengers and luggage.",
+    image: "/images/marketing/airport-transfer.webp",
+  },
+  {
+    label: "ATV adventures",
+    description:
+      "Time slots, safety requirements, guides and finite resources.",
+    image: "/images/marketing/desert-atv.webp",
+  },
+  {
+    label: "Travel packages",
+    description:
+      "Multi-day itineraries, destinations, inclusions and enquiries.",
+    image: "/images/marketing/travel-planning.webp",
+  },
 ];
 
 const platformFeatures = [
@@ -97,6 +118,21 @@ const platformFeatures = [
     "Safe publishing",
     "Preview drafts, publish immutable snapshots and connect a verified domain when ready.",
   ],
+  [
+    PackageOpen,
+    "Packages & offerings",
+    "Compose multi-day packages from existing tours and rentals without duplicating source content.",
+  ],
+  [
+    CalendarCheck2,
+    "Bookings & availability",
+    "Capture payment-free requests, protect departure capacity and manage schedules in the business timezone.",
+  ],
+  [
+    Boxes,
+    "Resources & fulfilment",
+    "Assign guides, vehicles and equipment with transactional overlap protection.",
+  ],
 ] as const;
 
 const proofPoints: Array<[LucideIcon, string]> = [
@@ -126,7 +162,7 @@ const faqs = [
   {
     question: "Can I use my existing booking system?",
     answer:
-      "Yes. Add the booking URL for an experience or rental and TripOne+ will route high-intent visitors to that booking flow while measuring the outbound click.",
+      "Yes. Use TripOne+'s payment-free request workflow or link an external booking URL. TripOne+ does not collect payments in this release.",
   },
   {
     question: "Can I publish before connecting a custom domain?",
@@ -136,7 +172,7 @@ const faqs = [
 ];
 
 export default function Home() {
-  const origin = getAppUrl("https://tools.neurerohan.com.np");
+  const origin = getAppUrl("https://triponeplus.com");
   const structuredData = [
     {
       "@context": "https://schema.org",
@@ -146,12 +182,12 @@ export default function Home() {
       operatingSystem: "Web",
       url: origin,
       description:
-        "A tourism website builder for tour, activity and rental businesses.",
+        "A tourism website builder and booking operations platform for tours, activities, rentals, transfers and travel packages.",
       offers: {
         "@type": "Offer",
         price: "0",
-        priceCurrency: "USD",
-        description: "Free during early access",
+        priceCurrency: "NPR",
+        description: "Free for the first three years, then NPR 4,999 per year",
       },
     },
     {
@@ -196,18 +232,21 @@ export default function Home() {
               tourism, not everything
             </p>
             <h1 className="mt-7 max-w-4xl text-balance text-5xl font-semibold leading-[.98] tracking-[-.052em] sm:text-6xl lg:text-[5.25rem]">
-              Websites built to{" "}
-              <span className="text-[#ffc857]">sell experiences.</span>
+              Sell the experience.{" "}
+              <span className="text-[#ffc857]">Run the operation.</span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70 sm:text-xl">
-              Turn your tours, activities and rentals into a fast, polished
-              website—with the pages, SEO and booking journey already
-              structured.
+              Build a fast, polished website—then manage packages, booking
+              requests, availability, resources, leads and customers from the
+              same tourism-native workspace.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
-              <ButtonLink href="/signup" className="min-h-13 px-7 text-base">
-                Build your website <ArrowRight size={18} />
-              </ButtonLink>
+              <MarketingPrimaryCta
+                guestLabel="Start building free"
+                className="min-h-13 px-7 text-base"
+              >
+                <ArrowRight size={18} />
+              </MarketingPrimaryCta>
               <ButtonLink
                 href="#how-it-works"
                 variant="secondary"
@@ -218,7 +257,7 @@ export default function Home() {
             </div>
             <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/65">
               {[
-                "Free during early access",
+                "Free for your first 3 years",
                 "No AI API",
                 "Preview before publishing",
               ].map((label) => (
@@ -379,7 +418,7 @@ export default function Home() {
               [
                 "03",
                 "Choose a direction",
-                "Select one of eight themes, then apply your logo and brand colors.",
+                "Select one of ten themes, then apply your logo and brand colors.",
               ],
               [
                 "04",
@@ -448,7 +487,7 @@ export default function Home() {
                 Design with range
               </p>
               <h2 className="marketing-title-light mt-5">
-                Eight directions. One coherent system.
+                Ten directions. One coherent system.
               </h2>
               <p className="mt-5 text-lg leading-8 text-[#60746d]">
                 Move from immersive coastal energy to restrained editorial
@@ -482,6 +521,57 @@ export default function Home() {
         </div>
       </section>
 
+      <section className="px-5 py-24 sm:py-28">
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-stretch">
+          <div className="relative min-h-[30rem] overflow-hidden rounded-[2rem]">
+            <Image
+              src="/images/marketing/travel-planning.webp"
+              alt="A tourism specialist planning a traveller journey"
+              fill
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#041c16] via-[#041c16]/15 to-transparent" />
+            <div className="absolute inset-x-7 bottom-7 text-white sm:inset-x-9 sm:bottom-9">
+              <p className="text-xs font-semibold uppercase tracking-[.17em] text-[#ffc857]">
+                TripOne+ growth studio
+              </p>
+              <h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-[-.03em] sm:text-4xl">
+                Technology when you want control. People when you want support.
+              </h2>
+            </div>
+          </div>
+          <div className="app-bg flex flex-col justify-center rounded-[2rem] border border-white/10 p-8 text-white sm:p-10">
+            <p className="marketing-kicker">Platform + services</p>
+            <p className="mt-6 text-lg leading-8 text-white/60">
+              Use TripOne+ as a self-service tourism website and operations
+              platform, or work with our growth studio on search, conversion,
+              local discovery, campaigns and measurement.
+            </p>
+            <div className="mt-8 grid gap-3 text-sm text-white/65 sm:grid-cols-2">
+              {[
+                "Tourism-native website system",
+                "Search and destination content",
+                "Campaign landing journeys",
+                "Honest measurement foundations",
+              ].map((item) => (
+                <span key={item} className="flex items-center gap-3">
+                  <Check size={17} className="shrink-0 text-[#ffc857]" />
+                  {item}
+                </span>
+              ))}
+            </div>
+            <ButtonLink
+              href="/growth-services"
+              variant="secondary"
+              className="mt-9 w-fit"
+            >
+              Explore growth services <ArrowRight size={17} />
+            </ButtonLink>
+          </div>
+        </div>
+      </section>
+
       <section className="app-bg px-5 py-24 text-white sm:py-28">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
@@ -492,6 +582,11 @@ export default function Home() {
               <h2 className="mt-5 max-w-2xl text-4xl font-semibold tracking-[-.035em] sm:text-5xl">
                 Make better website decisions.
               </h2>
+              <p className="mt-4 max-w-xl leading-7 text-white/50">
+                Explore {resources.length} practical guides, operating playbooks
+                and source-linked platform comparisons written for tourism
+                teams.
+              </p>
             </div>
             <Link
               href="/resources"
@@ -553,9 +648,12 @@ export default function Home() {
               Start with your real business details. Build the complete draft,
               inspect every page and publish when it is ready.
             </p>
-            <ButtonLink href="/signup" className="mt-8 min-h-13 px-7 text-base">
-              Build your website <ArrowRight size={18} />
-            </ButtonLink>
+            <MarketingPrimaryCta
+              guestLabel="Build your website"
+              className="mt-8 min-h-13 px-7 text-base"
+            >
+              <ArrowRight size={18} />
+            </MarketingPrimaryCta>
           </div>
         </div>
       </section>

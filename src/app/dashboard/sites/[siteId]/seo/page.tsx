@@ -143,7 +143,7 @@ export default async function Seo({
         )}
       />
       <Link
-        href={`/dashboard/sites/${siteId}/seo/redirects`}
+        href="/admin/seo/redirects"
         className="glass mt-5 flex min-h-16 items-center justify-between rounded-2xl px-5 text-sm font-semibold"
       >
         Manage URL redirects <span aria-hidden="true">→</span>

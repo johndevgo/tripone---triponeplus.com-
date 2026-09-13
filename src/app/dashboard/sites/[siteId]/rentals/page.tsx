@@ -39,7 +39,7 @@ export default async function RentalsPage({
         title="Rentals"
         action={
           <Link
-            href={`/dashboard/sites/${siteId}/rentals/new`}
+            href="/admin/rentals/new"
             className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} /> Add rental
@@ -95,7 +95,7 @@ export default async function RentalsPage({
             const firstRate = rates.find((rate) => rate.amount != null);
             return (
               <Link
-                href={`/dashboard/sites/${siteId}/rentals/${product.id}`}
+                href={`/admin/rentals/${product.id}`}
                 key={product.id}
                 className="glass rounded-2xl p-5 transition hover:border-[#FFC857]/40"
               >

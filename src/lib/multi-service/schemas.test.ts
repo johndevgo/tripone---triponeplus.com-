@@ -77,8 +77,8 @@ describe("Part 4 catalogue", () => {
     );
   });
 
-  it("ships eight complete theme presets", () => {
-    expect(themeIds).toHaveLength(8);
+  it("ships ten complete theme presets", () => {
+    expect(themeIds).toHaveLength(10);
     for (const id of themeIds) {
       expect(themes[id].id).toBe(id);
       expect(themes[id].colors.accent).toMatch(/^#[0-9A-F]{6}$/i);

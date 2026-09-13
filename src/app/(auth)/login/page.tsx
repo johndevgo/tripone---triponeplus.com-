@@ -15,7 +15,7 @@ export default async function Login({
     >
       <AuthMessage {...p} />
       <form action={login} className="mt-6 grid gap-5">
-        <input type="hidden" name="next" value={p.next ?? "/dashboard"} />
+        <input type="hidden" name="next" value={p.next ?? "/admin/dashboard"} />
         <label className="text-sm font-medium">
           Email
           <input

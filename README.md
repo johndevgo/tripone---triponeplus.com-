@@ -18,16 +18,23 @@ No AI or LLM API is used. Pages and copy come from typed category presets, page 
 
 ## Route map
 
-Marketing: `/`, `/features`, `/templates`, `/pricing`, `/resources`, `/resources/[slug]`, `/privacy`, `/terms`, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
+Marketing: `/`, `/features`, `/growth-services`, `/templates`, `/pricing`, `/resources`, `/resources/category/[category]`, `/resources/[slug]`, `/privacy`, `/terms`, `/login`, `/signup`, `/forgot-password`, `/reset-password`.
 
 The public marketing site includes original responsive travel photography,
-eight visual theme previews, generated Open Graph/Twitter images, structured
-software/article/FAQ/breadcrumb data, and a typed resource library with durable
-guides and fair competitor comparisons. Marketing images live in
+ten visual theme previews, generated Open Graph/Twitter images, structured
+software/article/FAQ/breadcrumb data, and a typed library of 63 original
+industry guides, SEO/CRO/operations playbooks and fair competitor comparisons
+organized into six indexable collections. The library supports client-side
+search and filtering without sending full article bodies to the browser.
+Marketing images live in
 `public/images/marketing/`; treat their filenames as immutable because they are
 served with long-lived cache headers.
 
-Product: `/onboarding`, `/dashboard`, `/dashboard/account`, `/dashboard/sites/[siteId]`, plus `builder`, `experiences`, `rentals`, `taxonomies`, `services`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `leads`, `analytics`, `domains` and `settings`.
+`/growth-services` gives the optional human-led tourism growth studio equal
+prominence without making ranking or booking guarantees. The SaaS remains fully
+usable as a self-service product.
+
+Product: `/onboarding`, `/admin/dashboard`, `/admin/account`, `/admin/workspaces`, plus clean `/admin/{feature}` routes for `offerings`, `experiences`, `rentals`, `packages`, `bookings`, `calendar`, `availability`, `resources`, `customers`, `leads`, `website`, `taxonomies`, `services`, `pages`, `media`, `locations`, `testimonials`, `design`, `seo`, `seo/redirects`, `analytics`, `domains` and `settings`. The active workspace is held in a verified HTTP-only cookie, so browser URLs never expose the site UUID. `/super-admin` is a separate service-role-backed platform console.
 
 Delivery: `/preview/[siteSlug]/[[...path]]` is authenticated and noindex. Live hostnames are internally rewritten to `/tenant-sites/[hostname]/[[...path]]`; tenant `/sitemap.xml` and `/robots.txt` use the same host-aware snapshot.
 
@@ -50,14 +57,16 @@ Open `http://localhost:3000`. For tenant routing, add a local hosts-file entry s
 
 Required:
 
-- `NEXT_PUBLIC_SITE_URL`: one absolute application origin. Use `https://tools.neurerohan.com.np` in the current production deployment; do not put comma-separated hosts here.
+- `NEXT_PUBLIC_SITE_URL`: one absolute application origin. Use `https://triponeplus.com` in production; do not put comma-separated hosts here.
 - `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL.
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: public publishable key. A legacy anon key can use `NEXT_PUBLIC_SUPABASE_ANON_KEY` instead.
-- `APP_HOSTS`: comma-separated non-tenant application aliases. Current production should include `tools.neurerohan.com.np,tripone-triponeplus-com.vercel.app`.
+- `APP_HOSTS`: comma-separated non-tenant application aliases. Include `triponeplus.com,www.triponeplus.com,tools.neurerohan.com.np,tripone-triponeplus-com.vercel.app` while the legacy alias remains attached.
+- `APP_REDIRECT_HOSTS`: aliases permanently redirected to `NEXT_PUBLIC_SITE_URL`, normally `www.triponeplus.com,tools.neurerohan.com.np`.
 
 Optional server-only:
 
-- `SUPABASE_SECRET_KEY` or legacy `SUPABASE_SERVICE_ROLE_KEY`: used only for the explicit account deletion flow. Never prefix it with `NEXT_PUBLIC_`.
+- `SUPABASE_SECRET_KEY` or legacy `SUPABASE_SERVICE_ROLE_KEY`: required for `/super-admin`, lifecycle retention and complete account deletion. Never prefix it with `NEXT_PUBLIC_`.
+- `CRON_SECRET`: a long random server-only value used by Vercel Cron to authorize daily inactive-account cleanup.
 - `VERCEL_TOKEN`, `VERCEL_PROJECT_ID`, `VERCEL_TEAM_ID`: domain provisioning and verification. Team ID is optional for a personal project.
 - `TRIPONE_DEMO_EMAIL`, `TRIPONE_DEMO_PASSWORD`: confirmed disposable seed user.
 - `TRIPONE_E2E_EMAIL`, `TRIPONE_E2E_PASSWORD`, `TRIPONE_E2E_SITE_ID`: disposable Playwright user/site.
@@ -74,9 +83,23 @@ Optional server-only:
    npx supabase@latest db lint --linked --level warning
    ```
 
-2. In Authentication → URL Configuration, set Site URL to `https://tools.neurerohan.com.np`. Add exact redirects:
-   - `https://tools.neurerohan.com.np/auth/callback`
-   - `https://tools.neurerohan.com.np/reset-password`
+   The current production history contains a later platform migration while
+   `20260910122440_operations_core.sql` is still absent. After creating and
+   confirming the `neurerohan@gmail.com` Auth account, preview and apply every
+   migration missing from remote history with:
+
+   ```powershell
+   npx supabase@latest db push --linked --include-all --dry-run
+   npx supabase@latest db push --linked --include-all
+   npx supabase@latest migration list --linked
+   npx supabase@latest db lint --linked --level warning
+   ```
+
+   Do not use `db reset --linked` on production; it deletes remote data.
+
+2. In Authentication → URL Configuration, set Site URL to `https://triponeplus.com`. Add exact redirects:
+   - `https://triponeplus.com/auth/callback`
+   - `https://triponeplus.com/reset-password`
    - `https://tripone-triponeplus-com.vercel.app/auth/callback`
    - `https://tripone-triponeplus-com.vercel.app/reset-password`
    - `http://localhost:3000/**` for local development
@@ -109,6 +132,9 @@ Optional server-only:
 20. `20260908201500_account_deletion_fk.sql`: preserves correct cascading account deletion behavior.
 21. `20260908202000_public_fallback_sitemap_discovery.sql`: advertises published customer sitemaps from the application robots file.
 22. `20260908203000_honest_path_based_publishing.sql`: prevents unowned platform subdomains from becoming verified or canonical.
+23. `20260910122440_operations_core.sql`: adds packages, native booking requests, customers, availability, departures, resources, operations audit trails and tenant-safe RPCs.
+24. `20260913092023_platform_access_entitlements_retention.sql`: adds service-only platform roles, founding entitlements, editable commercial/retention policy, consent-limited retained contacts and privileged audit records. If `neurerohan@gmail.com` already exists in Supabase Auth when this migration runs, it is bootstrapped as the initial super admin.
+25. `20260913170000_bootstrap_platform_owner.sql`: idempotently ensures the confirmed founding owner account has the initial `super_admin` role without storing a password.
 
 ## Demo data
 
@@ -145,23 +171,25 @@ The included `.github/workflows/ci.yml` runs install, lint, typecheck, unit test
    npx vercel@latest env add NEXT_PUBLIC_SUPABASE_URL production
    npx vercel@latest env add NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY production
    npx vercel@latest env add APP_HOSTS production
+   npx vercel@latest env add APP_REDIRECT_HOSTS production
+   npx vercel@latest env add SUPABASE_SECRET_KEY production
+   npx vercel@latest env add CRON_SECRET production
    npx vercel@latest deploy --prod
    ```
 
 2. Add server-only Supabase and Vercel domain variables in Project Settings → Environment Variables. Apply them to Production and only to Preview when genuinely needed.
-3. In Project Settings → Domains, keep `tools.neurerohan.com.np` and the existing Vercel alias attached. `triponeplus.com` is a future domain and must not be presented as currently owned or live.
-4. Create a least-privilege Vercel token for this project, set project/team IDs, and redeploy. Customer custom domains can then be attached and verified through the provider adapter. Until then, every published customer site uses `https://tools.neurerohan.com.np/s/{siteSlug}`.
+3. In Project Settings → Domains, make `triponeplus.com` primary. Keep `www.triponeplus.com` and `tools.neurerohan.com.np` attached as redirect aliases while old links are in circulation.
+4. Create a least-privilege Vercel token for this project, set project/team IDs, and redeploy. Customer custom domains can then be attached and verified through the provider adapter. Until then, every published customer site uses `https://triponeplus.com/s/{siteSlug}`.
 
 ## Cloudflare DNS
 
-If `triponeplus.com` is acquired later and Cloudflare remains authoritative DNS:
+If Cloudflare remains authoritative DNS for `triponeplus.com`:
 
 - `@` → Vercel’s displayed apex A record (often `76.76.21.21`)
 - `www` → Vercel’s displayed CNAME
-- `tools` in the `neurerohan.com.np` zone → Vercel’s displayed CNAME
-- `*` in the `triponeplus.com` zone → the Vercel project CNAME
+- `tools` in the `neurerohan.com.np` zone → Vercel’s displayed CNAME only while retaining the legacy redirect
 
-Use DNS-only (grey cloud) until Vercel has issued certificates and every hostname passes `vercel domains inspect`. If platform subdomains are enabled after acquiring `triponeplus.com`, each hostname must be attached and verified before it can serve traffic or become canonical. Until then, path-based customer publishing remains authoritative.
+Use DNS-only (grey cloud) until Vercel has issued certificates and every hostname passes `vercel domains inspect`. Customer websites use the path-based `triponeplus.com/s/{siteSlug}` address until their own custom hostname is attached and verified; no wildcard TripOne+ customer subdomain is required.
 
 For customer domains, the Domains screen displays provider verification TXT records when Vercel returns them, otherwise the appropriate apex A or subdomain CNAME fallback. Verification is never faked.
 
@@ -172,13 +200,18 @@ corepack pnpm lint
 corepack pnpm typecheck
 corepack pnpm test
 corepack pnpm test:db
+corepack pnpm test:db:operations
+corepack pnpm test:db:platform
+corepack pnpm db:status
 corepack pnpm build
 corepack pnpm test:e2e
 ```
 
 Playwright public desktop/mobile smoke tests need no credentials. Authenticated onboarding/builder flows skip unless disposable E2E credentials exist. Complete the manual production checks in `docs/PRODUCTION_CHECKLIST.md` after DNS and provider credentials are configured.
 
-`test:db` requires `TRIPONE_DATABASE_URL` and runs its disposable authenticated fixtures inside a transaction that ends with `ROLLBACK`. Use only a disposable database or an explicitly authorized project.
+The E2E command builds the application, starts that exact production build on a dedicated local port, waits for readiness, runs Playwright, and owns server teardown. Set `PLAYWRIGHT_BASE_URL` to test an already running authorized deployment instead.
+
+`test:db` requires `TRIPONE_DATABASE_URL` and runs its disposable authenticated fixtures inside a transaction that ends with `ROLLBACK`. Use only a disposable database or an explicitly authorized project. `db:status` uses the same server-only connection value for a read-only migration and release-table check.
 
 ## Security notes
 

@@ -42,6 +42,7 @@ import {
 } from "@/lib/site-generator";
 import { slugify, cn } from "@/lib/utils";
 import { buildWebsite, checkSlug } from "@/app/onboarding/actions";
+import { activationPath } from "@/lib/admin-routing";
 
 const icons: Record<BusinessCapability, typeof Compass> = {
   jetski: Waves,
@@ -116,7 +117,7 @@ const capabilityLabels: Record<BusinessCapability, string> = {
   other: "Other",
 };
 const steps = [
-  "Business type",
+  "What you offer",
   "Details",
   "Website structure",
   "Brand",
@@ -142,6 +143,7 @@ const label = "text-sm font-medium text-white/80";
 
 const defaults: OnboardingInput = {
   businessType: "tour_operator",
+  primaryCapability: "tour_operator",
   capabilities: ["tour_operator"],
   pageSelections: recommendedPageSelections(["tour_operator"]),
   name: "",
@@ -170,6 +172,9 @@ export function OnboardingWizard() {
   const [step, setStep] = useState(0);
   const [error, setError] = useState("");
   const [building, setBuilding] = useState(false);
+  const [saveState, setSaveState] = useState<"ready" | "saving" | "saved">(
+    "ready",
+  );
   const [slugState, setSlugState] = useState<
     "idle" | "checking" | "available" | "taken"
   >("idle");
@@ -201,6 +206,8 @@ export function OnboardingWizard() {
           value.pageSelections = recommendedPageSelections(capabilities);
         }
         if (!value.rentals) value.rentals = [];
+        if (!value.primaryCapability)
+          value.primaryCapability = value.businessType ?? "tour_operator";
         Object.entries(value).forEach(([key, val]) =>
           setValue(key as keyof OnboardingInput, val as never),
         );
@@ -211,18 +218,28 @@ export function OnboardingWizard() {
   }, [setValue]);
   useEffect(() => {
     // React Hook Form intentionally exposes an imperative subscription for autosave.
+    let timeout: ReturnType<typeof setTimeout> | undefined;
     // eslint-disable-next-line react-hooks/incompatible-library
-    const subscription = form.watch((value) =>
-      localStorage.setItem("tripone-onboarding", JSON.stringify(value)),
-    );
-    return () => subscription.unsubscribe();
+    const subscription = form.watch((value) => {
+      setSaveState("saving");
+      if (timeout) clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        localStorage.setItem("tripone-onboarding", JSON.stringify(value));
+        setSaveState("saved");
+      }, 350);
+    });
+    return () => {
+      subscription.unsubscribe();
+      if (timeout) clearTimeout(timeout);
+    };
   }, [form]);
   const preset =
     businessPresets[(values.businessType as BusinessType) || "other"];
   async function next() {
     setError("");
     let names: (keyof OnboardingInput)[] = [];
-    if (step === 0) names = ["businessType", "capabilities"];
+    if (step === 0)
+      names = ["businessType", "primaryCapability", "capabilities"];
     if (step === 1)
       names = [
         "name",
@@ -274,22 +291,33 @@ export function OnboardingWizard() {
       return;
     }
     localStorage.removeItem("tripone-onboarding");
-    router.push(`/dashboard/sites/${result.siteId}/created`);
+    router.push(activationPath(result.siteId, "/admin/created"));
     router.refresh();
   }
   async function uploadFile(file?: File) {
     if (!file) return undefined;
     setError("");
-    const data = new FormData();
-    data.set("file", file);
-    data.set("siteId", "pending");
-    const response = await fetch("/api/media", { method: "POST", body: data });
-    const body = (await response.json()) as { url?: string; error?: string };
-    if (!response.ok || !body.url) {
-      setError(body.error || "Upload failed.");
+    try {
+      const data = new FormData();
+      data.set("file", file);
+      data.set("siteId", "pending");
+      const response = await fetch("/api/media", {
+        method: "POST",
+        body: data,
+      });
+      const body = (await response.json().catch(() => ({}))) as {
+        url?: string;
+        error?: string;
+      };
+      if (!response.ok || !body.url) {
+        setError(body.error || "Upload failed. Please try again.");
+        return undefined;
+      }
+      return body.url;
+    } catch {
+      setError("Upload failed. Check your connection and try again.");
       return undefined;
     }
-    return body.url;
   }
   async function uploadLogo(file?: File) {
     const url = await uploadFile(file);
@@ -339,14 +367,49 @@ export function OnboardingWizard() {
             style={{ width: `${((step + 1) / steps.length) * 100}%` }}
           />
         </div>
+        <ol className="mt-3 hidden grid-cols-7 gap-2 text-[11px] lg:grid">
+          {steps.map((item, index) => (
+            <li
+              key={item}
+              className={cn(
+                "truncate transition",
+                index === step
+                  ? "font-semibold text-[#FFC857]"
+                  : index < step
+                    ? "text-emerald-200/70"
+                    : "text-white/30",
+              )}
+            >
+              {index < step ? "✓ " : ""}
+              {item}
+            </li>
+          ))}
+        </ol>
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs text-white/35">
+          <p>Private draft · preview before publishing · no card required</p>
+          <p aria-live="polite" className="inline-flex items-center gap-1.5">
+            {saveState === "saving" ? (
+              <LoaderCircle className="animate-spin" size={13} />
+            ) : (
+              <Check size={13} className="text-emerald-300" />
+            )}
+            {saveState === "saving" ? "Saving progress" : "Progress saved"}
+          </p>
+        </div>
       </div>
       <section className="glass rounded-[1.75rem] p-5 sm:p-8 lg:p-10">
         {step === 0 && (
           <BusinessStep
-            value={values.businessType as BusinessType}
+            value={
+              (values.primaryCapability as BusinessCapability) ??
+              (values.businessType as BusinessType)
+            }
             selected={(values.capabilities as BusinessCapability[]) ?? []}
             selectPrimary={(v) => {
-              setValue("businessType", v, { shouldValidate: true });
+              setValue("primaryCapability", v, { shouldValidate: true });
+              setValue("businessType", legacyBusinessType(v), {
+                shouldValidate: true,
+              });
               const current = (getValues("capabilities") ??
                 []) as BusinessCapability[];
               if (!current.includes(v))
@@ -365,7 +428,8 @@ export function OnboardingWizard() {
               const next = current.includes(v)
                 ? current.filter((item) => item !== v)
                 : [...current, v];
-              if (v === getValues("businessType") && !next.includes(v)) return;
+              if (v === getValues("primaryCapability") && !next.includes(v))
+                return;
               setValue("capabilities", next, { shouldValidate: true });
               setValue("pageSelections", recommendedPageSelections(next));
             }}
@@ -484,16 +548,16 @@ function BusinessStep({
   selectPrimary,
   toggle,
 }: {
-  value: BusinessType;
+  value: BusinessCapability;
   selected: BusinessCapability[];
-  selectPrimary: (v: BusinessType) => void;
+  selectPrimary: (v: BusinessCapability) => void;
   toggle: (v: BusinessCapability) => void;
 }) {
   return (
     <>
       <Title
         eyebrow="Start with your structure"
-        title="What kind of business are you building a website for?"
+        title="What does your business offer?"
         copy="Select every service line you offer. Your primary service shapes the initial terminology and recommendations."
       />
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -528,15 +592,13 @@ function BusinessStep({
                   {descriptions[type]}
                 </p>
               </button>
-              {businessTypes.includes(type as BusinessType) && (
-                <button
-                  type="button"
-                  onClick={() => selectPrimary(type as BusinessType)}
-                  className={`mt-3 text-xs font-medium ${primary ? "text-[#FFC857]" : "text-white/40 hover:text-white"}`}
-                >
-                  {primary ? "Primary service" : "Make primary"}
-                </button>
-              )}
+              <button
+                type="button"
+                onClick={() => selectPrimary(type)}
+                className={`mt-3 text-xs font-medium ${primary ? "text-[#FFC857]" : "text-white/40 hover:text-white"}`}
+              >
+                {primary ? "Primary service" : "Make primary"}
+              </button>
             </div>
           );
         })}
@@ -599,7 +661,7 @@ function DetailsStep({
               : slugState === "checking"
                 ? "Checking · "
                 : ""}
-            tools.neurerohan.com.np/s/{slug || valuesafe(name)}
+            triponeplus.com/s/{slug || valuesafe(name)}
           </span>
           <ErrorText>{errors.slug?.message}</ErrorText>
         </label>
@@ -634,6 +696,12 @@ function DetailsStep({
 }
 function valuesafe(name: string) {
   return slugify(name) || "your-business";
+}
+function legacyBusinessType(capability: BusinessCapability): BusinessType {
+  if (businessTypes.includes(capability as BusinessType))
+    return capability as BusinessType;
+  if (capability === "motorcycle_tour") return "tour_operator";
+  return "other";
 }
 function StructureStep({
   capabilities,
@@ -1191,7 +1259,7 @@ function ThemeStep({
       <Title
         eyebrow="Choose a theme"
         title="Select the character of your website."
-        copy="All eight themes share the same accessible renderer. You can refine design tokens later."
+        copy="All ten themes share the same accessible renderer. You can refine design tokens later."
       />
       <div className="grid gap-5 md:grid-cols-2">
         {Object.values(themes).map((theme) => {
@@ -1274,7 +1342,8 @@ function Review({
         <ReviewCard title="Business">
           <p className="text-xl font-semibold">{values.name}</p>
           <p>
-            {preset.label} · {values.city}, {values.country}
+            {capabilityLabels[values.primaryCapability]} · {values.city},{" "}
+            {values.country}
           </p>
           <p className="mt-3">{values.shortDescription}</p>
         </ReviewCard>
@@ -1320,7 +1389,7 @@ function Review({
         </ReviewCard>
         <ReviewCard title="Proposed website">
           <p className="font-medium text-[#FFC857]">
-            tools.neurerohan.com.np/s/{values.slug}
+            triponeplus.com/s/{values.slug}
           </p>
           <p className="mt-3">
             Pages:{" "}

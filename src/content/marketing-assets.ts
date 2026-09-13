@@ -7,6 +7,9 @@ export const marketingImages = {
   yacht: "/images/marketing/coastal-yacht.webp",
   diving: "/images/marketing/reef-diving.webp",
   guide: "/images/marketing/local-guide.webp",
+  transfer: "/images/marketing/airport-transfer.webp",
+  atv: "/images/marketing/desert-atv.webp",
+  planning: "/images/marketing/travel-planning.webp",
 } as const;
 
 export const themeMarketingImages: Record<ThemeId, string> = {
@@ -16,6 +19,8 @@ export const themeMarketingImages: Record<ThemeId, string> = {
   atlas: marketingImages.guide,
   summit: marketingImages.mountain,
   marina: marketingImages.yacht,
-  dune: marketingImages.safari,
-  nomad: marketingImages.guide,
+  dune: marketingImages.atv,
+  nomad: marketingImages.planning,
+  urban: marketingImages.transfer,
+  escape: marketingImages.planning,
 };

@@ -9,3 +9,5 @@ supabase/.temp/
 !.env.example
 .DS_Store
 *.tsbuildinfo
+# Local product-design references; intentionally excluded from deployments.
+/for dev or ai/

@@ -10,14 +10,13 @@ export default async function SiteLayout({
 }) {
   const { siteId } = await params;
   const supabase = await createClient();
-  const { data: site } = await supabase
-    .from("sites")
-    .select("id,name")
-    .eq("id", siteId)
-    .single();
+  const [{ data: site }, { data: isSuperAdmin }] = await Promise.all([
+    supabase.from("sites").select("id,name").eq("id", siteId).single(),
+    supabase.rpc("has_platform_role", { required_roles: ["super_admin"] }),
+  ]);
   if (!site) notFound();
   return (
-    <DashboardShell siteId={site.id} siteName={site.name}>
+    <DashboardShell siteName={site.name} isSuperAdmin={Boolean(isSuperAdmin)}>
       {children}
     </DashboardShell>
   );

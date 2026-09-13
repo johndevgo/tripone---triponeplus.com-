@@ -6,23 +6,26 @@ import {
   BookOpen,
   Boxes,
   Brush,
+  CalendarCheck2,
   Check,
   Globe2,
   Inbox,
   Layers3,
+  PackageOpen,
   Search,
   ShieldCheck,
   Smartphone,
+  UsersRound,
 } from "lucide-react";
-import { ButtonLink } from "@/components/ui/button";
+import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 
 export const metadata: Metadata = {
-  title: "Tourism website builder features",
+  title: "Tourism website builder and operations features",
   description:
-    "Explore TripOne+ website generation, visual editing, tourism CMS, SEO, leads, analytics, publishing and domain features.",
+    "Explore TripOne+ website generation, packages, payment-free bookings, availability, resources, CRM, SEO, analytics, publishing and domains.",
   alternates: { canonical: "/features" },
   openGraph: {
-    title: "Tourism website builder features | TripOne+",
+    title: "Tourism website builder and operations features | TripOne+",
     description:
       "Website generation, structured tourism content, visual editing, SEO, leads, analytics and versioned publishing.",
     url: "/features",
@@ -75,6 +78,21 @@ const features = [
     "One responsive renderer",
     "Builder previews and public websites share semantic components designed for phones, tablets and desktops.",
   ],
+  [
+    PackageOpen,
+    "Composable packages",
+    "Build multi-day packages from reusable tours, rentals and custom itinerary items, with one public detail renderer.",
+  ],
+  [
+    CalendarCheck2,
+    "Payment-free booking operations",
+    "Capture website or manual requests, manage status, edit schedules and participants, and protect fixed-departure capacity.",
+  ],
+  [
+    UsersRound,
+    "Tourism CRM and customers",
+    "Track sources, destinations, interests, follow-ups and value; convert qualified leads into customers and bookings.",
+  ],
 ] as const;
 
 export default function Features() {
@@ -84,20 +102,24 @@ export default function Features() {
         <div>
           <p className="marketing-kicker">Product system</p>
           <h1 className="marketing-title mt-6">
-            Everything needed to build, run and improve the website.
+            The website builder and operating workspace belong together.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-white/60">
             TripOne+ combines a structured tourism CMS with visual design,
-            publishing, enquiries and useful performance signals.
+            packages, bookings, availability, resources, CRM, publishing and
+            useful performance signals.
           </p>
-          <ButtonLink href="/signup" className="mt-8">
-            Build your website <ArrowRight size={17} />
-          </ButtonLink>
+          <MarketingPrimaryCta
+            guestLabel="Start building free"
+            className="mt-8"
+          >
+            <ArrowRight size={17} />
+          </MarketingPrimaryCta>
         </div>
         <div className="relative aspect-[4/3] overflow-hidden rounded-[2rem] border border-white/10">
           <Image
-            src="/images/marketing/local-guide.webp"
-            alt="A local guide leading a small group through a historic street"
+            src="/images/marketing/travel-planning.webp"
+            alt="A travel specialist planning an itinerary with two travellers"
             fill
             preload
             sizes="(max-width: 1024px) 100vw, 55vw"

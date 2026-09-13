@@ -12,19 +12,23 @@ export default async function Account({
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  const [{ data: profile }, { data: site }] = await Promise.all([
+  const [{ data: profile }, { data: entitlement }] = await Promise.all([
     supabase
       .from("profiles")
-      .select("full_name,avatar_url")
+      .select("full_name,avatar_url,marketing_consent")
       .eq("id", user!.id)
       .single(),
-    supabase.from("sites").select("id").limit(1).maybeSingle(),
+    supabase
+      .from("account_entitlements")
+      .select("status,free_until,annual_price,currency")
+      .eq("user_id", user!.id)
+      .maybeSingle(),
   ]);
   return (
     <main className="app-bg min-h-screen px-5 py-10 text-white">
       <div className="mx-auto max-w-3xl">
         <Link
-          href={site ? `/dashboard/sites/${site.id}` : "/dashboard"}
+          href="/admin/dashboard"
           className="inline-flex items-center gap-2 text-sm text-white/50"
         >
           <ArrowLeft size={16} />
@@ -56,6 +60,16 @@ export default async function Account({
                 className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-black/20 px-3"
               />
             </label>
+            <label className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[.04] p-4 text-sm leading-6 text-white/60">
+              <input
+                name="marketingConsent"
+                type="checkbox"
+                defaultChecked={profile?.marketing_consent ?? false}
+                className="mt-1 size-4 accent-[#f5a623]"
+              />
+              Email me useful product updates and account reminders. You can
+              turn this off at any time.
+            </label>
             <label className="text-sm">
               Avatar URL
               <input
@@ -78,6 +92,19 @@ export default async function Account({
             </button>
           </form>
         </section>
+        {entitlement && (
+          <section className="glass mt-5 rounded-3xl p-6">
+            <h2 className="text-xl font-semibold">Plan access</h2>
+            <p className="mt-2 text-sm leading-6 text-white/45">
+              Your founding access is{" "}
+              <span className="capitalize">{entitlement.status}</span> through{" "}
+              {new Date(entitlement.free_until).toLocaleDateString()}. The
+              configured annual renewal is {entitlement.currency}{" "}
+              {Number(entitlement.annual_price).toLocaleString()} after the free
+              period. No charge is taken automatically in this release.
+            </p>
+          </section>
+        )}
         <section className="glass mt-5 rounded-3xl p-6">
           <div className="flex items-center gap-3">
             <KeyRound className="text-emerald-300" />
@@ -95,8 +122,10 @@ export default async function Account({
         <section className="mt-5 rounded-3xl border border-red-300/15 bg-red-950/10 p-6">
           <h2 className="text-xl font-semibold text-red-100">Delete account</h2>
           <p className="mt-2 text-sm text-white/40">
-            This permanently removes the account and cascades through owned
-            businesses and websites. Type DELETE {user?.email}
+            This permanently removes login access, owned businesses, websites,
+            operational records and uploaded files. If you opted into product
+            emails, your email address remains on that mailing list until you
+            unsubscribe. Type DELETE {user?.email}
           </p>
           <form
             action={deleteAccount}

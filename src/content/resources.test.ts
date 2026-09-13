@@ -7,7 +7,7 @@ describe("marketing resource library", () => {
   it("uses unique stable slugs and complete article data", () => {
     const slugs = resources.map((article) => article.slug);
     expect(new Set(slugs).size).toBe(slugs.length);
-    expect(resources.length).toBeGreaterThanOrEqual(8);
+    expect(resources.length).toBeGreaterThanOrEqual(60);
     for (const article of resources) {
       expect(article.slug).toMatch(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
       expect(article.title.length).toBeGreaterThan(20);
@@ -16,6 +16,9 @@ describe("marketing resource library", () => {
       expect(article.takeaways.length).toBeGreaterThanOrEqual(3);
       expect(article.sections.length).toBeGreaterThanOrEqual(4);
       expect(article.faqs.length).toBeGreaterThan(0);
+      expect(
+        new Set(article.sections.map((section) => section.heading)).size,
+      ).toBe(article.sections.length);
     }
   });
 
@@ -23,7 +26,7 @@ describe("marketing resource library", () => {
     const comparisons = resources.filter(
       (article) => article.category === "Comparison",
     );
-    expect(comparisons.length).toBeGreaterThanOrEqual(3);
+    expect(comparisons.length).toBeGreaterThanOrEqual(8);
     for (const article of comparisons) {
       expect(article.sources?.length).toBeGreaterThan(0);
       for (const source of article.sources ?? []) {
