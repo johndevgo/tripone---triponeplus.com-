@@ -33,7 +33,7 @@ export function AuthCard({
         >
           {benefits && (
             <aside className="glass order-2 rounded-3xl p-7 sm:p-10 lg:order-1">
-              <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.18em] text-[#ffc857]">
+              <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.18em] text-[#95ee8e]">
                 <Compass size={15} /> Tourism-native from the start
               </p>
               <h2 className="mt-5 max-w-lg text-3xl font-semibold tracking-[-.04em] sm:text-4xl">
@@ -101,4 +101,4 @@ export function AuthMessage({
   );
 }
 export const inputClass =
-  "mt-2 min-h-12 w-full rounded-xl border border-white/15 bg-white/[.07] px-4 text-white placeholder:text-white/30 focus:border-[#FFC857] focus:outline-none";
+  "mt-2 min-h-12 w-full rounded-xl border border-white/15 bg-white/[.07] px-4 text-white placeholder:text-white/30 focus:border-[#95EE8E] focus:outline-none";

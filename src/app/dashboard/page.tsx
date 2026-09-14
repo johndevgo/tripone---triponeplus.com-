@@ -17,7 +17,7 @@ export default async function Dashboard() {
     <main className="app-bg min-h-screen px-5 py-12 text-white">
       <div className="mx-auto max-w-6xl">
         <div>
-          <p className="text-sm text-[#FFC857]">Your workspace</p>
+          <p className="text-sm text-[#95EE8E]">Your workspace</p>
           <h1 className="mt-2 text-4xl font-semibold">Websites</h1>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
@@ -27,7 +27,7 @@ export default async function Dashboard() {
               href={activationPath(site.id)}
               className="glass rounded-3xl p-6 hover:bg-white/[.09]"
             >
-              <Globe2 className="text-[#FFC857]" />
+              <Globe2 className="text-[#95EE8E]" />
               <h2 className="mt-8 text-xl font-semibold">{site.name}</h2>
               <p className="mt-1 text-sm text-white/45">
                 {fallbackSiteUrl(site.slug)} · {site.status}

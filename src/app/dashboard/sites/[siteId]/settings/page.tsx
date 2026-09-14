@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { AdvancedScriptsEditor } from "@/components/settings/advanced-scripts-editor";
+import { supportedTimeZones } from "@/lib/timezones";
 import { publishSite } from "../actions";
 import { PageHead } from "../experiences/page";
 import {
@@ -48,7 +49,7 @@ export default async function Settings({
           </Link>
           <form action={publishSite}>
             <input type="hidden" name="siteId" value={siteId} />
-            <button className="min-h-11 rounded-xl bg-[#f5a623] px-5 text-sm font-semibold text-[#173028]">
+            <button className="min-h-11 rounded-xl bg-[#5bcd57] px-5 text-sm font-semibold text-[#173028]">
               {site.status === "published"
                 ? "Publish updates"
                 : "Publish website"}
@@ -83,12 +84,25 @@ export default async function Settings({
               value={text(global.locale, "en-US")}
               required
             />
-            <Field
-              name="timezone"
-              label="Timezone"
-              value={business.timezone}
-              required
-            />
+            <label className="text-sm">
+              Timezone
+              <select
+                name="timezone"
+                defaultValue={business.timezone}
+                required
+                className="mt-2 min-h-11 w-full rounded-xl border border-white/12 bg-[#08271f] px-3 text-white"
+              >
+                {supportedTimeZones(business.timezone).map((timezone) => (
+                  <option value={timezone} key={timezone}>
+                    {timezone.replaceAll("_", " ")}
+                  </option>
+                ))}
+              </select>
+              <span className="mt-1.5 block text-xs leading-5 text-white/40">
+                Used for booking times, availability, reminders and calendar
+                dates.
+              </span>
+            </label>
             <Field
               name="currency"
               label="Currency"
@@ -283,7 +297,7 @@ export default async function Settings({
           </div>
           <AdvancedScriptsEditor initial={integrations.advancedScripts} />
         </SettingsSection>
-        <button className="min-h-12 justify-self-start rounded-xl bg-[#f5a623] px-6 font-semibold text-[#173028]">
+        <button className="min-h-12 justify-self-start rounded-xl bg-[#5bcd57] px-6 font-semibold text-[#173028]">
           Save settings
         </button>
       </form>
@@ -406,7 +420,7 @@ function Checks({ items }: { items: Array<[string, string, boolean]> }) {
             type="checkbox"
             name={name}
             defaultChecked={checked}
-            className="size-4 accent-[#f5a623]"
+            className="size-4 accent-[#5bcd57]"
           />
           {label}
         </label>

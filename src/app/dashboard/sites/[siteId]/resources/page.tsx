@@ -31,7 +31,7 @@ export default async function ResourcesPage({
         action={
           <a
             href="#add-resource"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
             Add resource
@@ -95,7 +95,7 @@ export default async function ResourcesPage({
                   <input type="hidden" name="siteId" value={siteId} />
                   <input type="hidden" name="resourceId" value={item.id} />
                   <ResourceFields resource={item} compact />
-                  <button className="min-h-10 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]">
+                  <button className="min-h-10 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]">
                     Save changes
                   </button>
                 </form>
@@ -121,7 +121,7 @@ export default async function ResourcesPage({
         >
           <input type="hidden" name="siteId" value={siteId} />
           <ResourceFields />
-          <button className="min-h-11 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
+          <button className="min-h-11 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
             Save resource
           </button>
         </form>

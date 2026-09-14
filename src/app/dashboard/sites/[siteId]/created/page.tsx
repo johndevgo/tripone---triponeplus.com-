@@ -8,10 +8,10 @@ export default async function Created({
   const { siteId } = await params;
   return (
     <div className="mx-auto max-w-2xl py-16 text-center">
-      <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-[#F5A623] text-[#173028]">
+      <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-[#5BCD57] text-[#173028]">
         <Check size={32} />
       </span>
-      <p className="mt-8 text-sm font-semibold uppercase tracking-[.18em] text-[#FFC857]">
+      <p className="mt-8 text-sm font-semibold uppercase tracking-[.18em] text-[#95EE8E]">
         Website created
       </p>
       <h1 className="mt-3 text-4xl font-semibold tracking-tight">
@@ -24,7 +24,7 @@ export default async function Created({
       <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
         <Link
           href={`/preview/${siteId}`}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#F5A623] px-5 text-sm font-semibold text-[#173028]"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#5BCD57] px-5 text-sm font-semibold text-[#173028]"
         >
           <Eye size={17} />
           Preview website

@@ -96,7 +96,7 @@ export default async function SuperAdmin({
     <>
       <div className="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
         <div>
-          <p className="text-sm font-semibold text-[#ffc857]">
+          <p className="text-sm font-semibold text-[#95ee8e]">
             Platform control
           </p>
           <h1 className="mt-2 text-4xl font-semibold tracking-[-.04em] sm:text-5xl">
@@ -127,7 +127,7 @@ export default async function SuperAdmin({
       <div className="mt-5 grid gap-5 xl:grid-cols-[1.1fr_.9fr]">
         <section className="glass rounded-3xl p-6">
           <div className="flex items-center gap-3">
-            <Database className="text-[#ffc857]" />
+            <Database className="text-[#95ee8e]" />
             <div>
               <h2 className="text-xl font-semibold">
                 Commercial and retention policy
@@ -169,11 +169,11 @@ export default async function SuperAdmin({
                 name="retentionEnabled"
                 type="checkbox"
                 defaultChecked={settings.retention_enabled}
-                className="size-4 accent-[#f5a623]"
+                className="size-4 accent-[#5bcd57]"
               />
               Enable daily inactive-account cleanup
             </label>
-            <button className="min-h-11 w-fit rounded-xl bg-[#f5a623] px-5 font-semibold text-[#173028] sm:col-span-2">
+            <button className="min-h-11 w-fit rounded-xl bg-[#5bcd57] px-5 font-semibold text-[#173028] sm:col-span-2">
               Save platform policy
             </button>
           </form>
@@ -187,7 +187,7 @@ export default async function SuperAdmin({
 
         <section className="glass rounded-3xl p-6">
           <div className="flex items-center gap-3">
-            <UserRoundCog className="text-[#ffc857]" />
+            <UserRoundCog className="text-[#95ee8e]" />
             <div>
               <h2 className="text-xl font-semibold">Platform access</h2>
               <p className="mt-1 text-sm text-white/40">
@@ -283,7 +283,7 @@ export default async function SuperAdmin({
                       : "never"}
                   </p>
                   {members.has(user.id) && (
-                    <span className="mt-2 inline-flex rounded-full bg-[#ffc857]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#ffc857]">
+                    <span className="mt-2 inline-flex rounded-full bg-[#95ee8e]/10 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-[#95ee8e]">
                       {members.get(user.id)?.replace("_", " ")}
                     </span>
                   )}

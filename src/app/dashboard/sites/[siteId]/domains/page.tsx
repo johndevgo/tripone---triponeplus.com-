@@ -1,4 +1,11 @@
-import { CheckCircle2, CircleDashed, Globe2, ShieldCheck } from "lucide-react";
+import {
+  CheckCircle2,
+  CircleDashed,
+  Globe2,
+  Pencil,
+  ShieldCheck,
+  Trash2,
+} from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 import { getDnsFallback } from "@/lib/domains/validation";
 import { isDomainProviderConfigured } from "@/lib/domains/provider";
@@ -8,6 +15,7 @@ import {
   addDomain,
   deleteDomain,
   setPrimaryDomain,
+  updateDomain,
   verifyDomain,
 } from "./actions";
 
@@ -75,6 +83,9 @@ export default async function Domains({
             const records = Array.isArray(provider.records)
               ? provider.records
               : [];
+            const ready =
+              domain.verification_status === "verified" &&
+              provider.dnsConfigured === true;
             return (
               <article
                 key={domain.id}
@@ -82,7 +93,7 @@ export default async function Domains({
               >
                 <div className="flex flex-col justify-between gap-4 sm:flex-row">
                   <div className="flex gap-3">
-                    {domain.verification_status === "verified" ? (
+                    {ready ? (
                       <CheckCircle2 className="text-emerald-300" />
                     ) : (
                       <CircleDashed className="text-amber-200" />
@@ -90,13 +101,14 @@ export default async function Domains({
                     <div>
                       <p className="font-semibold">{domain.hostname}</p>
                       <p className="mt-1 text-xs capitalize text-white/40">
-                        {domain.domain_type} · {domain.verification_status}
+                        {domain.domain_type} ·{" "}
+                        {ready ? "connected" : "pending DNS"}
                         {domain.is_primary ? " · Primary" : ""}
                       </p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {(domain.verification_status !== "verified" ||
+                    {(!ready ||
                       (configured &&
                         domain.domain_type === "subdomain" &&
                         provider.configured !== true)) && (
@@ -109,55 +121,84 @@ export default async function Domains({
                         </MiniButton>
                       </form>
                     )}
-                    {domain.verification_status === "verified" &&
-                      !domain.is_primary && (
-                        <form action={setPrimaryDomain}>
-                          <Hidden siteId={siteId} domainId={domain.id} />
-                          <MiniButton>Make primary</MiniButton>
-                        </form>
-                      )}
-                    {domain.domain_type === "custom" && !domain.is_primary && (
+                    {ready && !domain.is_primary && (
+                      <form action={setPrimaryDomain}>
+                        <Hidden siteId={siteId} domainId={domain.id} />
+                        <MiniButton>Make primary</MiniButton>
+                      </form>
+                    )}
+                    {domain.domain_type === "custom" && (
                       <form action={deleteDomain}>
                         <Hidden siteId={siteId} domainId={domain.id} />
-                        <MiniButton danger>Remove</MiniButton>
+                        <MiniButton danger>
+                          <Trash2 size={14} /> Remove
+                        </MiniButton>
                       </form>
                     )}
                   </div>
                 </div>
-                {domain.domain_type === "custom" &&
-                  domain.verification_status !== "verified" && (
-                    <div className="mt-5 rounded-xl bg-white/[.04] p-4 text-sm">
-                      <p className="font-medium">DNS records</p>
-                      {records.length > 0 ? (
-                        records.map((record, index) => {
-                          const item = object(record);
-                          return (
-                            <code
-                              className="mt-2 block break-all text-xs text-white/60"
-                              key={index}
-                            >
-                              {String(item.type)} {String(item.domain)} →{" "}
-                              {String(item.value)}
-                            </code>
-                          );
-                        })
-                      ) : (
-                        <code className="mt-2 block break-all text-xs text-white/60">
-                          {dns.type} {dns.name} → {dns.value}
-                        </code>
-                      )}
-                      {!configured && (
-                        <p className="mt-3 text-xs text-amber-100/70">
-                          Add VERCEL_TOKEN and VERCEL_PROJECT_ID to enable
-                          verified provisioning.
-                        </p>
-                      )}
-                    </div>
-                  )}
+                {domain.domain_type === "custom" && !ready && (
+                  <div className="mt-5 rounded-xl bg-white/[.04] p-4 text-sm">
+                    <p className="font-medium">DNS records</p>
+                    {records.length > 0 ? (
+                      records.map((record, index) => {
+                        const item = object(record);
+                        return (
+                          <code
+                            className="mt-2 block break-all text-xs text-white/60"
+                            key={index}
+                          >
+                            {String(item.type)} {String(item.domain)} →{" "}
+                            {String(item.value)}
+                          </code>
+                        );
+                      })
+                    ) : (
+                      <code className="mt-2 block break-all text-xs text-white/60">
+                        {dns.type} {dns.name} → {dns.value}
+                      </code>
+                    )}
+                    {!configured && (
+                      <p className="mt-3 text-xs text-amber-100/70">
+                        Add VERCEL_TOKEN and VERCEL_PROJECT_ID to enable
+                        verified provisioning.
+                      </p>
+                    )}
+                  </div>
+                )}
                 {domain.last_error && (
                   <p className="mt-3 text-xs text-red-200">
                     {domain.last_error}
                   </p>
+                )}
+                {domain.domain_type === "custom" && (
+                  <details className="mt-4 border-t border-white/10 pt-4">
+                    <summary className="flex cursor-pointer list-none items-center gap-2 text-xs font-semibold text-white/55 marker:hidden hover:text-white">
+                      <Pencil size={14} /> Edit hostname
+                    </summary>
+                    <form
+                      action={updateDomain}
+                      className="mt-3 flex flex-col gap-3 sm:flex-row"
+                    >
+                      <Hidden siteId={siteId} domainId={domain.id} />
+                      <label className="flex-1 text-xs text-white/55">
+                        Custom hostname
+                        <input
+                          name="hostname"
+                          required
+                          defaultValue={domain.hostname}
+                          className="mt-2 min-h-10 w-full rounded-xl border border-white/12 bg-black/20 px-3 text-sm text-white"
+                        />
+                      </label>
+                      <button className="mt-auto min-h-10 rounded-xl border border-[var(--brand-300)]/30 bg-[var(--brand-500)]/10 px-4 text-sm font-semibold text-[var(--brand-100)]">
+                        Save hostname
+                      </button>
+                    </form>
+                    <p className="mt-2 text-xs leading-5 text-white/35">
+                      Changing a hostname disconnects the old Vercel project
+                      domain and starts verification again for the new one.
+                    </p>
+                  </details>
                 )}
               </article>
             );
@@ -172,7 +213,7 @@ export default async function Domains({
       </section>
       <section className="glass mt-5 rounded-3xl p-6">
         <div className="flex items-center gap-3">
-          <Globe2 className="text-[#ffc857]" />
+          <Globe2 className="text-[#95ee8e]" />
           <h2 className="text-xl font-semibold">Add a custom domain</h2>
         </div>
         <form
@@ -189,7 +230,7 @@ export default async function Domains({
               className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-black/20 px-4"
             />
           </label>
-          <button className="mt-auto min-h-11 rounded-xl bg-[#f5a623] px-5 font-semibold text-[#173028]">
+          <button className="mt-auto min-h-11 rounded-xl bg-[#5bcd57] px-5 font-semibold text-[#173028]">
             Add domain
           </button>
         </form>
@@ -219,7 +260,7 @@ function MiniButton({
 }) {
   return (
     <button
-      className={`min-h-9 rounded-lg border px-3 text-xs ${danger ? "border-red-300/20 text-red-200" : "border-white/15 text-white/70"}`}
+      className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg border px-3 text-xs ${danger ? "border-red-300/20 text-red-200 hover:bg-red-400/10" : "border-white/15 text-white/70 hover:bg-white/[.06]"}`}
     >
       {children}
     </button>

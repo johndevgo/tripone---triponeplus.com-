@@ -23,7 +23,7 @@ export default async function SuperAdminLayout({
         <div className="mx-auto flex min-h-17 max-w-[1500px] items-center justify-between gap-5">
           <div className="flex items-center gap-5">
             <Logo light />
-            <span className="hidden items-center gap-2 rounded-full border border-[#ffc857]/20 bg-[#ffc857]/10 px-3 py-1.5 text-xs font-semibold text-[#ffc857] sm:inline-flex">
+            <span className="hidden items-center gap-2 rounded-full border border-[#95ee8e]/20 bg-[#95ee8e]/10 px-3 py-1.5 text-xs font-semibold text-[#95ee8e] sm:inline-flex">
               <ShieldCheck size={14} /> Super admin
             </span>
           </div>

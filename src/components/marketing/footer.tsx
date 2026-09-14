@@ -16,7 +16,7 @@ export async function MarketingFooter() {
           </p>
           <Link
             href={user ? "/admin/dashboard" : "/signup"}
-            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#ffc857] hover:text-white"
+            className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#95ee8e] hover:text-white"
           >
             {user ? "Open your dashboard" : "Build your website"}{" "}
             <ArrowUpRight size={15} />

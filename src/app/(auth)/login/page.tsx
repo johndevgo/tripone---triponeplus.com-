@@ -39,7 +39,7 @@ export default async function Login({
         </label>
         <div className="flex justify-end">
           <Link
-            className="text-sm text-[#FFC857] hover:underline"
+            className="text-sm text-[#95EE8E] hover:underline"
             href="/forgot-password"
           >
             Forgot password?
@@ -49,7 +49,7 @@ export default async function Login({
       </form>
       <p className="mt-6 text-center text-sm text-white/55">
         New to TripOne+?{" "}
-        <Link className="text-[#FFC857] hover:underline" href="/signup">
+        <Link className="text-[#95EE8E] hover:underline" href="/signup">
           Create an account
         </Link>
       </p>

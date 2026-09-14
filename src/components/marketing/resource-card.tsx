@@ -36,7 +36,7 @@ export function ResourceCard({ article }: { article: ResourceCardArticle }) {
             <span>{article.readTime}</span>
             <ArrowUpRight
               size={18}
-              className="text-[#ffc857] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              className="text-[#95ee8e] transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </div>
           <h2 className="mt-4 text-xl font-semibold leading-snug tracking-[-.02em] text-white">

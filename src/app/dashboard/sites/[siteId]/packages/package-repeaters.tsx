@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 
 const field =
-  "min-h-11 w-full rounded-xl border border-white/10 bg-white/[.055] px-3 outline-none transition focus:border-[#FFC857]/70 focus:ring-2 focus:ring-[#FFC857]/15";
+  "min-h-11 w-full rounded-xl border border-white/10 bg-white/[.055] px-3 outline-none transition focus:border-[#95EE8E]/70 focus:ring-2 focus:ring-[#95EE8E]/15";
 
 type ServiceOption = { id: string; name: string };
 type PackageItemValue = {
@@ -111,7 +111,7 @@ export function PackageItemsRepeater({
           className="rounded-2xl border border-white/10 bg-black/10 p-4"
         >
           <div className="flex items-center justify-between gap-3">
-            <p className="text-xs font-semibold uppercase tracking-[.14em] text-[#FFC857]">
+            <p className="text-xs font-semibold uppercase tracking-[.14em] text-[#95EE8E]">
               Package item {index + 1}
             </p>
             <RowActions
@@ -187,7 +187,7 @@ export function PackageItemsRepeater({
                 name="itemOptional"
                 value={index}
                 defaultChecked={Boolean(value.optional)}
-                className="size-4 accent-[#F5A623]"
+                className="size-4 accent-[#5BCD57]"
               />
               Optional
             </label>
@@ -206,7 +206,7 @@ export function PackageItemsRepeater({
       <button
         type="button"
         onClick={add}
-        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-dashed border-[#FFC857]/35 px-4 text-sm font-medium text-[#FFC857] transition hover:bg-[#FFC857]/10"
+        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-dashed border-[#95EE8E]/35 px-4 text-sm font-medium text-[#95EE8E] transition hover:bg-[#95EE8E]/10"
       >
         <Plus size={16} /> Add package item
       </button>
@@ -241,7 +241,7 @@ export function ItineraryRepeater({
           className="rounded-2xl border border-white/10 bg-black/10 p-4"
         >
           <div className="flex items-center justify-between gap-3">
-            <p className="text-xs font-semibold uppercase tracking-[.14em] text-[#FFC857]">
+            <p className="text-xs font-semibold uppercase tracking-[.14em] text-[#95EE8E]">
               Day {index + 1}
             </p>
             <RowActions
@@ -303,7 +303,7 @@ export function ItineraryRepeater({
       <button
         type="button"
         onClick={add}
-        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-dashed border-[#FFC857]/35 px-4 text-sm font-medium text-[#FFC857] transition hover:bg-[#FFC857]/10"
+        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-dashed border-[#95EE8E]/35 px-4 text-sm font-medium text-[#95EE8E] transition hover:bg-[#95EE8E]/10"
       >
         <Plus size={16} /> Add itinerary day
       </button>
@@ -362,7 +362,7 @@ export function FaqRepeater({ initialFaqs }: { initialFaqs: FaqValue[] }) {
             { key: `faq-${sequence.current}`, value: {} },
           ]);
         }}
-        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-dashed border-[#FFC857]/35 px-4 text-sm font-medium text-[#FFC857] transition hover:bg-[#FFC857]/10"
+        className="inline-flex min-h-11 w-fit items-center gap-2 rounded-xl border border-dashed border-[#95EE8E]/35 px-4 text-sm font-medium text-[#95EE8E] transition hover:bg-[#95EE8E]/10"
       >
         <Plus size={16} /> Add FAQ
       </button>

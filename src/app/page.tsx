@@ -228,12 +228,12 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-[1.02fr_.98fr]">
           <div>
             <p className="marketing-kicker border-white/15 bg-black/15 text-white/80">
-              <Compass size={16} className="text-[#ffc857]" /> Built for
+              <Compass size={16} className="text-[#95ee8e]" /> Built for
               tourism, not everything
             </p>
             <h1 className="mt-7 max-w-4xl text-balance text-5xl font-semibold leading-[.98] tracking-[-.052em] sm:text-6xl lg:text-[5.25rem]">
               Sell the experience.{" "}
-              <span className="text-[#ffc857]">Run the operation.</span>
+              <span className="text-[#95ee8e]">Run the operation.</span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70 sm:text-xl">
               Build a fast, polished website—then manage packages, booking
@@ -262,7 +262,7 @@ export default function Home() {
                 "Preview before publishing",
               ].map((label) => (
                 <span className="flex items-center gap-2" key={label}>
-                  <Check className="text-[#ffc857]" size={16} /> {label}
+                  <Check className="text-[#95ee8e]" size={16} /> {label}
                 </span>
               ))}
             </div>
@@ -273,7 +273,7 @@ export default function Home() {
               <div className="overflow-hidden rounded-[1.35rem] bg-[#f8faf9] text-[#09271f]">
                 <div className="flex items-center justify-between border-b border-black/5 px-5 py-4">
                   <div className="flex items-center gap-3">
-                    <div className="grid size-9 place-items-center rounded-xl bg-[#063d2e] text-white">
+                    <div className="grid size-9 place-items-center rounded-xl bg-[#075718] text-white">
                       <Compass size={17} />
                     </div>
                     <div>
@@ -283,7 +283,7 @@ export default function Home() {
                       </p>
                     </div>
                   </div>
-                  <span className="rounded-full bg-[#f5a623] px-3 py-2 text-xs font-semibold">
+                  <span className="rounded-full bg-[#5bcd57] px-3 py-2 text-xs font-semibold">
                     Book now
                   </span>
                 </div>
@@ -295,9 +295,9 @@ export default function Home() {
                     sizes="36rem"
                     className="object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#022c22]/95 via-[#022c22]/25 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#022f0e]/95 via-[#022f0e]/25 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6 text-white">
-                    <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#ffc857]">
+                    <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#95ee8e]">
                       Dubai Marina
                     </p>
                     <h2 className="mt-3 text-3xl font-semibold tracking-tight">
@@ -331,14 +331,14 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-b border-[#063d2e]/8 bg-white px-5 py-7">
+      <section className="border-b border-[#075718]/8 bg-white px-5 py-7">
         <div className="mx-auto grid max-w-7xl gap-5 text-sm text-[#50675f] sm:grid-cols-3">
           {proofPoints.map(([Icon, label]) => (
             <div
               key={String(label)}
               className="flex items-center justify-center gap-3"
             >
-              <Icon size={18} className="text-[#087a5a]" /> {String(label)}
+              <Icon size={18} className="text-[#11802a]" /> {String(label)}
             </div>
           ))}
         </div>
@@ -428,9 +428,9 @@ export default function Home() {
             ].map(([number, title, copy]) => (
               <li
                 key={number}
-                className="rounded-[1.5rem] border border-[#063d2e]/10 bg-white p-6 shadow-[0_16px_45px_rgba(2,44,34,.06)]"
+                className="rounded-[1.5rem] border border-[#075718]/10 bg-white p-6 shadow-[0_16px_45px_rgba(2,44,34,.06)]"
               >
-                <span className="grid size-10 place-items-center rounded-full bg-[#063d2e] text-xs font-bold text-[#ffc857]">
+                <span className="grid size-10 place-items-center rounded-full bg-[#075718] text-xs font-bold text-[#95ee8e]">
                   {number}
                 </span>
                 <h3 className="mt-8 text-xl font-semibold">{title}</h3>
@@ -533,7 +533,7 @@ export default function Home() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#041c16] via-[#041c16]/15 to-transparent" />
             <div className="absolute inset-x-7 bottom-7 text-white sm:inset-x-9 sm:bottom-9">
-              <p className="text-xs font-semibold uppercase tracking-[.17em] text-[#ffc857]">
+              <p className="text-xs font-semibold uppercase tracking-[.17em] text-[#95ee8e]">
                 TripOne+ growth studio
               </p>
               <h2 className="mt-4 max-w-xl text-3xl font-semibold tracking-[-.03em] sm:text-4xl">
@@ -556,7 +556,7 @@ export default function Home() {
                 "Honest measurement foundations",
               ].map((item) => (
                 <span key={item} className="flex items-center gap-3">
-                  <Check size={17} className="shrink-0 text-[#ffc857]" />
+                  <Check size={17} className="shrink-0 text-[#95ee8e]" />
                   {item}
                 </span>
               ))}
@@ -590,7 +590,7 @@ export default function Home() {
             </div>
             <Link
               href="/resources"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-[#ffc857]"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#95ee8e]"
             >
               Browse all resources <ArrowRight size={16} />
             </Link>
@@ -617,13 +617,13 @@ export default function Home() {
               useful tourism structure.
             </p>
           </div>
-          <div className="divide-y divide-[#063d2e]/10 border-y border-[#063d2e]/10">
+          <div className="divide-y divide-[#075718]/10 border-y border-[#075718]/10">
             {faqs.map((faq) => (
               <details key={faq.question} className="group py-6">
                 <summary className="flex cursor-pointer list-none items-center justify-between gap-5 text-lg font-semibold marker:hidden">
                   {faq.question}
                   <ChevronRight
-                    className="shrink-0 text-[#087a5a] transition group-open:rotate-90"
+                    className="shrink-0 text-[#11802a] transition group-open:rotate-90"
                     size={20}
                   />
                 </summary>
@@ -640,7 +640,7 @@ export default function Home() {
         <div className="app-bg relative mx-auto max-w-7xl overflow-hidden rounded-[2rem] px-6 py-16 text-center text-white sm:px-12 sm:py-20">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(14,179,127,.25),transparent_32rem)]" />
           <div className="relative">
-            <Sparkles className="mx-auto text-[#ffc857]" />
+            <Sparkles className="mx-auto text-[#95ee8e]" />
             <h2 className="mx-auto mt-5 max-w-3xl text-balance text-4xl font-semibold tracking-[-.04em] sm:text-5xl">
               Turn what you sell into a website people can understand.
             </h2>

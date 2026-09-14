@@ -138,7 +138,7 @@ const detailFields: Array<[keyof OnboardingInput, string]> = [
   ["googleMapsUrl", "Google Maps URL (optional)"],
 ];
 const input =
-  "mt-2 min-h-11 w-full rounded-xl border border-white/15 bg-white/[.06] px-3.5 text-white placeholder:text-white/30 focus:border-[#FFC857] focus:outline-none";
+  "mt-2 min-h-11 w-full rounded-xl border border-white/15 bg-white/[.06] px-3.5 text-white placeholder:text-white/30 focus:border-[#95EE8E] focus:outline-none";
 const label = "text-sm font-medium text-white/80";
 
 const defaults: OnboardingInput = {
@@ -160,7 +160,7 @@ const defaults: OnboardingInput = {
   address: "",
   googleMapsUrl: "",
   logoUrl: "",
-  brand: { primary: "#063D2E", secondary: "#087A5A", accent: "#F5A623" },
+  brand: { primary: "#075718", secondary: "#11802A", accent: "#5BCD57" },
   experiences: [],
   rentals: [],
   themeId: "horizon",
@@ -363,7 +363,7 @@ export function OnboardingWizard() {
         </div>
         <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-white/10">
           <div
-            className="h-full rounded-full bg-[#F5A623] transition-all duration-300"
+            className="h-full rounded-full bg-[#5BCD57] transition-all duration-300"
             style={{ width: `${((step + 1) / steps.length) * 100}%` }}
           />
         </div>
@@ -374,7 +374,7 @@ export function OnboardingWizard() {
               className={cn(
                 "truncate transition",
                 index === step
-                  ? "font-semibold text-[#FFC857]"
+                  ? "font-semibold text-[#95EE8E]"
                   : index < step
                     ? "text-emerald-200/70"
                     : "text-white/30",
@@ -532,7 +532,7 @@ function Title({
 }) {
   return (
     <div className="mb-8">
-      <p className="text-xs font-semibold uppercase tracking-[.2em] text-[#FFC857]">
+      <p className="text-xs font-semibold uppercase tracking-[.2em] text-[#95EE8E]">
         {eyebrow}
       </p>
       <h1 className="mt-3 text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
@@ -571,7 +571,7 @@ function BusinessStep({
               className={cn(
                 "min-h-40 rounded-2xl border p-5 text-left transition",
                 active
-                  ? "border-[#FFC857] bg-[#FFC857]/10 shadow-[inset_0_0_0_1px_rgba(255,200,87,.25)]"
+                  ? "border-[#95EE8E] bg-[#95EE8E]/10 shadow-[inset_0_0_0_1px_rgba(255,200,87,.25)]"
                   : "border-white/10 bg-white/[.035] hover:border-white/25 hover:bg-white/[.06]",
               )}
             >
@@ -583,9 +583,9 @@ function BusinessStep({
               >
                 <div className="flex justify-between">
                   <Icon
-                    className={active ? "text-[#FFC857]" : "text-emerald-300"}
+                    className={active ? "text-[#95EE8E]" : "text-emerald-300"}
                   />
-                  {active && <Check size={18} className="text-[#FFC857]" />}
+                  {active && <Check size={18} className="text-[#95EE8E]" />}
                 </div>
                 <h2 className="mt-5 font-semibold">{capabilityLabels[type]}</h2>
                 <p className="mt-1.5 text-xs leading-5 text-white/45">
@@ -595,7 +595,7 @@ function BusinessStep({
               <button
                 type="button"
                 onClick={() => selectPrimary(type)}
-                className={`mt-3 text-xs font-medium ${primary ? "text-[#FFC857]" : "text-white/40 hover:text-white"}`}
+                className={`mt-3 text-xs font-medium ${primary ? "text-[#95EE8E]" : "text-white/40 hover:text-white"}`}
               >
                 {primary ? "Primary service" : "Make primary"}
               </button>
@@ -747,7 +747,7 @@ function StructureStep({
             className={cn(
               "rounded-2xl border p-5",
               page.selected
-                ? "border-[#FFC857]/40 bg-[#FFC857]/[.06]"
+                ? "border-[#95EE8E]/40 bg-[#95EE8E]/[.06]"
                 : "border-white/10 bg-white/[.025]",
             )}
           >
@@ -760,7 +760,7 @@ function StructureStep({
                   onChange={(event) =>
                     update(page.key, { selected: event.target.checked })
                   }
-                  className="size-4 accent-[#F5A623]"
+                  className="size-4 accent-[#5BCD57]"
                 />
                 {page.title}
               </label>
@@ -874,7 +874,7 @@ function BrandStep({
             />
           ) : (
             <div>
-              <Upload className="mx-auto text-[#FFC857]" />
+              <Upload className="mx-auto text-[#95EE8E]" />
               <p className="mt-4 font-medium">Upload your logo</p>
               <p className="mt-2 text-xs text-white/45">
                 JPG, PNG, WebP or AVIF · 10 MB max
@@ -1050,7 +1050,7 @@ function ExperienceStep({
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp,image/avif"
-                  className={`${input} cursor-pointer py-2 file:mr-3 file:rounded-lg file:border-0 file:bg-[#F5A623] file:px-3 file:py-1.5 file:font-semibold file:text-[#173028]`}
+                  className={`${input} cursor-pointer py-2 file:mr-3 file:rounded-lg file:border-0 file:bg-[#5BCD57] file:px-3 file:py-1.5 file:font-semibold file:text-[#173028]`}
                   onChange={(event) => upload(index, event.target.files?.[0])}
                 />
               </label>
@@ -1083,7 +1083,7 @@ function ExperienceStep({
               extraDetails: {},
             })
           }
-          className="flex min-h-24 items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 text-sm font-medium text-white/65 hover:border-[#FFC857]/60 hover:bg-white/[.04]"
+          className="flex min-h-24 items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 text-sm font-medium text-white/65 hover:border-[#95EE8E]/60 hover:bg-white/[.04]"
         >
           <Plus size={18} />
           Add {preset.singular}
@@ -1091,7 +1091,7 @@ function ExperienceStep({
       </div>
       <div className="my-8 border-t border-white/10" />
       <div className="mb-5">
-        <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#FFC857]">
+        <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#95EE8E]">
           Rental products
         </p>
         <h2 className="mt-2 text-2xl font-semibold">
@@ -1177,7 +1177,7 @@ function ExperienceStep({
                 <input
                   {...register(`rentals.${index}.quoteOnly`)}
                   type="checkbox"
-                  className="size-4 accent-[#F5A623]"
+                  className="size-4 accent-[#5BCD57]"
                 />
                 Request a quote
               </label>
@@ -1209,7 +1209,7 @@ function ExperienceStep({
                 <input
                   type="file"
                   accept="image/jpeg,image/png,image/webp,image/avif"
-                  className={`${input} cursor-pointer py-2 file:mr-3 file:rounded-lg file:border-0 file:bg-[#F5A623] file:px-3 file:py-1.5 file:font-semibold file:text-[#173028]`}
+                  className={`${input} cursor-pointer py-2 file:mr-3 file:rounded-lg file:border-0 file:bg-[#5BCD57] file:px-3 file:py-1.5 file:font-semibold file:text-[#173028]`}
                   onChange={(event) =>
                     uploadRental(index, event.target.files?.[0])
                   }
@@ -1234,7 +1234,7 @@ function ExperienceStep({
               featuredImageUrl: "",
             })
           }
-          className="flex min-h-24 items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 text-sm font-medium text-white/65 hover:border-[#FFC857]/60 hover:bg-white/[.04]"
+          className="flex min-h-24 items-center justify-center gap-2 rounded-2xl border border-dashed border-white/20 text-sm font-medium text-white/65 hover:border-[#95EE8E]/60 hover:bg-white/[.04]"
         >
           <Plus size={18} /> Add rental product
         </button>
@@ -1274,7 +1274,7 @@ function ThemeStep({
               className={cn(
                 "overflow-hidden rounded-3xl border text-left transition",
                 active
-                  ? "border-[#FFC857] shadow-[0_0_0_1px_rgba(255,200,87,.3)]"
+                  ? "border-[#95EE8E] shadow-[0_0_0_1px_rgba(255,200,87,.3)]"
                   : "border-white/10 hover:border-white/25",
               )}
             >
@@ -1296,7 +1296,7 @@ function ThemeStep({
                   <div className="flex justify-between">
                     <div className="h-2 w-20 rounded bg-white/80" />
                     {active && (
-                      <span className="grid size-7 place-items-center rounded-full bg-[#FFC857] text-[#063D2E]">
+                      <span className="grid size-7 place-items-center rounded-full bg-[#95EE8E] text-[#075718]">
                         <Check size={15} />
                       </span>
                     )}
@@ -1364,7 +1364,7 @@ function Review({
             {values.experiences.length ? (
               values.experiences.map((e) => (
                 <p className="flex items-center gap-2" key={e.name}>
-                  <Check size={15} className="text-[#FFC857]" />
+                  <Check size={15} className="text-[#95EE8E]" />
                   {e.name}
                 </p>
               ))
@@ -1378,7 +1378,7 @@ function Review({
             {values.rentals.length ? (
               values.rentals.map((rental) => (
                 <p className="flex items-center gap-2" key={rental.name}>
-                  <Check size={15} className="text-[#FFC857]" />
+                  <Check size={15} className="text-[#95EE8E]" />
                   {rental.name}
                 </p>
               ))
@@ -1388,7 +1388,7 @@ function Review({
           </div>
         </ReviewCard>
         <ReviewCard title="Proposed website">
-          <p className="font-medium text-[#FFC857]">
+          <p className="font-medium text-[#95EE8E]">
             triponeplus.com/s/{values.slug}
           </p>
           <p className="mt-3">

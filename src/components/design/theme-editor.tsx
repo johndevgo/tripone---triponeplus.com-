@@ -232,7 +232,7 @@ export function ThemeEditor({
           <button
             disabled={pending}
             onClick={save}
-            className="inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-[#F5A623] px-3 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-10 flex-1 items-center justify-center gap-2 rounded-xl bg-[#5BCD57] px-3 text-sm font-semibold text-[#173028]"
           >
             <Save size={15} /> Save design
           </button>

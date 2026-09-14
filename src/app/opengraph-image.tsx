@@ -50,7 +50,7 @@ export default function OpenGraphImage() {
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              background: "#f5a623",
+              background: "#5bcd57",
               color: "#173028",
               fontSize: 30,
               fontWeight: 800,

@@ -25,8 +25,8 @@ export const metadata: Metadata = {
   creator: "TripOne+",
   publisher: "TripOne+",
   icons: {
-    icon: "/images/logo annd branding/tripone 1isto1 photo logo .png",
-    apple: "/images/logo annd branding/tripone 1isto1 photo logo .png",
+    icon: "/images/logo annd branding/tripone 1 isto 1 logo no background.png",
+    apple: "/images/logo annd branding/tripone 1 isto 1 logo no background.png",
   },
   category: "business",
   keywords: [

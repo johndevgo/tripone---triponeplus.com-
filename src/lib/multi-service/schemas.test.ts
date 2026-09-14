@@ -17,6 +17,15 @@ describe("multi-service validation", () => {
     expect(parsed.capabilities).toHaveLength(3);
   });
 
+  it("allows every supported service line to be selected", () => {
+    const parsed = capabilitiesFormSchema.parse({
+      businessId: "d7948642-12bc-4cf5-9fe0-7af980680701",
+      capabilities: [...businessCapabilities],
+      primaryCapability: businessCapabilities[0],
+    });
+    expect(parsed.capabilities).toHaveLength(businessCapabilities.length);
+  });
+
   it("rejects a primary capability that is not selected", () => {
     expect(() =>
       capabilitiesFormSchema.parse({

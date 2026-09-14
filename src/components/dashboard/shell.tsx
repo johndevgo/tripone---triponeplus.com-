@@ -183,7 +183,7 @@ export function DashboardShell({
                     className={cn(
                       "flex min-h-10 items-center gap-3 rounded-xl px-3 text-sm transition",
                       active
-                        ? "bg-[#F5A623] font-semibold text-[#173028]"
+                        ? "bg-[#5BCD57] font-semibold text-[#173028]"
                         : "text-white/60 hover:bg-white/[.07] hover:text-white",
                       collapsed && "justify-center",
                     )}
@@ -211,7 +211,7 @@ export function DashboardShell({
             <Link
               href="/super-admin"
               className={cn(
-                "mb-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-[#FFC857] hover:bg-white/[.07] hover:text-white",
+                "mb-1 flex min-h-11 items-center gap-3 rounded-xl px-3 text-sm text-[#95EE8E] hover:bg-white/[.07] hover:text-white",
                 collapsed && "justify-center",
               )}
             >

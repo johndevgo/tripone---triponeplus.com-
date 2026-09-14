@@ -47,7 +47,7 @@ export default async function Experiences({
         action={
           <Link
             href="/admin/experiences/new"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} /> Add experience
           </Link>
@@ -104,7 +104,7 @@ export default async function Experiences({
           {items.map((item) => (
             <Link
               href={`/admin/experiences/${item.id}`}
-              className="glass grid gap-4 rounded-2xl p-4 transition hover:border-[#FFC857]/40 sm:grid-cols-[96px_1fr_auto] sm:items-center"
+              className="glass grid gap-4 rounded-2xl p-4 transition hover:border-[#95EE8E]/40 sm:grid-cols-[96px_1fr_auto] sm:items-center"
               key={item.id}
             >
               <div className="grid aspect-square place-items-center overflow-hidden rounded-xl bg-white/[.06]">
@@ -124,7 +124,7 @@ export default async function Experiences({
                 <div className="flex items-center gap-2">
                   <h2 className="font-semibold">{item.name}</h2>
                   {item.featured && (
-                    <Star size={14} className="fill-[#FFC857] text-[#FFC857]" />
+                    <Star size={14} className="fill-[#95EE8E] text-[#95EE8E]" />
                   )}
                 </div>
                 <p className="mt-1 text-sm text-white/40">
@@ -169,7 +169,7 @@ export function PageHead({
   return (
     <div className="flex items-end justify-between gap-4">
       <div>
-        <p className="text-sm font-medium text-[#FFC857]">{eyebrow}</p>
+        <p className="text-sm font-medium text-[#95EE8E]">{eyebrow}</p>
         <h1 className="mt-2 text-3xl font-semibold tracking-tight">{title}</h1>
       </div>
       {action}
@@ -188,7 +188,7 @@ export function Empty({
   return (
     <div className="glass mt-8 grid min-h-72 place-items-center rounded-3xl p-8 text-center">
       <div>
-        <Icon className="mx-auto text-[#FFC857]" />
+        <Icon className="mx-auto text-[#95EE8E]" />
         <h2 className="mt-5 text-xl font-semibold">{title}</h2>
         <p className="mt-2 text-sm text-white/45">{copy}</p>
       </div>

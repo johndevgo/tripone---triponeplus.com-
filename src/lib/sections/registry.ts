@@ -352,7 +352,25 @@ function cards(
     "LayoutGrid",
     variants,
     commonSettings,
-    () => ({ title: label, description, spacing: "standard" }),
+    () => ({
+      title: label,
+      description,
+      spacing: "standard",
+      items: [
+        {
+          title: "Clear details",
+          description: "Share the accurate information guests need to decide.",
+        },
+        {
+          title: "Simple planning",
+          description: "Explain the next step and remove booking uncertainty.",
+        },
+        {
+          title: "Local support",
+          description: "Help guests reach your team before and after booking.",
+        },
+      ],
+    }),
   );
 }
 function experience(label: string, variants: readonly string[]) {

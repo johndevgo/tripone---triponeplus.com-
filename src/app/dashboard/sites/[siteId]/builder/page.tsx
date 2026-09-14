@@ -29,7 +29,7 @@ export default async function Builder({
     supabase
       .from("sites")
       .select(
-        "id,name,slug,theme_id,theme_settings,navigation,footer_settings,global_settings,businesses(name,city,country,phone,whatsapp,email,logo_url)",
+        "id,name,slug,theme_id,theme_settings,navigation,footer_settings,global_settings,cro_settings,businesses(name,city,country,phone,whatsapp,email,address,instagram_url,facebook_url,youtube_url,tripadvisor_url,logo_url)",
       )
       .eq("id", siteId)
       .single(),

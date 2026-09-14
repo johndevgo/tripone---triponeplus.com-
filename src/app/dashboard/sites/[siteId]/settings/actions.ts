@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
 import { advancedScriptsSchema } from "@/lib/integrations/advanced-scripts";
+import { isValidTimeZone } from "@/lib/timezones";
 
 const optionalUrl = z.union([
   z.literal(""),
@@ -25,7 +26,12 @@ const settingsSchema = z.object({
     .string()
     .trim()
     .regex(/^[a-z]{2}(?:-[A-Z]{2})?$/),
-  timezone: z.string().trim().min(2).max(80),
+  timezone: z
+    .string()
+    .trim()
+    .min(2)
+    .max(80)
+    .refine(isValidTimeZone, "Choose a valid IANA timezone."),
   currency: z
     .string()
     .trim()

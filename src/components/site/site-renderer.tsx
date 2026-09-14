@@ -134,6 +134,7 @@ export type SiteRendererProps = {
     navigation: unknown;
     footer_settings: unknown;
     global_settings: unknown;
+    cro_settings?: unknown;
   };
   business: {
     name: string;
@@ -143,6 +144,11 @@ export type SiteRendererProps = {
     whatsapp: string | null;
     email: string;
     logo_url: string | null;
+    address?: string | null;
+    instagram_url?: string | null;
+    facebook_url?: string | null;
+    youtube_url?: string | null;
+    tripadvisor_url?: string | null;
   };
   page: { title: string; slug: string; sections: SiteSection[] };
   theme: ThemeTokens;
@@ -195,8 +201,18 @@ export function SiteRenderer({
   const footer = (site.footer_settings ?? {}) as Record<string, unknown>;
   const global = (site.global_settings ?? {}) as Record<string, unknown>;
   const integrations = object(global.integrations);
-  const cro = object(global.cro);
+  const cro = object(site.cro_settings ?? global.cro);
+  const socialLinks = [
+    ["Instagram", business.instagram_url],
+    ["Facebook", business.facebook_url],
+    ["YouTube", business.youtube_url],
+    ["Tripadvisor", business.tripadvisor_url],
+  ].filter((item): item is [string, string] => Boolean(item[1]));
   const header = object(global.header);
+  const bookingUrl = text(global, "bookingUrl");
+  const globalBookingPath = bookingUrl || text(header, "ctaHref", "/contact");
+  const globalBookingTarget =
+    bookingUrl && global.openBookingInNewTab === true ? "_blank" : undefined;
   const headerVariant = text(header, "variant", "standard");
   const footerVariant = text(footer, "variant", "columns");
   const logoSize = text(header, "logoSize", "medium");
@@ -233,7 +249,7 @@ export function SiteRenderer({
       className="generated-site min-h-screen bg-[var(--site-bg)] font-[family-name:var(--site-font)] text-[var(--site-text)]"
     >
       {preview && (
-        <div className="bg-[#022C22] px-4 py-2 text-center text-xs text-white/60">
+        <div className="bg-[#022F0E] px-4 py-2 text-center text-xs text-white/60">
           Draft preview · Only you can see unpublished content
         </div>
       )}
@@ -242,13 +258,17 @@ export function SiteRenderer({
         className={`${header.sticky === false ? "relative" : "sticky top-0"} z-30 border-b border-black/5 ${header.transparentOverHero === true ? "bg-[color:var(--site-bg)]/65" : "bg-[color:var(--site-bg)]/90"} backdrop-blur-xl`}
       >
         {header.showContactBar === true &&
-          (business.phone || business.whatsapp) && (
+          ((business.phone && cro.phoneEnabled !== false) ||
+            (business.whatsapp && cro.whatsappEnabled !== false)) && (
             <div className="border-b border-black/5 bg-[var(--site-primary)] px-5 py-2 text-right text-xs text-white/75">
-              {business.phone && (
+              {business.phone && cro.phoneEnabled !== false && (
                 <a href={`tel:${business.phone}`}>{business.phone}</a>
               )}
-              {business.phone && business.whatsapp && <span> · </span>}
-              {business.whatsapp && (
+              {business.phone &&
+                business.whatsapp &&
+                cro.phoneEnabled !== false &&
+                cro.whatsappEnabled !== false && <span> · </span>}
+              {business.whatsapp && cro.whatsappEnabled !== false && (
                 <a
                   href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
                 >
@@ -290,14 +310,16 @@ export function SiteRenderer({
             ))}
           </nav>
           <Link
-            href={href(basePath, text(header, "ctaHref", "/contact"))}
+            href={href(basePath, globalBookingPath)}
+            target={globalBookingTarget}
+            rel={globalBookingTarget ? "noopener noreferrer" : undefined}
             data-cta
             className="site-primary-action hidden min-h-10 items-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-accent)] px-4 text-sm font-semibold sm:inline-flex"
           >
             {text(
-              header,
-              "ctaLabel",
-              text(cro, "defaultBookingCta", "Contact us"),
+              cro,
+              "defaultBookingCta",
+              text(header, "ctaLabel", "Contact us"),
             )}
           </Link>
           <details className="relative md:hidden">
@@ -336,6 +358,7 @@ export function SiteRenderer({
                 siteId={site.id}
                 sourcePage={page.slug ? `/${page.slug}` : "/"}
                 testimonials={testimonials}
+                croSettings={cro}
                 preview={Boolean(preview || editor)}
               />
             );
@@ -344,6 +367,11 @@ export function SiteRenderer({
                 key={section.id}
                 data-section-type={section.type}
                 data-section-variant={section.variant}
+                data-section-background={text(
+                  section.settings,
+                  "backgroundStyle",
+                  "default",
+                )}
                 role="button"
                 tabIndex={0}
                 aria-label={`Edit ${section.type} section`}
@@ -357,11 +385,11 @@ export function SiteRenderer({
                     editor.onSelectSection(section.id);
                   }
                 }}
-                className={`relative cursor-pointer outline-offset-[-3px] transition ${editor.selectedSectionId === section.id ? "z-10 outline-3 outline-[#F5A623]" : "hover:outline-2 hover:outline-[#F5A623]/60"}`}
+                className={`relative cursor-pointer outline-offset-[-3px] transition ${editor.selectedSectionId === section.id ? "z-10 outline-3 outline-[#5BCD57]" : "hover:outline-2 hover:outline-[#5BCD57]/60"}`}
               >
                 {rendered}
                 {editor.selectedSectionId === section.id && (
-                  <span className="pointer-events-none absolute left-2 top-2 z-30 rounded-md bg-[#F5A623] px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#173028]">
+                  <span className="pointer-events-none absolute left-2 top-2 z-30 rounded-md bg-[#5BCD57] px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-[#173028]">
                     {section.type.replace(/([A-Z])/g, " $1")}
                   </span>
                 )}
@@ -371,6 +399,11 @@ export function SiteRenderer({
                 key={section.id}
                 data-section-type={section.type}
                 data-section-variant={section.variant}
+                data-section-background={text(
+                  section.settings,
+                  "backgroundStyle",
+                  "default",
+                )}
               >
                 {rendered}
               </div>
@@ -415,6 +448,25 @@ export function SiteRenderer({
           )}
         />
       )}
+      {!activeExperience &&
+        !activeRental &&
+        !activePackage &&
+        cro.stickyMobileCta !== false && (
+          <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-3 border-t border-black/10 bg-[var(--site-surface)]/95 px-4 py-3 shadow-2xl backdrop-blur md:hidden">
+            <span className="min-w-0 text-sm font-semibold">
+              Ready to plan your trip?
+            </span>
+            <a
+              href={href(basePath, globalBookingPath)}
+              data-booking-link
+              target={globalBookingTarget}
+              rel={globalBookingTarget ? "noopener noreferrer" : undefined}
+              className="site-primary-action shrink-0 rounded-xl bg-[var(--site-accent)] px-5 py-3 text-sm font-semibold"
+            >
+              {text(cro, "defaultBookingCta", "Book now")}
+            </a>
+          </div>
+        )}
       <footer
         data-layout={footerVariant}
         className={`${footerVariant === "editorial" ? "border-t border-black/10 bg-[var(--site-surface)] text-[var(--site-text)]" : "bg-[var(--site-primary)] text-white"} px-5 ${footerVariant === "compact" ? "py-8" : "py-14"}`}
@@ -451,10 +503,35 @@ export function SiteRenderer({
             <a className="mt-3 block text-sm" href={`mailto:${business.email}`}>
               {business.email}
             </a>
-            {business.phone && (
+            {business.phone && cro.phoneEnabled !== false && (
               <a className="mt-2 block text-sm" href={`tel:${business.phone}`}>
                 {business.phone}
               </a>
+            )}
+            {business.whatsapp && cro.whatsappEnabled !== false && (
+              <a
+                className="mt-2 block text-sm"
+                href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
+              >
+                WhatsApp {business.whatsapp}
+              </a>
+            )}
+            {business.address && (
+              <p className="mt-2 text-sm opacity-65">{business.address}</p>
+            )}
+            {socialLinks.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-xs font-semibold">
+                {socialLinks.map(([label, url]) => (
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    key={label}
+                  >
+                    {label}
+                  </a>
+                ))}
+              </div>
             )}
           </div>
           {text(footer, "bookingCta") && (
@@ -950,6 +1027,7 @@ function Section({
   siteId,
   sourcePage,
   testimonials,
+  croSettings,
   preview = false,
 }: {
   section: SiteSection;
@@ -961,6 +1039,7 @@ function Section({
   siteId: string;
   sourcePage: string;
   testimonials: PublicTestimonial[];
+  croSettings: Record<string, unknown>;
   preview?: boolean;
 }) {
   const s = section.settings;
@@ -1110,21 +1189,30 @@ function Section({
           <div className="mx-auto max-w-7xl">
             <Heading settings={s} />
             <div className="mt-10 grid gap-4 md:grid-cols-3">
-              {[
-                "Useful information",
-                "Straightforward planning",
-                "Local contact",
-              ].map((title, i) => (
+              {contentItems(s, [
+                [
+                  "Useful information",
+                  "Everything guests need to choose the right experience.",
+                ],
+                [
+                  "Straightforward planning",
+                  "Clear steps help travellers plan with confidence.",
+                ],
+                [
+                  "Local contact",
+                  "Reach the team when you need practical answers.",
+                ],
+              ]).map((item, i) => (
                 <article
-                  key={title}
+                  key={`${item.title}-${i}`}
                   className="rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-bg)] p-6"
                 >
                   <span className="grid size-9 place-items-center rounded-full bg-[var(--site-primary)] text-sm text-white">
                     {i + 1}
                   </span>
-                  <h3 className="mt-7 text-lg font-semibold">{title}</h3>
+                  <h3 className="mt-7 text-lg font-semibold">{item.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-[var(--site-muted)]">
-                    Everything you need to choose and plan the right experience.
+                    {item.description}
                   </p>
                 </article>
               ))}
@@ -1144,20 +1232,28 @@ function Section({
           <div className="mx-auto max-w-7xl">
             <Heading settings={s} />
             <div className="mt-9 grid gap-4 md:grid-cols-3">
-              {[
-                "Clear details",
-                "Built around your trip",
-                "Ask before you book",
-              ].map((title) => (
+              {contentItems(s, [
+                [
+                  "Clear details",
+                  "Review practical information before you decide.",
+                ],
+                [
+                  "Built around your trip",
+                  "Find options suited to your plans and destination.",
+                ],
+                [
+                  "Ask before you book",
+                  "Contact the local team when you need clarification.",
+                ],
+              ]).map((item, index) => (
                 <article
                   className="min-h-40 rounded-[var(--site-radius)] border border-black/5 bg-[var(--site-surface)] p-6 shadow-sm"
-                  key={title}
+                  key={`${item.title}-${index}`}
                 >
                   <Check className="text-[var(--site-secondary)]" size={19} />
-                  <h3 className="mt-8 font-semibold">{title}</h3>
+                  <h3 className="mt-8 font-semibold">{item.title}</h3>
                   <p className="mt-2 text-sm leading-6 text-[var(--site-muted)]">
-                    Add verified information in your workspace as it becomes
-                    available.
+                    {item.description}
                   </p>
                 </article>
               ))}
@@ -1261,13 +1357,22 @@ function Section({
                   <Mail size={18} />
                   {business.email}
                 </a>
-                {business.phone && (
+                {business.phone && croSettings.phoneEnabled !== false && (
                   <a
                     href={`tel:${business.phone}`}
                     className="mt-4 flex items-center gap-3"
                   >
                     <Phone size={18} />
                     {business.phone}
+                  </a>
+                )}
+                {business.whatsapp && croSettings.whatsappEnabled !== false && (
+                  <a
+                    href={`https://wa.me/${business.whatsapp.replace(/\D/g, "")}`}
+                    className="mt-4 flex items-center gap-3"
+                  >
+                    <Phone size={18} />
+                    WhatsApp {business.whatsapp}
                   </a>
                 )}
               </div>
@@ -1612,6 +1717,23 @@ function Heading({ settings }: { settings: Record<string, unknown> }) {
       )}
     </div>
   );
+}
+
+function contentItems(
+  settings: Record<string, unknown>,
+  fallback: Array<[string, string]>,
+) {
+  if (!Array.isArray(settings.items))
+    return fallback.map(([title, description]) => ({ title, description }));
+  const parsed = settings.items.flatMap((item) => {
+    const value = object(item);
+    const title = text(value, "title");
+    if (!title) return [];
+    return [{ title, description: text(value, "description") }];
+  });
+  return parsed.length
+    ? parsed
+    : fallback.map(([title, description]) => ({ title, description }));
 }
 function ExperienceCard({
   item,

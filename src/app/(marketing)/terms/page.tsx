@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function Terms() {
   return (
     <article className="glass mx-auto max-w-3xl rounded-3xl p-7 sm:p-10">
-      <p className="text-sm font-semibold uppercase tracking-[.18em] text-[#ffc857]">
+      <p className="text-sm font-semibold uppercase tracking-[.18em] text-[#95ee8e]">
         Review before launch
       </p>
       <h1 className="mt-4 text-4xl font-semibold">Terms placeholder</h1>

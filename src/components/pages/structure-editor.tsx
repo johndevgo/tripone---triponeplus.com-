@@ -9,7 +9,7 @@ import {
 import type { NavigationItem } from "@/lib/types";
 
 const input =
-  "min-h-10 rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#FFC857]";
+  "min-h-10 rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#95EE8E]";
 export function StructureEditor({
   siteId,
   initialNavigation,
@@ -130,7 +130,7 @@ export function StructureEditor({
         </div>
         <button
           onClick={() => run(() => saveHeader({ siteId, ...header }))}
-          className="mt-5 flex min-h-10 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+          className="mt-5 flex min-h-10 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
         >
           <Save size={15} /> Save header
         </button>
@@ -208,13 +208,13 @@ export function StructureEditor({
               },
             ])
           }
-          className="mt-4 inline-flex items-center gap-2 text-sm text-[#FFC857]"
+          className="mt-4 inline-flex items-center gap-2 text-sm text-[#95EE8E]"
         >
           <Plus size={15} /> Add external link
         </button>
         <button
           onClick={() => run(() => saveNavigation({ siteId, items }))}
-          className="mt-5 flex min-h-10 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+          className="mt-5 flex min-h-10 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
         >
           <Save size={15} /> Save navigation
         </button>
@@ -259,7 +259,7 @@ export function StructureEditor({
         </div>
         <button
           onClick={() => run(() => saveFooter({ siteId, ...footer }))}
-          className="mt-5 flex min-h-10 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+          className="mt-5 flex min-h-10 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
         >
           <Save size={15} /> Save footer
         </button>

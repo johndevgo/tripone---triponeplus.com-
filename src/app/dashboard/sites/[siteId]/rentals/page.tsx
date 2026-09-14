@@ -40,7 +40,7 @@ export default async function RentalsPage({
         action={
           <Link
             href="/admin/rentals/new"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} /> Add rental
           </Link>
@@ -97,10 +97,10 @@ export default async function RentalsPage({
               <Link
                 href={`/admin/rentals/${product.id}`}
                 key={product.id}
-                className="glass rounded-2xl p-5 transition hover:border-[#FFC857]/40"
+                className="glass rounded-2xl p-5 transition hover:border-[#95EE8E]/40"
               >
                 <div className="flex items-start justify-between gap-4">
-                  <div className="grid size-11 place-items-center rounded-xl bg-[#F5A623]/10 text-[#FFC857]">
+                  <div className="grid size-11 place-items-center rounded-xl bg-[#5BCD57]/10 text-[#95EE8E]">
                     <Box size={21} />
                   </div>
                   <span className="rounded-full bg-white/[.07] px-2.5 py-1 text-xs capitalize text-white/50">

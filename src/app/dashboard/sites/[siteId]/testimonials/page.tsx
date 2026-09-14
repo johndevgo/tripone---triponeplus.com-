@@ -97,7 +97,7 @@ export default async function Testimonials({
                 <option value="archived">Archived</option>
               </select>
             </label>
-            <button className="min-h-11 rounded-xl bg-[#f5a623] font-semibold text-[#173028]">
+            <button className="min-h-11 rounded-xl bg-[#5bcd57] font-semibold text-[#173028]">
               Save testimonial
             </button>
           </form>

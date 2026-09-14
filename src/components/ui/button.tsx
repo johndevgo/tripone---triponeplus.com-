@@ -4,10 +4,10 @@ import { cn } from "@/lib/utils";
 
 const styles = {
   primary:
-    "bg-[#F5A623] text-[#173028] shadow-[0_8px_25px_rgba(245,166,35,.22)] hover:bg-[#FFC857]",
+    "border border-[#95EE8E]/45 bg-[#5BCD57] text-[#0b2a12] shadow-[0_10px_30px_rgba(91,205,87,.24)] hover:-translate-y-0.5 hover:bg-[#72dc6d] hover:shadow-[0_14px_38px_rgba(91,205,87,.32)]",
   secondary:
     "border border-white/15 bg-white/[.07] text-white hover:bg-white/[.12]",
-  dark: "bg-[#063D2E] text-white hover:bg-[#087A5A]",
+  dark: "bg-[#075718] text-white hover:bg-[#11802A]",
   ghost: "text-current hover:bg-current/10",
   danger: "bg-red-600 text-white hover:bg-red-500",
 };

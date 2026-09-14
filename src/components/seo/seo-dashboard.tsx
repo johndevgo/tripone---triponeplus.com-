@@ -22,7 +22,7 @@ type Page = {
   resourceKind: "page" | "experience" | "rental" | "taxonomy" | "location";
 };
 const input =
-  "mt-2 min-h-10 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#FFC857]";
+  "mt-2 min-h-10 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#95EE8E]";
 export function SeoDashboard({
   siteId,
   pages,
@@ -96,7 +96,7 @@ export function SeoDashboard({
         <div className="glass rounded-3xl p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
-              <p className="text-xs text-[#FFC857]">Per-page metadata</p>
+              <p className="text-xs text-[#95EE8E]">Per-page metadata</p>
               <h2 className="mt-1 text-xl font-semibold">Search appearance</h2>
             </div>
             <select
@@ -300,7 +300,7 @@ function PageSeoForm({
         ))}
       </div>
       <details className="rounded-2xl border border-white/10 p-4">
-        <summary className="cursor-pointer text-sm font-semibold text-[#FFC857]">
+        <summary className="cursor-pointer text-sm font-semibold text-[#95EE8E]">
           Social, breadcrumbs & editorial checks
         </summary>
         <div className="mt-4 grid gap-4">
@@ -397,7 +397,7 @@ function ScoreCard({ title, score }: { title: string; score: ReadinessScore }) {
   return (
     <div className="glass rounded-3xl p-6">
       <p className="text-sm text-white/50">{title}</p>
-      <p className="mt-3 text-5xl font-semibold text-[#FFC857]">
+      <p className="mt-3 text-5xl font-semibold text-[#95EE8E]">
         {score.score}
         <span className="text-lg text-white/30">/100</span>
       </p>
@@ -447,7 +447,7 @@ function SaveButton({ save }: { save: () => void }) {
   return (
     <button
       onClick={save}
-      className="mt-5 inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+      className="mt-5 inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
     >
       <Save size={15} /> Save settings
     </button>

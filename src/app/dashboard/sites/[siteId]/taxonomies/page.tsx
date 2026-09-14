@@ -59,7 +59,7 @@ export default async function TaxonomiesPage({
     taxonomyTemplates?.find((template) => template.subtype === "default");
   return (
     <div className="mx-auto max-w-6xl">
-      <p className="text-sm font-medium text-[#FFC857]">
+      <p className="text-sm font-medium text-[#95EE8E]">
         Information architecture
       </p>
       <h1 className="mt-2 text-3xl font-semibold">Taxonomies</h1>
@@ -75,7 +75,7 @@ export default async function TaxonomiesPage({
           <a
             key={type}
             href={`?type=${type}`}
-            className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-sm ${type === activeType ? "bg-[#F5A623] font-semibold text-[#173028]" : "glass text-white/60"}`}
+            className={`whitespace-nowrap rounded-xl px-4 py-2.5 text-sm ${type === activeType ? "bg-[#5BCD57] font-semibold text-[#173028]" : "glass text-white/60"}`}
           >
             {labels[type]}
           </a>
@@ -102,7 +102,7 @@ export default async function TaxonomiesPage({
                         {term.status}
                       </span>
                       {term.source_location_id && (
-                        <span className="text-[11px] text-[#FFC857]">
+                        <span className="text-[11px] text-[#95EE8E]">
                           Synced location
                         </span>
                       )}
@@ -128,13 +128,13 @@ export default async function TaxonomiesPage({
                 {term.source_location_id ? (
                   <Link
                     href="/admin/locations"
-                    className="mt-4 inline-flex rounded-lg border border-white/10 px-3 py-2 text-xs text-[#FFC857]"
+                    className="mt-4 inline-flex rounded-lg border border-white/10 px-3 py-2 text-xs text-[#95EE8E]"
                   >
                     Edit from Locations
                   </Link>
                 ) : (
                   <details className="mt-4 border-t border-white/10 pt-4">
-                    <summary className="cursor-pointer text-sm font-medium text-[#FFC857]">
+                    <summary className="cursor-pointer text-sm font-medium text-[#95EE8E]">
                       Edit landing page and SEO
                     </summary>
                     <form
@@ -229,7 +229,7 @@ export default async function TaxonomiesPage({
                         </select>
                       </label>
                       <div className="flex flex-wrap gap-3 sm:col-span-2">
-                        <button className="min-h-10 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]">
+                        <button className="min-h-10 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]">
                           Save landing page
                         </button>
                         <Link
@@ -253,7 +253,7 @@ export default async function TaxonomiesPage({
           ) : (
             <div className="glass grid min-h-64 place-items-center rounded-3xl p-8 text-center">
               <div>
-                <Tags className="mx-auto text-[#FFC857]" />
+                <Tags className="mx-auto text-[#95EE8E]" />
                 <h2 className="mt-4 font-semibold">
                   No {labels[activeType].toLowerCase()} yet
                 </h2>
@@ -320,7 +320,7 @@ export default async function TaxonomiesPage({
               </select>
             </label>
           </div>
-          <button className="mt-5 min-h-11 w-full rounded-xl bg-[#F5A623] font-semibold text-[#173028]">
+          <button className="mt-5 min-h-11 w-full rounded-xl bg-[#5BCD57] font-semibold text-[#173028]">
             Create term
           </button>
         </form>

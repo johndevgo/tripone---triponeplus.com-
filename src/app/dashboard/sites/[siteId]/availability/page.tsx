@@ -77,7 +77,7 @@ export default async function AvailabilityPage({
         action={
           <a
             href="#new-departure"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
             Add departure
@@ -107,7 +107,7 @@ export default async function AvailabilityPage({
                 <article key={rule.id} className="glass rounded-2xl p-5">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-xs uppercase tracking-[.12em] text-[#FFC857]">
+                      <p className="text-xs uppercase tracking-[.12em] text-[#95EE8E]">
                         {pretty(rule.schedule_type)}
                       </p>
                       <h3 className="mt-2 font-semibold">{rule.name}</h3>
@@ -193,7 +193,7 @@ export default async function AvailabilityPage({
                   {item.capacity && (
                     <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/10">
                       <div
-                        className="h-full bg-[#FFC857]"
+                        className="h-full bg-[#95EE8E]"
                         style={{
                           width: `${Math.min(100, (allocated / item.capacity) * 100)}%`,
                         }}
@@ -307,7 +307,7 @@ export default async function AvailabilityPage({
               className={`${input} mt-2 w-full py-3`}
             />
           </label>
-          <button className="min-h-11 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
+          <button className="min-h-11 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
             Create departure
           </button>
         </form>
@@ -430,7 +430,7 @@ export default async function AvailabilityPage({
               className={`${input} mt-2 w-full py-3`}
             />
           </label>
-          <button className="min-h-11 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
+          <button className="min-h-11 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
             Save operating rule
           </button>
         </form>

@@ -57,7 +57,7 @@ export default async function Signup({
         </label>
         <label className="flex items-start gap-3 rounded-xl border border-white/10 bg-white/[.04] p-4 text-sm leading-6 text-white/60">
           <input
-            className="mt-1 size-4 shrink-0 accent-[#f5a623]"
+            className="mt-1 size-4 shrink-0 accent-[#5bcd57]"
             name="marketingConsent"
             type="checkbox"
           />
@@ -74,7 +74,7 @@ export default async function Signup({
       </p>
       <p className="mt-6 text-center text-sm text-white/55">
         Already have an account?{" "}
-        <Link className="text-[#FFC857] hover:underline" href="/login">
+        <Link className="text-[#95EE8E] hover:underline" href="/login">
           Sign in
         </Link>
       </p>

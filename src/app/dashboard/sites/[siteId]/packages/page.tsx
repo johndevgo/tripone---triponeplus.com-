@@ -26,7 +26,7 @@ export default async function PackagesPage({
         action={
           <Link
             href="/admin/packages/new"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
             Add package
@@ -43,10 +43,10 @@ export default async function PackagesPage({
             <Link
               key={item.id}
               href={`/admin/packages/${item.id}`}
-              className="glass rounded-2xl p-5 transition hover:border-[#FFC857]/40"
+              className="glass rounded-2xl p-5 transition hover:border-[#95EE8E]/40"
             >
               <div className="flex items-start justify-between gap-4">
-                <span className="grid size-11 place-items-center rounded-xl bg-[#FFC857]/10 text-[#FFC857]">
+                <span className="grid size-11 place-items-center rounded-xl bg-[#95EE8E]/10 text-[#95EE8E]">
                   <Package />
                 </span>
                 <span className="rounded-full border border-white/10 px-2.5 py-1 text-xs capitalize text-white/50">
@@ -70,7 +70,7 @@ export default async function PackagesPage({
                 </span>
                 <span>{item.package_items?.[0]?.count ?? 0} items</span>
                 {item.featured && (
-                  <span className="text-[#FFC857]">Featured</span>
+                  <span className="text-[#95EE8E]">Featured</span>
                 )}
               </div>
             </Link>

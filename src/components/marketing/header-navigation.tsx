@@ -25,8 +25,8 @@ export function HeaderNavigation({
     : (["Build your website", "/signup"] as const);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-white/[.07] bg-[#041c16]/80 backdrop-blur-2xl">
-      <div className="mx-auto flex min-h-[4.75rem] max-w-7xl items-center justify-between px-5 lg:px-8">
+    <header className="fixed inset-x-3 top-3 z-40 mx-auto max-w-7xl rounded-2xl border border-white/15 bg-[#052a11]/72 shadow-[0_18px_60px_rgba(0,30,8,.22)] backdrop-blur-2xl sm:inset-x-5">
+      <div className="flex min-h-[4.5rem] items-center justify-between px-4 sm:px-5 lg:px-7">
         <Logo light />
         <nav
           aria-label="Main navigation"
@@ -82,7 +82,7 @@ export function HeaderNavigation({
           )}
           <Link
             onClick={() => setOpen(false)}
-            className="mt-1 rounded-xl bg-[#f5a623] px-4 py-3.5 text-sm font-semibold text-[#173028]"
+            className="mt-1 rounded-xl bg-[#5bcd57] px-4 py-3.5 text-sm font-semibold text-[#173028]"
             href={primary[1]}
           >
             {primary[0]}

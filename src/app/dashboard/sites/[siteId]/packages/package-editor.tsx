@@ -32,7 +32,7 @@ type PackageValue = Record<string, unknown> & {
 };
 
 const field =
-  "min-h-11 w-full rounded-xl border border-white/10 bg-white/[.055] px-3 outline-none transition focus:border-[#FFC857]/70 focus:ring-2 focus:ring-[#FFC857]/15";
+  "min-h-11 w-full rounded-xl border border-white/10 bg-white/[.055] px-3 outline-none transition focus:border-[#95EE8E]/70 focus:ring-2 focus:ring-[#95EE8E]/15";
 
 export async function PackageEditor({
   siteId,
@@ -81,7 +81,7 @@ export async function PackageEditor({
       </Link>
       <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-[#FFC857]">
+          <p className="text-sm font-medium text-[#95EE8E]">
             Package workspace
           </p>
           <h1 className="mt-2 text-3xl font-semibold">
@@ -368,7 +368,7 @@ export async function PackageEditor({
                 type="checkbox"
                 name="featured"
                 defaultChecked={Boolean(value?.featured)}
-                className="size-4 accent-[#F5A623]"
+                className="size-4 accent-[#5BCD57]"
               />
               Feature this package on the website
             </label>
@@ -376,7 +376,7 @@ export async function PackageEditor({
         </Panel>
 
         <div className="sticky bottom-4 z-20 flex justify-end">
-          <button className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-[#F5A623] px-6 font-semibold text-[#173028] shadow-xl transition hover:bg-[#FFC857] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FFC857]">
+          <button className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-[#5BCD57] px-6 font-semibold text-[#173028] shadow-xl transition hover:bg-[#95EE8E] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#95EE8E]">
             <Save size={18} /> Save package
           </button>
         </div>

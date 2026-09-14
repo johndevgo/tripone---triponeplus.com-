@@ -63,7 +63,7 @@ export default async function BookingsPage({
         action={
           <Link
             href="/admin/bookings/new"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
             Add booking
@@ -134,10 +134,10 @@ export default async function BookingsPage({
               <Link
                 href={`/admin/bookings/${booking.id}`}
                 key={booking.id}
-                className="glass grid gap-3 rounded-2xl p-5 transition hover:border-[#FFC857]/40 md:grid-cols-[150px_1fr_180px_120px] md:items-center"
+                className="glass grid gap-3 rounded-2xl p-5 transition hover:border-[#95EE8E]/40 md:grid-cols-[150px_1fr_180px_120px] md:items-center"
               >
                 <div>
-                  <strong className="text-[#FFC857]">
+                  <strong className="text-[#95EE8E]">
                     {booking.reference}
                   </strong>
                   <p className="mt-1 text-xs capitalize text-white/35">

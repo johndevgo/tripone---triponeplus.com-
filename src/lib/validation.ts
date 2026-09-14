@@ -45,7 +45,10 @@ export const onboardingSchema = z
   .object({
     businessType: z.enum(businessTypes),
     primaryCapability: z.enum(businessCapabilities),
-    capabilities: z.array(z.enum(businessCapabilities)).min(1).max(12),
+    capabilities: z
+      .array(z.enum(businessCapabilities))
+      .min(1)
+      .max(businessCapabilities.length),
     pageSelections: z
       .array(
         z.object({

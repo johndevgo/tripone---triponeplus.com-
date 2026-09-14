@@ -85,7 +85,7 @@ export function ResourceExplorer({
               onClick={() => chooseCategory(item)}
               className={`min-h-10 rounded-full border px-4 text-sm transition ${
                 category === item
-                  ? "border-[#ffc857]/55 bg-[#ffc857]/15 text-[#ffc857]"
+                  ? "border-[#95ee8e]/55 bg-[#95ee8e]/15 text-[#95ee8e]"
                   : "border-white/10 bg-white/[.04] text-white/55 hover:bg-white/[.08] hover:text-white"
               }`}
             >
@@ -102,7 +102,7 @@ export function ResourceExplorer({
         {category !== "All" && (
           <Link
             href={`/resources/category/${categorySlugs[category]}`}
-            className="inline-flex items-center gap-2 font-semibold text-[#ffc857]"
+            className="inline-flex items-center gap-2 font-semibold text-[#95ee8e]"
           >
             Open the {category.toLowerCase()} collection
             <ArrowRight size={15} />
@@ -125,7 +125,7 @@ export function ResourceExplorer({
               setQuery("");
               chooseCategory("All");
             }}
-            className="mt-3 text-sm font-semibold text-[#ffc857]"
+            className="mt-3 text-sm font-semibold text-[#95ee8e]"
           >
             Clear filters
           </button>

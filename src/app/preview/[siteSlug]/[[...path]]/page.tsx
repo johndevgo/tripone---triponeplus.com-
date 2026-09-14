@@ -26,7 +26,7 @@ async function load(siteSlug: string, path: string[]) {
   let query = supabase
     .from("sites")
     .select(
-      "id,name,slug,status,theme_id,theme_settings,navigation,footer_settings,global_settings,default_og_image_url,businesses(name,business_type,city,country,phone,whatsapp,email,logo_url)",
+      "id,name,slug,status,theme_id,theme_settings,navigation,footer_settings,global_settings,cro_settings,default_og_image_url,businesses(name,business_type,city,country,phone,whatsapp,email,address,instagram_url,facebook_url,youtube_url,tripadvisor_url,logo_url)",
     );
   query = /^[0-9a-f-]{36}$/i.test(siteSlug)
     ? query.eq("id", siteSlug)
@@ -292,6 +292,24 @@ export function fromSnapshot(
     whatsapp:
       typeof rawBusiness.whatsapp === "string" ? rawBusiness.whatsapp : null,
     email: String(rawBusiness.email ?? ""),
+    address:
+      typeof rawBusiness.address === "string" ? rawBusiness.address : null,
+    instagram_url:
+      typeof rawBusiness.instagram_url === "string"
+        ? rawBusiness.instagram_url
+        : null,
+    facebook_url:
+      typeof rawBusiness.facebook_url === "string"
+        ? rawBusiness.facebook_url
+        : null,
+    youtube_url:
+      typeof rawBusiness.youtube_url === "string"
+        ? rawBusiness.youtube_url
+        : null,
+    tripadvisor_url:
+      typeof rawBusiness.tripadvisor_url === "string"
+        ? rawBusiness.tripadvisor_url
+        : null,
     logo_url:
       typeof rawBusiness.logo_url === "string" ? rawBusiness.logo_url : null,
   };
@@ -305,6 +323,7 @@ export function fromSnapshot(
     navigation: rawSite.navigation,
     footer_settings: rawSite.footer,
     global_settings: rawSite.globalSettings,
+    cro_settings: rawSite.croSettings,
     default_og_image_url: rawSite.defaultOgImageUrl,
   };
   const route = path.join("/");

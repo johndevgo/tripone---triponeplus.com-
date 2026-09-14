@@ -160,7 +160,7 @@ export default async function CustomerDetail({
               className="mt-2 w-full rounded-xl border border-white/10 bg-white/[.05] p-3"
             />
           </label>
-          <button className="min-h-11 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028] sm:col-span-2">
+          <button className="min-h-11 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028] sm:col-span-2">
             Save customer
           </button>
         </form>
@@ -205,7 +205,7 @@ function Panel({
 }) {
   return (
     <section className="glass rounded-3xl p-6">
-      <div className="flex items-center gap-3 text-[#FFC857]">
+      <div className="flex items-center gap-3 text-[#95EE8E]">
         {icon}
         <h2 className="font-semibold text-white">{title}</h2>
       </div>

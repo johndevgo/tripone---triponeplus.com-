@@ -196,7 +196,7 @@ function AddLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#F5A623] px-3 text-xs font-semibold text-[#173028]"
+      className="inline-flex min-h-10 items-center gap-2 rounded-xl bg-[#5BCD57] px-3 text-xs font-semibold text-[#173028]"
     >
       <Plus size={15} />
       {label}

@@ -39,7 +39,7 @@ export default function Templates() {
           <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/55">
             {["Responsive", "Tokenized", "Builder-ready"].map((label) => (
               <span key={label} className="flex items-center gap-2">
-                <Check size={16} className="text-[#ffc857]" /> {label}
+                <Check size={16} className="text-[#95ee8e]" /> {label}
               </span>
             ))}
           </div>

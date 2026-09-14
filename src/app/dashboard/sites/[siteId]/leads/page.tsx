@@ -94,7 +94,7 @@ export default async function Leads({
           </Link>
           <a
             href="#add-lead"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
             Add lead
@@ -186,7 +186,7 @@ export default async function Leads({
               className={`${input} mt-2 w-full py-3`}
             />
           </label>
-          <button className="min-h-11 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
+          <button className="min-h-11 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
             Save lead
           </button>
         </form>
@@ -254,7 +254,7 @@ function LeadCard({ lead, siteId }: { lead: Lead; siteId: string }) {
         {lead.guests ? ` · ${lead.guests} guests` : ""}
       </p>
       {lead.follow_up_at && (
-        <p className="mt-2 text-xs text-[#FFC857]">
+        <p className="mt-2 text-xs text-[#95EE8E]">
           Follow up {new Date(lead.follow_up_at).toLocaleDateString()}
         </p>
       )}
@@ -346,7 +346,7 @@ function LeadActions({ lead, siteId }: { lead: Lead; siteId: string }) {
       )}
       <Link
         href={`/admin/bookings/new?leadId=${lead.id}`}
-        className="rounded-lg bg-[#F5A623] px-2.5 py-2 font-semibold text-[#173028]"
+        className="rounded-lg bg-[#5BCD57] px-2.5 py-2 font-semibold text-[#173028]"
       >
         Create booking
       </Link>

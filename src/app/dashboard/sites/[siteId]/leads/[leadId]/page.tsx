@@ -13,7 +13,7 @@ import {
 import { Feedback, pretty } from "../../bookings/page";
 
 const input =
-  "mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 outline-none focus:border-[#FFC857]/70";
+  "mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 outline-none focus:border-[#95EE8E]/70";
 
 export default async function LeadDetailPage({
   params,
@@ -89,7 +89,7 @@ export default async function LeadDetailPage({
       </Link>
       <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-[#FFC857]">
+          <p className="text-sm font-medium text-[#95EE8E]">
             {pretty(lead.source)}
           </p>
           <h1 className="mt-2 text-3xl font-semibold">{lead.name}</h1>
@@ -109,7 +109,7 @@ export default async function LeadDetailPage({
           )}
           <Link
             href={`/admin/bookings/new?leadId=${leadId}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <CalendarPlus size={16} /> Create booking
           </Link>
@@ -118,7 +118,7 @@ export default async function LeadDetailPage({
       <Feedback {...feedback} />
       <div className="mt-7 grid gap-5 lg:grid-cols-[1.15fr_.85fr]">
         <section className="glass rounded-3xl p-6">
-          <div className="flex items-center gap-3 text-[#FFC857]">
+          <div className="flex items-center gap-3 text-[#95EE8E]">
             <UserRound />
             <h2 className="font-semibold text-white">Opportunity details</h2>
           </div>
@@ -252,11 +252,11 @@ export default async function LeadDetailPage({
                 type="checkbox"
                 name="assignToMe"
                 defaultChecked={Boolean(lead.assigned_to)}
-                className="size-4 accent-[#F5A623]"
+                className="size-4 accent-[#5BCD57]"
               />{" "}
               Assign this lead to me
             </label>
-            <button className="min-h-11 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028] sm:col-span-2">
+            <button className="min-h-11 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028] sm:col-span-2">
               Save lead details
             </button>
           </form>
@@ -284,7 +284,7 @@ export default async function LeadDetailPage({
             </form>
           </section>
           <section className="glass rounded-3xl p-6">
-            <div className="flex items-center gap-3 text-[#FFC857]">
+            <div className="flex items-center gap-3 text-[#95EE8E]">
               <CheckCircle2 />
               <h2 className="font-semibold text-white">Activity timeline</h2>
             </div>
@@ -293,7 +293,7 @@ export default async function LeadDetailPage({
                 {activities.map((activity) => (
                   <li
                     key={activity.id}
-                    className="border-l border-[#FFC857]/35 pl-4"
+                    className="border-l border-[#95EE8E]/35 pl-4"
                   >
                     <p className="text-sm font-medium">
                       {pretty(activity.activity_type)}

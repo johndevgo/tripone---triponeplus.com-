@@ -55,7 +55,7 @@ export default async function Pricing() {
           <div className="absolute right-0 top-0 h-52 w-52 rounded-full bg-emerald-300/10 blur-3xl" />
           <div className="relative flex flex-col justify-between gap-8 sm:flex-row sm:items-start">
             <div>
-              <p className="text-sm font-semibold text-[#ffc857]">
+              <p className="text-sm font-semibold text-[#95ee8e]">
                 TripOne+ Founding Plan
               </p>
               <div className="mt-4 flex items-end gap-3">
@@ -72,7 +72,7 @@ export default async function Pricing() {
             </span>
           </div>
           <div className="my-8 border-t border-white/10" />
-          <p className="mb-7 rounded-2xl border border-[#ffc857]/15 bg-[#ffc857]/[.06] p-4 text-sm leading-6 text-white/65">
+          <p className="mb-7 rounded-2xl border border-[#95ee8e]/15 bg-[#95ee8e]/[.06] p-4 text-sm leading-6 text-white/65">
             After your free period, continued access is {renewal} per year. We
             do not auto-charge you in the current release.
           </p>
@@ -82,7 +82,7 @@ export default async function Pricing() {
                 key={item}
                 className="flex gap-3 text-sm leading-6 text-white/65"
               >
-                <Check className="mt-0.5 shrink-0 text-[#ffc857]" size={18} />{" "}
+                <Check className="mt-0.5 shrink-0 text-[#95ee8e]" size={18} />{" "}
                 {item}
               </p>
             ))}
@@ -124,7 +124,7 @@ export default async function Pricing() {
                 {question}
                 <ChevronRight
                   size={19}
-                  className="text-[#ffc857] transition group-open:rotate-90"
+                  className="text-[#95ee8e] transition group-open:rotate-90"
                 />
               </summary>
               <p className="mt-3 max-w-2xl leading-7 text-white/55">{answer}</p>

@@ -10,6 +10,8 @@ export type VerificationRecord = {
 
 export type DomainProviderResult = {
   configured: boolean;
+  projectVerified: boolean;
+  dnsConfigured: boolean;
   verified: boolean;
   records: VerificationRecord[];
   dns: ReturnType<typeof getDnsFallback>;
@@ -24,6 +26,13 @@ type VercelDomain = {
     value?: unknown;
     reason?: unknown;
   }>;
+  [key: string]: unknown;
+};
+
+type VercelDomainConfiguration = {
+  misconfigured?: boolean;
+  recommendedCNAME?: Array<{ value?: unknown; rank?: unknown }>;
+  recommendedIPv4?: Array<{ value?: unknown; rank?: unknown }>;
   [key: string]: unknown;
 };
 
@@ -71,18 +80,83 @@ async function requestDomain(hostname: string, mode: "add" | "verify") {
     cache: "no-store",
   });
   if (!response.ok) {
-    if (mode === "add" && response.status === 400)
-      return requestDomain(hostname, "verify");
-    throw new Error(await providerError(response));
+    const message = await providerError(response);
+    if (mode === "add" && response.status === 400) {
+      const existing = await getProjectDomain(hostname);
+      if (existing) return domainResult(hostname, existing);
+    }
+    throw new Error(message);
   }
   const raw = (await response.json()) as VercelDomain;
+  return domainResult(hostname, raw);
+}
+
+async function getProjectDomain(hostname: string) {
+  const response = await fetch(
+    vercelUrl(`/domains/${encodeURIComponent(hostname)}`, "v9"),
+    { headers: authHeaders(), cache: "no-store" },
+  );
+  if (response.status === 404) return null;
+  if (!response.ok) throw new Error(await providerError(response));
+  return (await response.json()) as VercelDomain;
+}
+
+async function domainResult(
+  hostname: string,
+  projectDomain: VercelDomain,
+): Promise<DomainProviderResult> {
+  const configuration = await getDomainConfiguration(hostname);
+  const projectVerified = projectDomain.verified === true;
+  const dnsConfigured = configuration?.misconfigured === false;
+  const ownershipRecords = normalizeRecords(projectDomain.verification);
   return {
     configured: true,
-    verified: raw.verified === true,
-    records: normalizeRecords(raw.verification),
+    projectVerified,
+    dnsConfigured,
+    // Vercel's project-domain `verified` flag only proves project access. A
+    // domain is production-ready after its public DNS also passes config.
+    verified: projectVerified && dnsConfigured,
+    records:
+      ownershipRecords.length > 0
+        ? ownershipRecords
+        : configurationRecords(hostname, configuration),
     dns: getDnsFallback(hostname),
-    raw,
+    raw: { projectDomain, configuration },
   } satisfies DomainProviderResult;
+}
+
+function configurationRecords(
+  hostname: string,
+  configuration: VercelDomainConfiguration | null,
+): VerificationRecord[] {
+  if (!configuration) return [];
+  const recommendations = isApex(hostname)
+    ? configuration.recommendedIPv4
+    : configuration.recommendedCNAME;
+  const type = isApex(hostname) ? "A" : "CNAME";
+  const domain = isApex(hostname) ? "@" : hostname.split(".")[0]!;
+  if (!Array.isArray(recommendations)) return [];
+  return recommendations.flatMap((item) =>
+    typeof item.value === "string" ? [{ type, domain, value: item.value }] : [],
+  );
+}
+
+function isApex(hostname: string) {
+  return hostname.split(".").length === 2;
+}
+
+async function getDomainConfiguration(hostname: string) {
+  const url = new URL(
+    `https://api.vercel.com/v6/domains/${encodeURIComponent(hostname)}/config`,
+  );
+  if (process.env.VERCEL_TEAM_ID)
+    url.searchParams.set("teamId", process.env.VERCEL_TEAM_ID);
+  const response = await fetch(url, {
+    headers: authHeaders(),
+    cache: "no-store",
+  });
+  if (!response.ok) return null;
+  return (await response.json()) as VercelDomainConfiguration;
 }
 
 function vercelUrl(path: string, version: "v9" | "v10") {
@@ -102,6 +176,8 @@ function authHeaders() {
 function unconfigured(hostname: string): DomainProviderResult {
   return {
     configured: false,
+    projectVerified: false,
+    dnsConfigured: false,
     verified: false,
     records: [],
     dns: getDnsFallback(hostname),

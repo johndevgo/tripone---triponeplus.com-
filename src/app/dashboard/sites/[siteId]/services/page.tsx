@@ -57,7 +57,7 @@ export default async function ServicesPage({
     "other";
   return (
     <div className="mx-auto max-w-6xl">
-      <p className="text-sm font-medium text-[#FFC857]">Business model</p>
+      <p className="text-sm font-medium text-[#95EE8E]">Business model</p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">
         Your service lines
       </h1>
@@ -86,10 +86,10 @@ export default async function ServicesPage({
           {businessCapabilities.map((capability) => (
             <label
               key={capability}
-              className="glass group relative flex min-h-24 cursor-pointer items-start gap-3 rounded-2xl p-4 transition hover:border-[#FFC857]/35 has-[:checked]:border-[#FFC857]/60 has-[:checked]:bg-[#FFC857]/[.08]"
+              className="glass group relative flex min-h-24 cursor-pointer items-start gap-3 rounded-2xl p-4 transition hover:border-[#95EE8E]/35 has-[:checked]:border-[#95EE8E]/60 has-[:checked]:bg-[#95EE8E]/[.08]"
             >
               <input
-                className="peer mt-1 size-4 accent-[#F5A623]"
+                className="peer mt-1 size-4 accent-[#5BCD57]"
                 type="checkbox"
                 name="capabilities"
                 value={capability}
@@ -102,7 +102,7 @@ export default async function ServicesPage({
                 </span>
               </span>
               <Check
-                className="absolute right-3 top-3 hidden text-[#FFC857] peer-checked:block"
+                className="absolute right-3 top-3 hidden text-[#95EE8E] peer-checked:block"
                 size={16}
               />
             </label>
@@ -111,12 +111,12 @@ export default async function ServicesPage({
         <div className="glass mt-6 rounded-2xl p-5">
           <label className="text-sm text-white/70">
             <span className="flex items-center gap-2 font-medium text-white">
-              <Star size={16} className="text-[#FFC857]" /> Primary service
+              <Star size={16} className="text-[#95EE8E]" /> Primary service
             </span>
             <select
               name="primaryCapability"
               defaultValue={primary}
-              className="mt-3 min-h-11 w-full max-w-md rounded-xl border border-white/15 bg-[#0b3027] px-3 outline-none focus:border-[#FFC857]"
+              className="mt-3 min-h-11 w-full max-w-md rounded-xl border border-white/15 bg-[#0b3027] px-3 outline-none focus:border-[#95EE8E]"
             >
               {businessCapabilities.map((capability) => (
                 <option key={capability} value={capability}>
@@ -127,7 +127,7 @@ export default async function ServicesPage({
           </label>
         </div>
         <div className="mt-6 flex justify-end">
-          <button className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028]">
+          <button className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028]">
             <BriefcaseBusiness size={18} /> Save service lines
           </button>
         </div>

@@ -108,7 +108,7 @@ export default async function SiteOverview({
     <>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
         <div>
-          <p className="text-sm font-medium text-[#FFC857]">Overview</p>
+          <p className="text-sm font-medium text-[#95EE8E]">Overview</p>
           <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
             {site.name}
           </h1>
@@ -119,7 +119,7 @@ export default async function SiteOverview({
         </div>
         <Link
           href={`/preview/${site.id}`}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#F5A623] px-5 text-sm font-semibold text-[#173028]"
+          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#5BCD57] px-5 text-sm font-semibold text-[#173028]"
         >
           Preview website <ArrowUpRight size={17} />
         </Link>
@@ -159,16 +159,16 @@ export default async function SiteOverview({
                 Your shared production renderer
               </p>
             </div>
-            <Eye className="text-[#FFC857]" />
+            <Eye className="text-[#95EE8E]" />
           </div>
-          <div className="m-4 grid min-h-72 place-items-center rounded-2xl bg-[linear-gradient(135deg,#087A5A,#022C22)] p-8 text-center">
+          <div className="m-4 grid min-h-72 place-items-center rounded-2xl bg-[linear-gradient(135deg,#11802A,#022F0E)] p-8 text-center">
             <div>
-              <p className="text-xs uppercase tracking-[.2em] text-[#FFC857]">
+              <p className="text-xs uppercase tracking-[.2em] text-[#95EE8E]">
                 {site.theme_id}
               </p>
               <h3 className="mt-3 text-3xl font-semibold">{site.name}</h3>
               <Link
-                className="mt-6 inline-flex rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#063D2E]"
+                className="mt-6 inline-flex rounded-xl bg-white px-4 py-2 text-sm font-semibold text-[#075718]"
                 href={`/preview/${site.id}`}
               >
                 Open preview
@@ -239,7 +239,7 @@ function Quick({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-xs text-white/60 hover:border-[#FFC857]/40 hover:text-white"
+      className="inline-flex min-h-9 items-center gap-2 rounded-xl border border-white/10 px-3 text-xs text-white/60 hover:border-[#95EE8E]/40 hover:text-white"
     >
       <PackagePlus size={14} />
       {label}

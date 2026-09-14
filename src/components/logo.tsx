@@ -4,17 +4,20 @@ export function Logo({ light = false }: { light?: boolean }) {
   return (
     <Link
       href="/"
-      className={`inline-flex items-center gap-2 text-xl font-bold tracking-tight ${light ? "text-white" : "text-[#063D2E]"}`}
+      aria-label="TripOne+ home"
+      className={`group inline-flex items-center gap-2.5 text-xl font-bold tracking-[-.035em] ${light ? "text-white" : "text-[#075718]"}`}
     >
       <Image
-        src="/images/logo annd branding/tripone 1isto1 photo logo .png"
-        alt=""
-        width={40}
-        height={40}
-        sizes="40px"
-        className="size-10 rounded-[.9rem] object-cover shadow-[0_8px_24px_rgba(8,122,90,.2)]"
+        src="/images/logo annd branding/tripone 1 isto 1 logo no background.png"
+        alt="TripOne+"
+        width={44}
+        height={44}
+        sizes="44px"
+        className="size-11 object-contain drop-shadow-[0_8px_18px_rgba(91,205,87,.24)] transition duration-200 group-hover:scale-[1.04]"
       />
-      TripOne<span className="text-[#F5A623]">+</span>
+      <span>
+        TripOne<span className="ml-1 text-[#5BCD57]">+</span>
+      </span>
     </Link>
   );
 }

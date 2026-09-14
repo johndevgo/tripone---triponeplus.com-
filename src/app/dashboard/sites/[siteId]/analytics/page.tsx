@@ -102,7 +102,7 @@ export default async function Analytics({
       {rows.length === 0 ? (
         <section className="glass mt-5 grid min-h-72 place-items-center rounded-3xl p-8 text-center">
           <div>
-            <BarChart3 className="mx-auto text-[#ffc857]" />
+            <BarChart3 className="mx-auto text-[#95ee8e]" />
             <h2 className="mt-4 text-xl font-semibold">No visitor data yet</h2>
             <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-white/45">
               Publish the website and share its live hostname. Page views and
@@ -123,7 +123,7 @@ export default async function Analytics({
                 <div
                   key={item.date}
                   title={`${item.date}: ${item.views}`}
-                  className="group relative flex-1 rounded-t bg-emerald-300/35 hover:bg-[#ffc857]"
+                  className="group relative flex-1 rounded-t bg-emerald-300/35 hover:bg-[#95ee8e]"
                   style={{
                     height: `${Math.max(3, (item.views / max) * 100)}%`,
                   }}

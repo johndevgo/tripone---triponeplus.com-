@@ -78,7 +78,7 @@ export default function ResourcesPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#041c16] via-[#041c16]/25 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-7 sm:p-9">
-            <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#ffc857]">
+            <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#95ee8e]">
               Start here · {featured.readTime}
             </p>
             <h2 className="mt-3 max-w-xl text-2xl font-semibold leading-tight sm:text-3xl">
@@ -109,7 +109,7 @@ export default function ResourcesPage() {
 
       <section className="glass mt-24 grid gap-8 rounded-[2rem] p-7 sm:p-10 lg:grid-cols-[.7fr_1.3fr] lg:items-center">
         <div className="grid aspect-square max-w-52 place-items-center rounded-[1.6rem] border border-white/10 bg-[linear-gradient(145deg,rgba(8,122,90,.45),rgba(245,166,35,.14))]">
-          <Compass size={58} className="text-[#ffc857]" />
+          <Compass size={58} className="text-[#95ee8e]" />
         </div>
         <div>
           <p className="marketing-kicker">

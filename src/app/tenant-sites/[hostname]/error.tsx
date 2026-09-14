@@ -14,7 +14,7 @@ export default function TenantError({
         </p>
         <button
           onClick={reset}
-          className="mt-6 min-h-11 rounded-xl bg-[#f5a623] px-5 font-semibold text-[#173028]"
+          className="mt-6 min-h-11 rounded-xl bg-[#5bcd57] px-5 font-semibold text-[#173028]"
         >
           Try again
         </button>

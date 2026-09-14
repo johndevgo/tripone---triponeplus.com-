@@ -28,7 +28,7 @@ export default async function Forgot({
         <Button type="submit">Send reset link</Button>
       </form>
       <p className="mt-6 text-center text-sm">
-        <Link className="text-[#FFC857]" href="/login">
+        <Link className="text-[#95EE8E]" href="/login">
           Back to sign in
         </Link>
       </p>

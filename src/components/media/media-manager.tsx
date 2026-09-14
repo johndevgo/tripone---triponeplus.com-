@@ -119,10 +119,10 @@ export function MediaManager({
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Search by filename or alt text"
-            className="min-h-10 w-full rounded-xl border border-white/10 bg-white/[.05] pl-10 pr-3 text-sm outline-none focus:border-[#FFC857]"
+            className="min-h-10 w-full rounded-xl border border-white/10 bg-white/[.05] pl-10 pr-3 text-sm outline-none focus:border-[#95EE8E]"
           />
         </label>
-        <label className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]">
+        <label className="inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]">
           <Upload size={16} /> Upload images
           <input
             className="sr-only"
@@ -169,7 +169,7 @@ export function MediaManager({
                   <input
                     defaultValue={item.alt_text ?? ""}
                     onBlur={(event) => updateAlt(item.id, event.target.value)}
-                    className="mt-2 min-h-10 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#FFC857]"
+                    className="mt-2 min-h-10 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#95EE8E]"
                   />
                 </label>
                 <button
@@ -185,7 +185,7 @@ export function MediaManager({
       ) : (
         <div className="glass mt-6 grid min-h-64 place-items-center rounded-3xl text-center">
           <div>
-            <ImageIcon className="mx-auto text-[#FFC857]" />
+            <ImageIcon className="mx-auto text-[#95EE8E]" />
             <h2 className="mt-4 text-lg font-semibold">No matching media</h2>
             <p className="mt-2 text-sm text-white/40">
               Upload JPG, PNG, WebP or AVIF images up to 10 MB.

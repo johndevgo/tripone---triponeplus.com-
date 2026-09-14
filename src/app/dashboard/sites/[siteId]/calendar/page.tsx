@@ -80,7 +80,7 @@ export default async function CalendarPage({
                   href={`/admin/bookings/${booking.id}`}
                   className="grid gap-3 border-b border-white/[.07] px-5 py-4 last:border-0 hover:bg-white/[.04] sm:grid-cols-[100px_1fr_160px_auto] sm:items-center"
                 >
-                  <time className="text-[#FFC857]">
+                  <time className="text-[#95EE8E]">
                     {new Date(booking.starts_at).toLocaleTimeString([], {
                       timeZone: timezone,
                       hour: "2-digit",

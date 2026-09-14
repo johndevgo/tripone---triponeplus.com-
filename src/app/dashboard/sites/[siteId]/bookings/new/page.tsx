@@ -6,7 +6,7 @@ import { oneRelation } from "@/lib/operations/relations";
 import { createBooking } from "../../operations-actions";
 import { Feedback } from "../page";
 const input =
-  "mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.055] px-3 outline-none focus:border-[#FFC857]/70";
+  "mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.055] px-3 outline-none focus:border-[#95EE8E]/70";
 export default async function NewBookingPage({
   params,
   searchParams,
@@ -240,7 +240,7 @@ export default async function NewBookingPage({
             <Area label="Internal notes" name="internalNotes" />
           </div>
         </Panel>
-        <button className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#F5A623] px-6 font-semibold text-[#173028]">
+        <button className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#5BCD57] px-6 font-semibold text-[#173028]">
           <CalendarPlus />
           Create booking
         </button>

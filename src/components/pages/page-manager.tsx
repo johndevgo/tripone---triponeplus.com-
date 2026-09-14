@@ -27,7 +27,7 @@ type SiteTemplate = {
   version: number;
 };
 const input =
-  "min-h-10 rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#FFC857]";
+  "min-h-10 rounded-xl border border-white/10 bg-white/[.05] px-3 text-sm outline-none focus:border-[#95EE8E]";
 
 export function PageManager({
   siteId,
@@ -68,7 +68,7 @@ export function PageManager({
               return result;
             })
           }
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028] disabled:opacity-40"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028] disabled:opacity-40"
         >
           <Plus size={16} /> Add page
         </button>
@@ -91,7 +91,7 @@ export function PageManager({
       </div>
       <section className="pt-4">
         <div className="mb-4">
-          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#FFC857]">
+          <p className="text-xs font-medium uppercase tracking-[0.16em] text-[#95EE8E]">
             Dynamic pages
           </p>
           <h2 className="mt-2 text-xl font-semibold">
@@ -201,7 +201,7 @@ function PageCard({
                 }),
               )
             }
-            className="grid size-10 place-items-center rounded-xl bg-[#F5A623] text-[#173028]"
+            className="grid size-10 place-items-center rounded-xl bg-[#5BCD57] text-[#173028]"
           >
             <Save size={16} />
           </button>

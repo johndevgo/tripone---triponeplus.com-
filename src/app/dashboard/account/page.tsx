@@ -35,9 +35,9 @@ export default async function Account({
           Back to dashboard
         </Link>
         <div className="mt-7 flex items-center gap-3">
-          <UserCircle className="text-[#ffc857]" />
+          <UserCircle className="text-[#95ee8e]" />
           <div>
-            <p className="text-sm text-[#ffc857]">Your account</p>
+            <p className="text-sm text-[#95ee8e]">Your account</p>
             <h1 className="text-3xl font-semibold">Profile & security</h1>
           </div>
         </div>
@@ -65,7 +65,7 @@ export default async function Account({
                 name="marketingConsent"
                 type="checkbox"
                 defaultChecked={profile?.marketing_consent ?? false}
-                className="mt-1 size-4 accent-[#f5a623]"
+                className="mt-1 size-4 accent-[#5bcd57]"
               />
               Email me useful product updates and account reminders. You can
               turn this off at any time.
@@ -87,7 +87,7 @@ export default async function Account({
                 className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.04] px-3 text-white/45"
               />
             </label>
-            <button className="min-h-11 justify-self-start rounded-xl bg-[#f5a623] px-5 font-semibold text-[#173028]">
+            <button className="min-h-11 justify-self-start rounded-xl bg-[#5bcd57] px-5 font-semibold text-[#173028]">
               Save profile
             </button>
           </form>

@@ -127,7 +127,7 @@ export default function Features() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#041c16]/90 via-transparent to-transparent" />
           <div className="glass absolute inset-x-5 bottom-5 rounded-2xl p-5 sm:inset-x-auto sm:bottom-7 sm:left-7 sm:max-w-sm">
-            <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#ffc857]">
+            <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#95ee8e]">
               Structured from the start
             </p>
             <p className="mt-2 text-lg font-semibold">
@@ -194,7 +194,7 @@ export default function Features() {
               "Draft preview before immutable publishing",
             ].map((item) => (
               <li key={item} className="flex items-center gap-3">
-                <Check size={17} className="text-[#ffc857]" /> {item}
+                <Check size={17} className="text-[#95ee8e]" /> {item}
               </li>
             ))}
           </ul>

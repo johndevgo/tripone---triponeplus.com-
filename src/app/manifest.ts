@@ -7,10 +7,10 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     display: "standalone",
     background_color: "#041c16",
-    theme_color: "#063d2e",
+    theme_color: "#075718",
     icons: [
       {
-        src: "/images/logo annd branding/tripone 1isto1 photo logo .png",
+        src: "/images/logo annd branding/tripone 1 isto 1 logo no background.png",
         sizes: "310x301",
         type: "image/png",
         purpose: "any",

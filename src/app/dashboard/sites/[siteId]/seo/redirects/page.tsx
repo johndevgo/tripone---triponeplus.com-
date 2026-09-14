@@ -66,7 +66,7 @@ export default async function Redirects({
               <option value="302">302</option>
             </select>
           </label>
-          <button className="min-h-11 rounded-xl bg-[#f5a623] px-5 font-semibold text-[#173028]">
+          <button className="min-h-11 rounded-xl bg-[#5bcd57] px-5 font-semibold text-[#173028]">
             Add
           </button>
         </form>

@@ -94,7 +94,7 @@ export default async function BookingDetail({
       </Link>
       <div className="mt-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-sm font-medium text-[#FFC857]">
+          <p className="text-sm font-medium text-[#95EE8E]">
             {booking.reference}
           </p>
           <h1 className="mt-2 text-3xl font-semibold">{name}</h1>
@@ -119,7 +119,7 @@ export default async function BookingDetail({
               </option>
             ))}
           </select>
-          <button className="rounded-xl bg-[#F5A623] px-4 font-semibold text-[#173028]">
+          <button className="rounded-xl bg-[#5BCD57] px-4 font-semibold text-[#173028]">
             Update status
           </button>
           <input
@@ -205,7 +205,7 @@ export default async function BookingDetail({
                   rows={3}
                   defaultValue={addOns.join("\n")}
                   placeholder="One add-on per line"
-                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#FFC857]/70"
+                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#95EE8E]/70"
                 />
               </label>
               <label className="text-sm sm:col-span-2">
@@ -219,7 +219,7 @@ export default async function BookingDetail({
                       ? details.requirements
                       : ""
                   }
-                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#FFC857]/70"
+                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#95EE8E]/70"
                 />
               </label>
               <label className="text-sm sm:col-span-2">
@@ -229,7 +229,7 @@ export default async function BookingDetail({
                   rows={3}
                   maxLength={5000}
                   defaultValue={booking.customer_notes}
-                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#FFC857]/70"
+                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#95EE8E]/70"
                 />
               </label>
               <label className="text-sm sm:col-span-2">
@@ -239,10 +239,10 @@ export default async function BookingDetail({
                   rows={3}
                   maxLength={3000}
                   placeholder="Appended to the private booking notes"
-                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#FFC857]/70"
+                  className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 py-3 outline-none focus:border-[#95EE8E]/70"
                 />
               </label>
-              <button className="min-h-11 rounded-xl border border-[#FFC857]/35 px-4 text-sm font-semibold text-[#FFC857] transition hover:bg-[#FFC857]/10 sm:col-span-2">
+              <button className="min-h-11 rounded-xl border border-[#95EE8E]/35 px-4 text-sm font-semibold text-[#95EE8E] transition hover:bg-[#95EE8E]/10 sm:col-span-2">
                 Save booking details
               </button>
             </form>
@@ -335,7 +335,7 @@ export default async function BookingDetail({
             {[...(booking.booking_activities ?? [])]
               .sort((a, b) => b.created_at.localeCompare(a.created_at))
               .map((item) => (
-                <li key={item.id} className="border-l border-[#FFC857]/40 pl-4">
+                <li key={item.id} className="border-l border-[#95EE8E]/40 pl-4">
                   <p className="text-sm font-medium">{pretty(item.action)}</p>
                   <p className="mt-1 text-xs text-white/35">
                     {new Date(item.created_at).toLocaleString()}
@@ -362,7 +362,7 @@ function Panel({
 }) {
   return (
     <section className="glass rounded-3xl p-6">
-      <div className="flex items-center gap-3 text-[#FFC857]">
+      <div className="flex items-center gap-3 text-[#95EE8E]">
         {icon}
         <h2 className="font-semibold text-white">{title}</h2>
       </div>
@@ -400,7 +400,7 @@ function EditField({
         step={step}
         maxLength={maxLength}
         defaultValue={value}
-        className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 outline-none focus:border-[#FFC857]/70"
+        className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-white/[.05] px-3 outline-none focus:border-[#95EE8E]/70"
       />
     </label>
   );

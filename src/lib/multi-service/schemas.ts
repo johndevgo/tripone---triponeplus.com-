@@ -14,7 +14,10 @@ const optionalUrl = z.union([z.literal(""), z.url()]);
 export const capabilitiesFormSchema = z
   .object({
     businessId: z.uuid(),
-    capabilities: z.array(z.enum(businessCapabilities)).min(1).max(12),
+    capabilities: z
+      .array(z.enum(businessCapabilities))
+      .min(1)
+      .max(businessCapabilities.length),
     primaryCapability: z.enum(businessCapabilities),
   })
   .refine((value) => value.capabilities.includes(value.primaryCapability), {

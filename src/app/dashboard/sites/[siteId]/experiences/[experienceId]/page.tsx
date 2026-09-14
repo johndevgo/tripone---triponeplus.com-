@@ -43,7 +43,7 @@ export default async function EditExperience({
         <h1 className="text-3xl font-semibold">Edit {experience.name}</h1>
         <Link
           href={`/admin/website?target=${experience.id}`}
-          className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#FFC857]/25 bg-[#FFC857]/[.06] px-4 text-sm font-medium text-[#FFC857]"
+          className="inline-flex min-h-11 items-center justify-center rounded-xl border border-[#95EE8E]/25 bg-[#95EE8E]/[.06] px-4 text-sm font-medium text-[#95EE8E]"
         >
           Customize page layout
         </Link>

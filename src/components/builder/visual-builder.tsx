@@ -83,6 +83,7 @@ type Props = {
     navigation: unknown;
     footer_settings: unknown;
     global_settings: unknown;
+    cro_settings?: unknown;
   };
   business: {
     name: string;
@@ -92,6 +93,11 @@ type Props = {
     whatsapp: string | null;
     email: string;
     logo_url: string | null;
+    address?: string | null;
+    instagram_url?: string | null;
+    facebook_url?: string | null;
+    youtube_url?: string | null;
+    tripadvisor_url?: string | null;
   };
   pages: BuilderPage[];
   experiences: PublicExperience[];
@@ -103,7 +109,7 @@ type Props = {
 
 const panel = "border-white/10 bg-[#07271f]/95 backdrop-blur-xl";
 const input =
-  "mt-2 min-h-10 w-full rounded-xl border border-white/12 bg-white/[.06] px-3 text-sm text-white outline-none transition focus:border-[#FFC857]";
+  "mt-2 min-h-10 w-full rounded-xl border border-white/12 bg-white/[.06] px-3 text-sm text-white outline-none transition focus:border-[#95EE8E]";
 
 export function VisualBuilder({
   site,
@@ -418,7 +424,7 @@ export function VisualBuilder({
                 key={item}
                 onClick={() => setDevice(item)}
                 aria-label={`${item} preview`}
-                className={`grid size-8 place-items-center rounded-lg ${device === item ? "bg-[#F5A623] text-[#173028]" : "text-white/50"}`}
+                className={`grid size-8 place-items-center rounded-lg ${device === item ? "bg-[#5BCD57] text-[#173028]" : "text-white/50"}`}
               >
                 <Icon size={16} />
               </button>
@@ -426,12 +432,12 @@ export function VisualBuilder({
           })}
         </div>
         {activePage.editorKind === "template" ? (
-          <span className="rounded-xl border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]">
+          <span className="rounded-xl border border-[#95EE8E]/20 px-3 py-2 text-xs text-[#95EE8E]">
             Global {activePage.templateKind?.replaceAll("_", " ")} template
           </span>
         ) : activePage.editorKind === "record" ? (
           <div className="flex items-center gap-2">
-            <span className="rounded-xl border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]">
+            <span className="rounded-xl border border-[#95EE8E]/20 px-3 py-2 text-xs text-[#95EE8E]">
               {recordOverrides[activePage.id]
                 ? "Custom record layout"
                 : "Inheriting shared template"}
@@ -464,7 +470,7 @@ export function VisualBuilder({
         )}
         <button
           onClick={() => setPublishOpen(true)}
-          className="min-h-10 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+          className="min-h-10 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
         >
           Publish changes
         </button>
@@ -476,7 +482,7 @@ export function VisualBuilder({
             <h2 className="text-sm font-semibold">Sections</h2>
             <button
               onClick={() => setLibraryOpen(true)}
-              className="grid size-9 place-items-center rounded-xl bg-[#F5A623] text-[#173028]"
+              className="grid size-9 place-items-center rounded-xl bg-[#5BCD57] text-[#173028]"
               aria-label="Add section"
             >
               <Plus size={17} />
@@ -606,7 +612,7 @@ export function VisualBuilder({
             <button
               disabled={publishing}
               onClick={publish}
-              className="min-h-10 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028] disabled:opacity-50"
+              className="min-h-10 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028] disabled:opacity-50"
             >
               {publishing ? "Publishing…" : "Publish now"}
             </button>
@@ -636,7 +642,7 @@ function SortableRow({
     <div
       ref={sortable.setNodeRef}
       style={{ transform, transition: sortable.transition }}
-      className={`flex items-center rounded-xl border ${selected ? "border-[#F5A623] bg-[#F5A623]/10" : "border-white/10 bg-white/[.04]"}`}
+      className={`flex items-center rounded-xl border ${selected ? "border-[#5BCD57] bg-[#5BCD57]/10" : "border-white/10 bg-white/[.04]"}`}
     >
       <button
         {...sortable.attributes}
@@ -681,7 +687,7 @@ function Inspector({
       : "";
   return (
     <div>
-      <p className="text-xs font-semibold uppercase tracking-widest text-[#FFC857]">
+      <p className="text-xs font-semibold uppercase tracking-widest text-[#95EE8E]">
         Inspector
       </p>
       <h2 className="mt-2 text-xl font-semibold">{definition.label}</h2>
@@ -735,7 +741,42 @@ function Inspector({
                 />
               </label>
             ))}
+            <label className="text-xs text-white/60">
+              Image overlay ({Number(section.settings.overlay ?? 45)}%)
+              <input
+                type="range"
+                min="0"
+                max="90"
+                value={Number(section.settings.overlay ?? 45)}
+                onChange={(event) =>
+                  patch({ settings: { overlay: Number(event.target.value) } })
+                }
+                className="mt-2 w-full accent-[var(--brand-500)]"
+              />
+            </label>
+            <label className="text-xs text-white/60">
+              Hero height
+              <select
+                value={value("height") || "tall"}
+                onChange={(event) =>
+                  patch({ settings: { height: event.target.value } })
+                }
+                className={input}
+              >
+                {["compact", "standard", "tall", "screen"].map((item) => (
+                  <option className="text-black" value={item} key={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </label>
           </>
+        )}
+        {Array.isArray(section.settings.items) && (
+          <ItemsEditor
+            items={section.settings.items}
+            onChange={(items) => patch({ settings: { items } })}
+          />
         )}
         <label className="text-xs text-white/60">
           Variant
@@ -762,6 +803,22 @@ function Inspector({
           >
             <option className="text-black">left</option>
             <option className="text-black">center</option>
+          </select>
+        </label>
+        <label className="text-xs text-white/60">
+          Background
+          <select
+            value={value("backgroundStyle") || "default"}
+            onChange={(event) =>
+              patch({ settings: { backgroundStyle: event.target.value } })
+            }
+            className={input}
+          >
+            {["default", "surface", "primary", "accent"].map((item) => (
+              <option className="text-black" value={item} key={item}>
+                {item}
+              </option>
+            ))}
           </select>
         </label>
         <label className="text-xs text-white/60">
@@ -813,12 +870,91 @@ function Inspector({
         </button>
         <button
           onClick={() => saveReusable("linked")}
-          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-[#FFC857]/30 text-xs text-[#FFC857]"
+          className="inline-flex min-h-10 items-center justify-center gap-2 rounded-xl border border-[#95EE8E]/30 text-xs text-[#95EE8E]"
         >
           <BookmarkPlus size={15} /> Save linked
         </button>
       </div>
     </div>
+  );
+}
+
+function ItemsEditor({
+  items,
+  onChange,
+}: {
+  items: unknown[];
+  onChange: (items: Array<Record<string, unknown>>) => void;
+}) {
+  const normalized = items.map((item) =>
+    item && typeof item === "object" && !Array.isArray(item)
+      ? (item as Record<string, unknown>)
+      : { title: String(item ?? "") },
+  );
+  const update = (index: number, key: string, value: string) =>
+    onChange(
+      normalized.map((item, itemIndex) =>
+        itemIndex === index ? { ...item, [key]: value } : item,
+      ),
+    );
+  return (
+    <fieldset className="grid gap-3 rounded-2xl border border-white/10 bg-white/[.025] p-3">
+      <legend className="px-1 text-xs font-semibold text-white/70">
+        Section items
+      </legend>
+      {normalized.map((item, index) => {
+        const keys = Object.keys(item).filter((key) =>
+          ["title", "description", "question", "answer", "label"].includes(key),
+        );
+        return (
+          <div
+            className="grid gap-2 rounded-xl border border-white/8 p-3"
+            key={index}
+          >
+            {keys.map((key) => (
+              <label className="text-[11px] capitalize text-white/45" key={key}>
+                {key}
+                {key === "description" || key === "answer" ? (
+                  <textarea
+                    rows={3}
+                    value={String(item[key] ?? "")}
+                    onChange={(event) => update(index, key, event.target.value)}
+                    className={`${input} py-2`}
+                  />
+                ) : (
+                  <input
+                    value={String(item[key] ?? "")}
+                    onChange={(event) => update(index, key, event.target.value)}
+                    className={input}
+                  />
+                )}
+              </label>
+            ))}
+            <button
+              type="button"
+              onClick={() => onChange(normalized.filter((_, i) => i !== index))}
+              className="justify-self-end text-xs text-red-200/80"
+            >
+              Remove item
+            </button>
+          </div>
+        );
+      })}
+      <button
+        type="button"
+        onClick={() =>
+          onChange([
+            ...normalized,
+            normalized[0] && "question" in normalized[0]
+              ? { question: "New question", answer: "Add an accurate answer." }
+              : { title: "New item", description: "Add useful details." },
+          ])
+        }
+        className="min-h-10 rounded-xl border border-white/10 text-xs font-semibold text-white/65 hover:bg-white/[.06]"
+      >
+        + Add item
+      </button>
+    </fieldset>
   );
 }
 
@@ -855,12 +991,12 @@ function SectionLibrary({
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           placeholder="Search sections"
-          className="min-h-11 w-full rounded-xl border border-white/10 bg-white/[.06] pl-10 pr-3 outline-none focus:border-[#FFC857]"
+          className="min-h-11 w-full rounded-xl border border-white/10 bg-white/[.06] pl-10 pr-3 outline-none focus:border-[#95EE8E]"
         />
       </label>
       {savedSections.length > 0 && (
         <div className="mt-5">
-          <p className="text-xs font-semibold uppercase tracking-wider text-[#FFC857]">
+          <p className="text-xs font-semibold uppercase tracking-wider text-[#95EE8E]">
             Saved sections
           </p>
           <div className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -868,7 +1004,7 @@ function SectionLibrary({
               <button
                 key={saved.id}
                 onClick={() => addSaved(saved)}
-                className="rounded-xl border border-[#FFC857]/20 bg-[#FFC857]/[.05] p-3 text-left"
+                className="rounded-xl border border-[#95EE8E]/20 bg-[#95EE8E]/[.05] p-3 text-left"
               >
                 <span className="block text-sm font-medium">{saved.name}</span>
                 <span className="mt-1 block text-[11px] text-white/35">
@@ -884,9 +1020,9 @@ function SectionLibrary({
           <button
             onClick={() => add(type as keyof typeof sectionRegistry)}
             key={type}
-            className="rounded-2xl border border-white/10 bg-white/[.04] p-4 text-left transition hover:border-[#FFC857]/60 hover:bg-white/[.07]"
+            className="rounded-2xl border border-white/10 bg-white/[.04] p-4 text-left transition hover:border-[#95EE8E]/60 hover:bg-white/[.07]"
           >
-            <span className="text-xs text-[#FFC857]">{item.category}</span>
+            <span className="text-xs text-[#95EE8E]">{item.category}</span>
             <span className="mt-2 block font-semibold">{item.label}</span>
             <span className="mt-1 block text-xs leading-5 text-white/40">
               {item.description}

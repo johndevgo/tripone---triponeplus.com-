@@ -87,7 +87,7 @@ export default async function Locations({
               label="SEO description"
               value={text(object(editing?.seo_settings).description)}
             />
-            <button className="min-h-11 rounded-xl bg-[#f5a623] font-semibold text-[#173028]">
+            <button className="min-h-11 rounded-xl bg-[#5bcd57] font-semibold text-[#173028]">
               Save location
             </button>
           </form>
@@ -122,7 +122,7 @@ export default async function Locations({
                     <div className="flex gap-2">
                       <Link
                         href={`/admin/website?target=${item.id}`}
-                        className="rounded-lg border border-[#FFC857]/20 px-3 py-2 text-xs text-[#FFC857]"
+                        className="rounded-lg border border-[#95EE8E]/20 px-3 py-2 text-xs text-[#95EE8E]"
                       >
                         Layout
                       </Link>

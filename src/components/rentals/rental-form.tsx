@@ -5,7 +5,7 @@ import { rentalProductTypes } from "@/lib/types";
 
 type Row = Record<string, unknown>;
 const fieldClass =
-  "mt-2 min-h-11 w-full rounded-xl border border-white/15 bg-white/[.06] px-3.5 text-white outline-none focus:border-[#FFC857]";
+  "mt-2 min-h-11 w-full rounded-xl border border-white/15 bg-white/[.06] px-3.5 text-white outline-none focus:border-[#95EE8E]";
 
 export function RentalForm({
   siteId,
@@ -326,7 +326,7 @@ export function RentalForm({
         >
           Cancel
         </Link>
-        <button className="min-h-11 rounded-xl bg-[#F5A623] px-6 text-sm font-semibold text-[#173028]">
+        <button className="min-h-11 rounded-xl bg-[#5BCD57] px-6 text-sm font-semibold text-[#173028]">
           Save rental
         </button>
       </div>

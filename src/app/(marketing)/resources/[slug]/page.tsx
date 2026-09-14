@@ -155,7 +155,7 @@ export default async function ResourceArticlePage({ params }: Props) {
         <div className="mx-auto mt-16 grid max-w-6xl gap-12 lg:grid-cols-[15rem_minmax(0,1fr)]">
           <aside className="lg:sticky lg:top-28 lg:self-start">
             <div className="rounded-2xl border border-white/10 bg-white/[.045] p-5">
-              <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#ffc857]">
+              <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#95ee8e]">
                 In this guide
               </p>
               <nav aria-label="Article sections" className="mt-4 grid gap-3">
@@ -181,7 +181,7 @@ export default async function ResourceArticlePage({ params }: Props) {
                     key={takeaway}
                     className="flex gap-3 leading-7 text-white/70"
                   >
-                    <Check className="mt-1 shrink-0 text-[#ffc857]" size={18} />
+                    <Check className="mt-1 shrink-0 text-[#95ee8e]" size={18} />
                     {takeaway}
                   </li>
                 ))}
@@ -260,7 +260,7 @@ export default async function ResourceArticlePage({ params }: Props) {
           </div>
           <Link
             href="/resources"
-            className="hidden items-center gap-2 text-sm font-semibold text-[#ffc857] sm:flex"
+            className="hidden items-center gap-2 text-sm font-semibold text-[#95ee8e] sm:flex"
           >
             View all <ArrowRight size={16} />
           </Link>

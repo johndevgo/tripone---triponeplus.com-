@@ -35,7 +35,7 @@ export default async function CustomersPage({
         action={
           <a
             href="#add-customer"
-            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#F5A623] px-4 text-sm font-semibold text-[#173028]"
+            className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-4 text-sm font-semibold text-[#173028]"
           >
             <Plus size={16} />
             Add customer
@@ -74,7 +74,7 @@ export default async function CustomersPage({
               <Link
                 key={customer.id}
                 href={`/admin/customers/${customer.id}`}
-                className="glass grid gap-3 rounded-2xl p-5 hover:border-[#FFC857]/40 md:grid-cols-[1fr_180px_160px] md:items-center"
+                className="glass grid gap-3 rounded-2xl p-5 hover:border-[#95EE8E]/40 md:grid-cols-[1fr_180px_160px] md:items-center"
               >
                 <div className="flex items-center gap-3">
                   <span className="grid size-10 place-items-center rounded-xl bg-emerald-300/10 text-emerald-200">
@@ -140,7 +140,7 @@ export default async function CustomersPage({
               className={`${input} mt-2 w-full py-3`}
             />
           </label>
-          <button className="min-h-11 rounded-xl bg-[#F5A623] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
+          <button className="min-h-11 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028] sm:col-span-2 lg:col-span-3">
             Save customer
           </button>
         </form>

@@ -13,6 +13,10 @@ import { createClient } from "@/lib/supabase/server";
 
 const identifiers = z.object({ siteId: z.uuid(), domainId: z.uuid() });
 
+const domainUpdateIdentifiers = identifiers.extend({
+  hostname: hostnameSchema,
+});
+
 export async function addDomain(formData: FormData) {
   const site = z.uuid().safeParse(formData.get("siteId"));
   if (!site.success) failAtAdmin("Invalid website request.");
@@ -127,6 +131,60 @@ export async function setPrimaryDomain(formData: FormData) {
   );
 }
 
+export async function updateDomain(formData: FormData) {
+  const parsed = domainUpdateIdentifiers.safeParse(
+    Object.fromEntries(formData),
+  );
+  if (!parsed.success) failAtAdmin("Invalid domain update request.");
+  const { siteId, domainId, hostname } = parsed.data;
+  const supabase = await createClient();
+  const { data: domain } = await supabase
+    .from("domains")
+    .select("hostname,domain_type")
+    .eq("id", domainId)
+    .eq("site_id", siteId)
+    .single();
+  if (!domain || domain.domain_type !== "custom")
+    fail(siteId, "Custom domain not found.");
+  if (domain.hostname === hostname)
+    redirect(
+      `/dashboard/sites/${siteId}/domains?message=No%20changes%20needed`,
+    );
+
+  let provider: Awaited<ReturnType<typeof addProviderDomain>>;
+  try {
+    provider = await addProviderDomain(hostname);
+  } catch (cause) {
+    fail(siteId, safeMessage(cause));
+  }
+  const { error } = await supabase
+    .from("domains")
+    .update({
+      hostname,
+      provider_data: provider,
+      verification_status: provider.verified ? "verified" : "pending",
+      verified_at: provider.verified ? new Date().toISOString() : null,
+      last_checked_at: new Date().toISOString(),
+      last_error: provider.verified
+        ? null
+        : "DNS configuration is still pending.",
+    })
+    .eq("id", domainId)
+    .eq("site_id", siteId);
+  if (error) {
+    await removeProviderDomain(hostname).catch(() => undefined);
+    fail(
+      siteId,
+      error.code === "23505"
+        ? "That hostname is already connected."
+        : error.message,
+    );
+  }
+  await removeProviderDomain(domain.hostname).catch(() => undefined);
+  revalidatePath(`/dashboard/sites/${siteId}/domains`);
+  redirect(`/dashboard/sites/${siteId}/domains?message=Domain%20updated`);
+}
+
 export async function deleteDomain(formData: FormData) {
   const { siteId, domainId } = parseIdentifiers(formData);
   const supabase = await createClient();
@@ -136,8 +194,8 @@ export async function deleteDomain(formData: FormData) {
     .eq("id", domainId)
     .eq("site_id", siteId)
     .single();
-  if (!domain || domain.domain_type === "subdomain" || domain.is_primary)
-    fail(siteId, "The fallback or primary domain cannot be removed.");
+  if (!domain || domain.domain_type === "subdomain")
+    fail(siteId, "The hosted fallback address cannot be removed.");
   try {
     await removeProviderDomain(domain.hostname);
   } catch (cause) {
@@ -149,6 +207,22 @@ export async function deleteDomain(formData: FormData) {
     .eq("id", domainId)
     .eq("site_id", siteId);
   if (error) fail(siteId, error.message);
+  if (domain.is_primary) {
+    const { data: replacement } = await supabase
+      .from("domains")
+      .select("id")
+      .eq("site_id", siteId)
+      .eq("domain_type", "custom")
+      .eq("verification_status", "verified")
+      .neq("id", domainId)
+      .order("created_at")
+      .limit(1)
+      .maybeSingle();
+    if (replacement)
+      await supabase.rpc("set_primary_domain", {
+        target_domain: replacement.id,
+      });
+  }
   revalidatePath(`/dashboard/sites/${siteId}/domains`);
   redirect(`/dashboard/sites/${siteId}/domains?message=Domain%20removed`);
 }

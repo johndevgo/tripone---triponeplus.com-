@@ -141,7 +141,7 @@ export default function GrowthServicesPage() {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#041c16] via-[#041c16]/15 to-transparent" />
           <div className="glass absolute inset-x-5 bottom-5 rounded-2xl p-5 sm:inset-x-auto sm:bottom-7 sm:left-7 sm:max-w-md">
-            <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#ffc857]">
+            <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#95ee8e]">
               One commercial system
             </p>
             <p className="mt-2 text-lg font-semibold">
@@ -183,7 +183,7 @@ export default function GrowthServicesPage() {
 
       <section className="mt-24 grid gap-6 lg:grid-cols-2">
         <article className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[.055] p-8 sm:p-10">
-          <p className="text-xs font-semibold uppercase tracking-[.17em] text-[#ffc857]">
+          <p className="text-xs font-semibold uppercase tracking-[.17em] text-[#95ee8e]">
             Self-service platform
           </p>
           <h2 className="mt-5 text-3xl font-semibold">
@@ -201,7 +201,7 @@ export default function GrowthServicesPage() {
               "No card required to start",
             ].map((item) => (
               <li key={item} className="flex items-center gap-3">
-                <Check size={17} className="text-[#ffc857]" /> {item}
+                <Check size={17} className="text-[#95ee8e]" /> {item}
               </li>
             ))}
           </ul>
@@ -215,14 +215,14 @@ export default function GrowthServicesPage() {
         <article className="relative overflow-hidden rounded-[2rem] border border-emerald-300/15 bg-[linear-gradient(145deg,rgba(8,122,90,.32),rgba(255,200,87,.08))] p-8 sm:p-10">
           <div className="relative h-16 w-full max-w-[21rem] overflow-hidden rounded-xl bg-white">
             <Image
-              src="/images/logo annd branding/tripone wide logo.png"
+              src="/images/logo annd branding/tripone wide logo no background.png"
               alt="TripOne+"
               fill
               sizes="336px"
               className="object-contain p-2"
             />
           </div>
-          <p className="mt-7 text-xs font-semibold uppercase tracking-[.17em] text-[#ffc857]">
+          <p className="mt-7 text-xs font-semibold uppercase tracking-[.17em] text-[#95ee8e]">
             Human-led growth studio
           </p>
           <h2 className="mt-5 text-3xl font-semibold">
@@ -260,7 +260,7 @@ export default function GrowthServicesPage() {
         </div>
         <p className="mt-8 text-center text-sm text-white/45">
           Prefer to explore first? Visit the{" "}
-          <Link href="/resources" className="text-[#ffc857] hover:text-white">
+          <Link href="/resources" className="text-[#95ee8e] hover:text-white">
             tourism resource library
           </Link>
           .
