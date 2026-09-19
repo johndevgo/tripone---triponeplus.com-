@@ -2,6 +2,7 @@ import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import { AdvancedScriptsEditor } from "@/components/settings/advanced-scripts-editor";
 import { supportedTimeZones } from "@/lib/timezones";
+import { FormSubmitButton } from "@/components/ui/form-submit-button";
 import { publishSite } from "../actions";
 import { PageHead } from "../experiences/page";
 import {
@@ -49,11 +50,14 @@ export default async function Settings({
           </Link>
           <form action={publishSite}>
             <input type="hidden" name="siteId" value={siteId} />
-            <button className="min-h-11 rounded-xl bg-[#5bcd57] px-5 text-sm font-semibold text-[#173028]">
+            <FormSubmitButton
+              pendingLabel="Publishing…"
+              className="min-h-11 rounded-xl bg-[#5bcd57] px-5 text-sm font-semibold text-[#173028]"
+            >
               {site.status === "published"
                 ? "Publish updates"
                 : "Publish website"}
-            </button>
+            </FormSubmitButton>
           </form>
         </div>
       </div>
@@ -65,6 +69,22 @@ export default async function Settings({
           {notice.error ?? notice.message}
         </p>
       )}
+      <div className="glass mt-6 flex flex-col gap-3 rounded-2xl p-4 text-sm sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-medium text-white">
+            Settings save to your working draft
+          </p>
+          <p className="mt-1 text-xs leading-5 text-white/45">
+            Preview confirms the draft immediately. Use Publish updates to send
+            saved changes to the live website.
+          </p>
+        </div>
+        <span className="w-fit rounded-full border border-[var(--brand-300)]/20 bg-[var(--brand-300)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--brand-100)]">
+          {site.status === "published"
+            ? "Live site · draft changes"
+            : "Draft only"}
+        </span>
+      </div>
       <form action={saveSettings} className="mt-8 grid gap-5">
         <input type="hidden" name="siteId" value={siteId} />
         <SettingsSection
@@ -224,6 +244,24 @@ export default async function Settings({
           title="Privacy & integrations"
           copy="Prefer controlled provider IDs. Advanced code is isolated to a verified customer origin."
         >
+          <div className="flex flex-wrap gap-2 text-xs">
+            <StatusPill
+              active={Boolean(text(integrations.googleTagManagerId))}
+              label="Google Tag Manager"
+            />
+            <StatusPill
+              active={Boolean(text(integrations.googleAnalyticsId))}
+              label="Google Analytics"
+            />
+            <StatusPill
+              active={Boolean(text(integrations.metaPixelId))}
+              label="Meta Pixel"
+            />
+            <StatusPill
+              active={Boolean(text(integrations.tiktokPixelId))}
+              label="TikTok Pixel"
+            />
+          </div>
           <label className="text-sm">
             Cookie consent mode
             <select
@@ -297,9 +335,12 @@ export default async function Settings({
           </div>
           <AdvancedScriptsEditor initial={integrations.advancedScripts} />
         </SettingsSection>
-        <button className="min-h-12 justify-self-start rounded-xl bg-[#5bcd57] px-6 font-semibold text-[#173028]">
+        <FormSubmitButton
+          pendingLabel="Saving settings…"
+          className="min-h-12 justify-self-start rounded-xl bg-[#5bcd57] px-6 font-semibold text-[#173028]"
+        >
           Save settings
-        </button>
+        </FormSubmitButton>
       </form>
       <section className="mt-8 rounded-3xl border border-red-300/15 bg-red-950/10 p-6">
         <h2 className="text-xl font-semibold text-red-100">Danger zone</h2>
@@ -433,6 +474,19 @@ function DangerButton({ children }: { children: React.ReactNode }) {
     <button className="mt-3 min-h-10 rounded-lg border border-red-300/25 px-4 text-sm text-red-100">
       {children}
     </button>
+  );
+}
+function StatusPill({ active, label }: { active: boolean; label: string }) {
+  return (
+    <span
+      className={`rounded-full border px-3 py-1.5 ${
+        active
+          ? "border-[var(--brand-300)]/25 bg-[var(--brand-300)]/10 text-[var(--brand-100)]"
+          : "border-white/10 bg-black/10 text-white/40"
+      }`}
+    >
+      {label}: {active ? "configured" : "not configured"}
+    </span>
   );
 }
 function object(value: unknown): Record<string, unknown> {

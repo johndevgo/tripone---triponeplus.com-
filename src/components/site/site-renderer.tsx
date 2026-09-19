@@ -431,6 +431,8 @@ export function SiteRenderer({
           rental={activeRental}
           siteId={site.id}
           basePath={basePath}
+          globalSettings={global}
+          croSettings={cro}
           preview={Boolean(preview || editor)}
           departures={departures.filter(
             (departure) => departure.rental_product_id === activeRental.id,
@@ -442,6 +444,8 @@ export function SiteRenderer({
           item={activePackage}
           siteId={site.id}
           basePath={basePath}
+          globalSettings={global}
+          croSettings={cro}
           preview={Boolean(preview || editor)}
           departures={departures.filter(
             (departure) => departure.package_id === activePackage.id,
@@ -581,12 +585,16 @@ function RentalDetail({
   rental,
   siteId,
   basePath,
+  globalSettings,
+  croSettings,
   departures,
   preview = false,
 }: {
   rental: PublicRental;
   siteId: string;
   basePath: string;
+  globalSettings: Record<string, unknown>;
+  croSettings: Record<string, unknown>;
   departures: PublicDeparture[];
   preview?: boolean;
 }) {
@@ -599,7 +607,14 @@ function RentalDetail({
           typeof (item as { value?: unknown }).value === "string",
       )
     : [];
-  const bookingHref = rental.booking_url || href(basePath, "/contact");
+  const configuredBookingUrl = text(globalSettings, "bookingUrl");
+  const bookingHref =
+    rental.booking_url || configuredBookingUrl || href(basePath, "/contact");
+  const externalBooking = Boolean(rental.booking_url || configuredBookingUrl);
+  const bookingTarget =
+    externalBooking && globalSettings.openBookingInNewTab === true
+      ? "_blank"
+      : undefined;
   return (
     <div data-rental-detail>
       {(rental.rates.length > 0 || rental.quote_only) && (
@@ -658,7 +673,10 @@ function RentalDetail({
           </div>
         </section>
       )}
-      <section className="bg-[var(--site-primary)] px-5 py-16 text-white">
+      <section
+        id="rental-booking-request"
+        className="scroll-mt-24 bg-[var(--site-primary)] px-5 py-16 text-white"
+      >
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="text-3xl font-semibold">Ask about {rental.name}</h2>
           <p className="mx-auto mt-3 max-w-xl text-white/65">
@@ -666,13 +684,13 @@ function RentalDetail({
             before booking.
           </p>
           <div className="mx-auto mt-8 max-w-xl text-left">
-            {rental.booking_url ? (
+            {externalBooking ? (
               <>
                 <a
                   href={bookingHref}
                   data-booking-link
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={bookingTarget}
+                  rel={bookingTarget ? "noopener noreferrer" : undefined}
                   className="site-primary-action flex min-h-12 items-center justify-center rounded-[calc(var(--site-radius)*.65)] bg-[var(--site-accent)] px-6 font-semibold text-[var(--site-text)]"
                 >
                   {rental.booking_button_label || "Request rental"}
@@ -704,6 +722,16 @@ function RentalDetail({
           </div>
         </div>
       </section>
+      {croSettings.stickyMobileCta !== false && (
+        <StickyBookingCta
+          href={externalBooking ? bookingHref : "#rental-booking-request"}
+          label={
+            rental.booking_button_label ||
+            text(croSettings, "defaultBookingCta", "Request rental")
+          }
+          target={bookingTarget}
+        />
+      )}
     </div>
   );
 }
@@ -1883,12 +1911,17 @@ function PackageCard({
 function PackageDetail({
   item,
   siteId,
+  basePath,
+  globalSettings,
+  croSettings,
   departures,
   preview = false,
 }: {
   item: PublicPackage;
   siteId: string;
   basePath: string;
+  globalSettings: Record<string, unknown>;
+  croSettings: Record<string, unknown>;
   departures: PublicDeparture[];
   preview?: boolean;
 }) {
@@ -1929,6 +1962,15 @@ function PackageDetail({
     (url, index, entries): url is string =>
       typeof url === "string" && Boolean(url) && entries.indexOf(url) === index,
   );
+  const configuredBookingUrl = text(globalSettings, "bookingUrl");
+  const packageBookingUrl =
+    item.booking_mode === "external" && item.booking_url
+      ? item.booking_url
+      : configuredBookingUrl;
+  const bookingTarget =
+    packageBookingUrl && globalSettings.openBookingInNewTab === true
+      ? "_blank"
+      : undefined;
   return (
     <div className="border-t border-black/5" data-package-detail>
       {gallery.length > 0 && (
@@ -1993,7 +2035,10 @@ function PackageDetail({
                 : "Flexible duration"}
             </p>
             <a
-              href="#booking-request"
+              href={packageBookingUrl || "#booking-request"}
+              data-booking-link
+              target={bookingTarget}
+              rel={bookingTarget ? "noopener noreferrer" : undefined}
               className="site-primary-action mt-6 flex min-h-12 items-center justify-center rounded-xl bg-[var(--site-accent)] font-semibold"
             >
               {item.booking_button_label}
@@ -2105,12 +2150,12 @@ function PackageDetail({
             availability.
           </p>
           <div className="mt-8">
-            {item.booking_mode === "external" && item.booking_url ? (
+            {packageBookingUrl ? (
               <a
-                href={item.booking_url}
+                href={packageBookingUrl}
                 data-booking-link
-                target="_blank"
-                rel="noopener noreferrer"
+                target={bookingTarget}
+                rel={bookingTarget ? "noopener noreferrer" : undefined}
                 className="site-primary-action flex min-h-12 items-center justify-center rounded-xl bg-[var(--site-accent)] font-semibold"
               >
                 {item.booking_button_label}
@@ -2134,6 +2179,41 @@ function PackageDetail({
           </div>
         </div>
       </section>
+      {croSettings.stickyMobileCta !== false && (
+        <StickyBookingCta
+          href={packageBookingUrl || href(basePath, "#booking-request")}
+          label={
+            item.booking_button_label ||
+            text(croSettings, "defaultBookingCta", "Request package")
+          }
+          target={bookingTarget}
+        />
+      )}
+    </div>
+  );
+}
+
+function StickyBookingCta({
+  href: bookingHref,
+  label,
+  target,
+}: {
+  href: string;
+  label: string;
+  target?: string;
+}) {
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-40 flex items-center justify-between gap-3 border-t border-black/10 bg-[var(--site-surface)]/95 px-4 py-3 shadow-2xl backdrop-blur md:hidden">
+      <span className="min-w-0 text-sm font-semibold">Ready to book?</span>
+      <a
+        href={bookingHref}
+        data-booking-link
+        target={target}
+        rel={target ? "noopener noreferrer" : undefined}
+        className="site-primary-action shrink-0 rounded-xl bg-[var(--site-accent)] px-5 py-3 text-sm font-semibold"
+      >
+        {label}
+      </a>
     </div>
   );
 }

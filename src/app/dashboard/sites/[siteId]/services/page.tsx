@@ -1,33 +1,8 @@
 import { notFound } from "next/navigation";
-import { BriefcaseBusiness, Check, Star } from "lucide-react";
 import { saveCapabilities } from "../multi-service-actions";
 import { createClient } from "@/lib/supabase/server";
-import { businessCapabilities, type BusinessCapability } from "@/lib/types";
-
-const labels: Record<BusinessCapability, string> = {
-  jetski: "Jet ski experiences",
-  boat_rental: "Boat rentals",
-  day_tour: "Day tours",
-  tour_operator: "Tour operator",
-  travel_agency: "Travel agency",
-  safari: "Safaris",
-  trekking: "Trekking",
-  hiking: "Hiking",
-  diving: "Diving",
-  snorkelling: "Snorkelling",
-  rafting: "Rafting",
-  atv_buggy: "ATV & buggy",
-  adventure_activity: "Adventure activities",
-  local_guide: "Local guide",
-  multi_day_tour: "Multi-day tours",
-  excursion: "Excursions",
-  water_sports: "Water sports",
-  motorcycle_tour: "Motorcycle tours",
-  motorcycle_rental: "Motorcycle rentals",
-  vehicle_rental: "Vehicle & jeep rentals",
-  equipment_rental: "Equipment rentals",
-  other: "Other tourism service",
-};
+import type { BusinessCapability } from "@/lib/types";
+import { ServiceLinesForm } from "@/components/settings/service-lines-form";
 
 export default async function ServicesPage({
   params,
@@ -79,59 +54,13 @@ export default async function ServicesPage({
           {feedback.error}
         </p>
       )}
-      <form action={saveCapabilities} className="mt-8">
-        <input type="hidden" name="siteId" value={siteId} />
-        <input type="hidden" name="businessId" value={site.business_id} />
-        <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-          {businessCapabilities.map((capability) => (
-            <label
-              key={capability}
-              className="glass group relative flex min-h-24 cursor-pointer items-start gap-3 rounded-2xl p-4 transition hover:border-[#95EE8E]/35 has-[:checked]:border-[#95EE8E]/60 has-[:checked]:bg-[#95EE8E]/[.08]"
-            >
-              <input
-                className="peer mt-1 size-4 accent-[#5BCD57]"
-                type="checkbox"
-                name="capabilities"
-                value={capability}
-                defaultChecked={selected.has(capability)}
-              />
-              <span>
-                <span className="block font-medium">{labels[capability]}</span>
-                <span className="mt-1 block text-xs text-white/40">
-                  Add this capability to page and content recommendations.
-                </span>
-              </span>
-              <Check
-                className="absolute right-3 top-3 hidden text-[#95EE8E] peer-checked:block"
-                size={16}
-              />
-            </label>
-          ))}
-        </div>
-        <div className="glass mt-6 rounded-2xl p-5">
-          <label className="text-sm text-white/70">
-            <span className="flex items-center gap-2 font-medium text-white">
-              <Star size={16} className="text-[#95EE8E]" /> Primary service
-            </span>
-            <select
-              name="primaryCapability"
-              defaultValue={primary}
-              className="mt-3 min-h-11 w-full max-w-md rounded-xl border border-white/15 bg-[#0b3027] px-3 outline-none focus:border-[#95EE8E]"
-            >
-              {businessCapabilities.map((capability) => (
-                <option key={capability} value={capability}>
-                  {labels[capability]}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div className="mt-6 flex justify-end">
-          <button className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-[#5BCD57] px-5 font-semibold text-[#173028]">
-            <BriefcaseBusiness size={18} /> Save service lines
-          </button>
-        </div>
-      </form>
+      <ServiceLinesForm
+        siteId={siteId}
+        businessId={site.business_id}
+        initialSelected={[...selected] as BusinessCapability[]}
+        initialPrimary={primary as BusinessCapability}
+        action={saveCapabilities}
+      />
     </div>
   );
 }

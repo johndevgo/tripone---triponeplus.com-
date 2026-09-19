@@ -51,7 +51,7 @@ const categoryCards = [
   {
     label: "Trekking",
     description: "Hikes, treks, routes, difficulty and multi-day details.",
-    image: "/images/marketing/mountain-trek.webp",
+    image: "/images/marketing/bhutan-trekking-vehicle.webp",
   },
   {
     label: "Safaris",
@@ -83,7 +83,7 @@ const categoryCards = [
     label: "Travel packages",
     description:
       "Multi-day itineraries, destinations, inclusions and enquiries.",
-    image: "/images/marketing/travel-planning.webp",
+    image: "/images/marketing/bhutan-jeep-tour.webp",
   },
 ];
 
@@ -198,6 +198,16 @@ export default function Home() {
         name: faq.question,
         acceptedAnswer: { "@type": "Answer", text: faq.answer },
       })),
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": `${origin.replace(/\/$/, "")}/#organization`,
+      name: "TripOne+",
+      url: origin,
+      logo: `${origin.replace(/\/$/, "")}/images/logo%20annd%20branding/tripone%201%20isto%201%20logo%20no%20background.png`,
+      description:
+        "A tourism website and operations platform for tour, activity, rental and travel businesses.",
     },
   ];
 
@@ -525,8 +535,8 @@ export default function Home() {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.05fr_.95fr] lg:items-stretch">
           <div className="relative min-h-[30rem] overflow-hidden rounded-[2rem]">
             <Image
-              src="/images/marketing/travel-planning.webp"
-              alt="A tourism specialist planning a traveller journey"
+              src="/images/marketing/mountain-yoga-retreat.webp"
+              alt="A guided wellness and yoga experience in a mountain destination"
               fill
               sizes="(max-width: 1024px) 100vw, 55vw"
               className="object-cover"

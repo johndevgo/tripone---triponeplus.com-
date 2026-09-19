@@ -384,6 +384,169 @@ function experience(label: string, variants: readonly string[]) {
 
 export const sectionRegistry = definitions;
 
+export type SectionRecipe = {
+  id: string;
+  name: string;
+  description: string;
+  type: keyof typeof sectionRegistry;
+  variant: string;
+  settings: Record<string, unknown>;
+};
+
+// Curated starting points accelerate common tourism pages without introducing
+// unverifiable claims. Every value remains editable through the same section
+// model used by preview and production rendering.
+export const sectionRecipes: SectionRecipe[] = [
+  {
+    id: "location-led-hero",
+    name: "Location-led booking hero",
+    description: "A clear offer, place and two-step conversion path.",
+    type: "hero",
+    variant: "immersive",
+    settings: {
+      eyebrow: "Plan your next experience",
+      title: "Explore unforgettable experiences in your destination",
+      description:
+        "Compare options, review practical details and choose the right next step for your trip.",
+      primaryCta: "View experiences",
+      primaryHref: "/experiences",
+      secondaryCta: "Contact the team",
+      secondaryHref: "/contact",
+      overlay: 48,
+      height: "tall",
+      focalPosition: "center",
+    },
+  },
+  {
+    id: "planning-confidence",
+    name: "Planning confidence",
+    description: "Answer the practical questions that slow down decisions.",
+    type: "whyChooseUs",
+    variant: "icon-grid",
+    settings: {
+      eyebrow: "Plan with clarity",
+      title: "Useful details before you decide",
+      description:
+        "Give guests accurate information about timing, location and the booking process.",
+      items: [
+        {
+          title: "Clear meeting details",
+          description: "Explain where to arrive and what happens next.",
+        },
+        {
+          title: "Transparent inclusions",
+          description: "Show what is included and what guests should bring.",
+        },
+        {
+          title: "Direct support",
+          description: "Offer a reliable way to ask questions before booking.",
+        },
+      ],
+    },
+  },
+  {
+    id: "day-by-day-itinerary",
+    name: "Day-by-day itinerary",
+    description: "A flexible timeline for tours and multi-day packages.",
+    type: "itinerary",
+    variant: "timeline",
+    settings: {
+      eyebrow: "What to expect",
+      title: "Your experience, step by step",
+      description: "Replace these examples with the accurate operating plan.",
+      items: [
+        {
+          title: "Meet and prepare",
+          description: "Add arrival and briefing details.",
+        },
+        {
+          title: "Begin the experience",
+          description: "Describe the main route or activity.",
+        },
+        {
+          title: "Return and next steps",
+          description: "Explain the expected finish and transport.",
+        },
+      ],
+    },
+  },
+  {
+    id: "inclusions-checklist",
+    name: "Inclusions checklist",
+    description: "Make package value and exclusions easy to compare.",
+    type: "inclusions",
+    variant: "split-checklist",
+    settings: {
+      title: "What is included",
+      description: "Set accurate expectations before a guest enquires.",
+      items: [
+        {
+          title: "Included",
+          description: "List confirmed equipment, transport or services.",
+        },
+        {
+          title: "Not included",
+          description: "List optional costs and guest responsibilities.",
+        },
+      ],
+    },
+  },
+  {
+    id: "booking-faq",
+    name: "Booking FAQ",
+    description: "Ready-to-edit answers for common planning questions.",
+    type: "faq",
+    variant: "accordion",
+    settings: {
+      eyebrow: "Plan your visit",
+      title: "Frequently asked questions",
+      items: [
+        {
+          question: "How do I book?",
+          answer: "Explain your exact booking or enquiry process.",
+        },
+        {
+          question: "What should I bring?",
+          answer: "List the items guests genuinely need.",
+        },
+        {
+          question: "What happens if plans change?",
+          answer: "Summarize your current cancellation policy.",
+        },
+      ],
+    },
+  },
+  {
+    id: "contact-conversion",
+    name: "Contact and enquiry",
+    description: "A practical enquiry block for visitors who need help.",
+    type: "contact",
+    variant: "split",
+    settings: {
+      eyebrow: "Talk to the team",
+      title: "Need help choosing?",
+      description:
+        "Ask about dates, group needs or practical details before you book.",
+    },
+  },
+  {
+    id: "conversion-banner",
+    name: "Conversion banner",
+    description: "A focused final action without fabricated urgency.",
+    type: "finalCta",
+    variant: "high-impact",
+    settings: {
+      eyebrow: "Ready when you are",
+      title: "Find the right experience for your trip",
+      description:
+        "Review the available options or contact the team with a question.",
+      label: "View experiences",
+      href: "/experiences",
+      spacing: "spacious",
+    },
+  },
+];
+
 export function createDefaultSection(
   type: keyof typeof sectionRegistry,
   variant?: string,

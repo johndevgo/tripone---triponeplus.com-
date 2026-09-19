@@ -21,6 +21,8 @@ import {
 } from "@dnd-kit/sortable";
 import {
   ArrowLeft,
+  ArrowDown,
+  ArrowUp,
   BookmarkPlus,
   Check,
   Copy,
@@ -44,7 +46,12 @@ import {
   type PublicPackage,
   type PublicRental,
 } from "@/components/site/site-renderer";
-import { sectionRegistry, createDefaultSection } from "@/lib/sections/registry";
+import {
+  sectionRecipes,
+  sectionRegistry,
+  createDefaultSection,
+  type SectionRecipe,
+} from "@/lib/sections/registry";
 import type { SiteSection, ThemeId } from "@/lib/types";
 import { getTheme, type ThemeTokens } from "@/lib/site-generator";
 import { useBuilderStore } from "./store";
@@ -253,6 +260,15 @@ export function VisualBuilder({
   }
   function addSection(type: keyof typeof sectionRegistry) {
     const section = createDefaultSection(type);
+    store.mutate((sections) => [...sections, section], section.id);
+    setLibraryOpen(false);
+  }
+  function addRecipe(recipe: SectionRecipe) {
+    const section = createDefaultSection(recipe.type, recipe.variant);
+    section.settings = {
+      ...section.settings,
+      ...structuredClone(recipe.settings),
+    };
     store.mutate((sections) => [...sections, section], section.id);
     setLibraryOpen(false);
   }
@@ -587,6 +603,7 @@ export function VisualBuilder({
           query={query}
           setQuery={setQuery}
           add={addSection}
+          addRecipe={addRecipe}
           savedSections={savedSections}
           addSaved={addSavedSection}
           close={() => setLibraryOpen(false)}
@@ -685,6 +702,35 @@ function Inspector({
     typeof section.settings[key] === "string"
       ? String(section.settings[key])
       : "";
+  const reservedFields = new Set([
+    "eyebrow",
+    "title",
+    "description",
+    "body",
+    "items",
+    "alignment",
+    "backgroundStyle",
+    "spacing",
+    ...(section.type === "hero"
+      ? [
+          "primaryCta",
+          "primaryHref",
+          "secondaryCta",
+          "secondaryHref",
+          "imageUrl",
+          "overlay",
+          "height",
+          "focalPosition",
+        ]
+      : []),
+  ]);
+  const additionalFields = Object.entries(section.settings).filter(
+    ([key, fieldValue]) =>
+      !reservedFields.has(key) &&
+      (typeof fieldValue === "string" ||
+        typeof fieldValue === "number" ||
+        typeof fieldValue === "boolean"),
+  );
   return (
     <div>
       <p className="text-xs font-semibold uppercase tracking-widest text-[#95EE8E]">
@@ -770,8 +816,32 @@ function Inspector({
                 ))}
               </select>
             </label>
+            <label className="text-xs text-white/60">
+              Image focus
+              <select
+                value={value("focalPosition") || "center"}
+                onChange={(event) =>
+                  patch({ settings: { focalPosition: event.target.value } })
+                }
+                className={input}
+              >
+                {["center", "top", "bottom", "left", "right"].map((item) => (
+                  <option className="text-black" value={item} key={item}>
+                    {item}
+                  </option>
+                ))}
+              </select>
+            </label>
           </>
         )}
+        {additionalFields.map(([key, fieldValue]) => (
+          <SettingField
+            key={key}
+            name={key}
+            value={fieldValue as string | number | boolean}
+            onChange={(nextValue) => patch({ settings: { [key]: nextValue } })}
+          />
+        ))}
         {Array.isArray(section.settings.items) && (
           <ItemsEditor
             items={section.settings.items}
@@ -891,7 +961,7 @@ function ItemsEditor({
       ? (item as Record<string, unknown>)
       : { title: String(item ?? "") },
   );
-  const update = (index: number, key: string, value: string) =>
+  const update = (index: number, key: string, value: unknown) =>
     onChange(
       normalized.map((item, itemIndex) =>
         itemIndex === index ? { ...item, [key]: value } : item,
@@ -903,52 +973,72 @@ function ItemsEditor({
         Section items
       </legend>
       {normalized.map((item, index) => {
-        const keys = Object.keys(item).filter((key) =>
-          ["title", "description", "question", "answer", "label"].includes(key),
-        );
+        const keys = Object.keys(item).filter((key) => {
+          const fieldValue = item[key];
+          return (
+            typeof fieldValue === "string" ||
+            typeof fieldValue === "number" ||
+            typeof fieldValue === "boolean"
+          );
+        });
         return (
           <div
             className="grid gap-2 rounded-xl border border-white/8 p-3"
             key={index}
           >
             {keys.map((key) => (
-              <label className="text-[11px] capitalize text-white/45" key={key}>
-                {key}
-                {key === "description" || key === "answer" ? (
-                  <textarea
-                    rows={3}
-                    value={String(item[key] ?? "")}
-                    onChange={(event) => update(index, key, event.target.value)}
-                    className={`${input} py-2`}
-                  />
-                ) : (
-                  <input
-                    value={String(item[key] ?? "")}
-                    onChange={(event) => update(index, key, event.target.value)}
-                    className={input}
-                  />
-                )}
-              </label>
+              <SettingField
+                compact
+                key={key}
+                name={key}
+                value={item[key] as string | number | boolean}
+                onChange={(nextValue) => update(index, key, nextValue)}
+              />
             ))}
-            <button
-              type="button"
-              onClick={() => onChange(normalized.filter((_, i) => i !== index))}
-              className="justify-self-end text-xs text-red-200/80"
-            >
-              Remove item
-            </button>
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex gap-1">
+                <button
+                  type="button"
+                  disabled={index === 0}
+                  onClick={() =>
+                    onChange(arrayMove(normalized, index, index - 1))
+                  }
+                  className="grid size-8 place-items-center rounded-lg border border-white/10 disabled:opacity-30"
+                  aria-label={`Move item ${index + 1} up`}
+                >
+                  <ArrowUp size={14} />
+                </button>
+                <button
+                  type="button"
+                  disabled={index === normalized.length - 1}
+                  onClick={() =>
+                    onChange(arrayMove(normalized, index, index + 1))
+                  }
+                  className="grid size-8 place-items-center rounded-lg border border-white/10 disabled:opacity-30"
+                  aria-label={`Move item ${index + 1} down`}
+                >
+                  <ArrowDown size={14} />
+                </button>
+              </div>
+              <button
+                type="button"
+                onClick={() =>
+                  onChange(
+                    normalized.filter((_, itemIndex) => itemIndex !== index),
+                  )
+                }
+                className="text-xs text-red-200/80"
+              >
+                Remove item
+              </button>
+            </div>
           </div>
         );
       })}
       <button
         type="button"
         onClick={() =>
-          onChange([
-            ...normalized,
-            normalized[0] && "question" in normalized[0]
-              ? { question: "New question", answer: "Add an accurate answer." }
-              : { title: "New item", description: "Add useful details." },
-          ])
+          onChange([...normalized, createBlankItem(normalized[0])])
         }
         className="min-h-10 rounded-xl border border-white/10 text-xs font-semibold text-white/65 hover:bg-white/[.06]"
       >
@@ -958,10 +1048,88 @@ function ItemsEditor({
   );
 }
 
+function SettingField({
+  name,
+  value,
+  onChange,
+  compact = false,
+}: {
+  name: string;
+  value: string | number | boolean;
+  onChange: (value: string | number | boolean) => void;
+  compact?: boolean;
+}) {
+  const label = name.replace(/([A-Z])/g, " $1").replaceAll("_", " ");
+  if (typeof value === "boolean")
+    return (
+      <label className="flex min-h-10 items-center gap-2 text-xs capitalize text-white/60">
+        <input
+          type="checkbox"
+          checked={value}
+          onChange={(event) => onChange(event.target.checked)}
+          className="size-4 accent-[var(--brand-500)]"
+        />
+        {label}
+      </label>
+    );
+  const multiline = /description|answer|body|caption|quote|content/i.test(name);
+  return (
+    <label
+      className={`${compact ? "text-[11px]" : "text-xs"} capitalize text-white/60`}
+    >
+      {label}
+      {multiline ? (
+        <textarea
+          rows={compact ? 3 : 4}
+          value={String(value)}
+          onChange={(event) => onChange(event.target.value)}
+          className={`${input} py-2`}
+        />
+      ) : (
+        <input
+          type={typeof value === "number" ? "number" : "text"}
+          inputMode={typeof value === "number" ? "decimal" : undefined}
+          value={String(value)}
+          onChange={(event) =>
+            onChange(
+              typeof value === "number"
+                ? Number(event.target.value)
+                : event.target.value,
+            )
+          }
+          className={input}
+        />
+      )}
+    </label>
+  );
+}
+
+function createBlankItem(example?: Record<string, unknown>) {
+  if (!example)
+    return { title: "New item", description: "Add useful details." };
+  return Object.fromEntries(
+    Object.entries(example).map(([key, value]) => [
+      key,
+      typeof value === "number"
+        ? 0
+        : typeof value === "boolean"
+          ? false
+          : key === "question"
+            ? "New question"
+            : key === "answer"
+              ? "Add an accurate answer."
+              : key === "title" || key === "label"
+                ? "New item"
+                : "",
+    ]),
+  );
+}
+
 function SectionLibrary({
   query,
   setQuery,
   add,
+  addRecipe,
   savedSections,
   addSaved,
   close,
@@ -969,6 +1137,7 @@ function SectionLibrary({
   query: string;
   setQuery: (value: string) => void;
   add: (type: keyof typeof sectionRegistry) => void;
+  addRecipe: (recipe: SectionRecipe) => void;
   savedSections: SavedSectionRecord[];
   addSaved: (section: SavedSectionRecord) => void;
   close: () => void;
@@ -994,6 +1163,37 @@ function SectionLibrary({
           className="min-h-11 w-full rounded-xl border border-white/10 bg-white/[.06] pl-10 pr-3 outline-none focus:border-[#95EE8E]"
         />
       </label>
+      {!query && (
+        <div className="mt-5">
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-wider text-[var(--brand-300)]">
+                Ready-made sections
+              </p>
+              <p className="mt-1 text-xs text-white/40">
+                Conversion-focused starting points with fully editable content.
+              </p>
+            </div>
+            <span className="text-[11px] text-white/30">
+              {sectionRecipes.length} recipes
+            </span>
+          </div>
+          <div className="mt-3 grid gap-2 sm:grid-cols-2">
+            {sectionRecipes.map((recipe) => (
+              <button
+                key={recipe.id}
+                onClick={() => addRecipe(recipe)}
+                className="rounded-xl border border-[var(--brand-300)]/20 bg-[var(--brand-300)]/[.06] p-3 text-left transition hover:border-[var(--brand-300)]/55 hover:bg-[var(--brand-300)]/[.1]"
+              >
+                <span className="block text-sm font-medium">{recipe.name}</span>
+                <span className="mt-1 block text-[11px] leading-5 text-white/40">
+                  {recipe.description}
+                </span>
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       {savedSections.length > 0 && (
         <div className="mt-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-[#95EE8E]">

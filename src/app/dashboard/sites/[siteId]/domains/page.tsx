@@ -10,6 +10,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getDnsFallback } from "@/lib/domains/validation";
 import { isDomainProviderConfigured } from "@/lib/domains/provider";
 import { fallbackSiteUrl } from "@/lib/tenancy/public-url";
+import { FormSubmitButton } from "@/components/ui/form-submit-button";
 import { PageHead } from "../experiences/page";
 import {
   addDomain,
@@ -114,7 +115,7 @@ export default async function Domains({
                         provider.configured !== true)) && (
                       <form action={verifyDomain}>
                         <Hidden siteId={siteId} domainId={domain.id} />
-                        <MiniButton>
+                        <MiniButton pendingLabel="Checking DNS…">
                           {domain.domain_type === "subdomain"
                             ? "Provision hosting"
                             : "Check DNS"}
@@ -124,13 +125,15 @@ export default async function Domains({
                     {ready && !domain.is_primary && (
                       <form action={setPrimaryDomain}>
                         <Hidden siteId={siteId} domainId={domain.id} />
-                        <MiniButton>Make primary</MiniButton>
+                        <MiniButton pendingLabel="Updating…">
+                          Make primary
+                        </MiniButton>
                       </form>
                     )}
                     {domain.domain_type === "custom" && (
                       <form action={deleteDomain}>
                         <Hidden siteId={siteId} domainId={domain.id} />
-                        <MiniButton danger>
+                        <MiniButton danger pendingLabel="Removing…">
                           <Trash2 size={14} /> Remove
                         </MiniButton>
                       </form>
@@ -190,9 +193,12 @@ export default async function Domains({
                           className="mt-2 min-h-10 w-full rounded-xl border border-white/12 bg-black/20 px-3 text-sm text-white"
                         />
                       </label>
-                      <button className="mt-auto min-h-10 rounded-xl border border-[var(--brand-300)]/30 bg-[var(--brand-500)]/10 px-4 text-sm font-semibold text-[var(--brand-100)]">
+                      <FormSubmitButton
+                        pendingLabel="Saving hostname…"
+                        className="mt-auto min-h-10 rounded-xl border border-[var(--brand-300)]/30 bg-[var(--brand-500)]/10 px-4 text-sm font-semibold text-[var(--brand-100)]"
+                      >
                         Save hostname
-                      </button>
+                      </FormSubmitButton>
                     </form>
                     <p className="mt-2 text-xs leading-5 text-white/35">
                       Changing a hostname disconnects the old Vercel project
@@ -230,9 +236,12 @@ export default async function Domains({
               className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-black/20 px-4"
             />
           </label>
-          <button className="mt-auto min-h-11 rounded-xl bg-[#5bcd57] px-5 font-semibold text-[#173028]">
+          <FormSubmitButton
+            pendingLabel="Adding domain…"
+            className="mt-auto min-h-11 rounded-xl bg-[#5bcd57] px-5 font-semibold text-[#173028]"
+          >
             Add domain
-          </button>
+          </FormSubmitButton>
         </form>
         <p className="mt-4 flex gap-2 text-xs text-white/40">
           <ShieldCheck size={15} />
@@ -254,16 +263,19 @@ function Hidden({ siteId, domainId }: { siteId: string; domainId: string }) {
 function MiniButton({
   children,
   danger,
+  pendingLabel,
 }: {
   children: React.ReactNode;
   danger?: boolean;
+  pendingLabel: string;
 }) {
   return (
-    <button
+    <FormSubmitButton
+      pendingLabel={pendingLabel}
       className={`inline-flex min-h-9 items-center gap-1.5 rounded-lg border px-3 text-xs ${danger ? "border-red-300/20 text-red-200 hover:bg-red-400/10" : "border-white/15 text-white/70 hover:bg-white/[.06]"}`}
     >
       {children}
-    </button>
+    </FormSubmitButton>
   );
 }
 function Notice({ message, error }: { message?: string; error?: string }) {

@@ -9,6 +9,7 @@ import {
   removeProviderDomain,
   verifyProviderDomain,
 } from "@/lib/domains/provider";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { createClient } from "@/lib/supabase/server";
 
 const identifiers = z.object({ siteId: z.uuid(), domainId: z.uuid() });
@@ -27,8 +28,8 @@ export async function addDomain(formData: FormData) {
   if (!parsed.success)
     fail(siteId, parsed.error.issues[0]?.message ?? "Invalid hostname.");
   const hostname = parsed.data;
-  const supabase = await createClient();
-  const { data: domain, error } = await supabase
+  const { admin } = await authorizedDomainClients(siteId);
+  const { data: domain, error } = await admin
     .from("domains")
     .insert({ site_id: siteId, hostname, domain_type: "custom" })
     .select("id")
@@ -42,19 +43,23 @@ export async function addDomain(formData: FormData) {
     );
   try {
     const provider = await addProviderDomain(hostname);
-    await supabase
+    await admin
       .from("domains")
       .update({
         provider_data: provider,
-        verification_status: provider.verified ? "verified" : "pending",
-        verified_at: provider.verified ? new Date().toISOString() : null,
+        // Adding a hostname never activates routing. The owner must explicitly
+        // run Check DNS after reviewing the required records.
+        verification_status: "pending",
+        verified_at: null,
         last_checked_at: new Date().toISOString(),
-        last_error: null,
+        last_error: provider.configured
+          ? "Review the DNS records, then run Check DNS to verify this hostname."
+          : "Vercel domain integration is not configured yet.",
       })
       .eq("id", domain.id)
       .eq("site_id", siteId);
   } catch (cause) {
-    await supabase
+    await admin
       .from("domains")
       .update({
         last_error: safeMessage(cause),
@@ -69,8 +74,8 @@ export async function addDomain(formData: FormData) {
 
 export async function verifyDomain(formData: FormData) {
   const { siteId, domainId } = parseIdentifiers(formData);
-  const supabase = await createClient();
-  const { data: domain } = await supabase
+  const { admin } = await authorizedDomainClients(siteId);
+  const { data: domain } = await admin
     .from("domains")
     .select("hostname,last_checked_at,domain_type,provider_data")
     .eq("id", domainId)
@@ -89,8 +94,8 @@ export async function verifyDomain(formData: FormData) {
         ? await addProviderDomain(domain.hostname)
         : await verifyProviderDomain(domain.hostname);
     if (!provider.configured)
-      fail(siteId, "Vercel domain integration is not configured yet.");
-    await supabase
+      throw new Error("Vercel domain integration is not configured yet.");
+    await admin
       .from("domains")
       .update({
         provider_data: provider,
@@ -104,7 +109,7 @@ export async function verifyDomain(formData: FormData) {
       .eq("id", domainId)
       .eq("site_id", siteId);
   } catch (cause) {
-    await supabase
+    await admin
       .from("domains")
       .update({
         last_error: safeMessage(cause),
@@ -120,8 +125,8 @@ export async function verifyDomain(formData: FormData) {
 
 export async function setPrimaryDomain(formData: FormData) {
   const { siteId, domainId } = parseIdentifiers(formData);
-  const supabase = await createClient();
-  const { error } = await supabase.rpc("set_primary_domain", {
+  const { userClient } = await authorizedDomainClients(siteId);
+  const { error } = await userClient.rpc("set_primary_domain", {
     target_domain: domainId,
   });
   if (error) fail(siteId, error.message);
@@ -137,8 +142,8 @@ export async function updateDomain(formData: FormData) {
   );
   if (!parsed.success) failAtAdmin("Invalid domain update request.");
   const { siteId, domainId, hostname } = parsed.data;
-  const supabase = await createClient();
-  const { data: domain } = await supabase
+  const { admin } = await authorizedDomainClients(siteId);
+  const { data: domain } = await admin
     .from("domains")
     .select("hostname,domain_type")
     .eq("id", domainId)
@@ -157,17 +162,20 @@ export async function updateDomain(formData: FormData) {
   } catch (cause) {
     fail(siteId, safeMessage(cause));
   }
-  const { error } = await supabase
+  const { error } = await admin
     .from("domains")
     .update({
       hostname,
       provider_data: provider,
-      verification_status: provider.verified ? "verified" : "pending",
-      verified_at: provider.verified ? new Date().toISOString() : null,
+      // A changed hostname represents new ownership. Keep it pending until the
+      // owner explicitly checks DNS for the exact replacement hostname.
+      verification_status: "pending",
+      verified_at: null,
       last_checked_at: new Date().toISOString(),
-      last_error: provider.verified
-        ? null
-        : "DNS configuration is still pending.",
+      last_error: provider.configured
+        ? "Hostname changed. Review its DNS records, then run Check DNS."
+        : "Vercel domain integration is not configured yet.",
+      is_primary: false,
     })
     .eq("id", domainId)
     .eq("site_id", siteId);
@@ -187,8 +195,8 @@ export async function updateDomain(formData: FormData) {
 
 export async function deleteDomain(formData: FormData) {
   const { siteId, domainId } = parseIdentifiers(formData);
-  const supabase = await createClient();
-  const { data: domain } = await supabase
+  const { admin } = await authorizedDomainClients(siteId);
+  const { data: domain } = await admin
     .from("domains")
     .select("hostname,domain_type,is_primary")
     .eq("id", domainId)
@@ -196,19 +204,22 @@ export async function deleteDomain(formData: FormData) {
     .single();
   if (!domain || domain.domain_type === "subdomain")
     fail(siteId, "The hosted fallback address cannot be removed.");
+  let providerWarning = "";
   try {
     await removeProviderDomain(domain.hostname);
   } catch (cause) {
-    fail(siteId, safeMessage(cause));
+    // Removing the TripOne+ route is the security-critical operation. Do not
+    // leave it active because a provider cleanup request was unavailable.
+    providerWarning = safeMessage(cause);
   }
-  const { error } = await supabase
+  const { error } = await admin
     .from("domains")
     .delete()
     .eq("id", domainId)
     .eq("site_id", siteId);
   if (error) fail(siteId, error.message);
   if (domain.is_primary) {
-    const { data: replacement } = await supabase
+    const { data: replacement } = await admin
       .from("domains")
       .select("id")
       .eq("site_id", siteId)
@@ -219,12 +230,34 @@ export async function deleteDomain(formData: FormData) {
       .limit(1)
       .maybeSingle();
     if (replacement)
-      await supabase.rpc("set_primary_domain", {
-        target_domain: replacement.id,
-      });
+      await admin
+        .from("domains")
+        .update({ is_primary: true })
+        .eq("id", replacement.id)
+        .eq("site_id", siteId);
   }
   revalidatePath(`/dashboard/sites/${siteId}/domains`);
-  redirect(`/dashboard/sites/${siteId}/domains?message=Domain%20removed`);
+  redirect(
+    `/dashboard/sites/${siteId}/domains?message=${encodeURIComponent(
+      providerWarning
+        ? "Domain removed from TripOne+. Vercel cleanup should be retried from the Vercel project."
+        : "Domain removed",
+    )}`,
+  );
+}
+
+async function authorizedDomainClients(siteId: string) {
+  const userClient = await createClient();
+  const [authResult, { data: ownsSite, error: ownershipError }] =
+    await Promise.all([
+      userClient.auth.getUser(),
+      userClient.rpc("owns_site", { target_site: siteId }),
+    ]);
+  if (authResult.error || !authResult.data.user || ownershipError || !ownsSite)
+    fail(siteId, "Website not found or not authorized.");
+  const admin = createAdminClient();
+  if (!admin) fail(siteId, "Server domain management is not configured.");
+  return { userClient, admin };
 }
 
 function fail(siteId: string, message = "Domain action failed."): never {

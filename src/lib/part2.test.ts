@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  sectionRecipes,
   sectionRegistry,
   createDefaultSection,
   validateSection,
@@ -25,6 +26,14 @@ describe("Part 2 section registry", () => {
     for (const type of sectionTypes) {
       const section = createDefaultSection(type);
       expect(sectionRegistry[type].variants).toContain(section.variant);
+      expect(validateSection(section).success).toBe(true);
+    }
+  });
+  it("keeps every curated recipe compatible with the production renderer", () => {
+    for (const recipe of sectionRecipes) {
+      const section = createDefaultSection(recipe.type, recipe.variant);
+      section.settings = { ...section.settings, ...recipe.settings };
+      expect(sectionRegistry[recipe.type].variants).toContain(recipe.variant);
       expect(validateSection(section).success).toBe(true);
     }
   });

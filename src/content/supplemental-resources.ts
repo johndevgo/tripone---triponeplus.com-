@@ -393,8 +393,8 @@ const strategyGuides: StrategyGuide[] = [
     ],
     risk: "Swapping a city name inside generic copy produces thin pages that do not help travellers choose.",
     metric: "Measure destination-page assisted experience views and enquiries.",
-    image: "/images/marketing/coastal-village.webp",
-    imageAlt: "A coastal destination with a compact waterfront village",
+    image: "/images/marketing/bhutan-trekking-vehicle.webp",
+    imageAlt: "A four-wheel-drive vehicle on a mountain route through Bhutan",
   },
   {
     slug: "tour-page-seo-checklist",
@@ -986,9 +986,9 @@ const comparisonGuides: ComparisonGuide[] = [
       "the starting point should be structured offerings, packages, travel-specific page recipes and connected booking-request operations",
     decision:
       "Build one real service page, update its operating details and test the complete mobile request workflow in each platform.",
-    image: "/images/marketing/coastal-village.webp",
+    image: "/images/marketing/mountain-wellness-retreat.webp",
     imageAlt:
-      "A polished travel website concept overlooking a coastal destination",
+      "A mountain wellness retreat representing a polished travel website",
     sources: [
       {
         label: "Squarespace website builder",

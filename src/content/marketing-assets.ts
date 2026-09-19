@@ -10,6 +10,10 @@ export const marketingImages = {
   transfer: "/images/marketing/airport-transfer.webp",
   atv: "/images/marketing/desert-atv.webp",
   planning: "/images/marketing/travel-planning.webp",
+  bhutanJeep: "/images/marketing/bhutan-jeep-tour.webp",
+  bhutanTrekking: "/images/marketing/bhutan-trekking-vehicle.webp",
+  mountainWellness: "/images/marketing/mountain-wellness-retreat.webp",
+  mountainYoga: "/images/marketing/mountain-yoga-retreat.webp",
 } as const;
 
 export const themeMarketingImages: Record<ThemeId, string> = {
