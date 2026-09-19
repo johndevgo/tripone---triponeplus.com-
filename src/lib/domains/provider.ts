@@ -81,7 +81,11 @@ async function requestDomain(hostname: string, mode: "add" | "verify") {
   });
   if (!response.ok) {
     const message = await providerError(response);
-    if (mode === "add" && response.status === 400) {
+    // Vercel can answer a manual verify request with 400 while DNS is still
+    // propagating. The project-domain and config endpoints remain the source
+    // of truth, so refresh those instead of turning an expected pending state
+    // into a destructive-looking error for the customer.
+    if ((mode === "add" || mode === "verify") && response.status === 400) {
       const existing = await getProjectDomain(hostname);
       if (existing) return domainResult(hostname, existing);
     }
@@ -109,6 +113,10 @@ async function domainResult(
   const projectVerified = projectDomain.verified === true;
   const dnsConfigured = configuration?.misconfigured === false;
   const ownershipRecords = normalizeRecords(projectDomain.verification);
+  const routingRecords = configurationRecords(hostname, configuration);
+  const ownershipChallenges = ownershipRecords.filter(
+    (record) => record.type.toUpperCase() === "TXT",
+  );
   return {
     configured: true,
     projectVerified,
@@ -116,10 +124,17 @@ async function domainResult(
     // Vercel's project-domain `verified` flag only proves project access. A
     // domain is production-ready after its public DNS also passes config.
     verified: projectVerified && dnsConfigured,
-    records:
-      ownershipRecords.length > 0
-        ? ownershipRecords
-        : configurationRecords(hostname, configuration),
+    // A hostname must never be shown with two competing CNAME values. Route
+    // records and ownership challenges are different requirements: keep the
+    // single project-specific routing recommendation and append TXT ownership
+    // proof only when Vercel explicitly asks for it.
+    records: deduplicateRecords([
+      ...routingRecords,
+      ...ownershipChallenges,
+      ...(routingRecords.length === 0
+        ? preferredFallbackRecord(ownershipRecords)
+        : []),
+    ]),
     dns: getDnsFallback(hostname),
     raw: { projectDomain, configuration },
   } satisfies DomainProviderResult;
@@ -136,9 +151,33 @@ function configurationRecords(
   const type = isApex(hostname) ? "A" : "CNAME";
   const domain = isApex(hostname) ? "@" : hostname.split(".")[0]!;
   if (!Array.isArray(recommendations)) return [];
-  return recommendations.flatMap((item) =>
-    typeof item.value === "string" ? [{ type, domain, value: item.value }] : [],
-  );
+  const preferred = [...recommendations]
+    .filter((item) => typeof item.value === "string")
+    .sort((left, right) => numericRank(left.rank) - numericRank(right.rank))[0];
+  return typeof preferred?.value === "string"
+    ? [{ type, domain, value: preferred.value }]
+    : [];
+}
+
+function numericRank(value: unknown) {
+  return typeof value === "number" && Number.isFinite(value)
+    ? value
+    : Number.MAX_SAFE_INTEGER;
+}
+
+function preferredFallbackRecord(records: VerificationRecord[]) {
+  const record = records.find((item) => item.type.toUpperCase() !== "TXT");
+  return record ? [record] : [];
+}
+
+function deduplicateRecords(records: VerificationRecord[]) {
+  const seen = new Set<string>();
+  return records.filter((record) => {
+    const key = `${record.type.toUpperCase()}|${record.domain.toLowerCase()}|${record.value.toLowerCase()}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 function isApex(hostname: string) {

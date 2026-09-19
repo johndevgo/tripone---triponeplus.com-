@@ -7,7 +7,7 @@ Last updated: 2026-09-10
 - Production branch: `main`
 - Part 4 branch: `feature/part4-multi-service`
 - Current production release: `23bff4f` (pushed to `origin/main`)
-- Production host currently configured by the repository: `tools.neurerohan.com.np`
+- Production host: `triponeplus.com`
 - `triponeplus.com` is not treated as an available tenant domain until ownership and DNS verification exist.
 
 ## Status
@@ -31,12 +31,12 @@ Last updated: 2026-09-10
 - 2026-09-07: Replaced unverified `slug.triponeplus.com` presentation with the real `/s/{siteSlug}` fallback. Verified domains still take priority.
 - 2026-09-08: Kept shared-origin fallback sites free of tenant-controlled scripts; their discoverability uses `/s/{siteSlug}/sitemap` and server-rendered published snapshots.
 - 2026-09-08: Applied the template-publishing, record-layout, fallback-delivery, rental-analytics and taxonomy-redirect migrations after rollback validation.
-- 2026-09-09: Made `https://tools.neurerohan.com.np/s/{siteSlug}` the authoritative platform-hosted customer address. Reserved `*.triponeplus.com` rows are pending and cannot become public or canonical without real ownership and verification.
+- 2026-09-09: Introduced path-based customer publishing. The current authoritative hosted address is `https://triponeplus.com/s/{siteSlug}`.
 - 2026-09-09: Completed real browser acceptance against published site `dipson-tours` at 375, 430, 768, 1024 and 1440 px. A disposable authenticated QA user also passed onboarding and builder autosave, then was deleted with its owned fixtures.
 - 2026-09-09: Proved advanced code executes on a disposable verified tenant origin under a nonce-bound CSP, cannot access private app API routes, and remains absent from the shared `/s/` origin. The fixture was deleted afterward.
-- 2026-09-09: Fast-forwarded the fully accepted Part 4 branch to `main`. GitHub CI passed and Vercel deployed the release at `https://tools.neurerohan.com.np`; the customer example is live at `/s/dipson-tours`.
+- 2026-09-09: Fast-forwarded the fully accepted Part 4 branch to `main`; GitHub CI passed and the customer example was live at `/s/dipson-tours`.
 - 2026-09-10: Rebuilt the SaaS marketing experience around six original, optimized travel photographs; expanded all public product pages; added eight typed long-form guides and fair competitor comparisons; generated social-sharing images; expanded sitemap and structured data; and added browser coverage for internal destinations, imagery and discovery surfaces.
-- 2026-09-10: Released the growth and visual upgrade as `23bff4f`. GitHub CI passed, Vercel served every checked release URL, and the production public plus five-width browser suites passed against `tools.neurerohan.com.np`.
+- 2026-09-10: Released the growth and visual upgrade as `23bff4f`; GitHub CI and the production browser suites passed.
 - 2026-09-13: Added clean active-workspace `/admin/*` navigation, service-role-backed platform administration, consent-limited inactive-account retention, three-year founding entitlements, custom-domain provider controls and the tourism growth studio. The feature branch remains behind a database release gate because the production REST schema reports `public.packages` missing.
 
 ## Latest verification
@@ -47,11 +47,11 @@ Last updated: 2026-09-10
 - Database integration: six rollback suites passed in the prior authorized database audit. The current environment does not contain the server-only database URL needed to rerun them.
 - Production build: passed with Next.js 16.3.4 and 101 application/customer pages generated successfully.
 - Browser acceptance: 22 desktop/mobile checks passed and 22 fixture-specific or intentionally duplicate matrix checks skipped. Authentication-required onboarding, builder and tenant-script suites remain opt-in because disposable credentials were not present.
-- Production smoke: `triponeplus.com` returns the current `main` release. `www.triponeplus.com` and `tools.neurerohan.com.np` do not currently resolve, and `/growth-services` remains unavailable until this feature branch is released.
+- Production smoke: `triponeplus.com` returns the current `main` release. `www.triponeplus.com` is the only optional redirect alias.
 - Dependency audit: no known vulnerabilities.
 - Remote database: `platform_settings` and `analytics_events` resolve, but `public.packages` returns PostgREST `PGRST205`. Apply `20260910122440_operations_core.sql` before merging this branch, then run the database suites and Supabase lint.
 
 ## External dependencies
 
 - Supabase migration deployment, Vercel environment management, customer registrar DNS and GitHub branch protection remain account-controlled. No credential is stored in this repository.
-- Restoring `www.triponeplus.com` and `tools.neurerohan.com.np` requires DNS records matching the values shown by the attached Vercel project. Keep `triponeplus.com` as the canonical production hostname.
+- Restoring `www.triponeplus.com` requires the DNS record shown by the attached Vercel project. Keep `triponeplus.com` as the canonical production hostname.

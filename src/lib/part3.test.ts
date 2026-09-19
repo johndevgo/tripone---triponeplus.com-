@@ -34,22 +34,22 @@ describe("production hostname rules", () => {
       "dubai-wave-jetski.triponeplus.com",
     );
     expect(isTenantHostname("dubai-wave-jetski.triponeplus.com")).toBe(true);
-    expect(isAppHostname("tools.neurerohan.com.np")).toBe(true);
+    expect(isAppHostname("www.triponeplus.com")).toBe(true);
     expect(safeTenantPath("//evil.example")).toBeNull();
     expect(safeTenantPath("/%ZZ")).toBeNull();
     expect(
       isSameOriginMutation(
         new Headers({
           host: "internal.vercel",
-          "x-forwarded-host": "tools.neurerohan.com.np",
-          origin: "https://tools.neurerohan.com.np",
+          "x-forwarded-host": "triponeplus.com",
+          origin: "https://triponeplus.com",
         }),
       ),
     ).toBe(true);
     expect(
       isSameOriginMutation(
         new Headers({
-          host: "tools.neurerohan.com.np",
+          host: "triponeplus.com",
           origin: "https://attacker.example",
           "sec-fetch-site": "cross-site",
         }),

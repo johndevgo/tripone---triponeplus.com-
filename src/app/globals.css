@@ -45,6 +45,14 @@ textarea,
 select {
   font: inherit;
 }
+.app-bg select {
+  color-scheme: dark;
+}
+.app-bg select option,
+.app-bg select optgroup {
+  color: #102b18;
+  background: #f4fff2;
+}
 button,
 a {
   -webkit-tap-highlight-color: transparent;

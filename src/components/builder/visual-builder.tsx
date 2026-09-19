@@ -1,7 +1,15 @@
 "use client";
 /* eslint-disable react-hooks/refs -- dnd-kit exposes callback refs and transform state as hook results. */
 
-import { useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import { createPortal } from "react-dom";
 import Link from "next/link";
 import {
   DndContext,
@@ -370,7 +378,7 @@ export function VisualBuilder({
       </div>
     );
   return (
-    <div className="-mx-4 -my-7 min-h-screen sm:-mx-7 lg:-mx-10 lg:-my-10">
+    <div className="-mx-4 -my-7 min-h-screen sm:-mx-7 lg:-mx-10 lg:-my-10 xl:h-dvh xl:min-h-0 xl:overflow-hidden">
       <header
         className={`sticky top-0 z-30 flex min-h-16 flex-wrap items-center gap-3 border-b px-4 ${panel}`}
       >
@@ -492,8 +500,10 @@ export function VisualBuilder({
         </button>
       </header>
 
-      <div className="grid min-h-[calc(100vh-4rem)] xl:grid-cols-[260px_minmax(0,1fr)_310px]">
-        <aside className={`border-b p-4 xl:border-b-0 xl:border-r ${panel}`}>
+      <div className="grid min-h-[calc(100vh-4rem)] xl:h-[calc(100dvh-4rem)] xl:min-h-0 xl:grid-cols-[260px_minmax(0,1fr)_310px] xl:overflow-hidden">
+        <aside
+          className={`border-b p-4 xl:h-full xl:overflow-y-auto xl:border-b-0 xl:border-r ${panel}`}
+        >
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold">Sections</h2>
             <button
@@ -534,11 +544,8 @@ export function VisualBuilder({
           </Link>
         </aside>
 
-        <main className="min-w-0 overflow-auto bg-[#03130f] p-4 sm:p-7">
-          <div
-            className="mx-auto origin-top overflow-hidden rounded-xl bg-white shadow-2xl transition-[width] duration-200"
-            style={{ width, maxWidth: "100%" }}
-          >
+        <main className="min-h-[46rem] min-w-0 overflow-hidden bg-[#03130f] p-4 sm:p-7 xl:h-full xl:min-h-0">
+          <ResponsivePreview width={width} label={`${device} website preview`}>
             <SiteRenderer
               site={site}
               business={business}
@@ -560,10 +567,12 @@ export function VisualBuilder({
                 onSelectSection: store.select,
               }}
             />
-          </div>
+          </ResponsivePreview>
         </main>
 
-        <aside className={`border-t p-5 xl:border-l xl:border-t-0 ${panel}`}>
+        <aside
+          className={`border-t p-5 xl:h-full xl:overflow-y-auto xl:border-l xl:border-t-0 ${panel}`}
+        >
           {selected ? (
             <Inspector
               section={selected}
@@ -636,6 +645,51 @@ export function VisualBuilder({
           </div>
         </Modal>
       )}
+    </div>
+  );
+}
+
+function ResponsivePreview({
+  width,
+  label,
+  children,
+}: {
+  width: string;
+  label: string;
+  children: ReactNode;
+}) {
+  const frameRef = useRef<HTMLIFrameElement>(null);
+  const [mountNode, setMountNode] = useState<HTMLElement | null>(null);
+
+  const prepareFrame = useCallback(() => {
+    const frameDocument = frameRef.current?.contentDocument;
+    if (!frameDocument) return;
+    frameDocument.head
+      .querySelectorAll("style, link[rel='stylesheet']")
+      .forEach((node) => node.remove());
+    document.head
+      .querySelectorAll("style, link[rel='stylesheet']")
+      .forEach((node) => frameDocument.head.appendChild(node.cloneNode(true)));
+    frameDocument.documentElement.lang = document.documentElement.lang || "en";
+    frameDocument.documentElement.className =
+      document.documentElement.className;
+    frameDocument.body.className = "m-0 min-h-screen bg-white";
+    setMountNode(frameDocument.body);
+  }, []);
+
+  return (
+    <div
+      className="mx-auto h-full max-w-full overflow-hidden rounded-xl bg-white shadow-2xl transition-[width] duration-200"
+      style={{ width }}
+    >
+      <iframe
+        ref={frameRef}
+        title={label}
+        srcDoc="<!doctype html><html lang='en'><head></head><body></body></html>"
+        onLoad={prepareFrame}
+        className="block h-full min-h-[42rem] w-full border-0 bg-white xl:min-h-0"
+      />
+      {mountNode ? createPortal(children, mountNode) : null}
     </div>
   );
 }

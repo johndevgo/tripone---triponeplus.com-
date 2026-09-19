@@ -60,8 +60,8 @@ Required:
 - `NEXT_PUBLIC_SITE_URL`: one absolute application origin. Use `https://triponeplus.com` in production; do not put comma-separated hosts here.
 - `NEXT_PUBLIC_SUPABASE_URL`: Supabase project URL.
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`: public publishable key. A legacy anon key can use `NEXT_PUBLIC_SUPABASE_ANON_KEY` instead.
-- `APP_HOSTS`: comma-separated non-tenant application aliases. Include `triponeplus.com,www.triponeplus.com,tools.neurerohan.com.np,tripone-triponeplus-com.vercel.app` while the legacy alias remains attached.
-- `APP_REDIRECT_HOSTS`: aliases permanently redirected to `NEXT_PUBLIC_SITE_URL`, normally `www.triponeplus.com,tools.neurerohan.com.np`.
+- `APP_HOSTS`: comma-separated non-tenant application aliases. Use `triponeplus.com,www.triponeplus.com,tripone-triponeplus-com.vercel.app` in production.
+- `APP_REDIRECT_HOSTS`: aliases permanently redirected to `NEXT_PUBLIC_SITE_URL`, normally `www.triponeplus.com`.
 
 Optional server-only:
 
@@ -85,7 +85,7 @@ Optional server-only:
 
    The current production history contains a later platform migration while
    `20260910122440_operations_core.sql` is still absent. After creating and
-   confirming the `neurerohan@gmail.com` Auth account, preview and apply every
+   confirming the configured owner Auth account, preview and apply every
    migration missing from remote history with:
 
    ```powershell
@@ -133,7 +133,7 @@ Optional server-only:
 21. `20260908202000_public_fallback_sitemap_discovery.sql`: advertises published customer sitemaps from the application robots file.
 22. `20260908203000_honest_path_based_publishing.sql`: prevents unowned platform subdomains from becoming verified or canonical.
 23. `20260910122440_operations_core.sql`: adds packages, native booking requests, customers, availability, departures, resources, operations audit trails and tenant-safe RPCs.
-24. `20260913092023_platform_access_entitlements_retention.sql`: adds service-only platform roles, founding entitlements, editable commercial/retention policy, consent-limited retained contacts and privileged audit records. If `neurerohan@gmail.com` already exists in Supabase Auth when this migration runs, it is bootstrapped as the initial super admin.
+24. `20260913092023_platform_access_entitlements_retention.sql`: adds service-only platform roles, founding entitlements, editable commercial/retention policy, consent-limited retained contacts and privileged audit records. An existing configured owner account can be promoted through the documented administration workflow.
 25. `20260913170000_bootstrap_platform_owner.sql`: idempotently ensures the confirmed founding owner account has the initial `super_admin` role without storing a password.
 
 ## Demo data
@@ -178,7 +178,7 @@ The included `.github/workflows/ci.yml` runs install, lint, typecheck, unit test
    ```
 
 2. Add server-only Supabase and Vercel domain variables in Project Settings → Environment Variables. Apply them to Production and only to Preview when genuinely needed.
-3. In Project Settings → Domains, make `triponeplus.com` primary. Keep `www.triponeplus.com` and `tools.neurerohan.com.np` attached as redirect aliases while old links are in circulation.
+3. In Project Settings → Domains, make `triponeplus.com` primary. Keep only `www.triponeplus.com` as an optional redirect alias and remove unrelated legacy domains from the project.
 4. Create a least-privilege Vercel token for this project, set project/team IDs, and redeploy. Customer custom domains can then be attached and verified through the provider adapter. Until then, every published customer site uses `https://triponeplus.com/s/{siteSlug}`.
 
 ## Cloudflare DNS
@@ -187,7 +187,6 @@ If Cloudflare remains authoritative DNS for `triponeplus.com`:
 
 - `@` → Vercel’s displayed apex A record (often `76.76.21.21`)
 - `www` → Vercel’s displayed CNAME
-- `tools` in the `neurerohan.com.np` zone → Vercel’s displayed CNAME only while retaining the legacy redirect
 
 Use DNS-only (grey cloud) until Vercel has issued certificates and every hostname passes `vercel domains inspect`. Customer websites use the path-based `triponeplus.com/s/{siteSlug}` address until their own custom hostname is attached and verified; no wildcard TripOne+ customer subdomain is required.
 

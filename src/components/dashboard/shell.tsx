@@ -69,7 +69,7 @@ const nav = [
   {
     label: "Settings",
     items: [
-      [Wrench, "Service lines", "services"],
+      [Wrench, "Business model", "services"],
       [Settings, "Site settings", "settings"],
     ],
   },

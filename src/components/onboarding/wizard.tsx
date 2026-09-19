@@ -8,25 +8,20 @@ import Image from "next/image";
 import {
   ArrowLeft,
   ArrowRight,
-  Bike,
-  Binoculars,
   Check,
   Compass,
-  Footprints,
   LoaderCircle,
-  Map,
-  Mountain,
+  PackageOpen,
   Plus,
-  Sailboat,
-  Ship,
+  Shapes,
   Trash2,
+  Truck,
   Upload,
-  Waves,
+  type LucideIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { themeMarketingImages } from "@/content/marketing-assets";
 import {
-  businessCapabilities,
   businessTypes,
   rentalProductTypes,
   type BusinessCapability,
@@ -34,6 +29,13 @@ import {
   type OnboardingInput,
   type WebsitePageSelection,
 } from "@/lib/types";
+import {
+  businessModelForCapability,
+  businessModels,
+  representativeForModel,
+  representativesForModels,
+  type BusinessModel,
+} from "@/lib/business-models";
 import { onboardingSchema } from "@/lib/validation";
 import {
   businessPresets,
@@ -44,77 +46,11 @@ import { slugify, cn } from "@/lib/utils";
 import { buildWebsite, checkSlug } from "@/app/onboarding/actions";
 import { activationPath } from "@/lib/admin-routing";
 
-const icons: Record<BusinessCapability, typeof Compass> = {
-  jetski: Waves,
-  boat_rental: Sailboat,
-  day_tour: Map,
-  tour_operator: Compass,
-  travel_agency: Ship,
-  safari: Binoculars,
-  trekking: Mountain,
-  hiking: Footprints,
-  diving: Waves,
-  snorkelling: Waves,
-  rafting: Waves,
-  atv_buggy: Bike,
-  adventure_activity: Mountain,
-  local_guide: Compass,
-  multi_day_tour: Map,
-  excursion: Ship,
-  water_sports: Waves,
-  motorcycle_tour: Bike,
-  motorcycle_rental: Bike,
-  vehicle_rental: Map,
-  equipment_rental: Compass,
-  other: Compass,
-};
-const descriptions: Record<BusinessCapability, string> = {
-  jetski: "High-energy guided rides and rentals",
-  boat_rental: "Charters, cruises and self-drive rentals",
-  day_tour: "Memorable trips completed in a day",
-  tour_operator: "Curated tours across one or more regions",
-  travel_agency: "Travel packages and trip planning",
-  safari: "Wildlife and wilderness journeys",
-  trekking: "Multi-stage treks and mountain routes",
-  hiking: "Guided walks and trail experiences",
-  diving: "Diving courses, trips and charters",
-  snorkelling: "Accessible reef and marine outings",
-  rafting: "River adventures for every ability",
-  atv_buggy: "Off-road motorized experiences",
-  adventure_activity: "Outdoor and adrenaline activities",
-  local_guide: "Personal, locally led experiences",
-  multi_day_tour: "Complete itineraries over several days",
-  excursion: "Focused trips from a destination",
-  water_sports: "On-water activities and rentals",
-  motorcycle_tour: "Guided road and trail journeys",
-  motorcycle_rental: "Motorcycles and scooters for hire",
-  vehicle_rental: "Cars, jeeps and specialist vehicles",
-  equipment_rental: "Outdoor and activity equipment for hire",
-  other: "Another kind of tourism business",
-};
-const capabilityLabels: Record<BusinessCapability, string> = {
-  jetski: "Jet Ski Rental",
-  boat_rental: "Boat Rental",
-  day_tour: "Day Tours",
-  tour_operator: "Tour Operator",
-  travel_agency: "Travel Agency",
-  safari: "Safari",
-  trekking: "Trekking",
-  hiking: "Hiking",
-  diving: "Diving",
-  snorkelling: "Snorkelling",
-  rafting: "Rafting",
-  atv_buggy: "ATV / Buggy",
-  adventure_activity: "Adventure Activities",
-  local_guide: "Local Guide",
-  multi_day_tour: "Multi-Day Tours",
-  excursion: "Excursions",
-  water_sports: "Water Sports",
-  motorcycle_tour: "Motorcycle Tours",
-  motorcycle_rental: "Motorcycle Rental",
-  vehicle_rental: "Vehicle & Jeep Rental",
-  equipment_rental: "Equipment Rental",
-  other: "Other",
+const modelIcons: Record<BusinessModel, LucideIcon> = {
+  tours: Compass,
+  rentals: Truck,
+  packages: PackageOpen,
+  other: Shapes,
 };
 const steps = [
   "What you offer",
@@ -400,36 +336,44 @@ export function OnboardingWizard() {
       <section className="glass rounded-[1.75rem] p-5 sm:p-8 lg:p-10">
         {step === 0 && (
           <BusinessStep
-            value={
+            value={businessModelForCapability(
               (values.primaryCapability as BusinessCapability) ??
-              (values.businessType as BusinessType)
-            }
-            selected={(values.capabilities as BusinessCapability[]) ?? []}
-            selectPrimary={(v) => {
-              setValue("primaryCapability", v, { shouldValidate: true });
-              setValue("businessType", legacyBusinessType(v), {
+                "tour_operator",
+            )}
+            selected={selectedBusinessModels(
+              (values.capabilities as BusinessCapability[]) ?? [],
+            )}
+            selectPrimary={(modelId) => {
+              const capability = representativeForModel(modelId);
+              setValue("primaryCapability", capability, {
                 shouldValidate: true,
               });
-              const current = (getValues("capabilities") ??
-                []) as BusinessCapability[];
-              if (!current.includes(v))
-                setValue("capabilities", [...current, v], {
-                  shouldValidate: true,
-                });
-              if (!current.includes(v))
-                setValue(
-                  "pageSelections",
-                  recommendedPageSelections([...current, v]),
-                );
+              setValue("businessType", legacyBusinessType(capability), {
+                shouldValidate: true,
+              });
+              const currentModels = selectedBusinessModels(
+                (getValues("capabilities") ?? []) as BusinessCapability[],
+              );
+              const nextModels = currentModels.includes(modelId)
+                ? currentModels
+                : [...currentModels, modelId];
+              const next = representativesForModels(nextModels);
+              setValue("capabilities", next, { shouldValidate: true });
+              setValue("pageSelections", recommendedPageSelections(next));
             }}
-            toggle={(v) => {
-              const current = (getValues("capabilities") ??
-                []) as BusinessCapability[];
-              const next = current.includes(v)
-                ? current.filter((item) => item !== v)
-                : [...current, v];
-              if (v === getValues("primaryCapability") && !next.includes(v))
+            toggle={(modelId) => {
+              const currentModels = selectedBusinessModels(
+                (getValues("capabilities") ?? []) as BusinessCapability[],
+              );
+              const primaryModel = businessModelForCapability(
+                getValues("primaryCapability"),
+              );
+              const nextModels = currentModels.includes(modelId)
+                ? currentModels.filter((item) => item !== modelId)
+                : [...currentModels, modelId];
+              if (modelId === primaryModel && !nextModels.includes(modelId))
                 return;
+              const next = representativesForModels(nextModels);
               setValue("capabilities", next, { shouldValidate: true });
               setValue("pageSelections", recommendedPageSelections(next));
             }}
@@ -548,28 +492,28 @@ function BusinessStep({
   selectPrimary,
   toggle,
 }: {
-  value: BusinessCapability;
-  selected: BusinessCapability[];
-  selectPrimary: (v: BusinessCapability) => void;
-  toggle: (v: BusinessCapability) => void;
+  value: BusinessModel;
+  selected: BusinessModel[];
+  selectPrimary: (v: BusinessModel) => void;
+  toggle: (v: BusinessModel) => void;
 }) {
   return (
     <>
       <Title
         eyebrow="Start with your structure"
-        title="What does your business offer?"
-        copy="Select every service line you offer. Your primary service shapes the initial terminology and recommendations."
+        title="What does your business sell?"
+        copy="Choose broad business models now. Add specific activities, destinations, travel styles and product categories later in Collections."
       />
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-        {businessCapabilities.map((type) => {
-          const Icon = icons[type];
-          const active = selected.includes(type);
-          const primary = value === type;
+      <div className="grid gap-4 sm:grid-cols-2">
+        {businessModels.map((model) => {
+          const Icon = modelIcons[model.id];
+          const active = selected.includes(model.id);
+          const primary = value === model.id;
           return (
             <div
-              key={type}
+              key={model.id}
               className={cn(
-                "min-h-40 rounded-2xl border p-5 text-left transition",
+                "min-h-44 rounded-3xl border p-5 text-left transition",
                 active
                   ? "border-[#95EE8E] bg-[#95EE8E]/10 shadow-[inset_0_0_0_1px_rgba(255,200,87,.25)]"
                   : "border-white/10 bg-white/[.035] hover:border-white/25 hover:bg-white/[.06]",
@@ -578,7 +522,7 @@ function BusinessStep({
               <button
                 type="button"
                 aria-pressed={active}
-                onClick={() => toggle(type)}
+                onClick={() => toggle(model.id)}
                 className="block w-full text-left"
               >
                 <div className="flex justify-between">
@@ -587,17 +531,17 @@ function BusinessStep({
                   />
                   {active && <Check size={18} className="text-[#95EE8E]" />}
                 </div>
-                <h2 className="mt-5 font-semibold">{capabilityLabels[type]}</h2>
-                <p className="mt-1.5 text-xs leading-5 text-white/45">
-                  {descriptions[type]}
+                <h2 className="mt-5 text-lg font-semibold">{model.label}</h2>
+                <p className="mt-1.5 text-sm leading-6 text-white/45">
+                  {model.description}
                 </p>
               </button>
               <button
                 type="button"
-                onClick={() => selectPrimary(type)}
+                onClick={() => selectPrimary(model.id)}
                 className={`mt-3 text-xs font-medium ${primary ? "text-[#95EE8E]" : "text-white/40 hover:text-white"}`}
               >
-                {primary ? "Primary service" : "Make primary"}
+                {primary ? "Primary business model" : "Make primary"}
               </button>
             </div>
           );
@@ -702,6 +646,17 @@ function legacyBusinessType(capability: BusinessCapability): BusinessType {
     return capability as BusinessType;
   if (capability === "motorcycle_tour") return "tour_operator";
   return "other";
+}
+function selectedBusinessModels(
+  capabilities: BusinessCapability[],
+): BusinessModel[] {
+  return businessModels
+    .filter((model) =>
+      model.capabilities.some((capability) =>
+        capabilities.includes(capability),
+      ),
+    )
+    .map((model) => model.id);
 }
 function StructureStep({
   capabilities,
@@ -1342,8 +1297,14 @@ function Review({
         <ReviewCard title="Business">
           <p className="text-xl font-semibold">{values.name}</p>
           <p>
-            {capabilityLabels[values.primaryCapability]} · {values.city},{" "}
-            {values.country}
+            {
+              businessModels.find(
+                (model) =>
+                  model.id ===
+                  businessModelForCapability(values.primaryCapability),
+              )?.label
+            }{" "}
+            · {values.city}, {values.country}
           </p>
           <p className="mt-3">{values.shortDescription}</p>
         </ReviewCard>

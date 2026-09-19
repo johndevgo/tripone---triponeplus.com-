@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { Logo } from "@/components/logo";
+import { tripOneSupport } from "@/content/support";
 import { getCurrentUser } from "@/lib/auth/current-user";
 
 export async function MarketingFooter() {
@@ -42,9 +43,12 @@ export async function MarketingFooter() {
           ]}
         />
         <FooterGroup
-          title="Company"
+          title="Support"
           links={[
-            ["Tourism growth", "/growth-services"],
+            ["WhatsApp us", tripOneSupport.whatsappHref],
+            [`Call ${tripOneSupport.phoneDisplay}`, tripOneSupport.phoneHref],
+            ["Instagram", tripOneSupport.instagramHref],
+            ["Facebook", tripOneSupport.facebookHref],
             ["Privacy", "/privacy"],
             ["Terms", "/terms"],
           ]}

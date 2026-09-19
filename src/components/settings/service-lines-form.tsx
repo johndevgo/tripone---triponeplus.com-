@@ -1,33 +1,31 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { BriefcaseBusiness, Check, Star } from "lucide-react";
+import {
+  BriefcaseBusiness,
+  Check,
+  Compass,
+  PackageOpen,
+  Shapes,
+  Star,
+  Truck,
+  type LucideIcon,
+} from "lucide-react";
 import { FormSubmitButton } from "@/components/ui/form-submit-button";
-import { businessCapabilities, type BusinessCapability } from "@/lib/types";
+import type { BusinessCapability } from "@/lib/types";
+import {
+  businessModelForCapability,
+  businessModels,
+  representativesForModels,
+  representativeForModel,
+  type BusinessModel,
+} from "@/lib/business-models";
 
-const labels: Record<BusinessCapability, string> = {
-  jetski: "Jet ski experiences",
-  boat_rental: "Boat rentals",
-  day_tour: "Day tours",
-  tour_operator: "Tour operator",
-  travel_agency: "Travel agency",
-  safari: "Safaris",
-  trekking: "Trekking",
-  hiking: "Hiking",
-  diving: "Diving",
-  snorkelling: "Snorkelling",
-  rafting: "Rafting",
-  atv_buggy: "ATV & buggy",
-  adventure_activity: "Adventure activities",
-  local_guide: "Local guide",
-  multi_day_tour: "Multi-day tours",
-  excursion: "Excursions",
-  water_sports: "Water sports",
-  motorcycle_tour: "Motorcycle tours",
-  motorcycle_rental: "Motorcycle rentals",
-  vehicle_rental: "Vehicle & jeep rentals",
-  equipment_rental: "Equipment rentals",
-  other: "Other tourism service",
+const modelIcons: Record<BusinessModel, LucideIcon> = {
+  tours: Compass,
+  rentals: Truck,
+  packages: PackageOpen,
+  other: Shapes,
 };
 
 export function ServiceLinesForm({
@@ -43,17 +41,31 @@ export function ServiceLinesForm({
   initialPrimary: BusinessCapability;
   action: (formData: FormData) => void | Promise<void>;
 }) {
-  const [selected, setSelected] = useState<BusinessCapability[]>(
-    initialSelected.length > 0 ? initialSelected : [initialPrimary],
+  const initialModels = businessModels
+    .filter((model) =>
+      model.capabilities.some((capability) =>
+        initialSelected.includes(capability),
+      ),
+    )
+    .map((model) => model.id);
+  const initialPrimaryModel = businessModelForCapability(initialPrimary);
+  const [selected, setSelected] = useState<BusinessModel[]>(
+    initialModels.length > 0 ? initialModels : [initialPrimaryModel],
   );
-  const [primary, setPrimary] = useState<BusinessCapability>(initialPrimary);
+  const [primary, setPrimary] = useState<BusinessModel>(initialPrimaryModel);
   const selectedSet = useMemo(() => new Set(selected), [selected]);
 
-  function toggle(capability: BusinessCapability) {
+  const representatives = useMemo(
+    () => representativesForModels(selected),
+    [selected],
+  );
+  const primaryCapability = representativeForModel(primary);
+
+  function toggle(model: BusinessModel) {
     setSelected((current) => {
-      const next = current.includes(capability)
-        ? current.filter((item) => item !== capability)
-        : [...current, capability];
+      const next = current.includes(model)
+        ? current.filter((item) => item !== model)
+        : [...current, model];
       if (next.length > 0 && !next.includes(primary)) setPrimary(next[0]!);
       return next;
     });
@@ -63,88 +75,87 @@ export function ServiceLinesForm({
     <form action={action} className="mt-8">
       <input type="hidden" name="siteId" value={siteId} />
       <input type="hidden" name="businessId" value={businessId} />
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-white/55">
-          <strong className="text-white">{selected.length}</strong> of{" "}
-          {businessCapabilities.length} service lines selected. There is no
-          twelve-service limit.
-        </p>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => setSelected([...businessCapabilities])}
-            className="min-h-9 rounded-lg border border-white/12 px-3 text-xs font-medium text-white/70 hover:bg-white/[.06]"
-          >
-            Select all
-          </button>
-          <button
-            type="button"
-            onClick={() => setSelected([primary])}
-            className="min-h-9 rounded-lg border border-white/12 px-3 text-xs font-medium text-white/70 hover:bg-white/[.06]"
-          >
-            Keep primary only
-          </button>
-        </div>
-      </div>
-      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-        {businessCapabilities.map((capability) => {
-          const checked = selectedSet.has(capability);
+      {representatives.map((capability) => (
+        <input
+          key={capability}
+          type="hidden"
+          name="capabilities"
+          value={capability}
+        />
+      ))}
+      <input
+        type="hidden"
+        name="primaryCapability"
+        value={primaryCapability ?? ""}
+      />
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {businessModels.map((model) => {
+          const checked = selectedSet.has(model.id);
+          const Icon = modelIcons[model.id];
           return (
-            <label
-              key={capability}
-              className="glass group relative flex min-h-24 cursor-pointer items-start gap-3 rounded-2xl p-4 transition hover:-translate-y-0.5 hover:border-[var(--brand-300)]/35 has-[:checked]:border-[var(--brand-300)]/60 has-[:checked]:bg-[var(--brand-300)]/[.08]"
+            <button
+              key={model.id}
+              type="button"
+              aria-pressed={checked}
+              onClick={() => toggle(model.id)}
+              className={`glass group relative min-h-40 rounded-3xl p-5 text-left transition hover:-translate-y-0.5 hover:border-[var(--brand-300)]/40 ${checked ? "border-[var(--brand-300)]/65 bg-[var(--brand-300)]/[.09]" : ""}`}
             >
-              <input
-                className="peer mt-1 size-4 accent-[var(--brand-500)]"
-                type="checkbox"
-                name="capabilities"
-                value={capability}
-                checked={checked}
-                onChange={() => toggle(capability)}
-              />
-              <span>
-                <span className="block font-medium">{labels[capability]}</span>
-                <span className="mt-1 block text-xs text-white/40">
-                  Add this capability to content and page recommendations.
-                </span>
+              <span className="grid size-11 place-items-center rounded-2xl border border-white/10 bg-white/[.07] text-[var(--brand-300)]">
+                <Icon size={21} />
               </span>
-              <Check
-                className="absolute right-3 top-3 hidden text-[var(--brand-300)] peer-checked:block"
-                size={16}
-              />
-            </label>
+              <span className="mt-4 block text-lg font-semibold">
+                {model.label}
+              </span>
+              <span className="mt-1.5 block max-w-md text-sm leading-6 text-white/48">
+                {model.description}
+              </span>
+              {checked && (
+                <span className="absolute right-5 top-5 grid size-7 place-items-center rounded-full bg-[var(--brand-500)] text-[#173028]">
+                  <Check size={16} />
+                </span>
+              )}
+            </button>
           );
         })}
       </div>
-      <div className="glass mt-6 rounded-2xl p-5">
-        <label className="text-sm text-white/70">
-          <span className="flex items-center gap-2 font-medium text-white">
+
+      <div className="glass mt-6 grid gap-5 rounded-3xl p-5 md:grid-cols-[minmax(0,1fr)_minmax(16rem,24rem)] md:items-end">
+        <div>
+          <p className="flex items-center gap-2 font-medium text-white">
             <Star size={16} className="text-[var(--brand-300)]" /> Primary
-            service
-          </span>
+            business model
+          </p>
+          <p className="mt-2 text-sm leading-6 text-white/45">
+            This shapes the first website draft. Activities, destinations,
+            travel styles and categories stay flexible in Collections.
+          </p>
+        </div>
+        <label className="text-sm text-white/70">
+          <span className="sr-only">Primary business model</span>
           <select
-            name="primaryCapability"
             value={primary}
             onChange={(event) =>
-              setPrimary(event.target.value as BusinessCapability)
+              setPrimary(event.target.value as BusinessModel)
             }
-            className="mt-3 min-h-11 w-full max-w-md rounded-xl border border-white/15 bg-[#0b3027] px-3 outline-none focus:border-[var(--brand-300)]"
+            className="min-h-11 w-full rounded-xl border border-white/15 bg-[#0b3027] px-3 text-white outline-none focus:border-[var(--brand-300)]"
           >
-            {selected.map((capability) => (
-              <option key={capability} value={capability}>
-                {labels[capability]}
+            {selected.map((modelId) => (
+              <option key={modelId} value={modelId}>
+                {businessModels.find((model) => model.id === modelId)?.label}
               </option>
             ))}
           </select>
         </label>
       </div>
+
       <div className="mt-6 flex justify-end">
         <FormSubmitButton
           disabled={selected.length === 0}
-          pendingLabel="Saving service lines…"
+          pendingLabel="Saving business model…"
           className="min-h-11 rounded-xl bg-[var(--brand-500)] px-5 font-semibold text-[#173028] shadow-[0_10px_30px_rgba(91,205,87,.18)]"
         >
-          <BriefcaseBusiness size={18} /> Save service lines
+          <BriefcaseBusiness size={18} /> Save business model
         </FormSubmitButton>
       </div>
     </form>

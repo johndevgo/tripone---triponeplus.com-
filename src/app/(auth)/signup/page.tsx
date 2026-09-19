@@ -67,10 +67,10 @@ export default async function Signup({
         <Button type="submit">Create my workspace</Button>
       </form>
       <p className="mt-4 text-xs leading-5 text-white/40">
-        Founding accounts include three years of free access. Accounts with no
-        sign-in for 60 days may be permanently removed under the retention
-        policy. If you opt into emails, that address may remain subscribed after
-        account deletion until you unsubscribe.
+        Founding accounts include the free period shown on our pricing page.
+        Accounts with no sign-in for 60 days may be permanently removed under
+        the retention policy. If you opt into emails, that address may remain
+        subscribed after account deletion until you unsubscribe.
       </p>
       <p className="mt-6 text-center text-sm text-white/55">
         Already have an account?{" "}

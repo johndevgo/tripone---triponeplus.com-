@@ -2,7 +2,6 @@ const defaultAppHosts = new Set([
   "triponeplus.com",
   "www.triponeplus.com",
   "app.triponeplus.com",
-  "tools.neurerohan.com.np",
   "localhost",
   "127.0.0.1",
 ]);

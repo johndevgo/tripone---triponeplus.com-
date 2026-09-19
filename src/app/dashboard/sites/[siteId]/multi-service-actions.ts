@@ -50,7 +50,7 @@ export async function saveCapabilities(formData: FormData) {
   });
   if (error) redirect(messagePath(path, "error", error.message));
   revalidatePath(path);
-  redirect(messagePath(path, "message", "Service lines updated"));
+  redirect(messagePath(path, "message", "Business model updated"));
 }
 
 export async function saveRentalProduct(formData: FormData) {

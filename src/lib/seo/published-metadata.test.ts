@@ -6,12 +6,10 @@ describe("published metadata", () => {
     expect(
       canonicalUrl(
         "/experiences/sunset-tour",
-        "https://tools.neurerohan.com.np/s/dubai-wave",
+        "https://triponeplus.com/s/dubai-wave",
         "/experiences/sunset-tour",
       ),
-    ).toBe(
-      "https://tools.neurerohan.com.np/s/dubai-wave/experiences/sunset-tour",
-    );
+    ).toBe("https://triponeplus.com/s/dubai-wave/experiences/sunset-tour");
   });
 
   it("supports safe absolute canonical overrides and rejects script URLs", () => {

@@ -62,10 +62,11 @@ export default async function TaxonomiesPage({
       <p className="text-sm font-medium text-[#95EE8E]">
         Information architecture
       </p>
-      <h1 className="mt-2 text-3xl font-semibold">Taxonomies</h1>
+      <h1 className="mt-2 text-3xl font-semibold">Collections</h1>
       <p className="mt-2 max-w-2xl text-white/45">
-        Organize experiences and rentals without generating empty public pages.
-        Terms remain draft until they have useful content and assignments.
+        Organize offerings by activity, destination, travel style, package
+        category or product category. A collection stays private until it has
+        useful content and assigned inventory.
       </p>
       <nav
         aria-label="Taxonomy type"

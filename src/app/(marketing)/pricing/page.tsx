@@ -1,25 +1,25 @@
 import type { Metadata } from "next";
 import { ArrowRight, Check, ChevronRight, Sparkles } from "lucide-react";
 import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
-import {
-  defaultPlatformSettings,
-  formatPlanPrice,
-} from "@/lib/platform/config";
-import { createPublicClient } from "@/lib/supabase/public";
-import { isSupabaseConfigured } from "@/lib/supabase/env";
+import { formatFreePeriod, formatPlanPrice } from "@/lib/platform/config";
+import { getPublicPlatformSettings } from "@/lib/platform/public-settings";
 
-export const metadata: Metadata = {
-  title: "Pricing",
-  description:
-    "Get TripOne+ free for three years, then continue for NPR 4,999 per year. No payment details required to start.",
-  alternates: { canonical: "/pricing" },
-  openGraph: {
-    title: "TripOne+ founding plan pricing",
-    description:
-      "Three years free, then NPR 4,999 per year. No payment details required to start.",
-    url: "/pricing",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getPublicPlatformSettings();
+  const freePeriod = formatFreePeriod(settings.foundingFreeYears);
+  const renewal = formatPlanPrice(settings.annualPrice, settings.currency);
+  const description = `Build with TripOne+ free for ${freePeriod}, then continue for ${renewal} per year. No payment details required to start.`;
+  return {
+    title: "Pricing",
+    description,
+    alternates: { canonical: "/pricing" },
+    openGraph: {
+      title: "TripOne+ founding plan pricing",
+      description,
+      url: "/pricing",
+    },
+  };
+}
 
 const included = [
   "Tourism-aware onboarding and deterministic generation",
@@ -32,7 +32,8 @@ const included = [
 ];
 
 export default async function Pricing() {
-  const settings = await getPricing();
+  const settings = await getPublicPlatformSettings();
+  const freePeriod = formatFreePeriod(settings.foundingFreeYears);
   const renewal = formatPlanPrice(settings.annualPrice, settings.currency);
   return (
     <>
@@ -41,12 +42,11 @@ export default async function Pricing() {
           <Sparkles size={15} /> Founding access
         </p>
         <h1 className="marketing-title mt-6">
-          Three years free. One simple annual price after that.
+          {freePeriod} free. One simple annual price after that.
         </h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/60">
-          Build, customize and publish for {settings.foundingFreeYears} full
-          years without entering payment information. Continue afterward for{" "}
-          {renewal} per year.
+          Build, customize and publish for {freePeriod} without entering payment
+          information. Continue afterward for {renewal} per year.
         </p>
       </section>
 
@@ -63,7 +63,7 @@ export default async function Pricing() {
                   $0
                 </span>
                 <span className="pb-2 text-white/45">
-                  for your first {settings.foundingFreeYears} years
+                  for your first {freePeriod}
                 </span>
               </div>
             </div>
@@ -104,7 +104,7 @@ export default async function Pricing() {
           {[
             [
               "Will TripOne+ always be free?",
-              `Your founding access is free for ${settings.foundingFreeYears} years. Continued access is currently set at ${renewal} per year after that period.`,
+              `Your founding access is free for ${freePeriod}. Continued access is currently set at ${renewal} per year after that period.`,
             ],
             [
               "Do I need a credit card?",
@@ -134,24 +134,4 @@ export default async function Pricing() {
       </section>
     </>
   );
-}
-
-async function getPricing() {
-  if (!isSupabaseConfigured()) return defaultPlatformSettings;
-  try {
-    const { data } = await createPublicClient()
-      .from("platform_settings")
-      .select("founding_free_years,annual_price,currency")
-      .eq("id", 1)
-      .single();
-    if (!data) return defaultPlatformSettings;
-    return {
-      ...defaultPlatformSettings,
-      foundingFreeYears: data.founding_free_years,
-      annualPrice: Number(data.annual_price),
-      currency: data.currency,
-    };
-  } catch {
-    return defaultPlatformSettings;
-  }
 }

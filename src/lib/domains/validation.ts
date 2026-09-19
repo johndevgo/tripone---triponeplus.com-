@@ -4,7 +4,6 @@ const reservedTripOneHosts = new Set([
   "triponeplus.com",
   "www.triponeplus.com",
   "app.triponeplus.com",
-  "tools.neurerohan.com.np",
 ]);
 
 export const hostnameSchema = z

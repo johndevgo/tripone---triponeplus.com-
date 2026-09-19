@@ -44,7 +44,7 @@ begin
   perform public.submit_analytics_event(
     jsonb_build_object(
       'deliveryMode','fallback','siteSlug','fallback-delivery-test',
-      'hostname','tools.neurerohan.com.np','eventName','page_view',
+      'hostname','triponeplus.com','eventName','page_view',
       'pagePath','/s/fallback-delivery-test','sessionId','fallbacksession1234',
       'deviceCategory','desktop'
     ),
@@ -53,7 +53,7 @@ begin
   perform public.submit_analytics_event(
     jsonb_build_object(
       'deliveryMode','fallback','siteSlug','fallback-delivery-test',
-      'hostname','tools.neurerohan.com.np','eventName','rental_view',
+      'hostname','triponeplus.com','eventName','rental_view',
       'rentalProductId',target_rental,
       'pagePath','/s/fallback-delivery-test/rentals/fallback-boat',
       'sessionId','fallbacksession1234','deviceCategory','desktop'
@@ -63,7 +63,7 @@ begin
   lead_id := public.submit_public_lead(
     jsonb_build_object(
       'deliveryMode','fallback','siteSlug','fallback-delivery-test',
-      'hostname','tools.neurerohan.com.np','siteId',target_site,
+      'hostname','triponeplus.com','siteId',target_site,
       'name','Fallback Visitor','email','visitor@example.invalid',
       'sourcePage','/contact','website',''
     ),

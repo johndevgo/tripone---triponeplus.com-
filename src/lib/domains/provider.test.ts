@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { addProviderDomain } from "./provider";
+import { addProviderDomain, verifyProviderDomain } from "./provider";
 
 const originalEnv = { ...process.env };
 
@@ -45,6 +45,83 @@ describe("Vercel domain verification", () => {
       domain: "booking",
       value: "cname.vercel-dns.com",
     });
+  });
+
+  it("shows one ranked route record and a separate ownership challenge", async () => {
+    configureProvider();
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(
+          response({
+            verified: false,
+            verification: [
+              {
+                type: "CNAME",
+                domain: "booking",
+                value: "cname.vercel-dns.com",
+              },
+              {
+                type: "TXT",
+                domain: "_vercel",
+                value: "vc-domain-verify=example",
+              },
+            ],
+          }),
+        )
+        .mockResolvedValueOnce(
+          response({
+            misconfigured: true,
+            recommendedCNAME: [
+              { value: "cname.vercel-dns.com", rank: 10 },
+              { value: "project.vercel-dns-017.com", rank: 1 },
+            ],
+          }),
+        ),
+    );
+    const result = await addProviderDomain("booking.example.com");
+    expect(result.records).toEqual([
+      {
+        type: "CNAME",
+        domain: "booking",
+        value: "project.vercel-dns-017.com",
+      },
+      {
+        type: "TXT",
+        domain: "_vercel",
+        value: "vc-domain-verify=example",
+        reason: undefined,
+      },
+    ]);
+  });
+
+  it("keeps a manual verification check pending when Vercel returns 400", async () => {
+    configureProvider();
+    vi.stubGlobal(
+      "fetch",
+      vi
+        .fn()
+        .mockResolvedValueOnce(response({ message: "not verified" }, 400))
+        .mockResolvedValueOnce(response({ verified: false }))
+        .mockResolvedValueOnce(
+          response({
+            misconfigured: true,
+            recommendedCNAME: [
+              { value: "project.vercel-dns-017.com", rank: 1 },
+            ],
+          }),
+        ),
+    );
+    const result = await verifyProviderDomain("booking.example.com");
+    expect(result.verified).toBe(false);
+    expect(result.records).toEqual([
+      {
+        type: "CNAME",
+        domain: "booking",
+        value: "project.vercel-dns-017.com",
+      },
+    ]);
   });
 });
 

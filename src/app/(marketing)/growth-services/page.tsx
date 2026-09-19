@@ -14,7 +14,10 @@ import {
 } from "lucide-react";
 import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import { ButtonLink } from "@/components/ui/button";
+import { tripOneSupport } from "@/content/support";
 import { getAppUrl } from "@/lib/app-url";
+import { formatFreePeriod } from "@/lib/platform/config";
+import { getPublicPlatformSettings } from "@/lib/platform/public-settings";
 
 export const metadata: Metadata = {
   title: "Tourism marketing and growth services",
@@ -86,7 +89,8 @@ const faqs = [
   },
 ];
 
-export default function GrowthServicesPage() {
+export default async function GrowthServicesPage() {
+  const plan = await getPublicPlatformSettings();
   const schema = {
     "@context": "https://schema.org",
     "@type": "Service",
@@ -118,7 +122,7 @@ export default function GrowthServicesPage() {
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <ButtonLink
-              href="mailto:neurerohan@gmail.com?subject=TripOne%2B%20growth%20services"
+              href={tripOneSupport.whatsappHref}
               className="min-h-13 px-7 text-base"
             >
               Discuss growth services <ArrowRight size={18} />
@@ -196,7 +200,7 @@ export default function GrowthServicesPage() {
           </p>
           <ul className="mt-7 grid gap-3 text-sm text-white/65">
             {[
-              "Three founding years free",
+              `${formatFreePeriod(plan.foundingFreeYears)} of founding access free`,
               "Ten professional themes",
               "No card required to start",
             ].map((item) => (
@@ -234,7 +238,7 @@ export default function GrowthServicesPage() {
             priorities.
           </p>
           <ButtonLink
-            href="mailto:neurerohan@gmail.com?subject=TripOne%2B%20growth%20services"
+            href={tripOneSupport.whatsappHref}
             variant="secondary"
             className="mt-8"
           >

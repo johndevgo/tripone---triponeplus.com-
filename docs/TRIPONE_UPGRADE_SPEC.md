@@ -23,7 +23,7 @@ The existing authenticated dashboard, Supabase ownership model, shared site rend
 - Every site owns five controlled taxonomies: activities, destinations, travel styles, package categories, and product categories. Terms may be nested only inside the same site and taxonomy; cycles are rejected in PostgreSQL.
 - Assignments carry `site_id` and use composite foreign keys so records cannot be related across tenants, even if an application bug bypasses UI validation.
 - Public rendering reads immutable published snapshots. Part 4 records are added to the snapshot graph only when published or otherwise eligible.
-- The public URL order is: verified customer primary domain, verified platform hostname, then `https://tools.neurerohan.com.np/s/{siteSlug}`. An unowned `*.triponeplus.com` hostname is never presented as live.
+- The public URL order is: verified customer primary domain, then `https://triponeplus.com/s/{siteSlug}`. An unowned `*.triponeplus.com` hostname is never presented as live.
 - Page sections remain typed JSON. No arbitrary HTML, arbitrary CSS, or server-side evaluation of tenant code is allowed.
 - Templates are shared typed section recipes with versioned inheritance; record overrides are explicit and reversible.
 - Tracking integrations are typed IDs. Advanced code is restricted to isolated verified tenant origins and is never evaluated on the app, preview, or `/s` fallback.

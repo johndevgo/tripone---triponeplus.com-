@@ -17,7 +17,7 @@
 - [x] Repository default branch is `main` and GitHub Actions passes
 - [x] Vercel project is connected to the GitHub repository
 - [x] Production environment variables required by the deployed application are configured
-- [ ] `triponeplus.com` is primary; `www.triponeplus.com` and `tools.neurerohan.com.np` redirect to it
+- [ ] `triponeplus.com` is primary; `www.triponeplus.com` may redirect to it
 - [ ] Cloudflare apex and `www` records match Vercel's displayed records
 - [ ] `VERCEL_TOKEN`, project ID and optional team ID enable domain provisioning
 - [x] Production deployment protection does not block customer websites

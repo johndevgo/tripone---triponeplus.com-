@@ -4,16 +4,14 @@ import { publicGenerationError } from "./onboarding-errors";
 
 describe("application URL configuration", () => {
   it("accepts one absolute application origin", () => {
-    expect(parseAppUrl("https://tools.neurerohan.com.np/")).toBe(
-      "https://tools.neurerohan.com.np",
+    expect(parseAppUrl("https://triponeplus.com/")).toBe(
+      "https://triponeplus.com",
     );
   });
 
   it("rejects the earlier comma-separated URL mistake", () => {
     expect(() =>
-      parseAppUrl(
-        "https://tools.neurerohan.com.np,tripone-triponeplus-com.vercel.app",
-      ),
+      parseAppUrl("https://triponeplus.com,tripone-triponeplus-com.vercel.app"),
     ).toThrow(/one absolute URL/);
   });
 });

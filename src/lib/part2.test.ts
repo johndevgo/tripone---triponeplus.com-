@@ -135,13 +135,7 @@ describe("structured discovery outputs", () => {
       "Sitemap: https://example.com/sitemap.xml",
     );
     expect(
-      buildRobots(
-        "https://tools.neurerohan.com.np",
-        true,
-        "/s/nepal-rides/sitemap",
-      ),
-    ).toContain(
-      "Sitemap: https://tools.neurerohan.com.np/s/nepal-rides/sitemap",
-    );
+      buildRobots("https://triponeplus.com", true, "/s/nepal-rides/sitemap"),
+    ).toContain("Sitemap: https://triponeplus.com/s/nepal-rides/sitemap");
   });
 });

@@ -27,8 +27,11 @@ import { MarketingHeader } from "@/components/marketing/header";
 import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import { ResourceCard } from "@/components/marketing/resource-card";
 import { ButtonLink } from "@/components/ui/button";
+import { marketingImages } from "@/content/marketing-assets";
 import { resources } from "@/content/resources";
 import { getAppUrl } from "@/lib/app-url";
+import { formatFreePeriod, formatPlanPrice } from "@/lib/platform/config";
+import { getPublicPlatformSettings } from "@/lib/platform/public-settings";
 
 export const metadata: Metadata = {
   title: "Tourism website builder and booking operations platform",
@@ -39,51 +42,51 @@ export const metadata: Metadata = {
 
 const categoryCards = [
   {
-    label: "Water sports",
-    description: "Jet skis, diving, snorkelling and guided water activities.",
-    image: "/images/marketing/ocean-hero.webp",
+    label: "Guided tours & activities",
+    description:
+      "City walks, day tours, local guides and bookable experiences.",
+    image: marketingImages.city,
   },
   {
-    label: "Tours & guides",
-    description: "Day tours, local guides, excursions and city experiences.",
-    image: "/images/marketing/local-guide.webp",
+    label: "Travel packages",
+    description: "Multi-day itineraries, departures, inclusions and enquiries.",
+    image: marketingImages.rail,
   },
   {
-    label: "Trekking",
-    description: "Hikes, treks, routes, difficulty and multi-day details.",
-    image: "/images/marketing/bhutan-trekking-vehicle.webp",
+    label: "Adventure & nature",
+    description: "Hikes, waterfalls, outdoor activities and guided routes.",
+    image: marketingImages.jungle,
   },
   {
     label: "Safaris",
     description: "Itineraries, wildlife context, guides and pickup details.",
-    image: "/images/marketing/safari-dawn.webp",
+    image: marketingImages.jungleSafari,
   },
   {
-    label: "Boat rentals",
-    description: "Fleet, capacity, rates and quote-led journeys.",
-    image: "/images/marketing/coastal-yacht.webp",
-  },
-  {
-    label: "Diving",
-    description: "Trip types, requirements, equipment and locations.",
-    image: "/images/marketing/reef-diving.webp",
-  },
-  {
-    label: "Transfers",
-    description: "Routes, pickup details, vehicles, passengers and luggage.",
-    image: "/images/marketing/airport-transfer.webp",
-  },
-  {
-    label: "ATV adventures",
+    label: "Rentals",
     description:
-      "Time slots, safety requirements, guides and finite resources.",
-    image: "/images/marketing/desert-atv.webp",
+      "Vehicles, boats, equipment, capacity, rates and availability.",
+    image: marketingImages.luxuryYacht,
   },
   {
-    label: "Travel packages",
-    description:
-      "Multi-day itineraries, destinations, inclusions and enquiries.",
-    image: "/images/marketing/bhutan-jeep-tour.webp",
+    label: "Wellness retreats",
+    description: "Retreat schedules, stays, teachers and package details.",
+    image: marketingImages.wellness,
+  },
+  {
+    label: "Culture & food",
+    description: "Markets, heritage, local stories and small-group tours.",
+    image: marketingImages.market,
+  },
+  {
+    label: "Desert & plains",
+    description: "Camps, camel journeys, cultural stops and transfers.",
+    image: marketingImages.desert,
+  },
+  {
+    label: "Stays & escapes",
+    description: "Distinctive accommodation, seasonal packages and add-ons.",
+    image: marketingImages.arctic,
   },
 ];
 
@@ -142,10 +145,10 @@ const proofPoints: Array<[LucideIcon, string]> = [
 ];
 
 const themePreviews = [
-  ["Horizon", "/images/marketing/ocean-hero.webp", "rounded-[1.8rem]"],
-  ["Luxe Voyage", "/images/marketing/coastal-yacht.webp", "rounded-sm"],
-  ["Summit", "/images/marketing/mountain-trek.webp", "rounded-lg"],
-  ["Nomad", "/images/marketing/local-guide.webp", "rounded-none"],
+  ["Horizon", marketingImages.city, "rounded-[1.8rem]"],
+  ["Luxe Voyage", marketingImages.luxuryYacht, "rounded-sm"],
+  ["Summit", marketingImages.jungle, "rounded-lg"],
+  ["Nomad", marketingImages.wellness, "rounded-none"],
 ] as const;
 
 const faqs = [
@@ -171,7 +174,10 @@ const faqs = [
   },
 ];
 
-export default function Home() {
+export default async function Home() {
+  const plan = await getPublicPlatformSettings();
+  const freePeriod = formatFreePeriod(plan.foundingFreeYears);
+  const renewal = formatPlanPrice(plan.annualPrice, plan.currency);
   const origin = getAppUrl("https://triponeplus.com");
   const structuredData = [
     {
@@ -186,8 +192,8 @@ export default function Home() {
       offers: {
         "@type": "Offer",
         price: "0",
-        priceCurrency: "NPR",
-        description: "Free for the first three years, then NPR 4,999 per year",
+        priceCurrency: plan.currency,
+        description: `Free for the first ${freePeriod}, then ${renewal} per year`,
       },
     },
     {
@@ -226,8 +232,8 @@ export default function Home() {
       <section className="app-bg relative isolate min-h-[52rem] overflow-hidden px-5 pb-24 pt-36 text-white lg:min-h-[58rem] lg:pb-28 lg:pt-44">
         <MarketingHeader />
         <Image
-          src="/images/marketing/ocean-hero.webp"
-          alt="A jet ski crossing clear coastal water at golden hour"
+          src={marketingImages.city}
+          alt="Travellers exploring a historic city with a local guide"
           fill
           preload
           sizes="100vw"
@@ -242,13 +248,13 @@ export default function Home() {
               tourism, not everything
             </p>
             <h1 className="mt-7 max-w-4xl text-balance text-5xl font-semibold leading-[.98] tracking-[-.052em] sm:text-6xl lg:text-[5.25rem]">
-              Sell the experience.{" "}
-              <span className="text-[#95ee8e]">Run the operation.</span>
+              The SEO-first website builder.{" "}
+              <span className="text-[#95ee8e]">Built for travel sales.</span>
             </h1>
             <p className="mt-7 max-w-2xl text-lg leading-8 text-white/70 sm:text-xl">
               Build a fast, polished website—then manage packages, booking
-              requests, availability, resources, leads and customers from the
-              same tourism-native workspace.
+              requests, customers, availability and marketing from the same
+              tourism-native workspace.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <MarketingPrimaryCta
@@ -267,7 +273,7 @@ export default function Home() {
             </div>
             <div className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm text-white/65">
               {[
-                "Free for your first 3 years",
+                `Free for your first ${freePeriod}`,
                 "No AI API",
                 "Preview before publishing",
               ].map((label) => (
@@ -287,7 +293,7 @@ export default function Home() {
                       <Compass size={17} />
                     </div>
                     <div>
-                      <p className="text-sm font-semibold">Dubai Wave</p>
+                      <p className="text-sm font-semibold">Atlas Journeys</p>
                       <p className="text-[11px] text-[#647a72]">
                         Website preview
                       </p>
@@ -299,7 +305,7 @@ export default function Home() {
                 </div>
                 <div className="relative m-3 min-h-[23rem] overflow-hidden rounded-2xl">
                   <Image
-                    src="/images/marketing/ocean-hero.webp"
+                    src={marketingImages.rail}
                     alt=""
                     fill
                     sizes="36rem"
@@ -308,13 +314,13 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-[#022f0e]/95 via-[#022f0e]/25 to-transparent" />
                   <div className="absolute inset-x-0 bottom-0 p-6 text-white">
                     <p className="text-xs font-semibold uppercase tracking-[.18em] text-[#95ee8e]">
-                      Dubai Marina
+                      Alpine rail journey
                     </p>
                     <h2 className="mt-3 text-3xl font-semibold tracking-tight">
-                      Jet ski experiences made clear.
+                      A complete journey, ready to compare.
                     </h2>
                     <p className="mt-3 text-sm text-white/65">
-                      Compare durations, routes and booking details.
+                      Explore the itinerary, inclusions and departure options.
                     </p>
                   </div>
                 </div>

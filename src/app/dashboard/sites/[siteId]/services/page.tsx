@@ -34,12 +34,11 @@ export default async function ServicesPage({
     <div className="mx-auto max-w-6xl">
       <p className="text-sm font-medium text-[#95EE8E]">Business model</p>
       <h1 className="mt-2 text-3xl font-semibold tracking-tight">
-        Your service lines
+        What does your business sell?
       </h1>
       <p className="mt-2 max-w-2xl text-white/50">
-        Select everything this business genuinely offers. The primary service
-        guides recommendations; every experience and rental still keeps its own
-        subtype.
+        Choose one or more broad operating areas. Organize detailed activities,
+        destinations, travel styles and product categories in Collections.
       </p>
       {feedback.message && (
         <p className="mt-5 rounded-xl bg-emerald-400/10 p-3 text-sm text-emerald-200">

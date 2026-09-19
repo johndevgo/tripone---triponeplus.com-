@@ -1,8 +1,8 @@
 export const defaultPlatformSettings = {
-  foundingFreeYears: 3,
+  foundingFreeYears: 1,
   inactivityDays: 60,
-  annualPrice: 4999,
-  currency: "NPR",
+  annualPrice: 99,
+  currency: "USD",
   retentionEnabled: true,
 } as const;
 
@@ -35,4 +35,8 @@ export function formatPlanPrice(price: number, currency: string) {
   } catch {
     return `${currency} ${price.toLocaleString("en")}`;
   }
+}
+
+export function formatFreePeriod(years: number) {
+  return `${years} ${years === 1 ? "year" : "years"}`;
 }

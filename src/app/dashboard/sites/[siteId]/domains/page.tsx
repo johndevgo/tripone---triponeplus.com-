@@ -81,9 +81,7 @@ export default async function Domains({
           {(domains ?? []).map((domain) => {
             const dns = getDnsFallback(domain.hostname);
             const provider = object(domain.provider_data);
-            const records = Array.isArray(provider.records)
-              ? provider.records
-              : [];
+            const records = recordsForDisplay(provider.records);
             const ready =
               domain.verification_status === "verified" &&
               provider.dnsConfigured === true;
@@ -142,7 +140,7 @@ export default async function Domains({
                 </div>
                 {domain.domain_type === "custom" && !ready && (
                   <div className="mt-5 rounded-xl bg-white/[.04] p-4 text-sm">
-                    <p className="font-medium">DNS records</p>
+                    <p className="font-medium">Required DNS setup</p>
                     {records.length > 0 ? (
                       records.map((record, index) => {
                         const item = object(record);
@@ -165,6 +163,15 @@ export default async function Domains({
                       <p className="mt-3 text-xs text-amber-100/70">
                         Add VERCEL_TOKEN and VERCEL_PROJECT_ID to enable
                         verified provisioning.
+                      </p>
+                    )}
+                    {configured && (
+                      <p className="mt-3 text-xs leading-5 text-white/45">
+                        Add each record once at the DNS provider that manages
+                        this domain. Remove any conflicting A, AAAA or CNAME
+                        record for the same name, wait for propagation, then
+                        choose Check DNS. Do not add multiple CNAME values for
+                        one hostname.
                       </p>
                     )}
                   </div>
@@ -232,7 +239,7 @@ export default async function Domains({
             <input
               name="hostname"
               required
-              placeholder="dubaiwavejetski.com"
+              placeholder="booking.yourtourcompany.com"
               className="mt-2 min-h-11 w-full rounded-xl border border-white/10 bg-black/20 px-4"
             />
           </label>
@@ -293,4 +300,22 @@ function object(value: unknown): Record<string, unknown> {
   return value && typeof value === "object" && !Array.isArray(value)
     ? (value as Record<string, unknown>)
     : {};
+}
+
+function recordsForDisplay(value: unknown) {
+  if (!Array.isArray(value)) return [];
+  const records = value.map(object).filter((record) => {
+    return (
+      typeof record.type === "string" &&
+      typeof record.domain === "string" &&
+      typeof record.value === "string"
+    );
+  });
+  const route = records.find(
+    (record) => String(record.type).toUpperCase() !== "TXT",
+  );
+  const ownership = records.filter(
+    (record) => String(record.type).toUpperCase() === "TXT",
+  );
+  return route ? [route, ...ownership] : ownership;
 }

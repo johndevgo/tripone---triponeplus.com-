@@ -105,9 +105,9 @@ describe("Part 4 catalogue", () => {
             is_primary: true,
           },
         ],
-        "https://tools.neurerohan.com.np",
+        "https://triponeplus.com",
       ),
-    ).toBe("https://tools.neurerohan.com.np/s/nepal-rides");
+    ).toBe("https://triponeplus.com/s/nepal-rides");
     expect(
       currentPublicSiteUrl(
         "nepal-rides",
@@ -118,9 +118,9 @@ describe("Part 4 catalogue", () => {
             is_primary: true,
           },
         ],
-        "https://tools.neurerohan.com.np",
+        "https://triponeplus.com",
       ),
-    ).toBe("https://tools.neurerohan.com.np/s/nepal-rides");
+    ).toBe("https://triponeplus.com/s/nepal-rides");
     expect(
       currentPublicSiteUrl(
         "nepal-rides",
@@ -131,7 +131,7 @@ describe("Part 4 catalogue", () => {
             is_primary: true,
           },
         ],
-        "https://tools.neurerohan.com.np",
+        "https://triponeplus.com",
       ),
     ).toBe("https://nepalrides.example");
   });

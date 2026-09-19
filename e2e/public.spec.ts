@@ -4,7 +4,7 @@ test("marketing and auth entry points are usable", async ({ page }) => {
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: /sell the experience.*run the operation/i,
+      name: /seo-first website builder.*built for travel sales/i,
     }),
   ).toBeVisible();
   await expect(
@@ -22,9 +22,9 @@ test("founding pricing and protected consoles are explicit", async ({
 }) => {
   await page.goto("/pricing");
   await expect(
-    page.getByRole("heading", { name: /three years free/i }),
+    page.getByRole("heading", { name: /\d+ years? free/i }),
   ).toBeVisible();
-  await expect(page.getByText(/NPR\s*4,999/i).first()).toBeVisible();
+  await expect(page.getByText(/per year/i).first()).toBeVisible();
 
   await page.goto("/admin/dashboard");
   await expect(page).toHaveURL(/\/login/);
@@ -46,7 +46,7 @@ test("growth studio is useful, honest and connected to the platform", async ({
   await expect(page.getByText(/do you guarantee rankings/i)).toBeVisible();
   await expect(
     page.getByRole("link", { name: /discuss growth services/i }),
-  ).toHaveAttribute("href", /^mailto:neurerohan@gmail\.com/);
+  ).toHaveAttribute("href", /^https:\/\/wa\.me\/9779745801189/);
   const schemas = await page
     .locator('script[type="application/ld+json"]')
     .allTextContents();
@@ -120,6 +120,7 @@ test("marketing navigation has no broken internal destinations", async ({
   page,
   request,
 }) => {
+  test.setTimeout(90_000);
   const hrefs = new Set<string>();
   for (const route of [
     "/",

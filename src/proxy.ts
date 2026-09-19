@@ -138,7 +138,6 @@ function canonicalAppUrl(request: NextRequest, hostname: string) {
   );
   if (destinationOrigin.hostname === "triponeplus.com") {
     configured.add("www.triponeplus.com");
-    configured.add("tools.neurerohan.com.np");
   }
   if (!configured.has(hostname) || destinationOrigin.hostname === hostname)
     return null;
