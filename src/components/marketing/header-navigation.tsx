@@ -27,8 +27,8 @@ export function HeaderNavigation({
     : (["Build your website", "/signup"] as const);
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-3 z-[100] isolate px-3 sm:px-5">
-      <div className="pointer-events-auto mx-auto max-w-7xl overflow-hidden rounded-2xl border border-white/15 bg-[#052a11]/92 shadow-[0_18px_60px_rgba(0,30,8,.3)] backdrop-blur-2xl backdrop-saturate-150">
+    <header className="pointer-events-none fixed inset-x-0 top-3 z-[1000] isolate px-3 sm:px-5">
+      <div className="pointer-events-auto mx-auto max-w-7xl overflow-visible rounded-2xl border border-white/20 bg-[#07391f]/82 shadow-[0_18px_60px_rgba(0,30,8,.3)] backdrop-blur-2xl backdrop-saturate-150">
         <div className="flex min-h-[4.5rem] items-center justify-between gap-5 px-4 sm:px-5 lg:px-7">
           <Logo light />
           <nav

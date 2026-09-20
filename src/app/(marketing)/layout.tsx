@@ -30,7 +30,7 @@ export default function MarketingLayout({
     ],
   };
   return (
-    <div className="app-bg relative min-h-screen overflow-hidden text-white">
+    <div className="app-bg relative min-h-screen overflow-x-clip text-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{

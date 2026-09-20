@@ -28,7 +28,7 @@ export async function MarketingFooter() {
           title="Product"
           links={[
             ["Features", "/features"],
-            ["Growth services", "/growth-services"],
+            ["Growth services", "/services"],
             ["Templates", "/templates"],
             ["Pricing", "/pricing"],
             ["Log in", "/login"],
@@ -75,9 +75,9 @@ function SupportLinks() {
             target={href.startsWith("http") ? "_blank" : undefined}
             rel={href.startsWith("http") ? "noreferrer" : undefined}
             aria-label={`${label} support`}
-            className="group flex min-h-12 items-center gap-3 rounded-xl border border-white/[.07] bg-white/[.035] px-3 text-white/70 transition hover:border-emerald-300/25 hover:bg-white/[.08] hover:text-white"
+            className="group flex min-h-12 items-center gap-3 rounded-xl border border-emerald-300/10 bg-emerald-300/[.045] px-3 text-white/75 transition hover:-translate-y-0.5 hover:border-emerald-300/30 hover:bg-emerald-300/[.1] hover:text-white"
           >
-            <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-emerald-300/15 bg-emerald-300/[.09] text-[#95ee8e] transition group-hover:border-emerald-300/35 group-hover:bg-emerald-300/[.14]">
+            <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-[#95ee8e]/25 bg-[#5bcd57]/15 text-[#b8ffb0] shadow-[0_8px_24px_rgba(91,205,87,.1)] transition group-hover:border-[#95ee8e]/45 group-hover:bg-[#5bcd57]/25">
               <Icon width={18} height={18} aria-hidden="true" />
             </span>
             {label}

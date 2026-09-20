@@ -32,7 +32,7 @@ export async function seoMetadataForRoute(
   const page = await seoPageForRoute(namespace, props);
   const image = getSeoPageImage(page);
   return {
-    title: page.metaTitle,
+    title: { absolute: page.metaTitle },
     description: page.metaDescription,
     keywords: [
       page.primaryKeyword,

@@ -27,6 +27,27 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives the first ten growth-service pages distinct service-specific plans", () => {
+    const batch = seoPages.slice(0, 10);
+    expect(batch.every((page) => page.pageType === "Growth Service")).toBe(
+      true,
+    );
+    const bodies = batch.map((page) =>
+      buildSeoContent(page)
+        .flatMap((section) => [
+          section.heading,
+          ...section.paragraphs,
+          ...(section.bullets ?? []),
+        ])
+        .join(" "),
+    );
+    expect(new Set(bodies).size).toBe(10);
+    for (const body of bodies) {
+      expect(body).toContain("Measurement and evidence");
+      expect(body).toContain("A practical 30, 60 and 90-day roadmap");
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);
@@ -75,6 +96,14 @@ describe("SEO content catalog", () => {
           entity.toLocaleLowerCase("en"),
         );
       }
+    }
+  });
+
+  it("answers at least seven visible questions on every catalog page", () => {
+    for (const page of seoPages) {
+      const faqs = buildSeoFaqs(page);
+      expect(faqs.length, `${page.path} FAQ depth`).toBeGreaterThanOrEqual(7);
+      expect(new Set(faqs.map((faq) => faq.question)).size).toBe(faqs.length);
     }
   });
 });

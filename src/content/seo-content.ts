@@ -1,4 +1,5 @@
 import type { SeoPageSpec } from "./seo-catalog";
+import { buildGrowthServiceSections } from "./growth-service-content";
 
 export type SeoContentSection = {
   heading: string;
@@ -62,12 +63,12 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
   const thirdEntity = page.entities[2]!;
   const audience = page.vertical.toLowerCase();
 
-  return [
+  const sections: SeoContentSection[] = [
     {
       heading: `${page.title}: the commercial context`,
       paragraphs: [
-        `${page.title} should be treated as a ${language.subject}, not as an isolated page, campaign or administrative task. For ${audience}, the useful objective is ${page.contentAngle.charAt(0).toLowerCase()}${page.contentAngle.slice(1)} The primary search theme, ${page.primaryKeyword}, signals that the reader expects a concrete answer, a credible operating method and a next step that matches ${page.intent.toLowerCase()} intent. That means the page has to connect discovery, evaluation and action instead of repeating a keyword without resolving the underlying business decision.`,
-        `The surrounding semantic topic includes ${secondary}, while the operational entities include ${entities}. These terms belong together because travellers and operators rarely experience them as separate disciplines. A visitor may discover an offer through search or advertising, compare product information, check trust signals, ask a question, and move into a booking or follow-up workflow. Strong implementation keeps those stages connected and gives every important fact a clear source of truth.`,
+        `${page.title} should be treated as a ${language.subject}, not as an isolated page, campaign or administrative task. For ${audience}, the useful objective is ${page.contentAngle.charAt(0).toLowerCase()}${page.contentAngle.slice(1)} A reader looking for ${page.primaryKeyword} expects a concrete answer, a credible operating method and a next step that matches ${page.intent.toLowerCase()} intent. The page therefore has to connect discovery, evaluation and action instead of repeating a phrase without resolving the underlying business decision.`,
+        `Related questions include ${secondary}, while the practical work connects ${entities}. These topics belong together because travellers and operators rarely experience them as separate disciplines. A visitor may discover an offer through search or advertising, compare product information, check trust signals, ask a question, and move into a booking or follow-up workflow. Strong implementation keeps those stages connected and gives every important fact a clear source of truth.`,
         `TripOne+ approaches ${page.keywordCluster.toLowerCase()} through structured content and visible rules. The platform does not invent rankings, revenue, awards, availability or customer proof. Instead, it helps a business publish accurate services, packages, destinations, policies and conversion paths. That distinction matters for search quality and conversion: precise facts are easier to understand, maintain, measure and trust than inflated claims written only to attract clicks.`,
       ],
     },
@@ -75,7 +76,7 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
       heading: `What ${page.primaryKeyword} needs to accomplish`,
       paragraphs: [
         `A useful ${page.primaryKeyword} strategy begins by defining the decision it supports. The reader should be able to identify who the offer is for, what is included, where it applies, what happens next and which limitations remain. For ${audience}, this usually requires a clear relationship between products, packages, destinations, dates, capacity, customer records and the acquisition channel that created the interaction. When those relationships are fragmented, teams repeat work and visitors encounter inconsistent answers.`,
-        `${firstEntity}, ${secondEntity} and ${thirdEntity} are especially important within this page. ${firstEntity} supplies context for the initial decision; ${secondEntity} shapes how that decision is executed; and ${thirdEntity} helps the business validate or communicate the result. The exact configuration will vary by operator, but the principle is stable: each entity should have an owner, an update process and a defined place in the customer journey.`,
+        `${firstEntity}, ${secondEntity} and ${thirdEntity} are especially important within this work. ${firstEntity} supplies context for the initial decision; ${secondEntity} shapes how that decision is executed; and ${thirdEntity} helps the business validate or communicate the result. The exact configuration will vary by operator, but the principle is stable: each important part should have an owner, an update process and a defined place in the customer journey.`,
         `The commercial outcome is ${language.outcome}. That outcome cannot be inferred from page views alone. The business must distinguish discovery metrics from qualified enquiries, booking requests, confirmed bookings and retained customers. This page therefore uses conversion-oriented language while remaining careful about what TripOne+ currently does: it structures websites and connected payment-free operating workflows, while external processors or reservation systems may still own payment and real-time inventory when required.`,
       ],
       bullets: [
@@ -86,10 +87,10 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
       ],
     },
     {
-      heading: `Entity and information architecture for ${page.keywordCluster}`,
+      heading: `How the moving parts fit together`,
       paragraphs: [
-        `Search engines and customers both benefit when the information architecture reflects real-world entities. A travel business is an organisation; its tours, activities, rentals and packages are offers; destinations are places; departures and availability describe time and capacity; customers and leads represent people at different stages. ${page.keywordCluster} becomes easier to navigate when these entities have stable URLs, consistent names and meaningful relationships rather than being buried in one long generic page.`,
-        `For this topic, the entity set is ${entities}. Each entity should be introduced in plain language, used where it answers a question and linked to a deeper page when the reader needs more detail. Entity coverage is not a licence to repeat nouns mechanically. Semantic depth comes from explaining relationships: how ${firstEntity} affects ${secondEntity}, where ${thirdEntity} enters the workflow, which team owns the data, and what changes for the customer when the information is incomplete.`,
+        `Search engines and customers both benefit when the information architecture reflects the real business. A travel company is an organisation; its tours, activities, rentals and packages are offers; destinations are places; departures and availability describe time and capacity; customers and leads represent people at different stages. ${page.keywordCluster} becomes easier to navigate when these parts have stable URLs, consistent names and meaningful relationships rather than being buried in one long generic page.`,
+        `For this topic, the connected areas are ${entities}. Each should be introduced in plain language, used where it answers a question and linked to a deeper page when the reader needs more detail. Useful depth comes from explaining relationships: how ${firstEntity} affects ${secondEntity}, where ${thirdEntity} enters the workflow, which team owns the information, and what changes for the customer when something is incomplete.`,
         `A strong hub-and-spoke structure gives ${page.title} a clear role. The hub explains the complete problem and routes readers to specialist services, tools, templates, comparisons or platform capabilities. Supporting pages answer narrower questions and link back with descriptive anchor text. This creates contextual internal linking without manufacturing dozens of location-and-keyword combinations that offer no distinct value.`,
       ],
     },
@@ -102,7 +103,7 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
       ],
       bullets: [
         `Audit the current source material and establish a baseline for ${language.evidence}.`,
-        `Model the important entities and their relationships before designing templates.`,
+        `Model the important records and relationships before designing templates.`,
         `Build one complete mobile-first journey and test it with realistic data.`,
         `Document ownership, review intervals and escalation rules.`,
         `Expand only after the first workflow is accurate, accessible and measurable.`,
@@ -110,9 +111,9 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
     },
     buildTypeSpecificSection(page),
     {
-      heading: `SEO depth without keyword stuffing`,
+      heading: `Useful depth without repetition`,
       paragraphs: [
-        `The primary keyword ${page.primaryKeyword} belongs in the page title, main heading, opening explanation and selected subheadings because it accurately describes the topic. The supporting phrases ${secondary} provide useful variants, but forcing an exact percentage would make the copy repetitive and less trustworthy. Modern search optimisation is stronger when terminology follows the subject naturally and the page supplies the entities, processes, examples and limitations needed to satisfy the intent.`,
+        `${page.primaryKeyword} belongs in the page title, main heading, opening explanation and selected subheadings because it accurately describes the topic. Related questions such as ${secondary} should appear only where they help explain a real decision. Forcing an exact repetition percentage would make the copy less readable and less trustworthy. Strong content uses the language of the subject naturally and supplies the processes, examples and limitations needed to answer the visitor well.`,
         `Technical signals should reinforce that clarity. Use one canonical URL, a concise meta title, a description written for the search result, crawlable internal links, an XML sitemap entry and structured data that matches visible content. Images need useful alternative text, stable dimensions and efficient delivery. FAQ schema should reflect questions answered on the page, not hidden keyword blocks. Comparison pages should cite current first-party sources before making provider-specific claims.`,
         `Authority grows through coherent coverage rather than raw page count. This page connects ${page.keywordCluster.toLowerCase()} to adjacent commercial and operational topics, and its related links help readers continue based on their next question. Pages should be refreshed when products, platform capabilities, prices or regulations change. If a page cannot be kept accurate or provide a distinct answer, consolidating it is better than preserving it for an impression count.`,
       ],
@@ -121,7 +122,7 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
       heading: `Conversion design and user experience`,
       paragraphs: [
         `Conversion rate optimisation begins with clarity. The headline should confirm the visitor is in the right place; the introduction should frame the result; and the page should reveal proof, process and limitations before asking for commitment. The call to action “${page.cta}” is positioned as the next logical step, not as a substitute for missing information. Secondary links support readers who need a calculator, checklist, comparison or deeper platform explanation first.`,
-        `On mobile, the content must remain scannable without becoming shallow. Descriptive headings, short paragraphs, entity chips, expandable FAQs and adequately sized controls help readers move through a long guide. Images should establish context rather than interrupt the decision. Focus indicators, semantic landmarks, labelled inputs and readable contrast are necessary conversion features because a journey that excludes keyboard, low-vision or small-screen users is both less useful and commercially weaker.`,
+        `On mobile, the content must remain scannable without becoming shallow. Descriptive headings, short paragraphs, clear topic cards, expandable FAQs and adequately sized controls help readers move through a long guide. Images should establish context rather than interrupt the decision. Focus indicators, semantic landmarks, labelled inputs and readable contrast are necessary conversion features because a journey that excludes keyboard, low-vision or small-screen users is both less useful and commercially weaker.`,
         `Trust should be specific and verifiable. Show real contact routes, explain what happens after an enquiry and state whether the next step is a consultation, external booking page or TripOne+ booking request. Do not create urgency, review totals or market-leading claims without supporting data. For ${audience}, accurate expectations reduce poor-fit enquiries and give the team a better opportunity to respond well.`,
       ],
     },
@@ -148,6 +149,20 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
         `For ${page.title.toLowerCase()}, the practical next step is to ${language.audienceAction}. Use the framework above to prepare accurate inputs, then choose “${page.cta}” when the business is ready to continue. TripOne+ can provide the website and workflow foundation; specialist payment, reservation, distribution or advertising platforms can remain connected where they are the appropriate source of truth.`,
       ],
     },
+  ];
+  const specialized = buildGrowthServiceSections(page);
+  if (!specialized) return sections;
+  return [
+    specialized[0]!,
+    sections[1]!,
+    specialized[1]!,
+    sections[2]!,
+    specialized[2]!,
+    specialized[3]!,
+    sections[6]!,
+    sections[7]!,
+    specialized[4]!,
+    sections[9]!,
   ];
 }
 
@@ -257,10 +272,35 @@ function buildTypeSpecificSection(page: SeoPageSpec): SeoContentSection {
 }
 
 export function buildSeoFaqs(page: SeoPageSpec): SeoFaq[] {
-  return page.faqs.map((question, index) => ({
+  const supplied = page.faqs.map((question, index) => ({
     question,
     answer: answerQuestion(page, question, index),
   }));
+  const additional: SeoFaq[] = [
+    {
+      question: `How should ${page.primaryKeyword} be measured?`,
+      answer: `Measurement should follow the commercial journey rather than stop at traffic. Establish a baseline for discovery, qualified enquiries, booking requests and confirmed outcomes where those records are available. Review ${readableList(page.entities.slice(0, 3))} together, document attribution limits and avoid presenting an impression, click or message as revenue without supporting booking evidence.`,
+    },
+    {
+      question: `What should ${page.vertical.toLowerCase()} prepare before starting?`,
+      answer: `Prepare the current offer catalogue, destination and product information, customer questions, access to relevant systems, existing performance records and a named decision owner. Confirm which details are authoritative and which are assumptions. This makes the first working session useful and prevents a new ${page.keywordCluster.toLowerCase()} process from reproducing outdated information.`,
+    },
+    {
+      question: `How does this support more direct travel bookings?`,
+      answer: `Direct bookings improve when owned discovery, accurate offer information, trust, a clear mobile action and reliable follow-up work as one journey. ${page.title} contributes by reducing uncertainty and connecting the visitor's context to an enquiry or booking workflow. It should complement appropriate distribution partners rather than rely on unsupported promises or remove channels without a transition plan.`,
+    },
+    {
+      question: `How often should this ${page.keywordCluster.toLowerCase()} work be reviewed?`,
+      answer: `Review critical customer-facing information whenever products, prices, schedules, suppliers or platform behaviour change. Review performance and workflow quality on a regular operating cadence, then complete a deeper quarterly assessment. Seasonal ${page.vertical.toLowerCase()} may need more frequent checks before peak demand so published information and team capacity remain aligned.`,
+    },
+  ];
+  const seen = new Set<string>();
+  return [...supplied, ...additional].filter((faq) => {
+    const key = faq.question.toLocaleLowerCase("en");
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 }
 
 export function seoContentWordCount(page: SeoPageSpec) {

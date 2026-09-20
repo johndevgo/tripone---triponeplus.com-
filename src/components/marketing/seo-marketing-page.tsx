@@ -21,11 +21,8 @@ import {
   getSeoPageImageAlt,
   type SeoPageSpec,
 } from "@/content/seo-catalog";
-import {
-  buildSeoContent,
-  buildSeoFaqs,
-  seoContentWordCount,
-} from "@/content/seo-content";
+import { buildSeoContent, buildSeoFaqs } from "@/content/seo-content";
+import { getServiceProofs } from "@/content/service-proof";
 import { tripOneSupport } from "@/content/support";
 import { getAppUrl } from "@/lib/app-url";
 
@@ -42,6 +39,7 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
   const content = buildSeoContent(page);
   const faqs = buildSeoFaqs(page);
   const editorialLinks = getSeoEditorialLinks(page);
+  const proofs = getServiceProofs(page.path);
   const namespace = getSeoNamespace(page);
   const image = getSeoPageImage(page);
   const origin = getAppUrl("https://triponeplus.com").replace(/\/$/, "");
@@ -99,9 +97,10 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
             <div className="mt-6 flex flex-wrap gap-2 text-xs text-white/55">
               {[
                 page.vertical,
-                page.intent,
-                page.funnelStage,
-                `${Math.floor(seoContentWordCount(page) / 100) * 100}+ words of practical guidance`,
+                page.pageType === "Growth Service"
+                  ? "Specialist travel growth service"
+                  : "Practical implementation guide",
+                "Clear scope and measurement",
               ].map((label) => (
                 <span
                   key={label}
@@ -139,7 +138,7 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
             <div className="absolute inset-0 bg-gradient-to-t from-[#021912]/90 via-transparent to-emerald-950/10" />
             <div className="absolute inset-x-0 bottom-0 p-7">
               <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#95ee8e]">
-                Content angle
+                Our approach
               </p>
               <p className="mt-3 max-w-xl text-lg font-medium leading-7 text-white/90">
                 {page.contentAngle}
@@ -158,10 +157,10 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
             </span>
             <div>
               <p className="text-xs font-semibold uppercase tracking-[.15em] text-white/38">
-                Semantic coverage
+                Connected strategy
               </p>
               <h2 id="topic-entities" className="mt-1 text-xl font-semibold">
-                Entities connected on this page
+                What this work connects
               </h2>
             </div>
           </div>
@@ -182,6 +181,67 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
             ))}
           </div>
         </section>
+
+        {proofs.length > 0 && (
+          <section aria-labelledby="delivery-evidence" className="mt-16">
+            <div className="max-w-3xl">
+              <p className="marketing-kicker">Selected delivery evidence</p>
+              <h2
+                id="delivery-evidence"
+                className="mt-5 text-3xl font-semibold tracking-[-.03em] sm:text-4xl"
+              >
+                Real work, shown with honest context
+              </h2>
+              <p className="mt-4 text-base leading-7 text-white/58">
+                These supplied portfolio materials demonstrate delivery
+                experience and the evidence used during an engagement. Client
+                identifiers are omitted where appropriate. Historical account
+                results are not forecasts or guarantees.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-5 lg:grid-cols-2">
+              {proofs.map((item, index) => (
+                <figure
+                  key={item.src}
+                  className={`glass overflow-hidden rounded-[1.6rem] ${index === 0 && proofs.length % 2 === 1 ? "lg:col-span-2" : ""}`}
+                >
+                  <div
+                    className={`relative bg-[#f7faf9] ${index === 0 && proofs.length % 2 === 1 ? "aspect-[2.35/1]" : "aspect-[1.72/1]"}`}
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      fill
+                      sizes={
+                        index === 0 && proofs.length % 2 === 1
+                          ? "(max-width: 1024px) 100vw, 80vw"
+                          : "(max-width: 1024px) 100vw, 40vw"
+                      }
+                      className="object-contain"
+                    />
+                  </div>
+                  <figcaption className="p-5 sm:p-6">
+                    <div className="flex flex-wrap items-center gap-3">
+                      <p className="text-lg font-semibold text-white">
+                        {item.title}
+                      </p>
+                      <span className="rounded-full border border-emerald-300/15 bg-emerald-300/[.07] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[.12em] text-[#95ee8e]">
+                        {item.kind === "performance"
+                          ? "Anonymised evidence"
+                          : item.kind === "credential"
+                            ? "Supplied credential"
+                            : "Delivery capability"}
+                      </span>
+                    </div>
+                    <p className="mt-3 text-sm leading-6 text-white/52">
+                      {item.caption}
+                    </p>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
 
         {page.pageType === "Tool" && (
           <SeoToolWorkspace
@@ -398,23 +458,23 @@ function headingId(value: string) {
 
 function entityRole(index: number) {
   return [
-    "Core subject",
-    "Delivery system",
-    "Decision signal",
-    "Customer context",
-    "Measurement layer",
-    "Supporting entity",
+    "Primary focus",
+    "Connected workflow",
+    "Decision input",
+    "Traveller touchpoint",
+    "Measurement",
+    "Supporting capability",
   ][index % 6]!;
 }
 
 function entityExplanation(page: SeoPageSpec, entity: string, index: number) {
   const actions = [
-    "Defines what the page and offer must explain accurately.",
-    "Connects the promise to a repeatable operating workflow.",
-    "Helps a traveller or operator evaluate the next action.",
-    "Adds necessary context for suitability, trust or planning.",
-    "Supports accountable review without inventing performance.",
-    `Extends the ${page.keywordCluster.toLowerCase()} topic when ${entity.toLowerCase()} materially affects the journey.`,
+    "Sets the central business and customer objective for the work.",
+    "Connects the promise to a process the team can repeat.",
+    "Helps a traveller or operator choose the right next action.",
+    "Adds useful context for suitability, trust and trip planning.",
+    "Supports accountable review without overstating performance.",
+    `Included where ${entity.toLowerCase()} materially improves the ${page.keywordCluster.toLowerCase()} journey.`,
   ];
   return actions[index % actions.length]!;
 }
