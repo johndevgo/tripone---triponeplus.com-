@@ -3,6 +3,7 @@ import { buildComparisonSections } from "./comparison-content";
 import { buildGrowthServiceSections } from "./growth-service-content";
 import { buildIndustrySections } from "./industry-content";
 import { buildResourceSections } from "./resource-page-content";
+import { buildToolSections } from "./tool-page-content";
 
 export type SeoContentSection = {
   heading: string;
@@ -158,7 +159,8 @@ export function buildSeoContent(page: SeoPageSpec): SeoContentSection[] {
     buildGrowthServiceSections(page) ??
     buildIndustrySections(page) ??
     buildComparisonSections(page) ??
-    buildResourceSections(page);
+    buildResourceSections(page) ??
+    buildToolSections(page);
   if (!specialized) return sections;
   return [
     specialized[0]!,

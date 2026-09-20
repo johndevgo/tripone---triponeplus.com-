@@ -198,6 +198,23 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives pages ninety-one to one hundred distinct pricing resources and calculator guidance", () => {
+    const batch = seoPages.slice(90, 100);
+    const sections = batch.map((page) => buildSeoContent(page));
+    expect(new Set(sections.map((items) => JSON.stringify(items))).size).toBe(
+      10,
+    );
+    for (const [index, items] of sections.entries()) {
+      const headings = items.map((section) => section.heading).join(" ");
+      if (index < 2) {
+        expect(headings).toContain("Complete the work in decision order");
+      } else {
+        expect(headings).toContain("How to read the live result");
+        expect(headings).toContain("Assumptions and limitations");
+      }
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);

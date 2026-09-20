@@ -517,6 +517,62 @@ const profiles: Record<string, ResourceProfile> = {
     review:
       "Review critical suppliers before contracting and each season, with formal renewal according to risk and contract dates. Investigate incidents and recurring service failures promptly rather than waiting for annual review.",
   },
+  "/resources/tour-pricing-worksheet": {
+    purpose:
+      "A tour pricing worksheet should expose every cost, capacity and commercial assumption behind a selling price. It helps an operator compare departures and channels without confusing markup, margin, cash collected or gross booking value with profit.",
+    startingPoint:
+      "Choose one product and date period. Record costs in their original currencies, the exchange-rate source and date, fixed versus per-guest behaviour, tax treatment, payment fees, commission, complimentary places and minimum viable departure size.",
+    checklist: [
+      "Fixed departure costs and per-guest variable costs",
+      "Supplier currency, exchange rate, tax and rate validity",
+      "Capacity, expected occupancy and complimentary places",
+      "Direct and distribution commission or payment costs",
+      "Contingency, target contribution, markup and margin",
+      "Published price, rounding, approval and next review date",
+    ],
+    workflow:
+      "Calculate the cost base first, then contribution and channel impact. Model several occupancy cases rather than dividing by maximum capacity, and compare the proposed price with what the offer includes and the market position without allowing competitor prices to replace the cost model.",
+    evidence:
+      "Use current supplier contracts, payroll or guide rates, transport and equipment costs, historical occupancy, refund and cancellation records and real distribution terms. Date every input that can expire or move with currency.",
+    handoff:
+      "Approve a controlled price version and connect it to the relevant product, date or package. Publish only customer-safe price context while finance and operations retain the cost detail and change history.",
+    risks: [
+      "Dividing costs by full capacity regardless of expected occupancy",
+      "Adding margin and commission percentages incorrectly",
+      "Ignoring tax, payment, refund and exchange-rate exposure",
+      "Leaving an expired supplier rate inside a live selling price",
+    ],
+    review:
+      "Review before every rate period and whenever costs, currency, tax, capacity or channel terms change. Compare forecast with actual departure contribution and explain material variance before copying the model forward.",
+  },
+  "/resources/tour-operator-kpi-dashboard": {
+    purpose:
+      "A tour operator KPI dashboard should connect demand, sales, capacity, delivery and customer outcomes without turning every available metric into a target. Each measure needs a definition, source, owner and decision it informs.",
+    startingPoint:
+      "Begin with the decisions leaders make weekly and monthly. Identify the few measures required for demand quality, pipeline, bookings, occupancy, contribution, cancellations, response, delivery and retention, then reconcile definitions across source systems.",
+    checklist: [
+      "Qualified demand and source with an agreed qualification rule",
+      "Response time, stage progression and confirmed booking outcome",
+      "Departure capacity, occupancy and serviceability",
+      "Revenue, direct cost, contribution and cash timing",
+      "Cancellation, refund, incident and customer feedback context",
+      "Definition, system, refresh time, owner and decision threshold",
+    ],
+    workflow:
+      "Structure the dashboard from leading operational signals to lagging commercial outcomes. Allow filters for product, departure, destination, source and period, but keep totals reconcilable. Pair rates with volumes so a small sample does not appear decisive.",
+    evidence:
+      "Use source records from bookings, CRM, finance, advertising and operations, with documented attribution and currency rules. Sample underlying records during every review rather than trusting a visually complete chart.",
+    handoff:
+      "Maintain a metric dictionary and exception log beside the dashboard. Assign owners to investigate thresholds and record actions so the dashboard supports decisions instead of becoming a presentation refreshed without follow-through.",
+    risks: [
+      "Treating inquiries or clicks as bookings or revenue",
+      "Combining currencies, products or periods without normalisation",
+      "Optimising one KPI while margin, capacity or service quality declines",
+      "Publishing personal or commercially sensitive detail too broadly",
+    ],
+    review:
+      "Review operating signals weekly, commercial performance monthly and definitions quarterly. Retire measures that do not influence a decision and add new ones only with an owner, source and action.",
+  },
 };
 
 export function buildResourceSections(
