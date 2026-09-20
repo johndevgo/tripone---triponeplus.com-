@@ -517,6 +517,230 @@ const profiles: Record<string, BlogProfile> = {
     roadmap:
       "The first month defines the lifecycle, data model and access rules. The second configures stages, queues, templates and one booking handoff. The third cleans exceptions, validates reporting and introduces only the automations the team can monitor.",
   },
+  "/blog/convert-travel-enquiries-to-bookings": {
+    thesis:
+      "To convert travel leads to bookings, create a measurable enquiry-to-booking system that preserves the traveller's context, responds with a useful next step and follows through until there is a clear decision. Persuasion cannot repair an unsuitable product, slow ownership or a proposal disconnected from the original request.",
+    context:
+      "Travel enquiries vary from early inspiration to date-specific purchase intent. A team needs a consistent way to qualify fit without making every customer repeat information. The strongest workflow combines human judgement, product knowledge, clear proposals and timely follow-up while respecting communication consent and customer preference.",
+    steps: [
+      "Capture source, product, dates, party, needs and preferred contact route",
+      "Assign an owner and acknowledge the enquiry with a realistic response time",
+      "Qualify suitability, budget context, availability and decision process",
+      "Send a clear proposal with assumptions, validity and one next action",
+      "Follow up with new decision value rather than repeated pressure",
+      "Record won or lost outcome, reason and operational handoff",
+    ],
+    foundation:
+      "Define stages from observable commitments such as new, contacted, qualified, proposal sent, decision pending, accepted, lost and converted. Set required fields, due actions, response expectations and ownership. Keep marketing permission separate from service communication, and store only the traveller information necessary at each stage.",
+    execution:
+      "Use templates for consistency while personalising the product recommendation, unanswered question and next step. Make proposals easy to scan on mobile and distinguish included, optional and unconfirmed items. Follow-up can add availability context, a relevant answer, alternative date or decision summary; it should never manufacture scarcity or continue after opt-out.",
+    measurement:
+      "Track first response, contact rate, qualification, proposal rate, acceptance, time in stage, loss reason, booking contribution and cancellation. Segment by source, product, market and owner without ranking staff from tiny or incomparable samples. Audit whether the CRM stage matches actual customer evidence.",
+    safeguards: [
+      "Do not confirm price or inventory before the responsible source verifies it",
+      "Do not send automated follow-up without suppression and ownership rules",
+      "Do not collect sensitive traveller data before it is required",
+      "Do not treat every enquiry as qualified pipeline or forecast revenue",
+    ],
+    roadmap:
+      "Month one defines stages, response ownership and clean measurement. Month two improves the highest-volume enquiry and proposal path. Month three tests follow-up value, reconciles bookings and lost reasons, then standardises the practices that improve qualified outcomes.",
+  },
+  "/blog/ota-vs-direct-bookings-tour-operators": {
+    thesis:
+      "OTA vs direct bookings is a channel portfolio decision, not a moral contest. Online travel agencies can provide discovery, transaction infrastructure and traveller confidence; direct channels can strengthen customer relationships, product control and retained contribution. The right mix depends on total economics and operational fit.",
+    context:
+      "Viator, GetYourGuide and other OTA relationships differ by market, product and contract. Commission is visible, but payment timing, cancellation, merchandising, customer access, support, ranking and incremental demand also matter. Direct acquisition has its own technology, content, media, payment, response and support costs.",
+    steps: [
+      "Map each channel's product eligibility, audience and contractual obligations",
+      "Calculate net contribution with consistent cost and cancellation treatment",
+      "Compare customer context, communication and operational workload",
+      "Separate incremental reach from demand that would otherwise book direct",
+      "Choose channel roles by product, market, season and capacity",
+      "Review concentration risk and customer outcomes on a fixed cadence",
+    ],
+    foundation:
+      "Maintain source identifiers from referral through booking and fulfilment. Record gross value, commission, payment cost, promotion, refund, variable delivery cost and support effort consistently. Document availability ownership and reconciliation when multiple channels sell the same departure. Read current partner terms rather than relying on general comparisons.",
+    execution:
+      "Use OTAs where their audience, trust or distribution solves a real problem, and maintain accurate content and inventory. Improve direct journeys with distinctive first-hand content, complete product pages, brand demand, useful email and dependable service. Avoid undercutting or communication practices that breach agreements.",
+    measurement:
+      "Compare qualified demand, confirmed bookings, net contribution, cancellation, no-show, support workload, lead time and repeat behaviour by channel and product. Review blended concentration and resilience. Attribution should document uncertainty where a traveller encountered several touchpoints before booking.",
+    safeguards: [
+      "Do not compare channels using gross sales on one side and net revenue on the other",
+      "Do not violate marketplace pricing, communication or customer-data terms",
+      "Do not remove productive distribution before owned demand is proven",
+      "Do not let disconnected inventory create overselling or inconsistent terms",
+    ],
+    roadmap:
+      "The first month standardises source and contribution reporting. The second improves one direct product journey while correcting OTA content and inventory. The third reviews incremental value and concentration, then adjusts mix gradually from observed evidence.",
+  },
+  "/blog/reduce-ota-dependence": {
+    thesis:
+      "To reduce OTA dependence, grow useful owned acquisition and customer relationships while retaining marketplace distribution that remains incremental and profitable. Abrupt withdrawal transfers risk to the operator; a measured transition builds SEO, paid search, email, brand and repeat demand before reallocating inventory.",
+    context:
+      "Dependence is a concentration problem when one or two platforms control discovery, transaction volume or customer access. The answer is not automatically fewer OTA bookings. It is a resilient mix in which the business understands channel economics, owns accurate website and CRM infrastructure and can create qualified demand directly.",
+    steps: [
+      "Measure booking and contribution concentration by channel and product",
+      "Identify products, markets and customer groups suited to direct growth",
+      "Repair the mobile product, payment or enquiry journey",
+      "Build destination SEO, brand search and permissioned retention assets",
+      "Test paid search and partnerships against contribution guardrails",
+      "Shift allocation only after owned demand and operations prove reliable",
+    ],
+    foundation:
+      "Establish source tracking, booking reconciliation, consent records, fast owned pages and a dependable response process. Create unique product and destination content from genuine expertise, not copied marketplace listings. Understand existing partner contracts, parity obligations and the capacity implications of changing allocation.",
+    execution:
+      "Prioritise one product and audience where direct value is clear. Improve the complete path from discovery through confirmation, then add one acquisition channel at a time. Invite lawful post-trip relationships and reviews without diverting active marketplace customers in ways that breach terms or expectations.",
+    measurement:
+      "Track direct share alongside total qualified bookings, blended acquisition cost, net contribution, cancellation, repeat value, response and channel concentration. A rising direct percentage caused by falling total demand is not success. Compare cohorts and seasons before changing distribution materially.",
+    safeguards: [
+      "Do not abandon productive marketplace demand without a tested replacement",
+      "Do not misuse OTA customer data for unrelated marketing",
+      "Do not duplicate generic destination pages merely to chase organic traffic",
+      "Do not hide the real labour and media cost of owned acquisition",
+    ],
+    roadmap:
+      "Month one establishes channel economics and fixes the direct foundation. Month two tests one owned acquisition path and retention workflow. Month three compares total and direct contribution, then makes a limited allocation change with monitoring and a rollback condition.",
+  },
+  "/blog/how-to-choose-tour-operator-software": {
+    thesis:
+      "Choosing tour operator software begins with the business's real customer, booking and delivery workflows, then tests products against those requirements using representative data. A long feature list has little value when ownership, integrations, reporting or daily usability remain unclear.",
+    context:
+      "Tour software may cover website content, booking, capacity, resources, CRM, payments, distribution and reporting in one platform or several connected systems. Integrated breadth can reduce duplication, while specialist depth may suit complex operations. Buyers should distinguish live capability, configuration, paid add-on, roadmap and custom work.",
+    steps: [
+      "Map the current customer and operating workflow before requesting demos",
+      "Rank must-have outcomes, constraints and acceptable manual work",
+      "Prepare representative products, departures, rates and exceptions",
+      "Run the same scripted trial in every shortlisted system",
+      "Evaluate data ownership, security, support, integration and total cost",
+      "Pilot migration and daily work before making an irreversible commitment",
+    ],
+    foundation:
+      "Create an evaluation team that includes sales, operations, finance, marketing and the people doing daily work. Document authoritative records and required exports. Review roles, audit history, backup, privacy, accessibility, uptime and vendor support alongside customer-facing functionality.",
+    execution:
+      "Ask vendors to demonstrate a new inquiry or booking, capacity change, payment, amendment, cancellation, customer message, departure view, reconciliation and report. Test the website and staff workflow on realistic mobile and desktop conditions. Record evidence in a weighted scorecard and identify every dependency.",
+    measurement:
+      "Estimate implementation effort, subscription and transaction cost, integration maintenance, training, support and switching risk. In a pilot, measure task completion, error rate, duplicate entry, response, customer completion and reconciliation. Treat promised future features separately from available functionality.",
+    safeguards: [
+      "Do not select software from a sales demonstration alone",
+      "Do not migrate without verified exports, mapping and rollback plans",
+      "Do not assume an integration synchronises every field or event",
+      "Do not optimise for feature count while ignoring daily usability",
+    ],
+    roadmap:
+      "Month one maps requirements and creates the trial script. Month two evaluates a small shortlist and checks references, contracts and data. Month three pilots the leading workflow, confirms migration and support, then approves with explicit risks and ownership.",
+  },
+  "/blog/best-website-builders-tour-operators": {
+    thesis:
+      "The best website builder for tour operators is the one that can model real tours, destinations and booking journeys, remain fast and accessible, support search visibility and let the team maintain accurate content. The answer changes with workflow, skills, integrations and ownership—not design templates alone.",
+    context:
+      "Wix, WordPress, Squarespace, Webflow and TripOne+ represent different approaches to hosted editing, extensibility, visual control and tourism-specific structure. Product capabilities and prices change, so buyers should verify current official documentation and run the same realistic trial instead of trusting a static ranking.",
+    steps: [
+      "Define catalogue, content, booking, domain and team requirements",
+      "Build one representative tour with real-length content and media",
+      "Test navigation, mobile action, accessibility and page performance",
+      "Verify metadata, structured data, redirects and index controls",
+      "Connect the required booking, analytics and consent workflow",
+      "Compare ownership, maintenance, support and total operating cost",
+    ],
+    foundation:
+      "Prepare a test product containing price context, duration, location, itinerary, inclusions, exclusions, suitability, policy, gallery and action. Include destination and category relationships, navigation and a redirected legacy URL. Document who can publish, restore, export and manage the domain.",
+    execution:
+      "Run the trial without vendor-prepared content and note every plugin, custom code or manual workaround. Inspect the generated mobile page, keyboard journey, semantic headings, image loading and visible structured facts. Test a content update and failure recovery, not only initial creation.",
+    measurement:
+      "Score customer task completion, editor effort, template consistency, speed, accessibility, search controls, integration reliability, maintenance and three-year cost. Separate essential requirements from preferences. A tourism-specific platform should earn its place through workflow fit, not a rigged comparison.",
+    safeguards: [
+      "Do not choose from screenshots or theme quantity alone",
+      "Do not assume plugins and integrations share one security or support model",
+      "Do not publish duplicate or thin pages generated by unchecked templates",
+      "Do not commit before testing export, domain and migration boundaries",
+    ],
+    roadmap:
+      "The first month defines requirements and content. The second runs identical trials and checks technical ownership. The third pilots the leading choice with one complete customer journey, then documents migration, governance and launch acceptance.",
+  },
+  "/blog/best-tour-booking-software": {
+    thesis:
+      "The best tour booking software is the system that protects sellable inventory, gives customers a clear journey and gives staff reliable booking, payment and departure records. Rankings cannot replace testing the operator's products, resources, channels and exceptions against current vendor capabilities.",
+    context:
+      "FareHarbor, Bókun, Rezdy, Checkfront, Xola and TripOne+ may be considered for different markets and operating models. Pricing, integrations and availability vary over time and location. Evaluation should begin with neutral requirements, current official evidence and a controlled trial rather than assuming one universal winner.",
+    steps: [
+      "Model the product, departure, rate, capacity and resource constraints",
+      "Script booking, payment, amendment, cancellation and refund scenarios",
+      "Test direct checkout and any required distributor synchronisation",
+      "Inspect customer messages, manifests, roles and audit history",
+      "Reconcile reports against representative booking and payment records",
+      "Review contracts, support, migration, data access and total cost",
+    ],
+    foundation:
+      "Create a dataset with shared and private capacity, add-ons, tax, commission, holds, cut-offs and edge cases. Identify the authoritative source for availability and payments. Include operations, finance and customer support in evaluation so a convenient checkout does not conceal difficult fulfilment or reconciliation.",
+    execution:
+      "Ask each vendor or trial environment to complete the same scenarios, including a simultaneous capacity edge, customer amendment, partial refund, no-show and failed integration. Test embedded and hosted purchase journeys on mobile. Export records and verify stable identifiers and usable detail.",
+    measurement:
+      "Score booking completion, staff time, inventory accuracy, reconciliation, exception handling, accessibility, support and cost. Model subscription, transaction, payment, marketplace and migration costs consistently. Keep current capability separate from roadmap promises and custom development.",
+    safeguards: [
+      "Do not rely on an affiliate ranking as the sole buying method",
+      "Do not connect live inventory before concurrency and failure testing",
+      "Do not assume payment settlement equals recognised revenue",
+      "Do not migrate without record counts, samples and rollback evidence",
+    ],
+    roadmap:
+      "Month one maps inventory and evaluation scenarios. Month two runs the shortlist and validates commercial and technical terms. Month three pilots the leading system with real staff and limited inventory, then approves only after reconciliation and recovery tests.",
+  },
+  "/blog/tour-operator-marketing-ideas": {
+    thesis:
+      "Useful tour operator marketing ideas become a portfolio when each one has an audience, funnel role, cost, effort, evidence requirement and next action. The goal is not to execute the longest list; it is to select a small combination the team can deliver, measure and improve.",
+    context:
+      "SEO, social, partnerships, ads, reviews and email solve different discovery and retention problems. A new operator may need proof and local partnerships before paid scale, while an established business may need stronger direct conversion or repeat demand. Every idea depends on accurate products and dependable service.",
+    steps: [
+      "Clarify the product, audience, season, capacity and commercial objective",
+      "Choose one awareness, one decision and one retention experiment",
+      "List required assets, proof, rights, spend, owner and response process",
+      "Create a trackable journey from message to customer action",
+      "Run long enough to collect representative qualified evidence",
+      "Keep, refine or stop the idea and record what changed",
+    ],
+    foundation:
+      "Build an idea register grouped by funnel stage and effort. Examples include destination answers, itinerary partnerships, guide-led video, customer stories with permission, local referral bundles, brand search, remarketing with consent, abandoned-enquiry follow-up and post-trip review or referral requests. Select from actual constraints rather than trend pressure.",
+    execution:
+      "Turn each selected idea into a one-page experiment with hypothesis, audience, message, destination, asset, channel, action, budget, timing and owner. Reuse verified product facts across formats while adapting the creative. Ensure sales and operations can handle the demand before launch.",
+    measurement:
+      "Use reach and engagement as diagnostics, qualified inquiries and progression as demand evidence, and booking contribution and delivery quality as commercial evidence. Record time and production cost, not just media spend. Compare ideas within similar seasons, products and attribution limits.",
+    safeguards: [
+      "Do not publish customer proof without consent or invent social evidence",
+      "Do not run promotions that operations or capacity cannot honour",
+      "Do not copy channel tactics without a relevant customer journey",
+      "Do not spread a limited team across more experiments than it can learn from",
+    ],
+    roadmap:
+      "Month one fixes the product journey and runs low-cost proof and partnership ideas. Month two tests one search or social acquisition hypothesis. Month three develops retention and referral, compares total contribution and commits to the smallest repeatable portfolio.",
+  },
+  "/blog/travel-marketing-automation": {
+    thesis:
+      "Travel marketing automation should move accurate context and trigger useful, expected communication across leads, bookings and customer relationships. It creates value when it reduces delay and omission; it creates risk when it scales wrong data, insensitive timing or messages without consent.",
+    context:
+      "CRM, email and workflow tools can support enquiry acknowledgement, follow-up, booking preparation, review requests and re-engagement. These journeys differ in purpose and lawful basis. High-sensitivity decisions, exceptions and traveller wellbeing should remain visible to qualified people rather than disappearing into an automation chain.",
+    steps: [
+      "Prioritise a frequent, stable workflow with measurable customer value",
+      "Define trigger, eligibility, data source, owner and stop conditions",
+      "Write messages from controlled product and booking facts",
+      "Test duplicates, delays, missing data, opt-out and status changes",
+      "Monitor delivery, response, progression and customer complaints",
+      "Version, approve and retire workflows with an audit history",
+    ],
+    foundation:
+      "Create a data map for lead, customer, booking, consent, product, date and owner. Define the source of truth and freshness of every field used in a message. Segment transactional service communication from promotional email and apply the relevant permission, suppression, retention and access controls.",
+    execution:
+      "Begin with internal routing and customer acknowledgements because their value and failure states are observable. Then test proposal reminders, pre-departure preparation, post-trip feedback and carefully permissioned retention. Provide a human contact route and pause automation when a complaint, cancellation or sensitive exception appears.",
+    measurement:
+      "Track processing success, delay, duplicate suppression, delivery, reply, stage progression, booking, complaint and opt-out. Measure time saved only after checking whether work shifted to exception handling. Review samples of actual journeys, not dashboard totals alone.",
+    safeguards: [
+      "Do not send promotional messages from service consent alone",
+      "Do not automate safety, refund or complaint decisions without oversight",
+      "Do not use stale price, availability or traveller fields in messages",
+      "Do not launch a workflow without monitoring, stop and ownership controls",
+    ],
+    roadmap:
+      "The first month maps data and automates one low-risk routing or acknowledgement flow. The second adds one measurable follow-up journey with full exception testing. The third audits customer outcomes and governance before expanding to retention or cross-channel automation.",
+  },
 };
 
 export function buildBlogSections(
