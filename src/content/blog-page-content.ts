@@ -237,6 +237,286 @@ const profiles: Record<string, BlogProfile> = {
     roadmap:
       "Month one prepares the offer, assets, measurement and response. Month two runs a controlled creative and journey test. Month three consolidates around qualified evidence and documents the next seasonal campaign.",
   },
+  "/blog/tiktok-marketing-tour-operators": {
+    thesis:
+      "TikTok marketing for tour operators works when short video makes a real experience easier to understand, imagine and evaluate. The channel is strongest as a discovery and learning system connected to accurate product pages, permissioned media and a measurable next step.",
+    context:
+      "Travel video can earn attention through place, people, motion and practical detail, but views alone do not establish commercial value. Organic publishing, creator collaboration and paid distribution have different rights, disclosure and measurement requirements. A useful programme connects each creative idea to a genuine traveller question and serviceable tour.",
+    steps: [
+      "Define the traveller, product, season and decision the video supports",
+      "Build repeatable formats around proof, preparation, place and people",
+      "Capture vertical footage with explicit usage and contributor permission",
+      "Publish accurate captions, location context and a relevant next step",
+      "Connect qualified viewers to a focused mobile product journey",
+      "Review retention, inquiry quality and bookings before scaling paid reach",
+    ],
+    foundation:
+      "Create a rights register, approved claims library, destination and product facts, brand safety rules and response owner before increasing output. The team should know which media can be posted organically, licensed to creators, used in advertisements or retained for future seasons. Product availability and policy information must remain controlled outside the video itself.",
+    execution:
+      "Use a compact editorial system: answer a real question, show a distinctive moment, explain a practical choice, introduce a qualified team member or correct a common misunderstanding. Test hooks and structures without manufacturing urgency or risk. Send viewers to the closest useful page rather than a generic home page, and preserve campaign context in forms or messages.",
+    measurement:
+      "Use hold rate, completion, saves, profile activity and landing behaviour as creative diagnostics. Judge commercial effect with qualified inquiries, booking progression, confirmed contribution and assisted discovery where evidence supports it. Compare formats and audiences over a meaningful period instead of declaring success from one viral post.",
+    safeguards: [
+      "Obtain rights and disclosure approval for customer, staff and creator media",
+      "Do not encourage unsafe participation or conceal material activity risks",
+      "Do not state live prices or availability in evergreen video without controls",
+      "Do not optimise solely for views, followers or inexpensive clicks",
+    ],
+    roadmap:
+      "Month one establishes rights, formats, product pages and measurement. Month two publishes a controlled organic series and learns from qualified response. Month three promotes only proven, serviceable creative and documents the next seasonal production cycle.",
+  },
+  "/blog/social-media-marketing-tour-operators": {
+    thesis:
+      "Social media marketing for tour operators should distribute four distinct kinds of value: awareness, proof, education and conversion. A balanced system helps travellers discover the operator, understand the experience, trust delivery and reach an appropriate booking or inquiry path.",
+    context:
+      "Instagram, TikTok and Facebook reward different behaviours and formats, while reviews and customer media supply a separate form of evidence. Copying every post across every channel often produces activity without clarity. The operating challenge is to preserve truthful product context, media rights and response ownership across a manageable publishing plan.",
+    steps: [
+      "Choose channel roles from audience behaviour and team capacity",
+      "Map content to awareness, proof, education or conversion",
+      "Create reusable formats from verified product and destination knowledge",
+      "Document permissions, moderation and response service levels",
+      "Link each conversion post to the closest relevant customer journey",
+      "Review qualified demand and assisted bookings alongside platform metrics",
+    ],
+    foundation:
+      "Centralise approved imagery, usage rights, product facts, common questions, policies, escalation routes and brand voice. Define who publishes, who answers public comments, who handles private customer information and how unanswered questions enter the CRM. A sustainable cadence is more useful than an ambitious calendar the team cannot maintain.",
+    execution:
+      "Build recurring series instead of isolated posts: product walkthroughs, guide knowledge, destination preparation, customer proof with consent, behind-the-scenes operations and seasonal availability. Adapt the opening, dimensions and interaction to each platform while retaining the same verified source. Make conversion posts specific about the product and next step.",
+    measurement:
+      "Use reach, retention, saves, shares and profile actions to diagnose distribution and relevance. Use tagged sessions, inquiries, response, booking progression and contribution to judge business value. Record dark-social and assisted influence carefully rather than forcing every sale into a single last-click story.",
+    safeguards: [
+      "Do not republish customer content without documented permission",
+      "Do not expose traveller information while showing operational proof",
+      "Do not fabricate reviews, scarcity, locations or experience conditions",
+      "Do not let unanswered messages become an unofficial booking system",
+    ],
+    roadmap:
+      "The first 30 days define roles, rights and four content pillars. The next 30 establish repeatable production and response. The final 30 compare formats with qualified customer outcomes and retain only the cadence the team can support.",
+  },
+  "/blog/tour-operator-website-design": {
+    thesis:
+      "Tour operator website design is product and decision architecture before it is decoration. The site should help a traveller identify the right experience, understand suitability and logistics, establish trust and complete the next action on a mobile connection.",
+    context:
+      "Beautiful destination imagery can create desire, but it cannot replace navigable categories, complete tour pages, transparent constraints or a functioning booking journey. Design choices should reflect the operator's catalogue and sales model, not a generic travel mood. Accessibility and performance are part of customer service and conversion quality.",
+    steps: [
+      "Model tours, destinations, categories and decision attributes",
+      "Design navigation around traveller tasks rather than internal departments",
+      "Create one complete tour-page information hierarchy",
+      "Place proof, policies and practical answers near the related decision",
+      "Build an accessible mobile action and confirmation journey",
+      "Test real content, slow networks and edge cases before visual polish",
+    ],
+    foundation:
+      "Start with structured product records for title, summary, price context, duration, location, schedule, capacity, inclusions, exclusions, suitability, policy, media and action. Decide which fields drive cards, detail pages, structured data and operations so the same fact is not maintained in conflicting places. Use clear URL and internal-link architecture.",
+    execution:
+      "Prototype the highest-value journey with production-length copy and real media. Maintain readable contrast, focus states, form labels, responsive controls and predictable navigation. Optimise image dimensions and loading, reserve space to avoid layout movement and keep sticky calls to action from obscuring content or browser controls.",
+    measurement:
+      "Review discovery, product comparison, action starts, form or checkout completion, response and confirmed booking by page and device. Pair quantitative funnels with support questions, search terms and usability observation. A redesign succeeds when it improves comprehension and completed customer outcomes without weakening speed or accessibility.",
+    safeguards: [
+      "Do not hide material prices, restrictions or cancellation terms behind decoration",
+      "Do not use motion, overlays or sticky controls that block reading and focus",
+      "Do not publish unoptimised media or duplicate catalogue content",
+      "Do not treat a desktop mock-up as evidence of mobile usability",
+    ],
+    roadmap:
+      "Month one defines content models, architecture and one journey. Month two implements the shared design system and complete product template. Month three tests performance, accessibility and conversion, then expands reusable sections from verified evidence.",
+  },
+  "/blog/travel-website-seo": {
+    thesis:
+      "Travel website SEO is a site-wide system connecting crawlable architecture, useful destination and product content, internal links, structured data and trustworthy business signals. Isolated keyword pages cannot compensate for duplicate inventory, weak facts or inaccessible rendering.",
+    context:
+      "Travel demand spans destinations, activities, seasons, logistics and commercial products. Search engines and travellers both need to distinguish informational guidance from bookable inventory and understand their relationship. Technical controls should preserve one indexable version of useful pages while drafts, filters and thin combinations remain managed.",
+    steps: [
+      "Inventory pages, templates, entities and the search intent each serves",
+      "Define canonical URL, navigation and internal-link rules",
+      "Strengthen product and destination pages with verified first-hand detail",
+      "Implement accurate metadata, headings, schema and media alternatives",
+      "Control duplicate, filtered, draft and discontinued URLs",
+      "Measure indexation, queries, qualified landings and bookings together",
+    ],
+    foundation:
+      "Create a content model for business, place, experience, offer, person, review and policy information, then map those records to page types. Maintain sitemaps, status codes, redirects and canonicals from publication state. Ensure primary content and links exist in server-rendered HTML and remain usable without fragile client-only behaviour.",
+    execution:
+      "Prioritise templates that serve real inventory and traveller decisions. Add unique logistics, suitability, comparisons, questions and local expertise instead of changing a place name in repeated copy. Use descriptive internal anchors from relevant context, validate structured data against visible content and update time-sensitive facts with ownership.",
+    measurement:
+      "Track valid indexation, crawl and rendering issues, query-to-page alignment, non-brand discovery, engaged product exploration and qualified conversion. Segment by template, market and device. Search visibility is diagnostic evidence, while commercial impact requires confirmed customer records and cautious attribution.",
+    safeguards: [
+      "Do not generate empty destination and category combinations for coverage",
+      "Do not mark up reviews, prices or availability absent from the page",
+      "Do not force unnatural keyword repetition into customer copy",
+      "Do not change URLs without tested redirects and internal-link updates",
+    ],
+    roadmap:
+      "The first month audits architecture, indexation and core templates. The second repairs technical controls and deepens the highest-value clusters. The third evaluates search and customer evidence, consolidates weak pages and plans the next authoritative topic set.",
+  },
+  "/blog/improve-travel-website-conversion": {
+    thesis:
+      "Improving travel website conversion starts by locating the decision stage where suitable travellers lose clarity, confidence or momentum. The answer may be stronger product information, clearer price context, faster mobile interaction, better proof or a more reliable response—not simply a louder call to action.",
+    context:
+      "Travel purchases carry timing, party, suitability, cancellation and trust questions. A single conversion rate can hide very different journeys and traffic quality. Diagnosis should separate discovery, comparison, action, completion, qualification and confirmed booking while protecting accessibility and truthful choice.",
+    steps: [
+      "Define the qualified outcome and each prerequisite decision",
+      "Segment the funnel by product, source, device and new or returning visitor",
+      "Inspect page speed, comprehension, trust, form and handoff friction",
+      "Prioritise one evidence-based hypothesis with a measurable guardrail",
+      "Test the full journey including confirmation and response",
+      "Keep, revise or reject the change from qualified commercial evidence",
+    ],
+    foundation:
+      "Instrument meaningful events with consent and stable names, then reconcile them with inquiry and booking records. Establish baseline performance and data quality before experimentation. Make price, duration, location, inclusions, suitability, availability context and cancellation information findable where the customer needs them.",
+    execution:
+      "Begin with high-confidence defects such as broken actions, invisible errors, unclear labels, slow media, poor contrast or lost context. For larger tests, change one material decision variable and document the audience, period and expected mechanism. Keep a human route for complex or accessibility-related needs.",
+    measurement:
+      "Use product views, action starts, completion, qualification, response, booking and contribution as a connected funnel. Watch cancellation, support burden and lead quality as guardrails. Treat small samples and seasonal shifts cautiously and retain a decision log rather than announcing certainty from noise.",
+    safeguards: [
+      "Do not use hidden fees, false scarcity or obstructive choice design",
+      "Do not remove essential detail merely to shorten a page",
+      "Do not declare a winner without enough representative evidence",
+      "Do not optimise form quantity while ignoring qualification and response",
+    ],
+    roadmap:
+      "Month one repairs instrumentation and obvious friction. Month two runs the highest-value product and action hypotheses. Month three connects experiments to confirmed outcomes, standardises proven patterns and documents unresolved customer questions.",
+  },
+  "/blog/how-to-price-tours": {
+    thesis:
+      "To price a tour, calculate the cost of safely delivering the promised experience at realistic capacity, then add the contribution required for overhead, risk and sustainable profit. Competitor prices and customer demand inform positioning, but they do not reveal the operator's economics.",
+    context:
+      "Tours combine fixed and variable costs, taxes, payment fees, guide or vehicle capacity, distributor commission, seasonality, cancellations and sometimes foreign-exchange exposure. A starting price, private price and per-person departure price may require different models. Every assumption needs a date and owner.",
+    steps: [
+      "Define the exact product unit, inclusions and sale channel",
+      "Separate fixed departure, per-guest and allocated overhead costs",
+      "Model realistic minimum, expected and maximum paid capacity",
+      "Add commission, tax, payment, contingency and target contribution",
+      "Compare market value and willingness without copying competitors",
+      "Approve price, validity, review triggers and customer presentation",
+    ],
+    foundation:
+      "Use supplier contracts and operating records rather than memory. Distinguish tax-inclusive and tax-exclusive inputs, recoverable amounts, complimentary places and costs triggered by thresholds. Model gross booking value separately from net revenue and contribution so a high selling price is not mistaken for healthy profit.",
+    execution:
+      "Run scenarios for low and expected occupancy, direct and distributor sales, and relevant seasons. If the required price exceeds perceived value, redesign the product or cost structure rather than hiding charges. Publish clear price units and material inclusions, and align the checkout, quote and operations record to the approved version.",
+    measurement:
+      "Review average realised price, paid occupancy, discount, channel cost, variable cost, contribution, refund and cancellation by departure or product. Compare forecast with actual delivery. Update only from controlled evidence and retain historical price versions for bookings already confirmed.",
+    safeguards: [
+      "Do not price below full delivery cost without an explicit strategy and limit",
+      "Do not confuse margin with markup or booking value with earned revenue",
+      "Do not apply commission after solving a formula that assumed net price",
+      "Do not change confirmed customer terms through a later price update",
+    ],
+    roadmap:
+      "Month one creates the cost model and reconciles recent departures. Month two tests channel, occupancy and value scenarios. Month three updates presentation and approval rules, then schedules supplier and seasonal review dates.",
+  },
+  "/blog/how-to-create-tour-packages": {
+    thesis:
+      "Creating tour packages means combining compatible services into a coherent traveller outcome with controlled itinerary, responsibility, capacity, price and terms. A package is not merely a list of attractions or a discount applied to unrelated products.",
+    context:
+      "Accommodation, transport, activities, guides and meals may have different suppliers, cancellation rules and inventory states. Package obligations also vary by jurisdiction. The product team should verify legal and commercial responsibilities and distinguish confirmed components, alternatives and optional additions.",
+    steps: [
+      "Define the traveller, outcome, duration and organising promise",
+      "Map the day-by-day flow and realistic movement between components",
+      "Contract suppliers and align capacity, cut-offs and cancellation terms",
+      "Calculate package cost, channel effect and contribution by scenario",
+      "Write inclusions, exclusions, suitability and contingency clearly",
+      "Pilot the complete package before broad distribution",
+    ],
+    foundation:
+      "Maintain one structured package record linked to controlled service, supplier and destination records. Record item order, day, quantity, optional status, fulfilment owner and version. Decide what happens when a component becomes unavailable and which substitutions require customer approval.",
+    execution:
+      "Build the itinerary around pacing and traveller purpose rather than maximising item count. Confirm transfer and check-in time, rest, accessibility, meal and luggage assumptions. On the product page, show the package as a complete decision: who it suits, route, accommodation context, included value, price basis, policy and next step.",
+    measurement:
+      "Track qualified interest, quote effort, component availability, conversion, package contribution, supplier exceptions and customer feedback. Review which items create value or operational friction. Use evidence to refine the package while preserving booked versions and customer communications.",
+    safeguards: [
+      "Do not describe proposed components as confirmed inventory",
+      "Do not hide material transfer, room, meal or eligibility constraints",
+      "Do not combine incompatible supplier cancellation conditions silently",
+      "Do not publish a package the operations team has not reviewed end to end",
+    ],
+    roadmap:
+      "The first month validates audience, route, suppliers and responsibilities. The second completes pricing, content and operating documentation. The third pilots delivery and refines the package from margin and exception evidence before wider promotion.",
+  },
+  "/blog/tour-booking-management": {
+    thesis:
+      "Tour booking management is a controlled lifecycle from initial request or checkout through confirmation, payment, amendment, departure, completion and cancellation. A useful system shows the current state, responsible person and next action without losing the history that explains them.",
+    context:
+      "A row in a spreadsheet rarely captures traveller, product, departure, capacity, payment and communication state reliably. Booking status must remain distinct from payment and fulfilment status. External booking engines or distributors may own parts of the journey, so reconciliation and responsibility need explicit rules.",
+    steps: [
+      "Define booking, payment and fulfilment status models separately",
+      "Create records for customer, participants, product and departure",
+      "Reserve capacity according to documented hold and expiry rules",
+      "Issue accurate confirmation, payment and preparation messages",
+      "Record amendments, cancellations, refunds and operational notes",
+      "Reconcile completed service and close the record with an audit trail",
+    ],
+    foundation:
+      "Choose stable identifiers, required fields, access roles and event history. Define which actions are automated and which require approval. Keep sensitive traveller and payment data to the minimum necessary and separate operational notes from general marketing fields. Document the authoritative source when systems integrate.",
+    execution:
+      "Design queues around work that needs action: pending response, awaiting payment, capacity exception, document due, upcoming departure and refund review. Templates should insert controlled facts but remain reviewable. Every customer-facing status change should leave evidence of time, channel and responsible actor.",
+    measurement:
+      "Monitor response, time to confirmation, payment collection, amendment volume, cancellations, no-shows, fulfilment exceptions and reconciliation gaps. Analyse by product and source. Speed matters only when the underlying status and customer communication remain accurate.",
+    safeguards: [
+      "Do not mark a request confirmed before inventory and terms are accepted",
+      "Do not store full payment credentials or unnecessary identity documents",
+      "Do not overwrite history when dates, guests or prices change",
+      "Do not let integrations create duplicate customers or capacity",
+    ],
+    roadmap:
+      "Month one maps the lifecycle and cleans identifiers and statuses. Month two implements queues, templates and integrations around one product flow. Month three reconciles exceptions, tightens permissions and expands only after the audit trail is reliable.",
+  },
+  "/blog/tour-availability-capacity-management": {
+    thesis:
+      "Tour availability management calculates whether a specific product can be sold for a date or time from the intersection of schedule, capacity, resources, existing commitments and operating rules. A calendar marked open is not sufficient when guides, vehicles, equipment or supplier inventory constrain delivery.",
+    context:
+      "Capacity can belong to a departure, shared resource, pickup zone, rate or package component. Holds, buffers, maintenance, private bookings and external channels further affect sellable inventory. The system must define an authoritative quantity and update path before promising real-time availability.",
+    steps: [
+      "Define the sellable unit and every constraining resource",
+      "Create departures, schedules, capacity and booking cut-off rules",
+      "Model holds, buffers, maintenance and private allocation",
+      "Connect channels only after source-of-truth ownership is explicit",
+      "Test simultaneous booking, amendment and cancellation scenarios",
+      "Reconcile upcoming capacity and investigate every exception",
+    ],
+    foundation:
+      "Represent product capacity separately from resource availability where their limits differ. Use transactions or equivalent concurrency controls for inventory changes and stable external references for integrations. Decide when a request reserves inventory, when a hold expires and who may override a constraint.",
+    execution:
+      "Start with a single inventory model and direct channel. Create operational views for low capacity, unassigned resources, expired holds and overbooking risk. When an OTA or reseller is introduced, document polling or webhook behaviour, latency, failure alerts and reconciliation instead of assuming perfect synchronisation.",
+    measurement:
+      "Track sellable capacity, paid occupancy, utilisation, denied requests, expired holds, manual overrides, channel lag and overbooking incidents. Examine contribution alongside occupancy because filling every place at an unsustainable rate is not an operational success.",
+    safeguards: [
+      "Do not expose real-time claims without an authoritative update mechanism",
+      "Do not count the same shared guide, vehicle or equipment twice",
+      "Do not leave holds without clear expiry and release behaviour",
+      "Do not allow manual overrides without identity, reason and audit history",
+    ],
+    roadmap:
+      "Month one maps products, departures and constraints. Month two implements reservation, expiry and exception queues for the direct channel. Month three tests integration failure and concurrency, reconciles real departures and only then expands distribution.",
+  },
+  "/blog/crm-for-tour-operators": {
+    thesis:
+      "A CRM for tour operators should organise the traveller lifecycle from inquiry and qualification through proposal, booking, delivery and repeat relationship. Generic deal stages are useful only when they preserve trip context, ownership, consent and the next customer action.",
+    context:
+      "Travel inquiries often include destination, dates, party, preferences, product and source before a sale exists. Multiple travellers may belong to one customer or booking, and sensitive information should not be copied into broad marketing records. The CRM must connect commercial work without becoming the uncontrolled source for every operational detail.",
+    steps: [
+      "Define lead, customer, traveller, opportunity and booking relationships",
+      "Capture source, product, dates, party and consent with minimal friction",
+      "Design stages from observable customer commitments",
+      "Assign an owner, due action and response expectation",
+      "Connect accepted opportunities to controlled booking records",
+      "Segment retention only from lawful, accurate customer history",
+    ],
+    foundation:
+      "Agree unique identifiers, required fields, duplicate handling, permissions and retention. Separate marketing consent from service communication and restrict passport, health or payment information to appropriate systems. Make stage entry and exit conditions concrete enough that two team members classify the same situation consistently.",
+    execution:
+      "Build views around overdue response, unqualified inquiries, proposals awaiting decision, deposits due, upcoming customers and post-trip follow-up. Automate reminders and context transfer, not unsupported decisions. Record lost reasons and customer objections in structured form while retaining useful conversation history.",
+    measurement:
+      "Measure response, qualification, stage progression, sales cycle, booking value, contribution, source quality, loss reasons and repeat behaviour. Audit missing owners, stale records, duplicates and automation failures. Use cohorts where seasonality or long planning windows make weekly conversion misleading.",
+    safeguards: [
+      "Do not store sensitive traveller information in unrestricted notes",
+      "Do not treat marketing consent as implied by a service inquiry",
+      "Do not automate messages without timing, suppression and ownership rules",
+      "Do not inflate pipeline value with unqualified or duplicate inquiries",
+    ],
+    roadmap:
+      "The first month defines the lifecycle, data model and access rules. The second configures stages, queues, templates and one booking handoff. The third cleans exceptions, validates reporting and introduces only the automations the team can monitor.",
+  },
 };
 
 export function buildBlogSections(

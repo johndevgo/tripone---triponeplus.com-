@@ -251,6 +251,23 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives guides one hundred and twenty-one to one hundred and thirty distinct operating depth", () => {
+    const batch = seoPages.slice(120, 130);
+    const sections = batch.map((page) => buildSeoContent(page));
+    expect(new Set(sections.map((items) => JSON.stringify(items))).size).toBe(
+      10,
+    );
+    for (const items of sections) {
+      const headings = items.map((section) => section.heading).join(" ");
+      expect(headings).toContain("Build the operating foundation first");
+      expect(headings).toContain("Execute one complete customer journey");
+      expect(headings).toContain("A practical 90-day action plan");
+      expect(items.some((section) => (section.bullets?.length ?? 0) >= 6)).toBe(
+        true,
+      );
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);
