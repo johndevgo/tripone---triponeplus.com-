@@ -1204,6 +1204,72 @@ const profiles: Record<string, ComparisonProfile> = {
       },
     ],
   }),
+  "/compare/tripone-vs-spreadsheets": reservationProfile({
+    alternative: "Spreadsheets",
+    category:
+      "general-purpose tables used as a lightweight travel operations system",
+    verifiedPosition:
+      "Google Sheets and Microsoft Excel provide flexible tables, formulas, filters, permissions, collaboration and version features. They can model almost any list quickly, but the team must design and enforce relationships, validation, ownership, privacy, audit and customer-facing workflows itself.",
+    alternativeFit:
+      "Keep a spreadsheet when the workflow is small, low-risk, owned by very few people and genuinely benefits from free-form analysis. It can also remain useful for exports, reconciliations and controlled planning beside a system of record.",
+    tripOneFit:
+      "Evaluate TripOne+ when products, packages, leads, customers, pages and publishing need explicit relationships, permissions and customer-facing actions instead of cells and hand-built conventions.",
+    testScenario:
+      "Enter the same enquiry twice, update one customer's trip, assign an owner, protect private fields, publish a current package, trace an accidental edit and produce a qualified pipeline report. Count manual controls and duplicate sources.",
+    migration:
+      "Inventory workbooks, tabs, owners, formulas, validation rules, identifiers and connected scripts. Clean duplicates and define stable keys before importing; archive a read-only original with retention and access rules.",
+    questions: [
+      "Which workbook is authoritative for each customer and offer?",
+      "How are validation, permissions, audit history and accidental edits controlled?",
+      "Which scripts, formulas and reports would need replacement?",
+      "Can the team export and reconcile every TripOne+ record if it leaves?",
+    ],
+    sources: [
+      {
+        label: "Google official Sheets collaboration guide",
+        href: "https://support.google.com/docs/answer/9331169?hl=en",
+      },
+      {
+        label: "Microsoft official Excel collaboration guide",
+        href: "https://support.microsoft.com/en-us/office/collaborate-on-excel-workbooks-at-the-same-time-with-co-authoring-7152aa8b-b791-414c-a3bb-3024e46fb104",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-wordpress-stack": reservationProfile({
+    alternative: "a WordPress plugin stack",
+    category:
+      "self-assembled CMS, commerce, booking and marketing architecture",
+    verifiedPosition:
+      "WordPress core provides publishing and users while plugins and themes extend functionality. Official WordPress documentation makes update, backup, compatibility and security maintenance an owner responsibility; WooCommerce Bookings documents bookable products, resources, availability, payments, extensions, imports, exports and developer-level customisation.",
+    alternativeFit:
+      "Choose a WordPress stack when the business needs open-ended CMS flexibility, has qualified technical ownership and accepts selecting, integrating, securing and maintaining multiple vendors. It can be a strong fit for bespoke requirements with a real maintenance budget.",
+    tripOneFit:
+      "Evaluate TripOne+ when the team prefers one tourism-aware product model, guided generation, shared renderer and managed workflow over assembling and governing a theme, page builder, booking extension, CRM, SEO and analytics stack.",
+    testScenario:
+      "Build and publish a representative tour, package and destination; accept a booking or enquiry; update every dependency; restore a backup; test mobile performance, accessibility and structured data; then identify who owns each failure path.",
+    migration:
+      "Preserve posts, pages, media, taxonomies, products, bookings, customers, orders, redirects, SEO fields, forms and consent records. Document plugin-specific tables and shortcodes before changing themes or retiring extensions.",
+    questions: [
+      "Who owns hosting, backups, security, updates and compatibility testing?",
+      "Which paid themes, plugins, gateways and support contracts are required?",
+      "How many systems own customer, booking and consent data?",
+      "Can all content and operational records be exported without proprietary lock-in?",
+    ],
+    sources: [
+      {
+        label: "WordPress official plugin documentation",
+        href: "https://wordpress.org/documentation/article/manage-plugins/",
+      },
+      {
+        label: "WordPress official update documentation",
+        href: "https://wordpress.org/documentation/article/plugins-themes-auto-updates/",
+      },
+      {
+        label: "WooCommerce Bookings official introduction",
+        href: "https://woocommerce.com/document/introduction-to-woocommerce-bookings/",
+      },
+    ],
+  }),
 };
 
 export function buildComparisonSections(

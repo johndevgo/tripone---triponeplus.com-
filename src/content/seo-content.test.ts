@@ -160,6 +160,26 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives pages seventy-one to eighty comparison evidence and working resources", () => {
+    const batch = seoPages.slice(70, 80);
+    expect(
+      new Set(batch.map((page) => JSON.stringify(buildSeoContent(page)))).size,
+    ).toBe(10);
+    for (const [index, page] of batch.entries()) {
+      const sections = buildSeoContent(page);
+      const headings = sections.map((section) => section.heading).join(" ");
+      if (index < 2) {
+        expect(
+          sections.flatMap((section) => section.sources ?? []).length,
+        ).toBeGreaterThanOrEqual(2);
+        expect(headings).toContain("Run the same practical trial");
+      } else {
+        expect(headings).toContain("Complete the work in decision order");
+        expect(headings).toContain("Quality and trust checks before approval");
+      }
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);
