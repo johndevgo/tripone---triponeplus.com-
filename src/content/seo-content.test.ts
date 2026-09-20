@@ -130,6 +130,21 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives comparison pages fifty-one to sixty specialist evaluation evidence", () => {
+    for (const page of seoPages.slice(50, 60)) {
+      const sections = buildSeoContent(page);
+      expect(
+        sections.flatMap((section) => section.sources ?? []).length,
+        `${page.path} source count`,
+      ).toBeGreaterThanOrEqual(2);
+      const body = sections
+        .flatMap((section) => [section.heading, ...section.paragraphs])
+        .join(" ");
+      expect(body).toContain("TripOne+");
+      expect(body).toContain("Migration");
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);

@@ -43,6 +43,29 @@ export const seoPages = z
   .length(138)
   .parse(generatedCatalog);
 
+const serviceArtwork: Record<string, string> = {
+  "/services/seo": "/images/service-art/travel-seo.webp",
+  "/services/google-ads": "/images/service-art/google-ads.webp",
+  "/services/meta-ads": "/images/service-art/meta-ads.webp",
+  "/services/tiktok-ads": "/images/service-art/tiktok-ads.webp",
+  "/services/social-media-marketing": "/images/service-art/social-media.webp",
+  "/services/content-marketing": "/images/service-art/content-marketing.webp",
+  "/services/creative-design": "/images/service-art/creative-design.webp",
+  "/services/conversion-rate-optimisation":
+    "/images/service-art/conversion-optimisation.webp",
+  "/services/website-growth": "/images/service-art/website-growth.webp",
+  "/services/analytics-tracking": "/images/service-art/analytics-tracking.webp",
+  "/services/strategy-consulting":
+    "/images/service-art/strategy-consulting.webp",
+  "/services/email-marketing-crm": "/images/service-art/email-crm.webp",
+  "/services/landing-pages-funnels": "/images/service-art/landing-pages.webp",
+  "/services/reputation-review-growth":
+    "/images/service-art/reputation-growth.webp",
+  "/services/marketing-automation":
+    "/images/service-art/marketing-automation.webp",
+  "/services/brand-positioning": "/images/service-art/brand-positioning.webp",
+};
+
 const pagesByPath = new Map(seoPages.map((page) => [page.path, page]));
 
 export const seoNamespaces = [
@@ -179,6 +202,9 @@ export function getRelatedSeoPages(page: SeoPageSpec, limit = 6) {
 }
 
 export function getSeoPageImage(page: SeoPageSpec) {
+  const suppliedArtwork = serviceArtwork[page.path];
+  if (suppliedArtwork) return suppliedArtwork;
+
   const context = [
     page.title,
     page.keywordCluster,
@@ -212,6 +238,9 @@ export function getSeoPageImage(page: SeoPageSpec) {
 }
 
 export function getSeoPageImageAlt(page: SeoPageSpec) {
+  if (serviceArtwork[page.path]) {
+    return `TripOne+ ${page.title.toLowerCase()} capability artwork`;
+  }
   return `Travel business scene supporting ${page.primaryKeyword} for ${page.vertical.toLowerCase()}`;
 }
 

@@ -16,6 +16,32 @@ type ComparisonProfile = {
 
 const reviewedOn = "20 September 2026";
 
+function reservationProfile(input: {
+  alternative: string;
+  category: string;
+  verifiedPosition: string;
+  alternativeFit: string;
+  tripOneFit: string;
+  testScenario: string;
+  migration: string;
+  questions: string[];
+  sources: { label: string; href: string }[];
+}): ComparisonProfile {
+  return {
+    alternative: input.alternative,
+    category: input.category,
+    verifiedPosition: input.verifiedPosition,
+    tripOnePosition:
+      "TripOne+ currently emphasises an owned tourism website, structured products and packages, destination content, request-led CRM records and an integrated growth workspace. It should not be described as matching a specialist platform's documented checkout, payment, ticketing, distribution or operational depth unless the live product and a representative test prove it.",
+    chooseAlternative: input.alternativeFit,
+    chooseTripOne: input.tripOneFit,
+    testScenario: input.testScenario,
+    migration: input.migration,
+    questions: input.questions,
+    sources: input.sources,
+  };
+}
+
 const profiles: Record<string, ComparisonProfile> = {
   "/compare/tripone-vs-tripcart": {
     alternative: "TripCart",
@@ -550,6 +576,318 @@ const profiles: Record<string, ComparisonProfile> = {
       },
     ],
   },
+  "/compare/tripone-vs-zaui": reservationProfile({
+    alternative: "Zaui",
+    category: "tour, activity and transport reservation platform",
+    verifiedPosition:
+      "Zaui's official material documents online booking, tour and transport schedules, routes, fleet and resource management, vehicle context, payments, mobile check-in, agent and OTA channels, customer self-service and inventory synchronisation. Its transport depth is a substantive distinction.",
+    alternativeFit:
+      "Evaluate Zaui when shuttles, routes, manifests, distance pricing, vehicles, transport schedules or mature live reservations are essential. Verify the precise gateways, channels, market support and commercial terms.",
+    tripOneFit:
+      "Evaluate TripOne+ when the priority is an owned content and growth system with packages, taxonomies and request-led CRM, or when transport reservations can remain in a specialist source of truth.",
+    testScenario:
+      "Configure a scheduled tour and airport transfer with vehicle, driver, route, capacity, payment and OTA sale. Change a schedule, process a walk-up and reconcile a manifest, then compare website editing and lead context.",
+    migration:
+      "Preserve routes, schedules, vehicles, products, resources, future reservations, customers, payments and channel mappings. Reconcile active trips and payouts before moving booking traffic.",
+    questions: [
+      "How are routes, fleet, resources and tour inventory represented?",
+      "Which gateways, OTAs and reseller workflows serve our market?",
+      "What fees and implementation services apply?",
+      "Can transport, booking and customer records be exported completely?",
+    ],
+    sources: [
+      { label: "Zaui official platform", href: "https://www.zaui.com/" },
+      {
+        label: "Zaui platform features",
+        href: "https://www.zaui.com/platform-features",
+      },
+      {
+        label: "Zaui tour and transport solutions",
+        href: "https://www.zaui.com/solutions",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-ventrata": reservationProfile({
+    alternative: "Ventrata",
+    category: "enterprise ticketing platform for tours and attractions",
+    verifiedPosition:
+      "Ventrata's official pages document web checkout, real-time availability, handheld and desktop POS, kiosks, scanning, ticket and capacity controls, reseller connectivity, OCTO APIs, hardware and enterprise reporting for high-volume online, onsite and third-party sales.",
+    alternativeFit:
+      "Evaluate Ventrata when turnstiles, kiosks, hardware, high-throughput ticket validation, reseller connectivity or enterprise attraction operations are core. Confirm implementation, hardware, support and commercial requirements.",
+    tripOneFit:
+      "Evaluate TripOne+ when a smaller operator needs an accessible owned website, structured travel content and customer-growth workflow without enterprise ticketing infrastructure.",
+    testScenario:
+      "Sell the same ticket through web, terminal, kiosk and a required reseller; scan it, enforce capacity, issue a change and inspect ledger reporting. Compare content publishing and CRM context separately.",
+    migration:
+      "Map products, ticket units, hardware, users, resellers, future admissions, payments and ledger records. Run scanners and channel connections in a controlled cutover with rollback.",
+    questions: [
+      "Which hardware, APIs and implementation services are required?",
+      "How do reseller, payment and support costs scale?",
+      "What offline and peak-load behaviour is supported?",
+      "Which ticket, customer and ledger exports are available?",
+    ],
+    sources: [
+      {
+        label: "Ventrata official features",
+        href: "https://ventrata.com/features-and-solutions",
+      },
+      {
+        label: "Ventrata OCTO API documentation",
+        href: "https://docs.ventrata.com/",
+      },
+      {
+        label: "Ventrata terminal documentation",
+        href: "https://support.ventrata.com/en/articles/9545671-ventrata-terminal-app-overview",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-rocketrez": reservationProfile({
+    alternative: "RocketRez",
+    category: "attraction ticketing, POS and guest experience platform",
+    verifiedPosition:
+      "RocketRez's official material documents online and onsite ticketing, POS, timed capacity, scanning, kiosks, memberships, retail, food and beverage, reseller sales and guest communication. That attraction-wide commerce model extends beyond a tour catalogue.",
+    alternativeFit:
+      "Evaluate RocketRez when an attraction needs gate scanning, memberships, retail, concessions, kiosks and unified POS as well as tickets. Confirm regional payment, hardware and implementation details.",
+    tripOneFit:
+      "Evaluate TripOne+ for tour businesses whose main need is a content-rich owned site, packages and request-led customer operations rather than venue-wide ticketing and retail.",
+    testScenario:
+      "Sell a timed ticket online and onsite, scan entry, enforce capacity, process membership benefits and bundle a retail item. Compare that path with TripOne+'s website and lead workflow.",
+    migration:
+      "Preserve tickets, memberships, future events, guest records, payments, retail data and hardware configuration. Test peak entry and reconciliation before retirement.",
+    questions: [
+      "Which ticketing, POS, retail and membership modules are required?",
+      "What hardware and payment commitments apply?",
+      "How does reseller and website ownership work?",
+      "Can all guest, ticket and transaction records be exported?",
+    ],
+    sources: [
+      {
+        label: "RocketRez official platform",
+        href: "https://www.rocketrez.com/",
+      },
+      {
+        label: "RocketRez official feature index",
+        href: "https://www.rocketrez.com/features-index",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-ticketinghub": reservationProfile({
+    alternative: "TicketingHub",
+    category: "tour and attraction ticketing and distribution platform",
+    verifiedPosition:
+      "TicketingHub presents booking and ticketing software for tours, activities and attractions with online checkout, channel distribution and operational tools. Buyers should verify every required workflow in its current official product, documentation and proposal.",
+    alternativeFit:
+      "Evaluate TicketingHub when ticket issuance, reseller distribution, live availability and checkout are central. Test the exact channels, payment model, fees and data access.",
+    tripOneFit:
+      "Evaluate TripOne+ when the operator primarily needs tourism-aware site generation, destination content, CRM context and marketing workflows, potentially connected to specialist ticketing.",
+    testScenario:
+      "Sell one timed activity direct and through a required reseller, redeem it, change availability, issue a cancellation and export the record. Compare editing and acquisition separately.",
+    migration:
+      "Map products, time slots, tickets, customers, payments, resellers and future bookings. Coordinate channel and widget replacement so no stale availability remains live.",
+    questions: [
+      "Which channels, ticket types and redemption workflows are supported?",
+      "What booking, payment and reseller fees apply?",
+      "How are the website and customer relationship managed?",
+      "What exports and APIs support migration?",
+    ],
+    sources: [
+      {
+        label: "TicketingHub official product site",
+        href: "https://www.ticketinghub.com/",
+      },
+      {
+        label: "TicketingHub official help centre",
+        href: "https://help.ticketinghub.com/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-rezgo": reservationProfile({
+    alternative: "Rezgo",
+    category: "tour and activity reservation, POS and distribution platform",
+    verifiedPosition:
+      "Rezgo's official site documents online, mobile, phone and in-person bookings, payment gateways, POS, inventory, resources, waivers, ticketing, analytics, reviews and OTA distribution. Current release material also shows ongoing kiosk and analytics development.",
+    alternativeFit:
+      "Evaluate Rezgo when live inventory, payments, POS, waivers, check-in or distribution are decisive. Confirm its current fee model, gateways and market availability.",
+    tripOneFit:
+      "Evaluate TripOne+ when the priority is deterministic website creation, packages, editorial growth and request-led CRM, or when Rezgo can remain the booking source.",
+    testScenario:
+      "Create inventory with multiple options and resources, take online and POS payments, sign a waiver, scan a ticket and distribute availability. Then compare content and acquisition workflows.",
+    migration:
+      "Preserve inventory, options, resources, future bookings, waivers, customers, payments and channel mappings. Reconcile active reservations and gateway records before switching.",
+    questions: [
+      "How does current pricing apply to our booking mix?",
+      "Which gateways and distribution partners serve our market?",
+      "What website and CRM capabilities are native?",
+      "Can all operational and customer records be exported?",
+    ],
+    sources: [
+      { label: "Rezgo official product site", href: "https://www.rezgo.com/" },
+      {
+        label: "Rezgo getting started guide",
+        href: "https://support.rezgo.com/kb/getting-started-with-rezgo/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-bookeo": reservationProfile({
+    alternative: "Bookeo",
+    category: "tour and activity scheduling and reservation platform",
+    verifiedPosition:
+      "Bookeo's official pages document real-time scheduling, payments, website widgets, standalone booking pages, reminders, rescheduling, staff and vehicle resources, waivers and OTA distribution. It separates appointments, classes and tours, so the exact account type matters.",
+    alternativeFit:
+      "Evaluate Bookeo when mature scheduling, payment, calendar and resource rules are core and its tour-specific product fits the catalogue. Confirm plan limits and paid add-ons.",
+    tripOneFit:
+      "Evaluate TripOne+ when tourism content, packages, destination SEO and broader lead/customer workflows outweigh the need for a mature instant scheduling engine.",
+    testScenario:
+      "Configure scheduled, special-date and private tour cases with guides, vehicles, payment and a waiver. Test rescheduling and OTA availability, then compare site editing.",
+    migration:
+      "Export tours, schedules, customers, future bookings, payments, resources and waiver records. Preserve synced calendars and active reservations until reconciled.",
+    questions: [
+      "Which Bookeo product and plan matches our tour model?",
+      "What resource, booking and add-on limits apply?",
+      "Which gateways and channels are available?",
+      "How complete are booking and customer exports?",
+    ],
+    sources: [
+      {
+        label: "Bookeo tours and activities",
+        href: "https://www.bookeo.com/tours/",
+      },
+      {
+        label: "Bookeo tour documentation",
+        href: "https://support.bookeo.com/hc/en-us/sections/360002699771-Bookeo-Tours-and-Activities",
+      },
+      {
+        label: "Bookeo official tour pricing",
+        href: "https://www.bookeo.com/tours/pricing/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-trytn": reservationProfile({
+    alternative: "TRYTN",
+    category: "tour and activity reservation management system",
+    verifiedPosition:
+      "TRYTN's official pages describe online booking and central reservations for tour and activity businesses, including scheduled and unscheduled products, merchandise, assets, schedules, fees, add-ons, questions and configurable feature visibility.",
+    alternativeFit:
+      "Evaluate TRYTN when live reservations, asset management and its scheduling model fit the operation. Verify checkout, payments, distribution, pricing and current scope directly.",
+    tripOneFit:
+      "Evaluate TripOne+ when an owned website, destination and package content, request-led CRM and agency growth layer are the stronger need.",
+    testScenario:
+      "Create scheduled and unscheduled products, assign a constrained asset, add fees and questions, process a reservation change and export it. Compare the public content workflow.",
+    migration:
+      "Map products, schedules, assets, customers, reservations, payments and integrations. Keep future reservations and financial records accessible throughout transition.",
+    questions: [
+      "Which scheduled, unscheduled and asset workflows fit our products?",
+      "What payment, distribution and notification features are included?",
+      "How is the public website managed?",
+      "What export and API access is available?",
+    ],
+    sources: [
+      {
+        label: "TRYTN official company overview",
+        href: "https://www.trytn.com/company/",
+      },
+      {
+        label: "TRYTN feature configuration guide",
+        href: "https://support.trytn.com/hc/en-us/articles/360060902752-Customizing-the-TRYTN-Experience-Controlling-TRYTN-Features-and-Functionality",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-bookinglayer": reservationProfile({
+    alternative: "Bookinglayer",
+    category: "reservation and operations platform for stays plus experiences",
+    verifiedPosition:
+      "Bookinglayer's official site documents accommodation, activities, services, rentals and packages in one inventory, with booking engine, customer portal, payments, room and activity planning, guest communication and operational lists. Accommodation-plus-programme depth is its meaningful specialisation.",
+    alternativeFit:
+      "Evaluate Bookinglayer when retreats, surf camps, wellness stays or adventure programmes must sell rooms and activities in one booking and manage deposits, arrivals and guest plans together.",
+    tripOneFit:
+      "Evaluate TripOne+ when the business does not need property-level accommodation operations and prioritises an owned tourism website, broad service catalogue and growth workflow.",
+    testScenario:
+      "Sell a package combining room, activity, transfer and payment plan; change room availability, collect guest details and run the arrival list. Compare website and CRM editing.",
+    migration:
+      "Preserve accommodation and activity inventory, packages, guests, future stays, payments, invoices and operational plans. Reconcile room occupancy before cutover.",
+    questions: [
+      "How are rooms, activities, services and groups modelled together?",
+      "Which payment, portal and planning modules are included?",
+      "What website and marketing controls are native?",
+      "Can complete guest, stay and financial records be exported?",
+    ],
+    sources: [
+      {
+        label: "Bookinglayer official platform",
+        href: "https://www.bookinglayer.com/",
+      },
+      {
+        label: "Bookinglayer backoffice features",
+        href: "https://www.bookinglayer.com/backoffice",
+      },
+      {
+        label: "Bookinglayer daily planning",
+        href: "https://bookinglayer.com/features/daily-planning",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-beyonk": reservationProfile({
+    alternative: "Beyonk",
+    category: "visitor ticketing and marketing platform",
+    verifiedPosition:
+      "Beyonk's official pages document online and onsite ticketing, ePOS, waivers, questionnaires, scheduling, capacity, self-service, QR check-in, memberships, gift cards, merchandise, reporting and marketing services. It is a close strategic comparison but remains ticketing-led.",
+    alternativeFit:
+      "Evaluate Beyonk when visitor ticketing, memberships, onsite sales and integrated marketing services match the organisation. Verify geography, payments, pricing and service terms.",
+    tripOneFit:
+      "Evaluate TripOne+ when the business needs travel packages, destinations, service and rental content and an owned growth workspace beyond an attraction-ticketing model.",
+    testScenario:
+      "Sell a timed ticket and membership, sign a waiver, check in by QR, change a booking and run a repeat-visitor campaign. Compare package and destination publishing.",
+    migration:
+      "Map events, tickets, memberships, waivers, customers, future admissions, payments and consent. Preserve refund and attendance obligations during transition.",
+    questions: [
+      "Which ticketing and marketing modules are included?",
+      "How are booking fees and funded marketing services structured?",
+      "Can it represent multi-day travel packages and suppliers?",
+      "What customer, ticket and consent exports are provided?",
+    ],
+    sources: [
+      { label: "Beyonk official platform", href: "https://beyonk.com/us/" },
+      {
+        label: "Beyonk official solutions",
+        href: "https://beyonk.com/us/solutions/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-wetravel": reservationProfile({
+    alternative: "WeTravel",
+    category:
+      "multi-day group travel booking, payments and trip management platform",
+    verifiedPosition:
+      "WeTravel's official pages document itinerary creation, booking pages, global payments, payment plans, room inventory, participant manifests, traveller details, partner payouts and trip management for multi-day and group travel. That financial and departure workflow is central to its positioning.",
+    alternativeFit:
+      "Evaluate WeTravel when collecting group-trip payments, managing instalments, travellers, rooms, manifests and supplier payouts is dominant. Verify countries, currencies, compliance and fees.",
+    tripOneFit:
+      "Evaluate TripOne+ when the priority is persistent business infrastructure across the public website, packages, destinations, CRM and marketing, and specialist payments can remain elsewhere.",
+    testScenario:
+      "Publish a group trip with itinerary, room options, deposit and instalments; collect traveller data, produce a manifest and pay a supplier. Compare the long-lived website workflow.",
+    migration:
+      "Preserve trips, participants, room assignments, balances, payment plans, payouts, manifests and compliance records. Do not move active payment obligations without reconciliation.",
+    questions: [
+      "Which countries, currencies and payment methods are supported?",
+      "How do processing, transfer and payout fees apply?",
+      "What persistent website, CRM and SEO functions are included?",
+      "Can all traveller, payment and trip records be exported?",
+    ],
+    sources: [
+      {
+        label: "WeTravel official platform",
+        href: "https://www.wetravel.com/",
+      },
+      {
+        label: "WeTravel official booking product",
+        href: "https://product.wetravel.com/bookings",
+      },
+      {
+        label: "WeTravel official workflow guide",
+        href: "https://help.wetravel.com/en/articles/253921-how-it-works",
+      },
+    ],
+  }),
 };
 
 export function buildComparisonSections(

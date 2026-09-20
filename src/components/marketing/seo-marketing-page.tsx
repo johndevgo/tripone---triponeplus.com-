@@ -8,11 +8,11 @@ import {
   Compass,
   ExternalLink,
   MessageCircle,
-  Network,
   SearchCheck,
 } from "lucide-react";
 import { ButtonLink } from "@/components/ui/button";
 import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
+import { SeoPageTypeIntro } from "@/components/marketing/seo-page-type-intro";
 import { SeoToolWorkspace } from "@/components/marketing/seo-tool-workspace";
 import {
   getSeoEditorialLinks,
@@ -147,40 +147,7 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
           </div>
         </header>
 
-        <section
-          aria-labelledby="topic-entities"
-          className="glass mt-12 rounded-[2rem] p-6 sm:p-8"
-        >
-          <div className="flex items-center gap-3">
-            <span className="grid size-11 place-items-center rounded-2xl bg-emerald-300/10 text-[#95ee8e]">
-              <Network size={21} />
-            </span>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-[.15em] text-white/38">
-                Connected strategy
-              </p>
-              <h2 id="topic-entities" className="mt-1 text-xl font-semibold">
-                What this work connects
-              </h2>
-            </div>
-          </div>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {page.entities.map((entity, index) => (
-              <div
-                key={entity}
-                className="rounded-2xl border border-emerald-300/15 bg-emerald-300/[.06] p-4"
-              >
-                <p className="text-xs font-semibold uppercase tracking-[.13em] text-[#95ee8e]">
-                  {entityRole(index)}
-                </p>
-                <p className="mt-2 font-medium text-emerald-50/85">{entity}</p>
-                <p className="mt-1 text-xs leading-5 text-white/42">
-                  {entityExplanation(page, entity, index)}
-                </p>
-              </div>
-            ))}
-          </div>
-        </section>
+        <SeoPageTypeIntro page={page} />
 
         {proofs.length > 0 && (
           <section aria-labelledby="delivery-evidence" className="mt-16">
@@ -475,29 +442,6 @@ function headingId(value: string) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
-}
-
-function entityRole(index: number) {
-  return [
-    "Primary focus",
-    "Connected workflow",
-    "Decision input",
-    "Traveller touchpoint",
-    "Measurement",
-    "Supporting capability",
-  ][index % 6]!;
-}
-
-function entityExplanation(page: SeoPageSpec, entity: string, index: number) {
-  const actions = [
-    "Sets the central business and customer objective for the work.",
-    "Connects the promise to a process the team can repeat.",
-    "Helps a traveller or operator choose the right next action.",
-    "Adds useful context for suitability, trust and trip planning.",
-    "Supports accountable review without overstating performance.",
-    `Included where ${entity.toLowerCase()} materially improves the ${page.keywordCluster.toLowerCase()} journey.`,
-  ];
-  return actions[index % actions.length]!;
 }
 
 function buildStructuredData(
