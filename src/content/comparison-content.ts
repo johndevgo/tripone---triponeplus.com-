@@ -221,6 +221,335 @@ const profiles: Record<string, ComparisonProfile> = {
       },
     ],
   },
+  "/compare/tripone-vs-wordpress": {
+    alternative: "WordPress",
+    category: "open-source content management system",
+    verifiedPosition:
+      "WordPress.org describes software installed on a chosen host, extended through thousands of themes and plugins, modified in code and used with custom content types, taxonomies and a REST API. That flexibility is genuine, but a travel booking stack, backups, security, compatibility and specialist workflows are assembled rather than supplied by WordPress core.",
+    tripOnePosition:
+      "TripOne+ is managed vertical software with prescribed tourism records, page recipes, a visual builder and connected operational workspaces. It provides less architectural freedom than WordPress while reducing the number of hosting, plugin and data-model decisions required for the supported travel workflow.",
+    chooseAlternative:
+      "Shortlist WordPress when source-level control, a particular plugin ecosystem, portable hosting or a highly bespoke website is essential and the business has accountable technical maintenance. Evaluate the complete theme, plugin, commerce and booking stack—not WordPress core alone.",
+    chooseTripOne:
+      "Shortlist TripOne+ when a guided tourism setup, managed release surface and connected catalogue, CRM and growth workflow are more valuable than arbitrary plugins. Verify any specialist checkout, channel or payment requirement against the current release.",
+    testScenario:
+      "Build the same tour, package, destination and lead journey; grant an editor access; update all dependencies; restore a backup; and export the travel records. Price hosting, premium plugins, development, monitoring and maintenance beside the managed application.",
+    migration:
+      "A WordPress export may not contain plugin-specific reservations or settings. Inventory the database, uploads, theme, custom code, users, URLs and each plugin's records. Preserve redirects and regulated customer or payment history before changing hosts or platforms.",
+    questions: [
+      "Who owns hosting, backups, security updates and plugin conflicts?",
+      "Which travel functions are core, premium plugins or custom code?",
+      "Can booking and customer data be exported without the original plugin?",
+      "What is the tested recovery process after a failed update?",
+    ],
+    sources: [
+      {
+        label: "WordPress.org official features",
+        href: "https://wordpress.org/about/features/",
+      },
+      {
+        label: "WordPress.org requirements",
+        href: "https://wordpress.org/about/requirements/",
+      },
+      {
+        label: "WordPress.org download model",
+        href: "https://wordpress.org/download/",
+      },
+    ],
+  },
+  "/compare/tripone-vs-webflow": {
+    alternative: "Webflow",
+    category: "visual website experience platform and composable CMS",
+    verifiedPosition:
+      "Webflow's official pages describe visual development, a composable CMS, hosting, SEO controls, analytics, optimisation, APIs, apps and custom code. Its strength is flexible website and content experience design. A travel operator still needs to model or integrate reservations, operational inventory and customer workflows not inherent to a general CMS.",
+    tripOnePosition:
+      "TripOne+ begins with tourism entities and deterministic site recipes, then connects them to leads, customers, bookings, packages and resources. Its design system is more constrained than Webflow's visual canvas, but supported travel data does not need to be invented as CMS collections from scratch.",
+    chooseAlternative:
+      "Evaluate Webflow when visual autonomy, a sophisticated marketing site, composable CMS or an existing best-of-breed booking stack is central and the team can design the integrations and content model.",
+    chooseTripOne:
+      "Evaluate TripOne+ when rapid tourism-aware setup and a connected content and operations workspace matter more than an open-ended visual canvas. Confirm advanced design and specialist reservation requirements in a live trial.",
+    testScenario:
+      "Build the same experience catalogue and destination relationships, connect the chosen booking action, publish an SEO change and hand daily editing to a non-designer. Compare CMS limits, integration work, accessibility, performance and administrator time.",
+    migration:
+      "Export CMS collections and original media where available, preserve custom code and integration documentation, and crawl all URLs. A hosted visual design may not move as a maintainable implementation, so budget for reconstruction and redirects.",
+    questions: [
+      "How will tours, dates, packages and destinations be modelled and related?",
+      "Which booking, CRM and operational systems must be integrated?",
+      "Who owns visual-system consistency and accessibility after launch?",
+      "What content and code can be exported in a reusable form?",
+    ],
+    sources: [
+      {
+        label: "Webflow official platform overview",
+        href: "https://webflow.com/platform",
+      },
+      {
+        label: "Webflow official CMS features",
+        href: "https://webflow.com/feature/cms",
+      },
+    ],
+  },
+  "/compare/tripone-vs-fareharbor": {
+    alternative: "FareHarbor",
+    category: "tour, activity, rental and attraction booking platform",
+    verifiedPosition:
+      "FareHarbor's official site documents direct checkout and payments, OTA and affiliate distribution, real-time availability sync, manifests, crew and resource workflows, check-in, reporting and guest follow-up. It is a mature reservation and operations candidate, not merely a booking widget.",
+    tripOnePosition:
+      "TripOne+ currently emphasises owned website generation, structured content, packages, CRM records, request-led bookings and growth services. It should not be represented as matching FareHarbor's documented reservation, payment, check-in and distribution depth unless those capabilities are implemented and tested.",
+    chooseAlternative:
+      "Shortlist FareHarbor when live inventory, checkout, payments, OTA distribution, manifests or day-of-operation tools are decisive. Confirm commercial terms, payment flow, website options, data access and the exact operational setup in a demo and contract.",
+    chooseTripOne:
+      "Shortlist TripOne+ when the immediate need is a tourism-aware owned website, content and lead/customer workspace, or when an existing specialist reservation system can remain the source of truth behind the marketing experience.",
+    testScenario:
+      "Create a capacity-constrained activity, sell through direct and partner paths, close inventory, assign a guide, check in a guest and reconcile source reporting. Separately test destination content, editing, CRM context and migration exports.",
+    migration:
+      "Preserve products, future and historical reservations, customer data, waivers, payment references, channel mappings, manifests, URLs and analytics. Run parallel reconciliation before moving live inventory or payment traffic.",
+    questions: [
+      "What fees, payment terms and channel commissions apply to this business?",
+      "How are inventory, resources and OTA mappings configured and exported?",
+      "What website, CRM and marketing capabilities are native or partner-led?",
+      "How will historical and future reservations remain accessible after exit?",
+    ],
+    sources: [
+      {
+        label: "FareHarbor official platform",
+        href: "https://fareharbor.com/",
+      },
+      {
+        label: "FareHarbor tour booking solution",
+        href: "https://fareharbor.com/solutions/tour-booking-software/",
+      },
+      {
+        label: "FareHarbor official help centre",
+        href: "https://help.fareharbor.com/",
+      },
+    ],
+  },
+  "/compare/tripone-vs-bokun": {
+    alternative: "Bókun",
+    category: "booking and channel management solution for experiences",
+    verifiedPosition:
+      "Bókun's official site presents booking and channel management with a website booking capability, Viator product import, availability synchronisation and access to a large reseller and OTA network. Its distribution orientation is material for operators that depend on multiple sales channels.",
+    tripOnePosition:
+      "TripOne+ concentrates on the owned website, tourism content, direct lead context, customer records and broader growth workspace. Its current release should not be assumed to replace Bókun's documented channel manager or live OTA inventory sync.",
+    chooseAlternative:
+      "Evaluate Bókun when OTA connectivity, channel management and live booking inventory are core. Verify each desired reseller, commission, payment flow, contract and direct-site experience with current first-party documentation.",
+    chooseTripOne:
+      "Evaluate TripOne+ when owned content, packages, destination authority and request-led sales operations are the priority, or as a website layer that hands inventory to a specialist system where a supported integration exists.",
+    testScenario:
+      "Publish one product direct and through the required resellers, change availability, cancel a booking and reconcile the channel. Then compare website editing, lead capture, customer context, SEO control and exports.",
+    migration:
+      "Map products, rates, availability, bookings, customer records, payments and every channel connection. Coordinate cutover with resellers to avoid duplicate or stale inventory and preserve required financial records.",
+    questions: [
+      "Which OTAs and resellers are live for the target market and product?",
+      "What platform, payment and channel fees apply?",
+      "How does direct website content and SEO ownership work?",
+      "Can products, bookings, customers and channel mappings be exported?",
+    ],
+    sources: [
+      { label: "Bókun official product site", href: "https://www.bokun.io/" },
+      { label: "Bókun official help centre", href: "https://docs.bokun.io/" },
+    ],
+  },
+  "/compare/tripone-vs-rezdy": {
+    alternative: "Rezdy",
+    category: "experience booking software and channel management network",
+    verifiedPosition:
+      "Rezdy's official pages describe booking management, communications, reporting and billing plus a channel manager connecting operators with global and local resellers. Its channel documentation discusses rate, availability and booking synchronisation and different supplier connection models.",
+    tripOnePosition:
+      "TripOne+ provides a managed tourism website and operational content layer with leads, customers and booking records, but it should not be claimed as equivalent to Rezdy's documented distribution network or real-time reservation engine.",
+    chooseAlternative:
+      "Evaluate Rezdy when multi-channel distribution, booking automation and connected reseller inventory are central. Validate the exact channels, plan, fees, payment arrangements and reconciliation workflow.",
+    chooseTripOne:
+      "Evaluate TripOne+ when the business needs an owned SEO and conversion site, package and destination content, and a request-led customer workflow, potentially alongside specialist booking infrastructure.",
+    testScenario:
+      "Connect one real product to the required channel, update rates and availability, process direct and reseller bookings and reconcile them. Compare that with the owned website, editing and lead-to-customer workflow.",
+    migration:
+      "Preserve supplier products, reseller contracts, rates, availability, orders, customers and reconciliation history. Coordinate channel disconnection and reconnection so two systems do not publish conflicting inventory.",
+    questions: [
+      "Which reseller connections and automation model fit this setup?",
+      "What booking, payment, channel and reconciliation fees apply?",
+      "How are direct website content and organic acquisition managed?",
+      "What complete data exports and API access are available?",
+    ],
+    sources: [
+      { label: "Rezdy official booking platform", href: "https://rezdy.com/" },
+      {
+        label: "Rezdy official channel manager",
+        href: "https://rezdy.com/channel-manager-for-suppliers/",
+      },
+    ],
+  },
+  "/compare/tripone-vs-checkfront": {
+    alternative: "Checkfront",
+    category: "booking management platform for tours, activities and rentals",
+    verifiedPosition:
+      "Checkfront's official pages document booking calendars, inventory and assets, forms, digital waivers, check-in, notifications, online payments, channel management and reporting. Its current pricing page also publishes a subscription and online-booking-fee model that buyers should reconfirm at quotation time.",
+    tripOnePosition:
+      "TripOne+ focuses on tourism website generation, structured content, CRM context and a broader marketing workspace. It does not currently justify a claim of matching Checkfront's documented waiver, payment, real-time inventory and booking-management depth.",
+    chooseAlternative:
+      "Evaluate Checkfront when waivers, detailed inventory, checkout, guest check-in and booking operations are decisive. Test the current product model and obtain binding commercial terms for the expected booking mix.",
+    chooseTripOne:
+      "Evaluate TripOne+ when an owned marketing and content system plus request-led operations is the more immediate need, or when a specialist booking platform can remain connected behind the public website.",
+    testScenario:
+      "Configure one rental and one scheduled activity with assets, waivers, seasonal pricing and notifications. Complete payment, change inventory, check in a guest, export the records and compare website editing and acquisition context.",
+    migration:
+      "Plan for products, assets, customers, bookings, waivers, payment references, notification templates and URLs. Legal retention requirements can prevent simply deleting the prior system after launch.",
+    questions: [
+      "What subscription, payment and per-booking fees apply today?",
+      "How do assets, inventory, waivers and channels map to our products?",
+      "Which website and CRM functions are native versus integrations?",
+      "Can all bookings, documents and customer records be exported?",
+    ],
+    sources: [
+      {
+        label: "Checkfront business management features",
+        href: "https://www.checkfront.com/run-your-business/",
+      },
+      {
+        label: "Checkfront official pricing",
+        href: "https://www.checkfront.com/pricing/",
+      },
+      {
+        label: "Checkfront waiver documentation",
+        href: "https://support.checkfront.com/hc/en-us/articles/19868093090204-How-do-I-get-started-with-Waivers-Documents",
+      },
+    ],
+  },
+  "/compare/tripone-vs-xola": {
+    alternative: "Xola",
+    category: "tour and activity booking and marketing platform",
+    verifiedPosition:
+      "Xola's official product pages describe direct booking, payments, scheduling, pricing, capacity, packages, resources, customer communication, point of sale, reporting and marketing tools. That is a substantial reservation and operations suite, not only an embedded checkout.",
+    tripOnePosition:
+      "TripOne+ combines an owned travel website and structured content with lead, customer, package and operational workspaces. Its present scope should not be portrayed as replacing Xola's documented payment, point-of-sale, live inventory and day-of-operation capabilities without evidence.",
+    chooseAlternative:
+      "Evaluate Xola when conversion-oriented checkout, payment processing, scheduling, resource allocation, POS and operational reporting are central. Confirm commercial availability and terms for the operating country.",
+    chooseTripOne:
+      "Evaluate TripOne+ for a content-led direct-growth site and request-led CRM workflow, or when the operator's reservation source of truth can remain a specialist platform behind the TripOne+ experience.",
+    testScenario:
+      "Create a variable-price tour with capacity, resources, package, cut-off, payment and post-purchase questions. Operate a walk-up and schedule change, then compare content creation, SEO controls and customer data export.",
+    migration:
+      "Preserve products, schedules, resource assignments, orders, customer responses, payments, reports and integrations. Reconcile future bookings and payouts before switching checkout traffic.",
+    questions: [
+      "Are payments and the full product available in our market?",
+      "How do pricing, resources, packages and distribution fit our catalogue?",
+      "What costs apply to payments, integrations and marketing tools?",
+      "Can operational and customer data be exported completely?",
+    ],
+    sources: [
+      { label: "Xola official platform", href: "https://www.xola.com/" },
+      {
+        label: "Xola tour management features",
+        href: "https://www.xola.com/tour-management-software",
+      },
+      {
+        label: "Xola official product tour",
+        href: "https://www.xola.com/product-tour/",
+      },
+    ],
+  },
+  "/compare/tripone-vs-peek-pro": {
+    alternative: "Peek Pro",
+    category: "experience and attraction booking and operations platform",
+    verifiedPosition:
+      "Peek Pro's official site describes online booking, point of sale, resources, waivers, customer communication, reseller connectivity, reporting and automation. It also markets advanced AI and revenue features; buyers should test exact availability and treat vendor performance claims as vendor claims, not forecasts.",
+    tripOnePosition:
+      "TripOne+ emphasises deterministic travel website creation, structured product and destination content, request-led CRM records and integrated growth work. It is not evidence-based to claim parity with Peek Pro's documented checkout, POS, inventory and enterprise operations.",
+    chooseAlternative:
+      "Evaluate Peek Pro when high-volume checkout, POS, resources, waivers, automation and reseller connectivity are core. Obtain current product, market, fee and implementation details rather than relying on headline growth claims.",
+    chooseTripOne:
+      "Evaluate TripOne+ when the owned website, organic content system and broader marketing workflow are the priority, or as a presentation layer while specialist reservation operations remain elsewhere.",
+    testScenario:
+      "Run a real product through mobile checkout, payment, resource allocation, waiver, walk-up, reschedule and reporting. Test the same business's content editing, destination SEO and lead workflow, then compare total ownership.",
+    migration:
+      "Map inventory, future bookings, customer records, waivers, payments, reseller connections, automation and reporting history. Keep the prior operational system available until every future reservation is reconciled.",
+    questions: [
+      "Which advertised automation and AI functions are included and available now?",
+      "What payment, booking, hardware and reseller costs apply?",
+      "How does the platform support owned website and SEO workflows?",
+      "What export and API options protect business continuity?",
+    ],
+    sources: [
+      {
+        label: "Peek Pro official product site",
+        href: "https://www.peekpro.com/",
+      },
+      {
+        label: "Peek Pro official knowledge base",
+        href: "https://support.peek.com/",
+      },
+    ],
+  },
+  "/compare/tripone-vs-trekksoft": {
+    alternative: "TrekkSoft",
+    category: "tour and activity booking and distribution platform",
+    verifiedPosition:
+      "TrekkSoft's official site and documentation describe a booking engine, POS, back office, integrated payments, channel manager, activities, rentals, packages, inquiries and resource workflows. Its public pricing shows plan-based features and multiple fee types that can change and should be reconfirmed.",
+    tripOnePosition:
+      "TripOne+ offers a managed tourism website, structured service and package content, customer records and growth workspace. Its current product should not be framed as a proven replacement for TrekkSoft's documented payments, POS, channels and mature reservation operations.",
+    chooseAlternative:
+      "Evaluate TrekkSoft when direct checkout, distribution, integrated payment, POS or activity operations are essential and its regional availability and terms fit. Calculate subscription, booking, payment and channel costs using the expected sales mix.",
+    chooseTripOne:
+      "Evaluate TripOne+ when the primary problem is owned content, destination discovery, request-led sales and marketing operations, or when a booking engine can remain integrated as the reservation source of truth.",
+    testScenario:
+      "Configure an activity, rental and package with schedules, pricing, payment and OTA distribution. Process direct, offline and partner bookings, then compare site editing, SEO, CRM context, exports and total fees.",
+    migration:
+      "Preserve activities, packages, schedules, reservations, customers, payments, channel mappings, resources and financial reports. Coordinate payout and channel timing before a checkout cutover.",
+    questions: [
+      "Which plan contains each required booking and operational feature?",
+      "What direct, OTA, payment and offline fees apply to our forecast mix?",
+      "How are website, channel and customer data exported?",
+      "What happens to future bookings and payouts after cancellation?",
+    ],
+    sources: [
+      {
+        label: "TrekkSoft official product site",
+        href: "https://www.trekksoft.com/",
+      },
+      {
+        label: "TrekkSoft official pricing",
+        href: "https://www.trekksoft.com/en/pricing",
+      },
+      {
+        label: "TrekkSoft activity documentation",
+        href: "https://support.trekksoft.com/activities",
+      },
+    ],
+  },
+  "/compare/tripone-vs-regiondo": {
+    alternative: "Regiondo",
+    category: "leisure booking and channel management system",
+    verifiedPosition:
+      "Regiondo's official help centre documents bookings, availability, offers, coupons, ticket validation, billing and settings. It also documents a channel manager for activating sales channels and mapping offer categories. Buyers should verify current market availability, plans, payments and integrations directly.",
+    tripOnePosition:
+      "TripOne+ centres the operator's owned site, travel content, customer context and marketing workspace. It does not have evidence for parity with Regiondo's documented ticketing, channel manager and mature reservation functions.",
+    chooseAlternative:
+      "Evaluate Regiondo when bookable offers, ticket validation, channel sales and reservation management are primary. Trial the exact product and channels in the operating market and obtain current commercial terms.",
+    chooseTripOne:
+      "Evaluate TripOne+ when a tourism-focused website, organic growth system, packages and request-led CRM are the main need, or when an existing reservation platform can stay behind the public journey.",
+    testScenario:
+      "Create one offer with appointments and capacity, connect a required sales channel, issue and validate a ticket, process a change and inspect billing. Compare owned-page editing, destination content and customer context.",
+    migration:
+      "Map offers, appointments, bookings, customers, tickets, payouts and channel categories. Disconnect sales channels in a controlled sequence and preserve records required for future attendance, refunds and accounting.",
+    questions: [
+      "Which markets, languages, gateways and channels are supported?",
+      "What subscription, payment and channel fees apply?",
+      "How much owned website and SEO control is included?",
+      "Can complete booking, customer, ticket and billing records be exported?",
+    ],
+    sources: [
+      { label: "Regiondo official website", href: "https://pro.regiondo.com/" },
+      {
+        label: "Regiondo dashboard documentation",
+        href: "https://support.regiondo.com/hc/en-us/articles/20179813699228-Which-functions-are-on-the-first-page-of-the-dashboard",
+      },
+      {
+        label: "Regiondo channel manager documentation",
+        href: "https://support.regiondo.com/hc/en-us/articles/20179874864668-How-do-I-work-with-the-channel-manager",
+      },
+    ],
+  },
 };
 
 export function buildComparisonSections(

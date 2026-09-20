@@ -112,6 +112,24 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives comparison pages forty-one to fifty current first-party sources", () => {
+    const batch = seoPages.slice(40, 50);
+    for (const page of batch) {
+      const sections = buildSeoContent(page);
+      const sources = sections.flatMap((section) => section.sources ?? []);
+      expect(
+        sources.length,
+        `${page.path} source count`,
+      ).toBeGreaterThanOrEqual(2);
+      expect(
+        sources.every((source) => source.href.startsWith("https://")),
+      ).toBe(true);
+      expect(sections.map((section) => section.heading).join(" ")).toContain(
+        "Run the same practical trial",
+      );
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);
