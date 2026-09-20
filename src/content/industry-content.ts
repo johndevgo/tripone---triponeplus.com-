@@ -521,6 +521,150 @@ const profiles: Record<string, IndustryProfile> = {
     thirdMonth:
       "By day 90, review demand, utilisation and qualification by service line, then refine inventory, schedules and content around observed needs.",
   },
+  "/for/food-tour-companies": {
+    promise:
+      "Food tour booking software should help a local operator turn culinary expertise into discoverable tours while keeping guides, tastings, partners and group capacity coordinated. TripOne+ connects the public story with the enquiry or booking context the team needs to deliver it.",
+    operatingReality:
+      "A food tour combines timed movement, venue relationships, dietary communication and guide-led storytelling. Capacity may depend on a partner venue rather than the guide alone. Menus and stops can change, so the website needs a trustworthy description without promising every tasting or supplier indefinitely.",
+    catalogue:
+      "Tours can store neighbourhood, duration, meeting point, sample tastings, inclusions, dietary guidance, accessibility and booking mode. City, cuisine and activity taxonomies create useful discovery paths while the tour remains one maintainable source record.",
+    salesJourney:
+      "Local search and destination content lead into a product page that answers practical questions before the call to action. The booking or enquiry retains the chosen tour, date and source, allowing staff to handle dietary notes and party context through an appropriate follow-up.",
+    delivery:
+      "Guide and group capacity must be aligned with venue arrangements and walking logistics. Dietary information should be communicated carefully, and allergy safety or guaranteed substitution decisions remain with qualified businesses and suppliers rather than marketing automation.",
+    capabilities: [
+      "Food tour and tasting product pages",
+      "City, neighbourhood and cuisine collections",
+      "Guide, departure and group-capacity foundation",
+      "Dietary and accessibility information",
+      "Customer, enquiry and booking context",
+      "Local SEO, reviews and responsive publishing",
+    ],
+    website:
+      "Food and neighbourhood imagery can support desire while guide expertise, meeting details, walking expectations and dietary context build confidence. Destination guides and relevant internal links help the operator earn discovery beyond a single product page.",
+    measurement:
+      "Review qualified demand and bookings by tour, date and source alongside dietary questions, response time, capacity loss and review themes. This connects acquisition with the real quality and constraints of the experience.",
+    safeguards: [
+      "Do not promise a permanent tasting or venue without confirmation",
+      "Communicate dietary limits without universal safety claims",
+      "Align group size with guides and venue partners",
+      "Keep meeting points and route accessibility current",
+    ],
+    firstMonth:
+      "Month one publishes a flagship food tour with verified logistics and tests its local-search, dietary-question and booking journey.",
+    secondMonth:
+      "By day 60, organise neighbourhood and cuisine content, connect guide capacity and standardise pre-tour communication.",
+    thirdMonth:
+      "By day 90, review demand, feedback themes and partner constraints, then expand tours and editorial content from observed traveller interest.",
+  },
+  "/for/walking-cultural-tours": {
+    promise:
+      "Walking tour booking software should keep a locally rich experience simple to discover, understand and schedule. TripOne+ helps cultural operators publish guide-led tours, city expertise and clear meeting information while retaining customer and source context after the visitor acts.",
+    operatingReality:
+      "Walking tours can be scheduled, private, tip-based or fixed-price, with different guide, language, group and accessibility constraints. Routes change with closures, events and weather. A lightweight workflow must still protect accurate timing, meeting points and guide ownership.",
+    catalogue:
+      "Products can describe theme, neighbourhood, duration, route character, language, accessibility, meeting point and booking mode. City and cultural collections group real tours without creating thin pages for every landmark mentioned in the story.",
+    salesJourney:
+      "A traveller moving through local search sees location, schedule context and the next action quickly on mobile. Requests or bookings retain the selected tour and source, while staff can handle private groups or language needs through a distinct qualification path.",
+    delivery:
+      "Guide schedules and agreed group limits define capacity. Route changes, local permissions and weather alternatives should have an owner and communication path. The public page must not imply access to sites or spaces that the tour cannot guarantee.",
+    capabilities: [
+      "Walking and cultural tour catalogue",
+      "Guide, language and departure foundation",
+      "Meeting-point and accessibility content",
+      "Private and scheduled enquiry routes",
+      "Customer, booking and source context",
+      "City SEO, local guides and review publishing",
+    ],
+    website:
+      "The site can pair local photography with a clear route theme, duration, guide perspective and meeting instructions. City guides and cultural resources create useful topical depth without burying the booking action.",
+    measurement:
+      "Track qualified actions by tour, city, language and source with guide utilisation, no-show or meeting issues and response time. Customer questions reveal where local pages need more clarity.",
+    safeguards: [
+      "Keep meeting points and route changes current",
+      "Set guide and group limits before accepting demand",
+      "Describe accessibility and walking expectations accurately",
+      "Avoid guaranteeing access controlled by third parties",
+    ],
+    firstMonth:
+      "The first month configures one scheduled and one private path, verifies meeting information and tests the complete mobile journey.",
+    secondMonth:
+      "By day 60, organise city and cultural collections, connect guide capacity and strengthen local discovery and pre-tour reminders.",
+    thirdMonth:
+      "By day 90, review route-level demand and operating exceptions, then refine schedules and content around maintainable local expertise.",
+  },
+  "/for-transfer-operators": {
+    promise:
+      "Transfer booking software should connect a passenger's route and timing with an appropriate vehicle, driver and accountable schedule. TripOne+ helps transfer operators present services, capture useful request context and manage the customer journey while specialist dispatch or real-time fleet systems remain authoritative where needed.",
+    operatingReality:
+      "Airport, hotel, intercity and private transfers vary by pickup point, flight context, passenger count, luggage, vehicle class and waiting terms. Availability is route and time dependent. A generic contact form creates avoidable back-and-forth and weak operational handoffs.",
+    catalogue:
+      "Services can describe route or service area, vehicle context, passenger and luggage guidance, inclusions, pricing label and request mode. Locations and product categories help visitors find real coverage without generating a page for every possible postcode or route.",
+    salesJourney:
+      "The request captures pickup, destination, date, party and relevant transport context, then preserves the source page. Staff can qualify and assign it before confirmation. Phone or WhatsApp routes remain available with clear ownership for urgent cases.",
+    delivery:
+      "Vehicles, drivers, schedules and turnaround create capacity. Live dispatch, GPS, flight tracking, payment and driver compliance may require specialist platforms. TripOne+ should connect or hand off to them transparently rather than claim functionality that has not been integrated.",
+    capabilities: [
+      "Transfer and vehicle-service pages",
+      "Route, location and service-area content",
+      "Vehicle, driver and schedule planning foundation",
+      "Context-rich transfer enquiries",
+      "Customer and booking relationship records",
+      "Local SEO and campaign landing pages",
+    ],
+    website:
+      "Transfer pages should foreground coverage, vehicle suitability, pickup process, luggage and waiting terms. Useful airport or destination resources can support search demand when they contain real operational guidance rather than interchangeable route copy.",
+    measurement:
+      "Review qualified requests and bookings by route, vehicle class and source alongside response time, unserviceable demand and scheduling conflicts. This is more useful than counting generic quote clicks.",
+    safeguards: [
+      "Confirm route, time and vehicle before promising service",
+      "Keep driver and vehicle compliance in controlled systems",
+      "Avoid thin auto-generated route pages",
+      "Make specialist dispatch and tracking boundaries explicit",
+    ],
+    firstMonth:
+      "Month one models a representative airport or private transfer, its request fields and assignment path, including unavailable and changed-time cases.",
+    secondMonth:
+      "By day 60, organise locations and vehicle classes, improve local discovery and standardise customer and driver handoffs.",
+    thirdMonth:
+      "By day 90, compare route demand with serviceability and schedule evidence, then prioritise dispatch integrations and content from real gaps.",
+  },
+  "/for/wellness-retreats": {
+    promise:
+      "Retreat booking software should help a guest understand the programme, setting, accommodation and suitability before entering a considered sales journey. TripOne+ gives wellness retreat businesses a content-rich website, package model and customer workflow without making clinical or guaranteed-outcome claims.",
+    operatingReality:
+      "A retreat combines dates, rooms, programme sessions, practitioners, meals, transfers and guest expectations. Some requests need consultation before acceptance. Capacity can be limited by accommodation type or programme ratio, and optional components need to remain distinct from what the package includes.",
+    catalogue:
+      "Retreat packages can include accommodation, activities, meals, transfers and a day-by-day programme, supported by destinations and travel styles. Content can explain audience, pace and preparation while avoiding medical language the operator is not qualified to use.",
+    salesJourney:
+      "The page answers programme, accommodation, inclusion and suitability questions before an enquiry or booking request. The lead retains retreat and date context, allowing staff to handle room preference and appropriate qualification through a private workflow.",
+    delivery:
+      "Room inventory, facilitators, programme capacity and supplier commitments must align. Sensitive health information should only be collected when necessary through an appropriate secure process, and clinical screening belongs with qualified professionals.",
+    capabilities: [
+      "Retreat, programme and package pages",
+      "Accommodation and inclusion presentation",
+      "Date, room and programme-capacity foundation",
+      "Consultative enquiry and customer workflow",
+      "Destination, practitioner and resource content",
+      "SEO, email and premium website controls",
+    ],
+    website:
+      "A calm visual system can support the story while detailed programme, accommodation, practitioner and policy content earns trust. Real proof and sourced testimonials are more valuable than vague transformation promises.",
+    measurement:
+      "Track qualified interest, date and room preference, stage progression, response time and confirmed outcomes. Content engagement can guide improvement but should never be interpreted as a wellness or health result.",
+    safeguards: [
+      "Avoid medical or guaranteed transformation claims",
+      "Align room and programme capacity before confirmation",
+      "Protect sensitive guest information",
+      "Label optional, sample and confirmed inclusions clearly",
+    ],
+    firstMonth:
+      "The first month structures one retreat and programme, verifies claims and capacity, and tests the consultation-to-confirmation handoff.",
+    secondMonth:
+      "By day 60, add useful destination and preparation content, improve guest follow-up and connect accommodation and programme constraints.",
+    thirdMonth:
+      "By day 90, review qualified pipeline and guest questions, then refine packages and retention journeys without overstating outcomes.",
+  },
 };
 
 export function buildIndustrySections(

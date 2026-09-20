@@ -92,6 +92,26 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives pages thirty-one to forty sourced industry and comparison guidance", () => {
+    const batch = seoPages.slice(30, 40);
+    const sections = batch.map((page) => buildSeoContent(page));
+    expect(new Set(sections.map((items) => JSON.stringify(items))).size).toBe(
+      10,
+    );
+
+    for (const [index, items] of sections.entries()) {
+      const body = items.map((item) => item.heading).join(" ");
+      if (index < 4) {
+        expect(body).toContain("From catalogue to customer and delivery");
+      } else {
+        expect(body).toContain("Run the same practical trial");
+        expect(items.some((item) => (item.sources?.length ?? 0) >= 2)).toBe(
+          true,
+        );
+      }
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);

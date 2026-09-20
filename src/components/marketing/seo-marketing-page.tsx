@@ -307,6 +307,27 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
                       ))}
                     </ul>
                   )}
+                  {section.sources && (
+                    <aside className="not-prose mt-7 rounded-2xl border border-white/10 bg-white/[.04] p-5">
+                      <p className="text-xs font-semibold uppercase tracking-[.14em] text-[#95ee8e]">
+                        First-party sources checked
+                      </p>
+                      <ul className="mt-3 grid gap-2">
+                        {section.sources.map((source) => (
+                          <li key={source.href}>
+                            <a
+                              href={source.href}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-2 text-sm font-semibold text-white/68 transition hover:text-white"
+                            >
+                              {source.label} <ExternalLink size={13} />
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </aside>
+                  )}
                   {index === 3 && (
                     <div className="not-prose mt-9 rounded-2xl border border-white/10 bg-white/[.045] p-6">
                       <p className="text-sm font-semibold text-white">
