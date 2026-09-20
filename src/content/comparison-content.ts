@@ -888,6 +888,322 @@ const profiles: Record<string, ComparisonProfile> = {
       },
     ],
   }),
+  "/compare/tripone-vs-travefy": reservationProfile({
+    alternative: "Travefy",
+    category: "travel advisor CRM, itinerary and proposal platform",
+    verifiedPosition:
+      "Travefy's official product pages document an itinerary and proposal builder, reusable content, supplier imports, client mobile apps, CRM records, forms, invoices, commission tracking, email, websites and landing pages. Its advisor-centred trip and back-office workflow is broader than a presentation tool alone.",
+    alternativeFit:
+      "Evaluate Travefy when advisors need mature itinerary assembly, proposal approval, supplier imports, invoices and commission tracking in one established workflow. Verify plan-level limits, payment handling, website scope and team pricing.",
+    tripOneFit:
+      "Evaluate TripOne+ when the priority is a tourism website and content system with broad operator products, packages, destinations and request-led CRM, plus an integrated marketing workspace.",
+    testScenario:
+      "Import a representative supplier booking, assemble a branded multi-day proposal, collect a form and approval, issue an invoice, record commission and deliver the final trip in the client app. Then compare website and acquisition controls.",
+    migration:
+      "Preserve contacts, trips, reusable content, forms, invoices, commission records, documents and client communications. Export a complete trip and contact sample before committing to the cutover.",
+    questions: [
+      "Which itinerary, CRM, invoice and website capabilities are included in our plan?",
+      "How are payments, authorisations and commissions represented?",
+      "Which supplier imports and team controls match our workflow?",
+      "Can trips, contacts, forms, documents and financial records be exported?",
+    ],
+    sources: [
+      { label: "Travefy official product", href: "https://travefy.com/pro" },
+      {
+        label: "Travefy official CRM release",
+        href: "https://travefy.com/blog-post/travefy-launches-all-new-crm-suite",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-traveljoy": reservationProfile({
+    alternative: "TravelJoy",
+    category: "travel advisor CRM, itinerary, invoicing and payment platform",
+    verifiedPosition:
+      "TravelJoy's official material documents client profiles, tasks, messaging, forms, e-signatures, proposals, itineraries, invoices, payment schedules, group trips, reports and workflow automation. Current product updates also describe marketing email and enquiry-page capabilities connected to its CRM.",
+    alternativeFit:
+      "Evaluate TravelJoy when a travel advisor needs client, proposal, payment and group-trip administration in a focused product. Test the exact payment geography, itinerary depth, team model and current membership limits.",
+    tripOneFit:
+      "Evaluate TripOne+ when the durable public website, structured product and destination content, broader operator catalogue and acquisition system are the leading requirements.",
+    testScenario:
+      "Create an inquiry, collect an intake form, build a proposal with options, obtain approval, schedule a deposit and balance, manage a group traveller and run the post-trip follow-up. Compare the persistent website journey separately.",
+    migration:
+      "Preserve contacts, preferences, trips, forms, signatures, invoices, payment records, templates and message history. Reconcile all open balances and future departures before replacing any customer-facing links.",
+    questions: [
+      "Which CRM, group, payment and marketing features are included today?",
+      "Which currencies, countries and payment responsibilities are supported?",
+      "How much control is available over the public website and SEO?",
+      "What complete contact, trip, form and transaction exports are available?",
+    ],
+    sources: [
+      {
+        label: "TravelJoy official CRM overview",
+        href: "https://traveljoy.com/blog/post/traveljoy-a-comprehensive-crm-for-travel-agents",
+      },
+      {
+        label: "TravelJoy official feature guide",
+        href: "https://traveljoy.com/blog/post/traveljoy-features-that-simplify-travel-planning-for-advisors",
+      },
+      {
+        label: "TravelJoy official marketing update",
+        href: "https://stripe.traveljoy.com/blog/post/meet-your-new-marketing-tab",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-tourwriter": reservationProfile({
+    alternative: "Tourwriter",
+    category:
+      "itinerary, pricing, booking and operations platform for FIT travel",
+    verifiedPosition:
+      "Tourwriter's official product and knowledge-base pages document itinerary design, supplier and rate records, itemised pricing, markups and commissions, traveller and agency CRM, booking requests, payments, accounting connections, tasks and reporting. It is positioned particularly for bespoke multi-day FIT businesses.",
+    alternativeFit:
+      "Evaluate Tourwriter when complex tailor-made itineraries, supplier rates, margins, booking requests and financial operations are central. Verify plan limits, setup costs, accounting connections and implementation effort in the current proposal.",
+    tripOneFit:
+      "Evaluate TripOne+ when public website ownership, content-led acquisition, packages, activities, rentals and customer-growth workflows matter more than deep supplier pricing and FIT back-office operations.",
+    testScenario:
+      "Load supplier products and seasonal rates, assemble a multi-currency itinerary, calculate net and gross pricing, request bookings, collect a traveller payment and reconcile supplier obligations. Compare publishing and lead acquisition separately.",
+    migration:
+      "Preserve supplier contracts, rates, products, itineraries, contacts, bookings, tasks, invoices and payment records. Validate pricing and active departures in parallel before switching systems.",
+    questions: [
+      "How are supplier rates, markups, commissions and currencies controlled?",
+      "Which booking, payment and accounting integrations are included?",
+      "What setup, migration, training and per-user commitments apply?",
+      "Can all supplier, itinerary, customer and finance records be exported?",
+    ],
+    sources: [
+      {
+        label: "Tourwriter official product",
+        href: "https://www.tourwriter.com/product/",
+      },
+      {
+        label: "Tourwriter official pricing workflow",
+        href: "https://learn.tourwriter.com/portal/en/kb/articles/itinerary-pricing-in-tourwriter",
+      },
+      {
+        label: "Tourwriter official plans",
+        href: "https://www.tourwriter.com/software-pricing-plans/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-wetu": reservationProfile({
+    alternative: "Wetu",
+    category: "travel itinerary, content and trade collaboration platform",
+    verifiedPosition:
+      "Wetu's official product and knowledge pages document a shared travel content library, itinerary builder, product manager, contact manager, co-branding and white-labelling, multiple digital and document outputs, and the offline-capable TravelKey client app. Its travel-trade content ecosystem is a material distinction.",
+    alternativeFit:
+      "Evaluate Wetu when rich itinerary presentation, supplier content, agent collaboration, co-branding and offline traveller delivery are core. Verify the exact package, content rights, translation and output availability.",
+    tripOneFit:
+      "Evaluate TripOne+ when the business needs an owned public website, structured offers and destinations, leads, packages and growth operations beyond itinerary distribution.",
+    testScenario:
+      "Create a multi-day itinerary from shared and private content, apply co-branding, publish the required outputs, open it offline in the traveller app and update a contact. Compare website discovery and enquiry workflows.",
+    migration:
+      "Preserve private content, images, products, contacts, templates, itineraries and traveller documents. Confirm content licensing and output access before replacing existing itinerary links.",
+    questions: [
+      "Which itinerary outputs and apps are available in the selected package?",
+      "How do shared, supplier and private content rights work?",
+      "Which contact, proposal and collaboration workflows are native?",
+      "Can private content, contacts and itineraries be exported completely?",
+    ],
+    sources: [
+      { label: "Wetu official platform", href: "https://wetu.com/" },
+      {
+        label: "Wetu official account guide",
+        href: "https://knowledge.wetu.com/whats-included-in-my-wetu-account-and-where-should-i-start",
+      },
+      {
+        label: "Wetu official output guide",
+        href: "https://knowledge.wetu.com/what-output-options-does-wetu-give-me-for-my-itineraries",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-lemax": reservationProfile({
+    alternative: "Lemax",
+    category: "tour operator and travel agency ERP platform",
+    verifiedPosition:
+      "Lemax's official feature pages document travel products and complex packages, supplier rates, inventory, sales, automated supplier ordering, reservations, rooming and movement lists, guides and vehicles, finance, accounting and reporting. That end-to-end operational scope is substantially deeper than a website builder.",
+    alternativeFit:
+      "Evaluate Lemax when a larger DMC or operator needs supplier contracting, reservations, operations, accounting and management reporting in one implementation. Confirm configuration, integration, migration and support commitments.",
+    tripOneFit:
+      "Evaluate TripOne+ when a smaller or growing operator prioritises an owned website, structured catalogue, request-led customer workflow and integrated acquisition without implementing a full travel ERP.",
+    testScenario:
+      "Create contracted products and rates, quote a package, request supplier availability, take customer payment, issue confirmations, assign a guide and vehicle, produce movement lists and reconcile financial reporting.",
+    migration:
+      "Map suppliers, contracts, products, inventory, reservations, passengers, operations, invoices, payments and ledgers. A finance-approved parallel run is essential before operational cutover.",
+    questions: [
+      "Which sales, operations and finance modules are required?",
+      "How are implementation, customisation, integrations and support scoped?",
+      "Can the platform represent our supplier and accounting rules?",
+      "What full operational and financial exports are contractually available?",
+    ],
+    sources: [
+      {
+        label: "Lemax official travel product features",
+        href: "https://lemax.net/travel-products/",
+      },
+      {
+        label: "Lemax official operations features",
+        href: "https://lemax.net/operations/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-safari-portal": reservationProfile({
+    alternative: "Safari Portal",
+    category: "travel itinerary, proposal and advisor workflow platform",
+    verifiedPosition:
+      "Safari Portal's official feature list documents reusable and preloaded travel content, customisable itineraries and lookbooks, guest portals, forms, live flight updates, CRM synchronisation, media, sales-pipeline visibility and task management. Its design-led itinerary workflow is especially relevant to safari and luxury travel advisors.",
+    alternativeFit:
+      "Evaluate Safari Portal when high-touch proposals, reusable destination and property content, guest documents and advisor task workflows are decisive. Verify payments, CRM synchronisation, content coverage and plan terms.",
+    tripOneFit:
+      "Evaluate TripOne+ when the business needs a persistent public website, broad operator product model, destination SEO, enquiries and marketing operations as the primary system.",
+    testScenario:
+      "Build a custom itinerary from preloaded and private content, share a lookbook, collect guest forms, update a flight, expose final documents and move the opportunity through pipeline tasks. Compare public-site ownership separately.",
+    migration:
+      "Preserve contacts, private content, media, proposals, itineraries, forms, documents, tasks and pipeline status. Test CRM synchronisation and export completeness with representative records.",
+    questions: [
+      "Which content, itinerary, guest-portal and CRM features are included?",
+      "How are payments, invoicing and client documents handled?",
+      "What controls exist for public websites, SEO and lead acquisition?",
+      "Can contacts, private content and complete trips be exported?",
+    ],
+    sources: [
+      {
+        label: "Safari Portal official feature list",
+        href: "https://www.safariportal.app/features",
+      },
+      {
+        label: "Safari Portal official site",
+        href: "https://www.safariportal.app/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-anyroad": reservationProfile({
+    alternative: "AnyRoad",
+    category: "enterprise experiential marketing and event platform",
+    verifiedPosition:
+      "AnyRoad's official platform pages document branded booking and ticketing, capacity and event operations, guest data capture, payments, surveys, feedback analysis, analytics, post-experience conversion and integrations with CRM, CDP, POS and other systems. It is aimed strongly at scaled brand experiences and events.",
+    alternativeFit:
+      "Evaluate AnyRoad when an enterprise brand needs event operations, consented first-party guest data, experiential analytics and cross-system activation across locations. Validate implementation, privacy, integrations and commercial scope.",
+    tripOneFit:
+      "Evaluate TripOne+ when a tour or travel business needs an owned tourism website, travel products and packages, destinations and practical customer-growth operations without enterprise experiential infrastructure.",
+    testScenario:
+      "Launch a branded recurring experience, accept online and walk-in guests, scan entry, capture consented feedback, inspect capacity and push a qualified record into the required CRM. Compare travel catalogue and SEO workflows separately.",
+    migration:
+      "Preserve experiences, schedules, tickets, guests, consent, payments, surveys, integrations and reporting definitions. Validate privacy obligations and active events before cutover.",
+    questions: [
+      "Which event, booking, feedback and analytics modules are included?",
+      "How are guest consent, data ownership and regional privacy handled?",
+      "Which CRM, POS, CDP and reporting integrations are proven?",
+      "Can event, guest, consent and transaction data be exported completely?",
+    ],
+    sources: [
+      {
+        label: "AnyRoad official platform overview",
+        href: "https://www.anyroad.com/platform/overview",
+      },
+      {
+        label: "AnyRoad official integrations",
+        href: "https://www.anyroad.com/platform/integrations",
+      },
+      {
+        label: "AnyRoad official experience survey",
+        href: "https://www.anyroad.com/platform/experience-survey",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-sembark": reservationProfile({
+    alternative: "Sembark",
+    category: "travel sales, operations, accounting and reporting platform",
+    verifiedPosition:
+      "Sembark's official product and documentation pages describe travel CRM and sales, quotations, operations, accounting, taxation, reporting, employee workflows, transport management, tour-movement calendars, payment tracking and ledgers. Its back-office scope is materially broader than website publishing.",
+    alternativeFit:
+      "Evaluate Sembark when a travel agency, DMC or operator needs integrated quotations, service operations, payments, accounts and tax workflows suited to its operating market. Verify localisation, implementation and module scope.",
+    tripOneFit:
+      "Evaluate TripOne+ when the priority is a public tourism website, structured packages and services, customer context and marketing workflow, with accounting remaining in a dedicated system.",
+    testScenario:
+      "Capture a lead, price and approve an itinerary, assign operational services, track incoming and supplier payments, produce the movement calendar and reconcile a management report. Compare website publishing independently.",
+    migration:
+      "Map leads, customers, itineraries, suppliers, services, operations, employees, payments, tax records and ledgers. Finance and operations should approve reconciled opening balances before cutover.",
+    questions: [
+      "Which sales, operations, accounting and tax modules fit our entity?",
+      "What implementation, migration and local support are included?",
+      "How are payment, supplier and profitability records controlled?",
+      "Can complete operational and accounting data be exported?",
+    ],
+    sources: [
+      { label: "Sembark official platform", href: "https://sembark.com/" },
+      {
+        label: "Sembark official getting-started documentation",
+        href: "https://sembark.com/travel-software/docs/getting-started/",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-hubspot": reservationProfile({
+    alternative: "HubSpot",
+    category: "general CRM, sales, marketing, service and content platform",
+    verifiedPosition:
+      "HubSpot's official product pages document a shared CRM data foundation with contact and deal management, pipelines, sales engagement, forms, email, automation, reporting, marketing and service products. Packaging and limits vary significantly by product, edition, seat and contact volume.",
+    alternativeFit:
+      "Evaluate HubSpot when sophisticated general CRM, sales, service or marketing automation is central and the team can design the travel-specific data model and integrations. Price the complete required bundle, not only the entry CRM.",
+    tripOneFit:
+      "Evaluate TripOne+ when a smaller travel team wants tourism-native products, packages, destinations, website generation and lead context without first configuring a general CRM platform.",
+    testScenario:
+      "Capture a travel enquiry with product and source context, route it, progress a deal, automate an appropriate follow-up, report the qualified outcome and connect a booking handoff. Compare the work and cost of modelling travel entities.",
+    migration:
+      "Preserve contacts, companies, deals, activities, consent, lists, workflows, forms, marketing records and custom properties. Audit edition-dependent exports and integrations before changing the source of truth.",
+    questions: [
+      "Which Hubs, editions, seats and marketing-contact volumes are required?",
+      "How will travel products, trips, travellers and bookings be modelled?",
+      "Which workflows require paid operations or custom objects?",
+      "Can all CRM, activity, consent and automation data be exported?",
+    ],
+    sources: [
+      {
+        label: "HubSpot official CRM",
+        href: "https://www.hubspot.com/products/crm/ai-crm",
+      },
+      {
+        label: "HubSpot official Sales Hub",
+        href: "https://www.hubspot.com/products/sales",
+      },
+      {
+        label: "HubSpot official product catalog",
+        href: "https://legal.hubspot.com/hubspot-product-and-services-catalog",
+      },
+    ],
+  }),
+  "/compare/tripone-vs-zoho-crm": reservationProfile({
+    alternative: "Zoho CRM",
+    category: "general sales, marketing and customer relationship platform",
+    verifiedPosition:
+      "Zoho CRM's official feature pages document leads, contacts, deals, multiple pipelines, omnichannel communication, workflows, Blueprint process controls, journey orchestration, analytics, portals and extensive layout and module customisation. Travel-specific entities and fulfilment still require configuration or connected products.",
+    alternativeFit:
+      "Evaluate Zoho CRM when a team needs a configurable general CRM and is prepared to model travel enquiries, products and handoffs. Verify edition limits, the wider Zoho apps required and the implementation ownership.",
+    tripOneFit:
+      "Evaluate TripOne+ when the business wants tourism-aware website, product, package and destination structures connected to a simpler lead and customer workspace out of the box.",
+    testScenario:
+      "Capture a package enquiry, assign and qualify the lead, progress a deal through a custom travel pipeline, automate follow-up, create a customer view and report source-to-outcome evidence. Record every added app and customisation.",
+    migration:
+      "Preserve leads, contacts, accounts, deals, activities, consent, workflows, custom modules, layouts and reports. Test APIs and edition-level exports with representative relationships before migration.",
+    questions: [
+      "Which edition and additional Zoho applications are required?",
+      "How will trips, travellers, packages and bookings be represented?",
+      "Who will own Blueprint, workflow and custom-module maintenance?",
+      "Can all related records, activities and automation definitions be exported?",
+    ],
+    sources: [
+      {
+        label: "Zoho CRM official feature suite",
+        href: "https://www.zoho.com/crm/features.html",
+      },
+      {
+        label: "Zoho CRM official customer-experience features",
+        href: "https://www.zoho.com/crm/cx-platform/features/",
+      },
+      {
+        label: "Zoho CRM official overview",
+        href: "https://www.zoho.com/crm/what-is-zoho-crm.html",
+      },
+    ],
+  }),
 };
 
 export function buildComparisonSections(
