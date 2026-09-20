@@ -4,6 +4,11 @@ import {
   resourceCategorySlugs,
   resources,
 } from "@/content/resources";
+import {
+  getSeoPageImage,
+  seoNamespaces,
+  seoPages,
+} from "@/content/seo-catalog";
 import { getAppUrl } from "@/lib/app-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,6 +20,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/templates",
     "/pricing",
     "/resources",
+    "/services",
+    "/for",
+    "/compare",
+    "/tools",
+    "/blog",
   ].map((path): MetadataRoute.Sitemap[number] => ({
     url: `${origin}${path}`,
     changeFrequency: path === "" ? ("weekly" as const) : ("monthly" as const),
@@ -36,5 +46,31 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.76,
     }),
   );
-  return [...marketingPages, ...resourceCollections, ...resourcePages];
+  const seoHubs = seoNamespaces.map(
+    (namespace): MetadataRoute.Sitemap[number] => ({
+      url: `${origin}/${namespace}`,
+      changeFrequency: "weekly",
+      priority: 0.82,
+    }),
+  );
+  const seoCatalogPages = seoPages.map(
+    (page): MetadataRoute.Sitemap[number] => ({
+      url: `${origin}${page.path}`,
+      lastModified: "2026-09-20",
+      changeFrequency: page.pageType === "Blog" ? "monthly" : "weekly",
+      priority:
+        page.priority === "P0" ? 0.86 : page.priority === "P1" ? 0.78 : 0.7,
+      images: [`${origin}${getSeoPageImage(page)}`],
+    }),
+  );
+  const unique = new Map<string, MetadataRoute.Sitemap[number]>();
+  for (const entry of [
+    ...marketingPages,
+    ...resourceCollections,
+    ...resourcePages,
+    ...seoHubs,
+    ...seoCatalogPages,
+  ])
+    unique.set(entry.url, entry);
+  return [...unique.values()];
 }

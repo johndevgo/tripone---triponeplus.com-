@@ -7,10 +7,12 @@ import { Logo } from "@/components/logo";
 import { ButtonLink } from "@/components/ui/button";
 
 const links = [
-  ["Features", "/features"],
-  ["Growth services", "/growth-services"],
+  ["Platform", "/features"],
+  ["Services", "/services"],
+  ["Industries", "/for"],
   ["Templates", "/templates"],
   ["Resources", "/resources"],
+  ["Tools", "/tools"],
   ["Pricing", "/pricing"],
 ] as const;
 
@@ -25,13 +27,13 @@ export function HeaderNavigation({
     : (["Build your website", "/signup"] as const);
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-3 z-40 px-3 sm:px-5">
-      <div className="pointer-events-auto mx-auto max-w-7xl overflow-hidden rounded-2xl border border-white/15 bg-[#052a11]/78 shadow-[0_18px_60px_rgba(0,30,8,.22)] backdrop-blur-2xl">
+    <header className="pointer-events-none fixed inset-x-0 top-3 z-[100] isolate px-3 sm:px-5">
+      <div className="pointer-events-auto mx-auto max-w-7xl overflow-hidden rounded-2xl border border-white/15 bg-[#052a11]/92 shadow-[0_18px_60px_rgba(0,30,8,.3)] backdrop-blur-2xl backdrop-saturate-150">
         <div className="flex min-h-[4.5rem] items-center justify-between gap-5 px-4 sm:px-5 lg:px-7">
           <Logo light />
           <nav
             aria-label="Main navigation"
-            className="hidden items-center gap-6 text-sm text-white/75 md:flex"
+            className="hidden items-center gap-4 text-sm text-white/75 lg:flex"
           >
             {links.map(([label, href]) => (
               <Link key={href} href={href} className="hover:text-white">
@@ -51,7 +53,7 @@ export function HeaderNavigation({
             aria-expanded={open}
             aria-controls="mobile-navigation"
             onClick={() => setOpen((value) => !value)}
-            className="grid size-11 place-items-center rounded-xl border border-white/15 bg-white/10 text-white md:hidden"
+            className="grid size-11 place-items-center rounded-xl border border-white/15 bg-white/10 text-white lg:hidden"
           >
             {open ? <X /> : <Menu />}
           </button>
@@ -60,7 +62,7 @@ export function HeaderNavigation({
           <nav
             id="mobile-navigation"
             aria-label="Mobile navigation"
-            className="mx-4 mb-4 grid gap-1 rounded-2xl border border-white/10 bg-black/15 p-3 text-white md:hidden"
+            className="mx-4 mb-4 grid max-h-[calc(100dvh-6.5rem)] gap-1 overflow-y-auto rounded-2xl border border-white/10 bg-black/15 p-3 text-white lg:hidden"
           >
             {links.map(([label, href]) => (
               <Link

@@ -1,0 +1,4545 @@
+[
+  {
+    "sn": 1,
+    "pageType": "Growth Service",
+    "title": "SEO for Travel & Tour Businesses",
+    "primaryKeyword": "travel SEO agency",
+    "secondaryKeywords": [
+      "tour operator SEO agency",
+      "travel agency SEO services"
+    ],
+    "keywordCluster": "Travel SEO",
+    "path": "/services/seo",
+    "entities": [
+      "Google Search",
+      "Search Console",
+      "schema",
+      "local SEO",
+      "content",
+      "backlinks"
+    ],
+    "metaTitle": "Travel SEO Agency for Tour Operators | TripOne+",
+    "metaDescription": "Grow organic visibility and direct bookings with specialist SEO for tour operators, travel agencies, DMCs and experience businesses.",
+    "faqs": [
+      "What does travel SEO include?",
+      "How long does tour operator SEO take?",
+      "Can you help reduce OTA dependence?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/platform",
+      "/resources/travel-seo-checklist",
+      "/tools/travel-meta-title-generator"
+    ],
+    "inboundLinks": ["Home", "industry pages", "SEO blogs", "comparison pages"],
+    "contentAngle": "Position SEO around revenue and direct bookings rather than rankings alone.",
+    "cta": "Book a Growth Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 2,
+    "pageType": "Growth Service",
+    "title": "Google Ads for Travel & Tour Businesses",
+    "primaryKeyword": "Google Ads for tour operators",
+    "secondaryKeywords": ["travel PPC agency", "Google Ads travel agency"],
+    "keywordCluster": "Travel PPC",
+    "path": "/services/google-ads",
+    "entities": [
+      "Google Ads",
+      "Search",
+      "Performance Max",
+      "conversion tracking",
+      "keywords",
+      "ROAS"
+    ],
+    "metaTitle": "Google Ads for Tour Operators | TripOne+",
+    "metaDescription": "Build profitable Google Ads campaigns for tours, activities and travel businesses with specialist strategy, tracking and conversion optimisation.",
+    "faqs": [
+      "Do Google Ads work for tour operators?",
+      "What budget should I start with?",
+      "Do you manage conversion tracking?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators; agencies; activities",
+    "internalLinks": [
+      "/tools/google-ads-budget-calculator",
+      "/growth-services/analytics-tracking",
+      "/growth-services/cro"
+    ],
+    "inboundLinks": ["Home", "PPC blogs", "industry pages", "resources"],
+    "contentAngle": "Own high-intent travel searches and connect spend to bookings.",
+    "cta": "Book a Google Ads Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 3,
+    "pageType": "Growth Service",
+    "title": "Meta Ads for Travel Businesses",
+    "primaryKeyword": "Meta Ads for travel businesses",
+    "secondaryKeywords": [
+      "Facebook ads tour operators",
+      "Instagram ads travel agency"
+    ],
+    "keywordCluster": "Meta Advertising",
+    "path": "/services/meta-ads",
+    "entities": [
+      "Meta Ads",
+      "Facebook",
+      "Instagram",
+      "Reels",
+      "audiences",
+      "retargeting",
+      "creative"
+    ],
+    "metaTitle": "Meta Ads for Travel Businesses | TripOne+",
+    "metaDescription": "Generate awareness, enquiries and bookings with Facebook and Instagram campaigns built specifically for travel and experience businesses.",
+    "faqs": [
+      "Are Meta Ads good for tours?",
+      "What creatives work best?",
+      "Can you retarget website visitors?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/creative-design",
+      "/growth-services/cro",
+      "/growth-services/analytics-tracking"
+    ],
+    "inboundLinks": ["Social blogs", "industry pages", "creative resources"],
+    "contentAngle": "Combine travel creative, audience strategy and conversion tracking rather than media buying alone.",
+    "cta": "Book a Meta Ads Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 4,
+    "pageType": "Growth Service",
+    "title": "TikTok Ads for Travel & Experience Businesses",
+    "primaryKeyword": "TikTok ads for travel businesses",
+    "secondaryKeywords": [
+      "TikTok marketing tour operator",
+      "travel TikTok ads"
+    ],
+    "keywordCluster": "TikTok Advertising",
+    "path": "/services/tiktok-ads",
+    "entities": [
+      "TikTok Ads",
+      "Spark Ads",
+      "UGC",
+      "creators",
+      "short-form video"
+    ],
+    "metaTitle": "TikTok Ads for Travel Businesses | TripOne+",
+    "metaDescription": "Reach discovery-led travellers with TikTok campaigns, short-form creative and performance tracking designed for travel businesses.",
+    "faqs": [
+      "Do TikTok Ads work for tour companies?",
+      "What videos should we use?",
+      "Can UGC be used in ads?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Activities; tours; attractions",
+    "internalLinks": [
+      "/growth-services/creative-design",
+      "/growth-services/social-media",
+      "/tools/roas-calculator"
+    ],
+    "inboundLinks": ["TikTok blogs", "social pages", "industry pages"],
+    "contentAngle": "Translate visual travel experiences into performance creative.",
+    "cta": "Book a TikTok Audit",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 5,
+    "pageType": "Growth Service",
+    "title": "Social Media Marketing for Travel Businesses",
+    "primaryKeyword": "social media marketing for travel agency",
+    "secondaryKeywords": [
+      "social media for tour operators",
+      "travel social media agency"
+    ],
+    "keywordCluster": "Travel Social Media",
+    "path": "/services/social-media-marketing",
+    "entities": [
+      "Instagram",
+      "TikTok",
+      "Facebook",
+      "Reels",
+      "content calendar",
+      "community"
+    ],
+    "metaTitle": "Social Media Marketing for Travel Businesses | TripOne+",
+    "metaDescription": "Build a stronger travel brand with strategy, content, publishing and social media growth across Instagram, TikTok and Facebook.",
+    "faqs": [
+      "Which platforms should travel businesses use?",
+      "Do you create content?",
+      "Do you manage posting?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/content-marketing",
+      "/growth-services/creative-design",
+      "/resources/travel-social-calendar"
+    ],
+    "inboundLinks": ["Social blogs", "industry pages", "homepage"],
+    "contentAngle": "Position social as demand creation plus brand trust, not vanity posting.",
+    "cta": "Plan My Social Growth",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 6,
+    "pageType": "Growth Service",
+    "title": "Content Marketing for Travel Businesses",
+    "primaryKeyword": "travel content marketing",
+    "secondaryKeywords": [
+      "tour operator content marketing",
+      "travel content agency"
+    ],
+    "keywordCluster": "Travel Content",
+    "path": "/services/content-marketing",
+    "entities": [
+      "blogs",
+      "destination content",
+      "SEO",
+      "video",
+      "guides",
+      "content strategy"
+    ],
+    "metaTitle": "Content Marketing for Travel Businesses | TripOne+",
+    "metaDescription": "Build search visibility and traveller demand with strategic content for tour operators, travel agencies and experience brands.",
+    "faqs": [
+      "What content should a tour company create?",
+      "Does content help direct bookings?",
+      "Do you write SEO content?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/resources/travel-content-calendar",
+      "/blog"
+    ],
+    "inboundLinks": ["SEO blogs", "industry pages", "resources"],
+    "contentAngle": "Create a compounding content asset rather than isolated blog posts.",
+    "cta": "Build My Content Strategy",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 7,
+    "pageType": "Growth Service",
+    "title": "Creative & Design for Travel Brands",
+    "primaryKeyword": "travel marketing design",
+    "secondaryKeywords": [
+      "travel creative agency",
+      "tour operator graphic design"
+    ],
+    "keywordCluster": "Travel Creative",
+    "path": "/services/creative-design",
+    "entities": [
+      "graphic design",
+      "ad creative",
+      "video",
+      "branding",
+      "social assets",
+      "landing pages"
+    ],
+    "metaTitle": "Creative & Design for Travel Brands | TripOne+",
+    "metaDescription": "Performance-focused travel creative for ads, websites, social media and campaigns—built to make experiences look worth booking.",
+    "faqs": [
+      "What creative assets do you produce?",
+      "Do you design ad creative?",
+      "Can you work with existing branding?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/meta-ads",
+      "/growth-services/tiktok-ads",
+      "/growth-services/brand-positioning"
+    ],
+    "inboundLinks": ["Paid media pages", "social pages", "design blogs"],
+    "contentAngle": "Beautiful travel creative tied to commercial objectives.",
+    "cta": "Start a Creative Project",
+    "priority": "P0",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 8,
+    "pageType": "Growth Service",
+    "title": "Conversion Rate Optimisation for Travel Websites",
+    "primaryKeyword": "travel website CRO",
+    "secondaryKeywords": [
+      "tour booking conversion optimisation",
+      "travel CRO agency"
+    ],
+    "keywordCluster": "Travel CRO",
+    "path": "/services/conversion-rate-optimisation",
+    "entities": [
+      "conversion rate",
+      "UX",
+      "booking funnel",
+      "CTA",
+      "analytics",
+      "landing pages"
+    ],
+    "metaTitle": "Travel Website CRO & Booking Optimisation | TripOne+",
+    "metaDescription": "Turn more travel website visitors into enquiries and bookings through conversion research, UX improvements and booking-funnel optimisation.",
+    "faqs": [
+      "What is a good tour website conversion rate?",
+      "What do you test?",
+      "Can CRO improve direct bookings?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators; agencies; activities",
+    "internalLinks": [
+      "/growth-services/website-growth",
+      "/growth-services/analytics-tracking",
+      "/tools/conversion-rate-calculator"
+    ],
+    "inboundLinks": ["Website blogs", "comparison pages", "analytics pages"],
+    "contentAngle": "Turn existing traffic into more revenue before simply buying more traffic.",
+    "cta": "Get a CRO Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 9,
+    "pageType": "Growth Service",
+    "title": "Website Growth for Travel Businesses",
+    "primaryKeyword": "travel website growth",
+    "secondaryKeywords": [
+      "tour operator website agency",
+      "travel website optimisation"
+    ],
+    "keywordCluster": "Travel Website Growth",
+    "path": "/services/website-growth",
+    "entities": [
+      "website",
+      "UX",
+      "SEO",
+      "CRO",
+      "content",
+      "performance",
+      "bookings"
+    ],
+    "metaTitle": "Travel Website Growth Services | TripOne+",
+    "metaDescription": "Improve your travel website across SEO, speed, UX, conversion, content and booking journeys with one specialist growth team.",
+    "faqs": [
+      "What is website growth?",
+      "Is this a redesign service?",
+      "Can you improve an existing website?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/platform",
+      "/growth-services/seo",
+      "/growth-services/cro"
+    ],
+    "inboundLinks": ["Tour website blogs", "industries", "homepage"],
+    "contentAngle": "Position website as an acquisition asset, not a digital brochure.",
+    "cta": "Audit My Travel Website",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 10,
+    "pageType": "Growth Service",
+    "title": "Analytics & Tracking for Travel Businesses",
+    "primaryKeyword": "travel marketing analytics",
+    "secondaryKeywords": [
+      "travel conversion tracking",
+      "tourism analytics agency"
+    ],
+    "keywordCluster": "Travel Analytics",
+    "path": "/services/analytics-tracking",
+    "entities": [
+      "GA4",
+      "Google Tag Manager",
+      "Meta Pixel",
+      "TikTok Pixel",
+      "attribution",
+      "dashboards"
+    ],
+    "metaTitle": "Travel Analytics & Tracking Services | TripOne+",
+    "metaDescription": "Know which channels generate bookings with properly configured analytics, pixels, conversion tracking and travel marketing dashboards.",
+    "faqs": [
+      "What should a travel business track?",
+      "Can you fix GA4?",
+      "Can bookings be attributed to campaigns?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/tools/utm-builder",
+      "/tools/roas-calculator",
+      "/platform/analytics"
+    ],
+    "inboundLinks": ["PPC pages", "SEO pages", "CRO pages"],
+    "contentAngle": "Unify marketing and operational measurement around bookings and revenue.",
+    "cta": "Fix My Tracking",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 11,
+    "pageType": "Growth Service",
+    "title": "Travel Growth Strategy & Consulting",
+    "primaryKeyword": "travel marketing consultant",
+    "secondaryKeywords": [
+      "tour operator marketing consultant",
+      "tourism growth strategy"
+    ],
+    "keywordCluster": "Travel Strategy",
+    "path": "/services/strategy-consulting",
+    "entities": [
+      "tourism marketing",
+      "growth strategy",
+      "acquisition",
+      "direct bookings",
+      "planning"
+    ],
+    "metaTitle": "Travel Growth Strategy & Consulting | TripOne+",
+    "metaDescription": "Get a practical growth plan across acquisition, direct bookings, positioning, technology and operations from specialists in travel businesses.",
+    "faqs": [
+      "What does a travel growth consultant do?",
+      "Who is this for?",
+      "Can you audit our full marketing setup?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Owners; leadership teams",
+    "internalLinks": [
+      "/growth-services",
+      "/platform",
+      "/resources/tour-operator-marketing-plan"
+    ],
+    "inboundLinks": ["Homepage", "all service pages", "growth blogs"],
+    "contentAngle": "Cross-channel diagnostic for operators that do not know which lever to fix first.",
+    "cta": "Book a Strategy Session",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 12,
+    "pageType": "Growth Service",
+    "title": "Email Marketing & CRM for Travel Businesses",
+    "primaryKeyword": "email marketing for travel agency",
+    "secondaryKeywords": [
+      "tour operator email marketing",
+      "travel CRM marketing"
+    ],
+    "keywordCluster": "Travel Email & CRM",
+    "path": "/services/email-marketing-crm",
+    "entities": [
+      "email automation",
+      "CRM",
+      "segmentation",
+      "newsletters",
+      "repeat bookings"
+    ],
+    "metaTitle": "Email Marketing & CRM for Travel Businesses | TripOne+",
+    "metaDescription": "Turn enquiries and past guests into bookings with travel-focused email strategy, CRM segmentation, automation and retention campaigns.",
+    "faqs": [
+      "What emails should tour operators send?",
+      "Can you work with our CRM?",
+      "How do you increase repeat bookings?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators; agencies; DMCs",
+    "internalLinks": [
+      "/platform/crm",
+      "/growth-services/marketing-automation",
+      "/resources/travel-crm-pipeline"
+    ],
+    "inboundLinks": ["CRM blogs", "customer retention blogs", "platform pages"],
+    "contentAngle": "Monetise first-party customer data before constantly reacquiring customers.",
+    "cta": "Build My Email System",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 13,
+    "pageType": "Growth Service",
+    "title": "Landing Pages & Booking Funnels for Travel Businesses",
+    "primaryKeyword": "travel landing page design",
+    "secondaryKeywords": ["tour landing pages", "travel booking funnel"],
+    "keywordCluster": "Travel Funnels",
+    "path": "/services/landing-pages-funnels",
+    "entities": [
+      "landing pages",
+      "funnels",
+      "PPC",
+      "booking CTA",
+      "forms",
+      "CRO"
+    ],
+    "metaTitle": "Travel Landing Pages & Booking Funnels | TripOne+",
+    "metaDescription": "Create high-converting landing pages and booking funnels for paid campaigns, tours, packages and travel offers.",
+    "faqs": [
+      "What makes a good travel landing page?",
+      "Do you build pages for Google Ads?",
+      "Can pages integrate with bookings?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/cro",
+      "/growth-services/google-ads",
+      "/platform/website-builder"
+    ],
+    "inboundLinks": ["PPC pages", "CRO blogs", "campaign resources"],
+    "contentAngle": "One-message campaign pages designed around the booking decision.",
+    "cta": "Build a Landing Page",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 14,
+    "pageType": "Growth Service",
+    "title": "Reputation & Review Growth for Travel Businesses",
+    "primaryKeyword": "tour operator review management",
+    "secondaryKeywords": [
+      "travel reputation management",
+      "get more tour reviews"
+    ],
+    "keywordCluster": "Travel Reputation",
+    "path": "/services/reputation-review-growth",
+    "entities": [
+      "Google Reviews",
+      "Tripadvisor",
+      "Trustpilot",
+      "review requests",
+      "reputation"
+    ],
+    "metaTitle": "Travel Review & Reputation Growth | TripOne+",
+    "metaDescription": "Build trust and increase review volume with systematic post-trip review generation and reputation management for travel businesses.",
+    "faqs": [
+      "How can tour companies get more reviews?",
+      "Which review sites matter?",
+      "Can review requests be automated?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; attractions; activities",
+    "internalLinks": [
+      "/platform/customers",
+      "/growth-services/marketing-automation",
+      "/blog/get-more-tour-reviews"
+    ],
+    "inboundLinks": [
+      "Customer experience blogs",
+      "CRM pages",
+      "industry pages"
+    ],
+    "contentAngle": "Turn completed experiences into reusable trust and acquisition assets.",
+    "cta": "Build My Review System",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 15,
+    "pageType": "Growth Service",
+    "title": "Marketing Automation for Travel Businesses",
+    "primaryKeyword": "travel marketing automation",
+    "secondaryKeywords": ["tour operator automation", "travel CRM automation"],
+    "keywordCluster": "Travel Automation",
+    "path": "/services/marketing-automation",
+    "entities": [
+      "automation",
+      "CRM",
+      "leads",
+      "email",
+      "booking follow-up",
+      "workflows"
+    ],
+    "metaTitle": "Travel Marketing Automation Services | TripOne+",
+    "metaDescription": "Automate lead follow-up, booking communications, review requests and customer journeys without losing the human travel experience.",
+    "faqs": [
+      "What can a tour operator automate?",
+      "Can automation follow up leads?",
+      "What systems can be connected?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators; agencies; DMCs",
+    "internalLinks": [
+      "/platform/crm",
+      "/platform/bookings",
+      "/growth-services/email-marketing-crm"
+    ],
+    "inboundLinks": ["Automation blogs", "CRM resources", "platform pages"],
+    "contentAngle": "Remove repetitive admin at acquisition and retention stages.",
+    "cta": "Automate My Travel Business",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 16,
+    "pageType": "Growth Service",
+    "title": "Brand Strategy & Positioning for Travel Businesses",
+    "primaryKeyword": "travel branding agency",
+    "secondaryKeywords": ["tour operator branding", "travel brand strategy"],
+    "keywordCluster": "Travel Branding",
+    "path": "/services/brand-positioning",
+    "entities": [
+      "brand strategy",
+      "positioning",
+      "identity",
+      "messaging",
+      "differentiation"
+    ],
+    "metaTitle": "Travel Brand Strategy & Positioning | TripOne+",
+    "metaDescription": "Build a distinctive travel brand with clearer positioning, messaging, visual direction and a value proposition travellers remember.",
+    "faqs": [
+      "What does travel branding include?",
+      "Do you redesign logos?",
+      "How do we differentiate from competitors?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/creative-design",
+      "/growth-services/content-marketing",
+      "/growth-services/website-growth"
+    ],
+    "inboundLinks": ["Homepage", "design blogs", "service pages"],
+    "contentAngle": "Make the offer memorable before scaling paid acquisition.",
+    "cta": "Define My Brand",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 17,
+    "pageType": "Industry",
+    "title": "Tour Operator Software & Growth Platform",
+    "primaryKeyword": "tour operator software",
+    "secondaryKeywords": [
+      "best software for tour operators",
+      "tour management platform"
+    ],
+    "keywordCluster": "Tour Operator Platform",
+    "path": "/for/tour-operators",
+    "entities": [
+      "tours",
+      "bookings",
+      "CRM",
+      "website",
+      "availability",
+      "packages",
+      "marketing"
+    ],
+    "metaTitle": "Tour Operator Software & Growth Platform | TripOne+",
+    "metaDescription": "Run bookings, products, customers, website and growth from one platform purpose-built for modern tour operators.",
+    "faqs": [
+      "What software do tour operators need?",
+      "Can TripOne+ manage bookings?",
+      "Does it include a website?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/compare", "/growth-services/seo"],
+    "inboundLinks": ["Homepage", "blogs", "comparisons", "resources"],
+    "contentAngle": "Full operating system plus growth layer rather than booking widget only.",
+    "cta": "Start TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 18,
+    "pageType": "Industry",
+    "title": "Travel Agency Software & Growth Platform",
+    "primaryKeyword": "travel agency software",
+    "secondaryKeywords": ["travel agency management software", "travel CRM"],
+    "keywordCluster": "Travel Agency Platform",
+    "path": "/for/travel-agencies",
+    "entities": [
+      "travel agencies",
+      "CRM",
+      "itineraries",
+      "packages",
+      "customers",
+      "leads"
+    ],
+    "metaTitle": "Travel Agency Software & Growth Platform | TripOne+",
+    "metaDescription": "Manage enquiries, packages, customers, websites and growth with a unified platform designed for travel agencies.",
+    "faqs": [
+      "What software does a travel agency need?",
+      "Does TripOne+ include CRM?",
+      "Can agencies manage packages?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Travel agencies",
+    "internalLinks": [
+      "/platform/crm",
+      "/platform/packages",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Travel agency blogs", "comparison pages"],
+    "contentAngle": "Replace fragmented website, CRM and marketing workflows with one system.",
+    "cta": "Start TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 19,
+    "pageType": "Industry",
+    "title": "DMC Software & Growth Platform",
+    "primaryKeyword": "DMC software",
+    "secondaryKeywords": ["destination management company software", "DMC CRM"],
+    "keywordCluster": "DMC Technology",
+    "path": "/for/dmcs",
+    "entities": [
+      "DMC",
+      "FIT",
+      "groups",
+      "suppliers",
+      "itinerary",
+      "packages",
+      "CRM"
+    ],
+    "metaTitle": "DMC Software & Growth Platform | TripOne+",
+    "metaDescription": "Organise products, packages, leads, customers and digital growth with a flexible operating platform for destination management companies.",
+    "faqs": [
+      "What is DMC software?",
+      "Can TripOne+ manage multiple services?",
+      "Is it suitable for custom itineraries?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "DMCs",
+    "internalLinks": [
+      "/platform/packages",
+      "/platform/crm",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Multi-day blogs", "itinerary resources", "compare pages"],
+    "contentAngle": "Position flexibility for complex multi-service operators.",
+    "cta": "Explore TripOne+",
+    "priority": "P0",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 20,
+    "pageType": "Industry",
+    "title": "Activity Provider Booking & Growth Platform",
+    "primaryKeyword": "activity booking software",
+    "secondaryKeywords": [
+      "activity provider software",
+      "activity management system"
+    ],
+    "keywordCluster": "Activity Businesses",
+    "path": "/for/activity-providers",
+    "entities": [
+      "activities",
+      "booking",
+      "availability",
+      "capacity",
+      "website",
+      "marketing"
+    ],
+    "metaTitle": "Activity Booking Software & Growth Platform | TripOne+",
+    "metaDescription": "Manage activity products, capacity, bookings, customers and marketing with one platform for experience businesses.",
+    "faqs": [
+      "What is activity booking software?",
+      "Can capacity be managed?",
+      "Can I build my own website?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Activity providers",
+    "internalLinks": [
+      "/platform/bookings",
+      "/platform/availability",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Activity blogs", "tool pages", "comparisons"],
+    "contentAngle": "Blend operations with direct-booking growth.",
+    "cta": "Start TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 21,
+    "pageType": "Industry",
+    "title": "Adventure Tour Operator Software",
+    "primaryKeyword": "adventure tour operator software",
+    "secondaryKeywords": [
+      "adventure booking system",
+      "adventure travel software"
+    ],
+    "keywordCluster": "Adventure Travel",
+    "path": "/for/adventure-tour-operators",
+    "entities": [
+      "adventure travel",
+      "guides",
+      "equipment",
+      "departures",
+      "bookings"
+    ],
+    "metaTitle": "Adventure Tour Operator Software | TripOne+",
+    "metaDescription": "Manage departures, resources, bookings and direct growth with a platform built for adventure tour businesses.",
+    "faqs": [
+      "Can TripOne+ manage equipment?",
+      "How are departures managed?",
+      "Is it suitable for multi-day adventures?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Adventure operators",
+    "internalLinks": [
+      "/platform/resources",
+      "/platform/availability",
+      "/growth-services/seo"
+    ],
+    "inboundLinks": ["Adventure blogs", "operational tools"],
+    "contentAngle": "Operational control plus marketing for high-consideration adventure products.",
+    "cta": "Explore Adventure Setup",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 22,
+    "pageType": "Industry",
+    "title": "Trekking Company Software",
+    "primaryKeyword": "trekking company software",
+    "secondaryKeywords": [
+      "trekking booking software",
+      "trekking agency software"
+    ],
+    "keywordCluster": "Trekking Businesses",
+    "path": "/for/trekking-companies",
+    "entities": [
+      "treks",
+      "departures",
+      "guides",
+      "porters",
+      "itinerary",
+      "packages"
+    ],
+    "metaTitle": "Trekking Company Software & Website Platform | TripOne+",
+    "metaDescription": "Manage trekking packages, departures, enquiries, guides, websites and direct growth in one connected platform.",
+    "faqs": [
+      "Can it manage fixed departures?",
+      "Can we publish trek itineraries?",
+      "Can it support guides and resources?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Trekking companies",
+    "internalLinks": [
+      "/platform/packages",
+      "/platform/resources",
+      "/resources/itinerary-template"
+    ],
+    "inboundLinks": ["Trekking SEO blogs", "comparison pages"],
+    "contentAngle": "Showcase complex itineraries while managing operational capacity.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 23,
+    "pageType": "Industry",
+    "title": "Safari Operator Software",
+    "primaryKeyword": "safari operator software",
+    "secondaryKeywords": ["safari booking software", "safari tour management"],
+    "keywordCluster": "Safari Businesses",
+    "path": "/for/safari-operators",
+    "entities": [
+      "safari",
+      "lodges",
+      "vehicles",
+      "guides",
+      "itineraries",
+      "bookings"
+    ],
+    "metaTitle": "Safari Operator Software & Growth Platform | TripOne+",
+    "metaDescription": "Run safari products, vehicles, departures, customers and marketing from one connected business platform.",
+    "faqs": [
+      "Can TripOne+ manage safari vehicles?",
+      "Does it support multi-day itineraries?",
+      "Can we manage leads?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Safari operators",
+    "internalLinks": [
+      "/platform/resources",
+      "/platform/crm",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Comparison Safari Portal", "safari blogs"],
+    "contentAngle": "Operations, customer journey and growth for high-value safari sales.",
+    "cta": "Explore Safari Setup",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 24,
+    "pageType": "Industry",
+    "title": "Boat Tour Booking Software",
+    "primaryKeyword": "boat tour booking software",
+    "secondaryKeywords": ["boat tour software", "boat excursion booking"],
+    "keywordCluster": "Marine Tours",
+    "path": "/for/boat-tour-operators",
+    "entities": ["boat tours", "vessels", "capacity", "departures", "bookings"],
+    "metaTitle": "Boat Tour Booking Software | TripOne+",
+    "metaDescription": "Manage boat tours, vessel capacity, schedules, direct bookings and marketing through one travel-business platform.",
+    "faqs": [
+      "Can I manage multiple boats?",
+      "Can capacity vary by vessel?",
+      "Can customers book online?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Boat tour operators",
+    "internalLinks": [
+      "/platform/resources",
+      "/platform/bookings",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Capacity tools", "boating blogs"],
+    "contentAngle": "Make vessels first-class resources tied to availability and sales.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 25,
+    "pageType": "Industry",
+    "title": "Yacht Charter Business Software",
+    "primaryKeyword": "yacht charter software",
+    "secondaryKeywords": [
+      "yacht booking software",
+      "charter management platform"
+    ],
+    "keywordCluster": "Yacht Charter",
+    "path": "/for/yacht-charters",
+    "entities": ["yachts", "charters", "availability", "clients", "enquiries"],
+    "metaTitle": "Yacht Charter Software & Growth Platform | TripOne+",
+    "metaDescription": "Manage yacht availability, enquiries, customers, charter products and digital growth with TripOne+.",
+    "faqs": [
+      "Can TripOne+ manage yacht availability?",
+      "Can it handle enquiry-led sales?",
+      "Can we build charter pages?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Yacht charters",
+    "internalLinks": [
+      "/platform/availability",
+      "/platform/crm",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Marine blogs", "website resources"],
+    "contentAngle": "Premium enquiry and availability workflow, not only instant booking.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 26,
+    "pageType": "Industry",
+    "title": "Dive & Snorkelling Business Software",
+    "primaryKeyword": "dive booking software",
+    "secondaryKeywords": [
+      "diving business software",
+      "snorkelling booking system"
+    ],
+    "keywordCluster": "Diving Businesses",
+    "path": "/for-diving-snorkelling",
+    "entities": ["dive trips", "equipment", "boats", "instructors", "capacity"],
+    "metaTitle": "Dive & Snorkelling Booking Software | TripOne+",
+    "metaDescription": "Organise dive trips, equipment, schedules, customers and direct-booking growth with one flexible platform.",
+    "faqs": [
+      "Can equipment be tracked?",
+      "Can instructors be resources?",
+      "Can trips have capacity limits?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Dive centres; snorkelling operators",
+    "internalLinks": [
+      "/platform/resources",
+      "/platform/availability",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Capacity tools", "activity blogs"],
+    "contentAngle": "Connect equipment, staff and departures to the customer booking journey.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 27,
+    "pageType": "Industry",
+    "title": "Rafting Company Booking Software",
+    "primaryKeyword": "rafting booking software",
+    "secondaryKeywords": [
+      "rafting company software",
+      "rafting reservation system"
+    ],
+    "keywordCluster": "Rafting Businesses",
+    "path": "/for/rafting-companies",
+    "entities": ["rafts", "guides", "departures", "equipment", "capacity"],
+    "metaTitle": "Rafting Booking Software & Growth Platform | TripOne+",
+    "metaDescription": "Manage rafting departures, guides, equipment, customers and marketing with TripOne+.",
+    "faqs": [
+      "Can I allocate guides?",
+      "Can capacity be limited?",
+      "Does it support seasonal operations?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Rafting companies",
+    "internalLinks": [
+      "/platform/resources",
+      "/platform/bookings",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Adventure blogs", "capacity tools"],
+    "contentAngle": "Sell and operate capacity-constrained departures in one place.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 28,
+    "pageType": "Industry",
+    "title": "ATV & Buggy Tour Software",
+    "primaryKeyword": "ATV tour booking software",
+    "secondaryKeywords": ["buggy tour booking system", "ATV rental software"],
+    "keywordCluster": "ATV & Buggy",
+    "path": "/for/atv-buggy-tours",
+    "entities": [
+      "ATV",
+      "buggy",
+      "vehicles",
+      "time slots",
+      "rentals",
+      "bookings"
+    ],
+    "metaTitle": "ATV & Buggy Tour Booking Software | TripOne+",
+    "metaDescription": "Manage vehicles, timeslots, tours, rentals, customers and digital growth with a platform built for experience operators.",
+    "faqs": [
+      "Can vehicles be assigned to bookings?",
+      "Does it support rentals?",
+      "Can timeslots have capacity?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "ATV; buggy operators",
+    "internalLinks": [
+      "/platform/resources",
+      "/platform/rentals",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Vehicle tools", "activity blogs"],
+    "contentAngle": "Resources and rentals alongside guided experiences.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 29,
+    "pageType": "Industry",
+    "title": "Motorcycle Tour & Rental Software",
+    "primaryKeyword": "motorcycle tour software",
+    "secondaryKeywords": [
+      "motorcycle rental software",
+      "motorbike tour booking"
+    ],
+    "keywordCluster": "Motorcycle Travel",
+    "path": "/for/motorcycle-tour-rentals",
+    "entities": ["motorcycles", "rentals", "tours", "inventory", "itineraries"],
+    "metaTitle": "Motorcycle Tour & Rental Software | TripOne+",
+    "metaDescription": "Manage motorcycle tours, rentals, fleet availability, packages and customers from one travel-business platform.",
+    "faqs": [
+      "Does TripOne+ handle rentals and tours?",
+      "Can bikes be resources?",
+      "Can we sell multi-day routes?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Motorcycle tours; rentals",
+    "internalLinks": [
+      "/platform/rentals",
+      "/platform/packages",
+      "/platform/resources"
+    ],
+    "inboundLinks": ["Adventure blogs", "rental resources"],
+    "contentAngle": "One operator can sell guided tours and standalone rentals together.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 30,
+    "pageType": "Industry",
+    "title": "Bike Tour & Rental Software",
+    "primaryKeyword": "bike tour booking software",
+    "secondaryKeywords": ["bicycle rental software", "cycling tour software"],
+    "keywordCluster": "Cycling Businesses",
+    "path": "/for/bike-tour-rentals",
+    "entities": ["bikes", "rentals", "guides", "tours", "inventory"],
+    "metaTitle": "Bike Tour & Rental Software | TripOne+",
+    "metaDescription": "Manage guided bike tours, rentals, inventory, bookings and growth without stitching multiple systems together.",
+    "faqs": [
+      "Can I manage bike inventory?",
+      "Can tours and rentals coexist?",
+      "Does it support guides?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Bike operators",
+    "internalLinks": [
+      "/platform/rentals",
+      "/platform/resources",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Cycling blogs", "inventory tools"],
+    "contentAngle": "Mixed rental-and-tour operating model.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 31,
+    "pageType": "Industry",
+    "title": "Food Tour Business Software",
+    "primaryKeyword": "food tour booking software",
+    "secondaryKeywords": [
+      "food tour operator software",
+      "culinary tour booking"
+    ],
+    "keywordCluster": "Food Tours",
+    "path": "/for/food-tour-companies",
+    "entities": ["food tours", "guides", "tastings", "capacity", "bookings"],
+    "metaTitle": "Food Tour Booking Software | TripOne+",
+    "metaDescription": "Manage food tours, schedules, customers, guides and direct-booking marketing in one travel business platform.",
+    "faqs": [
+      "Can food tours have fixed times?",
+      "Can guides be assigned?",
+      "Can dietary notes be captured?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Food tour companies",
+    "internalLinks": [
+      "/platform/bookings",
+      "/platform/customers",
+      "/growth-services/local-seo"
+    ],
+    "inboundLinks": ["Local SEO blogs", "tour website resources"],
+    "contentAngle": "Strong local discovery plus smooth scheduling and customer data.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 32,
+    "pageType": "Industry",
+    "title": "Walking & Cultural Tour Software",
+    "primaryKeyword": "walking tour booking software",
+    "secondaryKeywords": [
+      "cultural tour software",
+      "guided tour booking system"
+    ],
+    "keywordCluster": "Guided Tours",
+    "path": "/for/walking-cultural-tours",
+    "entities": ["walking tours", "guides", "cities", "capacity", "bookings"],
+    "metaTitle": "Walking & Cultural Tour Booking Software | TripOne+",
+    "metaDescription": "Run guided tours, schedules, guides, bookings and local growth through one flexible platform.",
+    "faqs": [
+      "Can guides have schedules?",
+      "Can tours run multiple times daily?",
+      "Can TripOne+ help with local SEO?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Walking; cultural tours",
+    "internalLinks": [
+      "/platform/availability",
+      "/growth-services/local-seo",
+      "/platform/bookings"
+    ],
+    "inboundLinks": ["Local SEO blogs", "city-tour resources"],
+    "contentAngle": "Operational simplicity plus local discovery.",
+    "cta": "Start TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 33,
+    "pageType": "Industry",
+    "title": "Transfer Operator Software",
+    "primaryKeyword": "transfer booking software",
+    "secondaryKeywords": [
+      "airport transfer software",
+      "transport booking system"
+    ],
+    "keywordCluster": "Transfers",
+    "path": "/for-transfer-operators",
+    "entities": ["transfers", "vehicles", "drivers", "schedules", "customers"],
+    "metaTitle": "Transfer Booking & Operations Software | TripOne+",
+    "metaDescription": "Manage transfer products, vehicles, drivers, schedules and customers from one connected operating platform.",
+    "faqs": [
+      "Can vehicles and drivers be allocated?",
+      "Can private transfers be sold?",
+      "Can transfer availability be managed?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Transfer companies",
+    "internalLinks": [
+      "/platform/resources",
+      "/platform/bookings",
+      "/platform/customers"
+    ],
+    "inboundLinks": ["Transport blogs", "operational tools"],
+    "contentAngle": "Vehicle-resource scheduling and direct customer acquisition.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 34,
+    "pageType": "Industry",
+    "title": "Wellness Retreat Booking Software",
+    "primaryKeyword": "retreat booking software",
+    "secondaryKeywords": ["wellness retreat software", "yoga retreat booking"],
+    "keywordCluster": "Retreat Businesses",
+    "path": "/for/wellness-retreats",
+    "entities": [
+      "retreats",
+      "accommodation",
+      "programmes",
+      "packages",
+      "guests"
+    ],
+    "metaTitle": "Wellness Retreat Booking & Growth Software | TripOne+",
+    "metaDescription": "Manage retreat packages, guests, schedules, enquiries and marketing with a flexible travel-business platform.",
+    "faqs": [
+      "Can retreats be sold as packages?",
+      "Can accommodation be included?",
+      "Does it manage guest details?"
+    ],
+    "intent": "Commercial",
+    "funnelStage": "BOFU",
+    "vertical": "Wellness retreats",
+    "internalLinks": [
+      "/platform/packages",
+      "/growth-services/content-marketing",
+      "/platform/customers"
+    ],
+    "inboundLinks": ["Bookinglayer comparison", "wellness blogs"],
+    "contentAngle": "Content-led high-ticket sales plus package and guest management.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 35,
+    "pageType": "Compare",
+    "title": "TripOne+ vs TripCart",
+    "primaryKeyword": "TripCart alternative",
+    "secondaryKeywords": ["TripOne+ vs TripCart", "TripCart competitors"],
+    "keywordCluster": "TripCart Alternatives",
+    "path": "/compare/tripone-vs-tripcart",
+    "entities": [
+      "TripOne+",
+      "TripCart",
+      "website builder",
+      "bookings",
+      "CRM",
+      "growth"
+    ],
+    "metaTitle": "TripOne+ vs TripCart: Tour Platform Comparison",
+    "metaDescription": "Compare TripOne+ and TripCart across website creation, bookings, business operations, CRM, growth tools and long-term scalability.",
+    "faqs": [
+      "What is the difference between TripOne+ and TripCart?",
+      "Which has broader business management?",
+      "Which is better for growth?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/for/tour-operators", "/growth-services"],
+    "inboundLinks": ["TripCart-alternative blogs", "comparison hub"],
+    "contentAngle": "Lead with breadth: operating system plus specialist growth services; verify feature claims before publishing.",
+    "cta": "Compare TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 36,
+    "pageType": "Compare",
+    "title": "TripOne+ vs WP Travel Engine",
+    "primaryKeyword": "WP Travel Engine alternative",
+    "secondaryKeywords": [
+      "TripOne+ vs WP Travel Engine",
+      "WP Travel Engine competitors"
+    ],
+    "keywordCluster": "WordPress Travel Alternatives",
+    "path": "/compare/tripone-vs-wp-travel-engine",
+    "entities": [
+      "TripOne+",
+      "WP Travel Engine",
+      "WordPress",
+      "plugins",
+      "hosting",
+      "booking"
+    ],
+    "metaTitle": "TripOne+ vs WP Travel Engine: Full Comparison",
+    "metaDescription": "Compare a hosted travel-business platform with a WordPress tour-booking plugin across setup, website, operations and growth.",
+    "faqs": [
+      "Do I need WordPress?",
+      "Which requires more maintenance?",
+      "Can both manage tours?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform",
+      "/for/tour-operators",
+      "/growth-services/website-growth"
+    ],
+    "inboundLinks": ["WordPress blogs", "website resources"],
+    "contentAngle": "Hosted operating platform versus plugin-based stack.",
+    "cta": "See TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 37,
+    "pageType": "Compare",
+    "title": "TripOne+ vs WP Travel",
+    "primaryKeyword": "WP Travel alternative",
+    "secondaryKeywords": ["TripOne+ vs WP Travel", "WP Travel competitors"],
+    "keywordCluster": "WordPress Travel Alternatives",
+    "path": "/compare/tripone-vs-wp-travel",
+    "entities": ["TripOne+", "WP Travel", "WordPress", "bookings", "website"],
+    "metaTitle": "TripOne+ vs WP Travel: Tour Software Comparison",
+    "metaDescription": "Compare TripOne+ with WP Travel across tour management, website ownership, CRM, operations, growth and maintenance.",
+    "faqs": [
+      "Which is easier to set up?",
+      "Do both require WordPress?",
+      "Which has CRM?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/for/tour-operators"],
+    "inboundLinks": ["WordPress blogs", "comparison hub"],
+    "contentAngle": "Contrast platform-native workflow with plugin architecture.",
+    "cta": "Compare Platforms",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 38,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Tourfic",
+    "primaryKeyword": "Tourfic alternative",
+    "secondaryKeywords": ["TripOne+ vs Tourfic", "Tourfic competitors"],
+    "keywordCluster": "Tourfic Alternatives",
+    "path": "/compare/tripone-vs-tourfic",
+    "entities": ["TripOne+", "Tourfic", "WooCommerce", "WordPress", "bookings"],
+    "metaTitle": "TripOne+ vs Tourfic: Travel Platform Comparison",
+    "metaDescription": "Compare TripOne+ and Tourfic for websites, tours, rentals, bookings, CRM, growth and overall travel-business operations.",
+    "faqs": [
+      "Is Tourfic only for WordPress?",
+      "Which supports broader operations?",
+      "Which is easier to maintain?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Travel businesses",
+    "internalLinks": ["/platform", "/for/travel-agencies", "/growth-services"],
+    "inboundLinks": ["WordPress resources", "comparison hub"],
+    "contentAngle": "Hosted integrated SaaS versus WooCommerce/WordPress travel stack.",
+    "cta": "See the Difference",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 39,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Wix",
+    "primaryKeyword": "Wix alternative for tour operators",
+    "secondaryKeywords": ["TripOne+ vs Wix", "Wix for travel business"],
+    "keywordCluster": "Website Builder Alternatives",
+    "path": "/compare/tripone-vs-wix",
+    "entities": [
+      "TripOne+",
+      "Wix",
+      "website builder",
+      "CMS",
+      "bookings",
+      "CRM"
+    ],
+    "metaTitle": "TripOne+ vs Wix for Tour & Travel Businesses",
+    "metaDescription": "Compare TripOne+ with Wix when your travel business needs more than a website—bookings, operations, CRM and growth included.",
+    "faqs": [
+      "Is Wix good for tour operators?",
+      "Does TripOne+ include a website builder?",
+      "Which handles operations?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/platform/website-builder",
+      "/platform/bookings",
+      "/for/tour-operators"
+    ],
+    "inboundLinks": ["Website blogs", "builder resources"],
+    "contentAngle": "Specialist vertical OS versus general-purpose website builder.",
+    "cta": "Build with TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 40,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Squarespace",
+    "primaryKeyword": "Squarespace alternative for tour operators",
+    "secondaryKeywords": ["TripOne+ vs Squarespace", "travel website builder"],
+    "keywordCluster": "Website Builder Alternatives",
+    "path": "/compare/tripone-vs-squarespace",
+    "entities": ["TripOne+", "Squarespace", "websites", "CMS", "booking"],
+    "metaTitle": "Squarespace vs TripOne+ for Travel Businesses",
+    "metaDescription": "Compare Squarespace and TripOne+ for building a travel website, managing bookings, customers, operations and growth.",
+    "faqs": [
+      "Is Squarespace good for tours?",
+      "Can it manage availability?",
+      "Which is travel-specific?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": ["/platform/website-builder", "/for/tour-operators"],
+    "inboundLinks": ["Website blogs", "comparison hub"],
+    "contentAngle": "General site builder versus purpose-built travel operating platform.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 41,
+    "pageType": "Compare",
+    "title": "TripOne+ vs WordPress",
+    "primaryKeyword": "WordPress alternative for tour operators",
+    "secondaryKeywords": ["TripOne+ vs WordPress", "travel website platform"],
+    "keywordCluster": "Website Platform Alternatives",
+    "path": "/compare/tripone-vs-wordpress",
+    "entities": [
+      "TripOne+",
+      "WordPress",
+      "plugins",
+      "hosting",
+      "maintenance",
+      "CMS"
+    ],
+    "metaTitle": "TripOne+ vs WordPress for Travel Businesses",
+    "metaDescription": "Compare an integrated travel SaaS with a self-managed WordPress stack for websites, bookings, CRM, operations and growth.",
+    "faqs": [
+      "Do I need plugins with WordPress?",
+      "Which is easier to maintain?",
+      "Which is better for travel operations?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/platform/website-builder",
+      "/growth-services/website-growth"
+    ],
+    "inboundLinks": ["WordPress blogs", "WP comparison pages"],
+    "contentAngle": "Vertical SaaS versus assembling hosting, plugins, CRM and tools.",
+    "cta": "Compare Setups",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 42,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Webflow",
+    "primaryKeyword": "Webflow alternative for travel business",
+    "secondaryKeywords": ["TripOne+ vs Webflow", "Webflow tour website"],
+    "keywordCluster": "Website Platform Alternatives",
+    "path": "/compare/tripone-vs-webflow",
+    "entities": ["TripOne+", "Webflow", "CMS", "website", "operations"],
+    "metaTitle": "TripOne+ vs Webflow for Travel Businesses",
+    "metaDescription": "Compare Webflow and TripOne+ when you need a high-quality website plus products, bookings, CRM and travel operations.",
+    "faqs": [
+      "Is Webflow suitable for tour bookings?",
+      "Which includes CRM?",
+      "Which requires integrations?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Travel brands",
+    "internalLinks": ["/platform/website-builder", "/platform/crm"],
+    "inboundLinks": ["Website design blogs", "comparison hub"],
+    "contentAngle": "Design-first generic CMS versus travel-business operating layer.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 43,
+    "pageType": "Compare",
+    "title": "TripOne+ vs FareHarbor",
+    "primaryKeyword": "FareHarbor alternative",
+    "secondaryKeywords": ["TripOne+ vs FareHarbor", "FareHarbor competitors"],
+    "keywordCluster": "FareHarbor Alternatives",
+    "path": "/compare/tripone-vs-fareharbor",
+    "entities": [
+      "TripOne+",
+      "FareHarbor",
+      "bookings",
+      "tours",
+      "activities",
+      "channel management"
+    ],
+    "metaTitle": "TripOne+ vs FareHarbor: Tour Software Comparison",
+    "metaDescription": "Compare TripOne+ and FareHarbor across direct booking, websites, customer management, operations and business growth.",
+    "faqs": [
+      "What are FareHarbor alternatives?",
+      "Which offers a website platform?",
+      "Which supports broader growth?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; activities",
+    "internalLinks": [
+      "/platform/bookings",
+      "/for/activity-providers",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Booking software blogs", "comparison hub"],
+    "contentAngle": "Position TripOne+ as broader than reservation infrastructure alone.",
+    "cta": "Compare TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 44,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Bókun",
+    "primaryKeyword": "Bókun alternative",
+    "secondaryKeywords": ["TripOne+ vs Bokun", "Bokun competitors"],
+    "keywordCluster": "Bókun Alternatives",
+    "path": "/compare/tripone-vs-bokun",
+    "entities": ["TripOne+", "Bókun", "Viator", "channel manager", "bookings"],
+    "metaTitle": "TripOne+ vs Bókun: Tour Operator Comparison",
+    "metaDescription": "Compare TripOne+ and Bókun across bookings, websites, customer management, operations, direct growth and distribution.",
+    "faqs": [
+      "Is Bókun owned by Tripadvisor?",
+      "Which supports direct growth?",
+      "Which has broader business tools?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/growth-services", "/for/tour-operators"],
+    "inboundLinks": ["OTA blogs", "direct booking resources"],
+    "contentAngle": "Distribution-first reservation ecosystem versus direct-business operating and growth platform.",
+    "cta": "Compare TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 45,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Rezdy",
+    "primaryKeyword": "Rezdy alternative",
+    "secondaryKeywords": ["TripOne+ vs Rezdy", "Rezdy competitors"],
+    "keywordCluster": "Rezdy Alternatives",
+    "path": "/compare/tripone-vs-rezdy",
+    "entities": [
+      "TripOne+",
+      "Rezdy",
+      "channel manager",
+      "resource management",
+      "bookings"
+    ],
+    "metaTitle": "TripOne+ vs Rezdy: Booking Platform Comparison",
+    "metaDescription": "Compare TripOne+ and Rezdy for bookings, resources, websites, CRM, direct acquisition and day-to-day travel operations.",
+    "faqs": [
+      "What are Rezdy alternatives?",
+      "Which has website tools?",
+      "Which includes growth services?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform/bookings",
+      "/platform/resources",
+      "/growth-services"
+    ],
+    "inboundLinks": ["Reservation-system blogs", "comparison hub"],
+    "contentAngle": "Full business stack versus booking/distribution-led platform.",
+    "cta": "See TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 46,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Checkfront",
+    "primaryKeyword": "Checkfront alternative",
+    "secondaryKeywords": ["TripOne+ vs Checkfront", "Checkfront competitors"],
+    "keywordCluster": "Checkfront Alternatives",
+    "path": "/compare/tripone-vs-checkfront",
+    "entities": [
+      "TripOne+",
+      "Checkfront",
+      "reservations",
+      "waivers",
+      "inventory"
+    ],
+    "metaTitle": "TripOne+ vs Checkfront: Tour Software Comparison",
+    "metaDescription": "Compare TripOne+ and Checkfront across reservations, inventory, CRM, websites, marketing and broader travel-business operations.",
+    "faqs": [
+      "What are Checkfront alternatives?",
+      "Which supports websites?",
+      "Which includes marketing tools?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; rentals; activities",
+    "internalLinks": ["/platform", "/for/activity-providers"],
+    "inboundLinks": ["Comparison hub", "booking blogs"],
+    "contentAngle": "Broader vertical operating system and growth ecosystem.",
+    "cta": "Compare Platforms",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 47,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Xola",
+    "primaryKeyword": "Xola alternative",
+    "secondaryKeywords": ["TripOne+ vs Xola", "Xola competitors"],
+    "keywordCluster": "Xola Alternatives",
+    "path": "/compare/tripone-vs-xola",
+    "entities": [
+      "TripOne+",
+      "Xola",
+      "checkout",
+      "tours",
+      "activities",
+      "bookings"
+    ],
+    "metaTitle": "TripOne+ vs Xola: Tour Booking Comparison",
+    "metaDescription": "Compare TripOne+ and Xola across online booking, customer management, website control, operations and business growth.",
+    "faqs": [
+      "What are Xola alternatives?",
+      "Which supports travel websites?",
+      "Which provides CRM?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Activities; attractions",
+    "internalLinks": ["/platform/bookings", "/growth-services"],
+    "inboundLinks": ["Booking comparison blogs"],
+    "contentAngle": "Booking platform versus end-to-end travel business ecosystem.",
+    "cta": "Explore TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 48,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Peek Pro",
+    "primaryKeyword": "Peek Pro alternative",
+    "secondaryKeywords": ["TripOne+ vs Peek Pro", "Peek Pro competitors"],
+    "keywordCluster": "Peek Pro Alternatives",
+    "path": "/compare/tripone-vs-peek-pro",
+    "entities": [
+      "TripOne+",
+      "Peek Pro",
+      "tours",
+      "activities",
+      "booking engine"
+    ],
+    "metaTitle": "TripOne+ vs Peek Pro: Tour Software Comparison",
+    "metaDescription": "Compare TripOne+ with Peek Pro for bookings, websites, CRM, operations, customer acquisition and travel-business growth.",
+    "faqs": [
+      "What are Peek Pro alternatives?",
+      "Which includes website tools?",
+      "Which offers growth services?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Activities; attractions",
+    "internalLinks": ["/platform", "/growth-services"],
+    "inboundLinks": ["Booking blogs", "comparison hub"],
+    "contentAngle": "Move comparison beyond checkout to whole-business workflow.",
+    "cta": "Compare TripOne+",
+    "priority": "P1",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 49,
+    "pageType": "Compare",
+    "title": "TripOne+ vs TrekkSoft",
+    "primaryKeyword": "TrekkSoft alternative",
+    "secondaryKeywords": ["TripOne+ vs TrekkSoft", "TrekkSoft competitors"],
+    "keywordCluster": "TrekkSoft Alternatives",
+    "path": "/compare/tripone-vs-trekksoft",
+    "entities": [
+      "TripOne+",
+      "TrekkSoft",
+      "tours",
+      "activities",
+      "distribution"
+    ],
+    "metaTitle": "TripOne+ vs TrekkSoft: Tour Platform Comparison",
+    "metaDescription": "Compare TripOne+ and TrekkSoft across booking, distribution, websites, CRM, operations and direct-growth capabilities.",
+    "faqs": [
+      "What are TrekkSoft alternatives?",
+      "Which is best for direct bookings?",
+      "Which includes CRM?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/for/tour-operators"],
+    "inboundLinks": ["Comparison hub", "direct booking blogs"],
+    "contentAngle": "Direct business ownership and growth versus reservation/distribution tooling.",
+    "cta": "Compare Platforms",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 50,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Regiondo",
+    "primaryKeyword": "Regiondo alternative",
+    "secondaryKeywords": ["TripOne+ vs Regiondo", "Regiondo competitors"],
+    "keywordCluster": "Regiondo Alternatives",
+    "path": "/compare/tripone-vs-regiondo",
+    "entities": ["TripOne+", "Regiondo", "booking system", "activities"],
+    "metaTitle": "TripOne+ vs Regiondo: Booking Software Comparison",
+    "metaDescription": "Compare TripOne+ and Regiondo across bookings, website control, CRM, operations and direct acquisition for tour businesses.",
+    "faqs": [
+      "What are Regiondo alternatives?",
+      "Which supports websites?",
+      "Which offers broader operations?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; activities",
+    "internalLinks": ["/platform", "/growth-services"],
+    "inboundLinks": ["Comparison hub", "booking blogs"],
+    "contentAngle": "Travel business OS versus booking system.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 51,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Zaui",
+    "primaryKeyword": "Zaui alternative",
+    "secondaryKeywords": ["TripOne+ vs Zaui", "Zaui competitors"],
+    "keywordCluster": "Zaui Alternatives",
+    "path": "/compare/tripone-vs-zaui",
+    "entities": ["TripOne+", "Zaui", "transport", "tours", "reservations"],
+    "metaTitle": "TripOne+ vs Zaui: Tour Operator Software Comparison",
+    "metaDescription": "Compare TripOne+ and Zaui across tour operations, reservations, websites, CRM, transport needs and growth capabilities.",
+    "faqs": [
+      "What are Zaui alternatives?",
+      "Which is best for transport operators?",
+      "Which includes marketing?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; transport",
+    "internalLinks": ["/platform", "/for/transfer-operators"],
+    "inboundLinks": ["Transport blogs", "comparison hub"],
+    "contentAngle": "Be explicit where Zaui's transport depth differs; win on unified website/growth where supported.",
+    "cta": "Compare Platforms",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 52,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Ventrata",
+    "primaryKeyword": "Ventrata alternative",
+    "secondaryKeywords": ["TripOne+ vs Ventrata", "Ventrata competitors"],
+    "keywordCluster": "Ventrata Alternatives",
+    "path": "/compare/tripone-vs-ventrata",
+    "entities": [
+      "TripOne+",
+      "Ventrata",
+      "ticketing",
+      "attractions",
+      "resellers"
+    ],
+    "metaTitle": "TripOne+ vs Ventrata: Travel Platform Comparison",
+    "metaDescription": "Compare TripOne+ and Ventrata across reservations, websites, CRM, distribution, operations and growth.",
+    "faqs": [
+      "What are Ventrata alternatives?",
+      "Which suits smaller operators?",
+      "Which includes website growth?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Attractions; tours",
+    "internalLinks": ["/platform", "/growth-services"],
+    "inboundLinks": ["Ventrata blogs", "comparison hub"],
+    "contentAngle": "Enterprise ticketing/distribution versus accessible full business platform.",
+    "cta": "Compare TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 53,
+    "pageType": "Compare",
+    "title": "TripOne+ vs RocketRez",
+    "primaryKeyword": "RocketRez alternative",
+    "secondaryKeywords": ["TripOne+ vs RocketRez", "RocketRez competitors"],
+    "keywordCluster": "RocketRez Alternatives",
+    "path": "/compare/tripone-vs-rocketrez",
+    "entities": [
+      "TripOne+",
+      "RocketRez",
+      "ticketing",
+      "attractions",
+      "inventory"
+    ],
+    "metaTitle": "TripOne+ vs RocketRez: Attraction Software Comparison",
+    "metaDescription": "Compare TripOne+ and RocketRez for ticketing, inventory, websites, customer data, marketing and broader operations.",
+    "faqs": [
+      "What are RocketRez alternatives?",
+      "Which is suited to tours?",
+      "Which includes growth services?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Attractions; tours",
+    "internalLinks": ["/platform", "/for/activity-providers"],
+    "inboundLinks": ["Attraction blogs", "comparison hub"],
+    "contentAngle": "Tour/business flexibility versus attraction-ticketing specialization.",
+    "cta": "Compare Platforms",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 54,
+    "pageType": "Compare",
+    "title": "TripOne+ vs TicketingHub",
+    "primaryKeyword": "TicketingHub alternative",
+    "secondaryKeywords": [
+      "TripOne+ vs TicketingHub",
+      "TicketingHub competitors"
+    ],
+    "keywordCluster": "TicketingHub Alternatives",
+    "path": "/compare/tripone-vs-ticketinghub",
+    "entities": [
+      "TripOne+",
+      "TicketingHub",
+      "ticketing",
+      "tours",
+      "distribution"
+    ],
+    "metaTitle": "TripOne+ vs TicketingHub: Tour Software Comparison",
+    "metaDescription": "Compare TripOne+ and TicketingHub across ticketing, booking, website ownership, CRM, operations and growth.",
+    "faqs": [
+      "What are TicketingHub alternatives?",
+      "Which includes CRM?",
+      "Which is broader than ticketing?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; attractions",
+    "internalLinks": ["/platform", "/growth-services"],
+    "inboundLinks": ["Ticketing blogs", "comparison hub"],
+    "contentAngle": "Broader operating system versus ticketing-centric tooling.",
+    "cta": "Explore TripOne+",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 55,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Rezgo",
+    "primaryKeyword": "Rezgo alternative",
+    "secondaryKeywords": ["TripOne+ vs Rezgo", "Rezgo competitors"],
+    "keywordCluster": "Rezgo Alternatives",
+    "path": "/compare/tripone-vs-rezgo",
+    "entities": ["TripOne+", "Rezgo", "booking system", "POS", "tours"],
+    "metaTitle": "TripOne+ vs Rezgo: Tour Booking Comparison",
+    "metaDescription": "Compare TripOne+ and Rezgo across online bookings, websites, CRM, operational management and growth.",
+    "faqs": [
+      "What are Rezgo alternatives?",
+      "Which has a website builder?",
+      "Which includes CRM?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/for/tour-operators"],
+    "inboundLinks": ["Booking blogs", "comparison hub"],
+    "contentAngle": "Full-site and business management versus established reservation system.",
+    "cta": "Compare TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 56,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Bookeo",
+    "primaryKeyword": "Bookeo alternative",
+    "secondaryKeywords": ["TripOne+ vs Bookeo", "Bookeo competitors"],
+    "keywordCluster": "Bookeo Alternatives",
+    "path": "/compare/tripone-vs-bookeo",
+    "entities": ["TripOne+", "Bookeo", "reservations", "appointments", "tours"],
+    "metaTitle": "TripOne+ vs Bookeo for Tour Businesses",
+    "metaDescription": "Compare TripOne+ and Bookeo for travel bookings, website management, CRM, operations and customer acquisition.",
+    "faqs": [
+      "Is Bookeo good for tours?",
+      "What are Bookeo alternatives?",
+      "Which is travel-specific?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; activities",
+    "internalLinks": ["/platform/bookings", "/growth-services"],
+    "inboundLinks": ["Booking system blogs"],
+    "contentAngle": "Vertical specialization versus general booking functionality.",
+    "cta": "Compare Platforms",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 57,
+    "pageType": "Compare",
+    "title": "TripOne+ vs TRYTN",
+    "primaryKeyword": "TRYTN alternative",
+    "secondaryKeywords": ["TripOne+ vs TRYTN", "TRYTN competitors"],
+    "keywordCluster": "TRYTN Alternatives",
+    "path": "/compare/tripone-vs-trytn",
+    "entities": ["TripOne+", "TRYTN", "tours", "activities", "reservations"],
+    "metaTitle": "TripOne+ vs TRYTN: Booking Software Comparison",
+    "metaDescription": "Compare TripOne+ and TRYTN across booking management, websites, customers, operations and marketing growth.",
+    "faqs": [
+      "What are TRYTN alternatives?",
+      "Which includes CRM?",
+      "Which includes website management?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Activity providers",
+    "internalLinks": ["/platform", "/for/activity-providers"],
+    "inboundLinks": ["Comparison hub", "activity blogs"],
+    "contentAngle": "Compare scope and ownership of complete customer journey.",
+    "cta": "Explore TripOne+",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 58,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Bookinglayer",
+    "primaryKeyword": "Bookinglayer alternative",
+    "secondaryKeywords": [
+      "TripOne+ vs Bookinglayer",
+      "Bookinglayer competitors"
+    ],
+    "keywordCluster": "Bookinglayer Alternatives",
+    "path": "/compare/tripone-vs-bookinglayer",
+    "entities": [
+      "TripOne+",
+      "Bookinglayer",
+      "retreats",
+      "accommodation",
+      "activities",
+      "packages"
+    ],
+    "metaTitle": "TripOne+ vs Bookinglayer: Travel Platform Comparison",
+    "metaDescription": "Compare TripOne+ and Bookinglayer for experience businesses managing packages, activities, websites, customers and growth.",
+    "faqs": [
+      "Which is better for retreats?",
+      "Do both support packages?",
+      "Which includes growth services?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Retreats; adventure operators",
+    "internalLinks": ["/platform/packages", "/for/wellness-retreats"],
+    "inboundLinks": ["Retreat blogs", "comparison hub"],
+    "contentAngle": "Acknowledge Bookinglayer accommodation depth; differentiate on website builder and agency-growth layer.",
+    "cta": "Compare Platforms",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 59,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Beyonk",
+    "primaryKeyword": "Beyonk alternative",
+    "secondaryKeywords": ["TripOne+ vs Beyonk", "Beyonk competitors"],
+    "keywordCluster": "Beyonk Alternatives",
+    "path": "/compare/tripone-vs-beyonk",
+    "entities": ["TripOne+", "Beyonk", "ticketing", "marketing", "attractions"],
+    "metaTitle": "TripOne+ vs Beyonk: Booking & Growth Comparison",
+    "metaDescription": "Compare two platforms combining travel operations and growth services across websites, bookings, customer management and marketing.",
+    "faqs": [
+      "How is TripOne+ different from Beyonk?",
+      "Which is better for tour operators?",
+      "Do both offer marketing?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tours; attractions",
+    "internalLinks": ["/platform", "/growth-services"],
+    "inboundLinks": ["Comparison hub", "marketing blogs"],
+    "contentAngle": "One of the closest strategic comparisons: rigorously compare breadth, business model and target operator.",
+    "cta": "Compare TripOne+",
+    "priority": "P0",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 60,
+    "pageType": "Compare",
+    "title": "TripOne+ vs WeTravel",
+    "primaryKeyword": "WeTravel alternative",
+    "secondaryKeywords": ["TripOne+ vs WeTravel", "WeTravel competitors"],
+    "keywordCluster": "WeTravel Alternatives",
+    "path": "/compare/tripone-vs-wetravel",
+    "entities": ["TripOne+", "WeTravel", "group travel", "trips", "booking"],
+    "metaTitle": "TripOne+ vs WeTravel: Travel Business Comparison",
+    "metaDescription": "Compare TripOne+ and WeTravel for selling trips, managing customers, building a website, operations and growth.",
+    "faqs": [
+      "What are WeTravel alternatives?",
+      "Which includes a website builder?",
+      "Which is suited to tour operators?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Group travel; multi-day tours",
+    "internalLinks": ["/platform/packages", "/for/tour-operators"],
+    "inboundLinks": ["Group travel blogs"],
+    "contentAngle": "Position around persistent business infrastructure versus trip-selling workflow.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 61,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Travefy",
+    "primaryKeyword": "Travefy alternative",
+    "secondaryKeywords": ["TripOne+ vs Travefy", "Travefy competitors"],
+    "keywordCluster": "Travefy Alternatives",
+    "path": "/compare/tripone-vs-travefy",
+    "entities": [
+      "TripOne+",
+      "Travefy",
+      "itinerary builder",
+      "proposals",
+      "CRM"
+    ],
+    "metaTitle": "TripOne+ vs Travefy: Travel Software Comparison",
+    "metaDescription": "Compare TripOne+ and Travefy across itineraries, CRM, websites, bookings, operations and business growth.",
+    "faqs": [
+      "What are Travefy alternatives?",
+      "Which manages bookings?",
+      "Which is better for operators vs advisors?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Travel agencies; advisors; operators",
+    "internalLinks": ["/platform/crm", "/platform/packages"],
+    "inboundLinks": ["Travel agency blogs", "itinerary resources"],
+    "contentAngle": "Clarify advisor/itinerary focus versus operator operating system.",
+    "cta": "Compare Platforms",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 62,
+    "pageType": "Compare",
+    "title": "TripOne+ vs TravelJoy",
+    "primaryKeyword": "TravelJoy alternative",
+    "secondaryKeywords": ["TripOne+ vs TravelJoy", "TravelJoy competitors"],
+    "keywordCluster": "TravelJoy Alternatives",
+    "path": "/compare/tripone-vs-traveljoy",
+    "entities": [
+      "TripOne+",
+      "TravelJoy",
+      "CRM",
+      "itineraries",
+      "travel advisors"
+    ],
+    "metaTitle": "TripOne+ vs TravelJoy: Travel Platform Comparison",
+    "metaDescription": "Compare TripOne+ and TravelJoy for CRM, itineraries, websites, booking operations and marketing growth.",
+    "faqs": [
+      "Is TravelJoy for tour operators?",
+      "Which includes website management?",
+      "Which offers operations tools?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Travel agencies; advisors",
+    "internalLinks": ["/platform/crm", "/for/travel-agencies"],
+    "inboundLinks": ["Agency software blogs"],
+    "contentAngle": "Advisor workflow versus broader operator and agency business OS.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 63,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Tourwriter",
+    "primaryKeyword": "Tourwriter alternative",
+    "secondaryKeywords": ["TripOne+ vs Tourwriter", "Tourwriter competitors"],
+    "keywordCluster": "Tourwriter Alternatives",
+    "path": "/compare/tripone-vs-tourwriter",
+    "entities": [
+      "TripOne+",
+      "Tourwriter",
+      "itinerary",
+      "suppliers",
+      "multi-day tours"
+    ],
+    "metaTitle": "TripOne+ vs Tourwriter: Tour Operator Comparison",
+    "metaDescription": "Compare TripOne+ and Tourwriter for multi-day products, customer management, operations, websites and business growth.",
+    "faqs": [
+      "What are Tourwriter alternatives?",
+      "Which is better for multi-day tours?",
+      "Which includes a website builder?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Multi-day operators; DMCs",
+    "internalLinks": ["/platform/packages", "/for/dmcs"],
+    "inboundLinks": ["Multi-day blogs", "comparison hub"],
+    "contentAngle": "Respect Tourwriter's complex tour focus; differentiate on integrated website and growth stack.",
+    "cta": "Compare Platforms",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 64,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Wetu",
+    "primaryKeyword": "Wetu alternative",
+    "secondaryKeywords": ["TripOne+ vs Wetu", "Wetu competitors"],
+    "keywordCluster": "Wetu Alternatives",
+    "path": "/compare/tripone-vs-wetu",
+    "entities": ["TripOne+", "Wetu", "itinerary builder", "content", "DMC"],
+    "metaTitle": "TripOne+ vs Wetu: Travel Platform Comparison",
+    "metaDescription": "Compare TripOne+ and Wetu for itinerary creation, travel content, CRM, websites, bookings and operational management.",
+    "faqs": [
+      "What are Wetu alternatives?",
+      "Which includes booking operations?",
+      "Which is best for DMCs?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "DMCs; travel agencies",
+    "internalLinks": ["/platform/packages", "/for/dmcs"],
+    "inboundLinks": ["Itinerary resources", "DMC blogs"],
+    "contentAngle": "Content/itinerary collaboration platform versus full operating platform.",
+    "cta": "Explore TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 65,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Lemax",
+    "primaryKeyword": "Lemax alternative",
+    "secondaryKeywords": ["TripOne+ vs Lemax", "Lemax competitors"],
+    "keywordCluster": "Lemax Alternatives",
+    "path": "/compare/tripone-vs-lemax",
+    "entities": [
+      "TripOne+",
+      "Lemax",
+      "tour operator management",
+      "suppliers",
+      "finance"
+    ],
+    "metaTitle": "TripOne+ vs Lemax: Tour Operator Software Comparison",
+    "metaDescription": "Compare TripOne+ and Lemax across packages, suppliers, CRM, operations, websites, finance needs and marketing growth.",
+    "faqs": [
+      "What are Lemax alternatives?",
+      "Which suits smaller operators?",
+      "Which includes website tools?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators; DMCs",
+    "internalLinks": ["/platform", "/for/dmcs"],
+    "inboundLinks": ["Enterprise software blogs"],
+    "contentAngle": "Enterprise tour-management depth versus accessible unified digital-growth platform.",
+    "cta": "Compare Platforms",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 66,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Safari Portal",
+    "primaryKeyword": "Safari Portal alternative",
+    "secondaryKeywords": [
+      "TripOne+ vs Safari Portal",
+      "Safari Portal competitors"
+    ],
+    "keywordCluster": "Safari Portal Alternatives",
+    "path": "/compare/tripone-vs-safari-portal",
+    "entities": [
+      "TripOne+",
+      "Safari Portal",
+      "safari",
+      "itineraries",
+      "proposals"
+    ],
+    "metaTitle": "TripOne+ vs Safari Portal for Safari Operators",
+    "metaDescription": "Compare TripOne+ and Safari Portal across safari sales, itineraries, CRM, operations, websites and growth.",
+    "faqs": [
+      "What are Safari Portal alternatives?",
+      "Which manages operations?",
+      "Which includes marketing?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Safari operators",
+    "internalLinks": ["/for/safari-operators", "/platform/crm"],
+    "inboundLinks": ["Safari blogs", "industry page"],
+    "contentAngle": "Safari-specialist sales tools versus broader business OS.",
+    "cta": "Compare TripOne+",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 67,
+    "pageType": "Compare",
+    "title": "TripOne+ vs AnyRoad",
+    "primaryKeyword": "AnyRoad alternative",
+    "secondaryKeywords": ["TripOne+ vs AnyRoad", "AnyRoad competitors"],
+    "keywordCluster": "Experience Platform Alternatives",
+    "path": "/compare/tripone-vs-anyroad",
+    "entities": ["TripOne+", "AnyRoad", "experiences", "events", "guest data"],
+    "metaTitle": "TripOne+ vs AnyRoad: Experience Platform Comparison",
+    "metaDescription": "Compare TripOne+ and AnyRoad across bookings, guest data, websites, operations and growth for experience businesses.",
+    "faqs": [
+      "What are AnyRoad alternatives?",
+      "Which is travel-specific?",
+      "Which includes websites?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Experience operators",
+    "internalLinks": ["/platform", "/for/activity-providers"],
+    "inboundLinks": ["Experience marketing blogs"],
+    "contentAngle": "Tourism operating system versus enterprise experiential marketing platform.",
+    "cta": "Explore TripOne+",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 68,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Sembark",
+    "primaryKeyword": "Sembark alternative",
+    "secondaryKeywords": ["TripOne+ vs Sembark", "Sembark competitors"],
+    "keywordCluster": "Tour Management Alternatives",
+    "path": "/compare/tripone-vs-sembark",
+    "entities": ["TripOne+", "Sembark", "travel management", "tour operations"],
+    "metaTitle": "TripOne+ vs Sembark: Travel Software Comparison",
+    "metaDescription": "Compare TripOne+ and Sembark for tour management, CRM, websites, operations, packages and growth.",
+    "faqs": [
+      "What are Sembark alternatives?",
+      "Which includes websites?",
+      "Which offers marketing services?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Tour operators; agencies",
+    "internalLinks": ["/platform", "/for/travel-agencies"],
+    "inboundLinks": ["Comparison hub", "software blogs"],
+    "contentAngle": "Compare workflow breadth, implementation and customer acquisition layer.",
+    "cta": "Compare Platforms",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 69,
+    "pageType": "Compare",
+    "title": "TripOne+ vs HubSpot",
+    "primaryKeyword": "HubSpot alternative for travel business",
+    "secondaryKeywords": ["TripOne+ vs HubSpot", "travel CRM alternative"],
+    "keywordCluster": "Travel CRM Alternatives",
+    "path": "/compare/tripone-vs-hubspot",
+    "entities": [
+      "TripOne+",
+      "HubSpot",
+      "CRM",
+      "leads",
+      "automation",
+      "marketing"
+    ],
+    "metaTitle": "TripOne+ vs HubSpot for Travel Businesses",
+    "metaDescription": "Compare a general CRM with a travel-specific platform combining products, bookings, customers, websites and growth.",
+    "faqs": [
+      "Is HubSpot suitable for tour operators?",
+      "Which manages bookings?",
+      "Can TripOne+ replace multiple tools?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": ["/platform/crm", "/platform/bookings"],
+    "inboundLinks": ["CRM blogs", "automation service pages"],
+    "contentAngle": "General CRM versus travel-native data model and operations.",
+    "cta": "Explore Travel CRM",
+    "priority": "P1",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 70,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Zoho CRM",
+    "primaryKeyword": "Zoho CRM alternative for travel agency",
+    "secondaryKeywords": ["TripOne+ vs Zoho", "travel agency CRM"],
+    "keywordCluster": "Travel CRM Alternatives",
+    "path": "/compare/tripone-vs-zoho-crm",
+    "entities": ["TripOne+", "Zoho", "CRM", "leads", "automation"],
+    "metaTitle": "TripOne+ vs Zoho CRM for Travel Businesses",
+    "metaDescription": "Compare Zoho CRM with a travel-native platform for enquiries, customers, products, bookings, websites and operations.",
+    "faqs": [
+      "Is Zoho good for travel agencies?",
+      "Which handles bookings?",
+      "Which is easier for tour operations?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "BOFU",
+    "vertical": "Travel agencies; tour operators",
+    "internalLinks": ["/platform/crm", "/for/travel-agencies"],
+    "inboundLinks": ["CRM blogs", "agency resources"],
+    "contentAngle": "Generic configurable CRM versus travel-native end-to-end workflow.",
+    "cta": "Compare Platforms",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 71,
+    "pageType": "Compare",
+    "title": "TripOne+ vs Spreadsheets",
+    "primaryKeyword": "tour operator software vs spreadsheets",
+    "secondaryKeywords": ["travel business spreadsheet alternative"],
+    "keywordCluster": "Software Adoption",
+    "path": "/compare/tripone-vs-spreadsheets",
+    "entities": [
+      "TripOne+",
+      "Excel",
+      "Google Sheets",
+      "bookings",
+      "CRM",
+      "capacity"
+    ],
+    "metaTitle": "Tour Operator Software vs Spreadsheets | TripOne+",
+    "metaDescription": "See where spreadsheets break down as bookings, customers, capacity, resources and teams grow—and what an operating platform changes.",
+    "faqs": [
+      "When should I stop using spreadsheets?",
+      "Can spreadsheets manage capacity?",
+      "How do I migrate data?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "MOFU",
+    "vertical": "Small operators",
+    "internalLinks": ["/platform", "/resources/tour-operator-sop-template"],
+    "inboundLinks": ["Startup blogs", "operations resources"],
+    "contentAngle": "Show operational cost of disconnected manual systems without attacking simple early-stage use.",
+    "cta": "Move Beyond Spreadsheets",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 72,
+    "pageType": "Compare",
+    "title": "TripOne+ vs a Custom WordPress Stack",
+    "primaryKeyword": "tour operator WordPress stack",
+    "secondaryKeywords": [
+      "WordPress travel booking stack",
+      "travel website plugins"
+    ],
+    "keywordCluster": "Software Stack Comparison",
+    "path": "/compare/tripone-vs-wordpress-stack",
+    "entities": [
+      "WordPress",
+      "hosting",
+      "plugins",
+      "CRM",
+      "booking",
+      "analytics"
+    ],
+    "metaTitle": "TripOne+ vs a WordPress Travel Stack",
+    "metaDescription": "Compare one integrated travel platform with building a WordPress site from hosting, themes, booking plugins, CRM and marketing tools.",
+    "faqs": [
+      "How many plugins does a tour site need?",
+      "What maintenance is required?",
+      "Which approach scales better?"
+    ],
+    "intent": "Comparison",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/compare/tripone-vs-wordpress"],
+    "inboundLinks": ["WP blogs", "website resources"],
+    "contentAngle": "Total-system comparison rather than TripOne+ versus a single plugin.",
+    "cta": "Compare the Stack",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 73,
+    "pageType": "Resource",
+    "title": "Tour Operator Business Plan Template",
+    "primaryKeyword": "tour operator business plan",
+    "secondaryKeywords": [
+      "tour company business plan",
+      "tour operator business plan template"
+    ],
+    "keywordCluster": "Business Planning",
+    "path": "/resources/tour-operator-business-plan",
+    "entities": [
+      "tour operator",
+      "market analysis",
+      "operations",
+      "finance",
+      "marketing"
+    ],
+    "metaTitle": "Tour Operator Business Plan Template | TripOne+",
+    "metaDescription": "Plan your tour business with a practical framework covering market, products, pricing, operations, marketing, technology and financial assumptions.",
+    "faqs": [
+      "What belongs in a tour operator business plan?",
+      "How do I forecast bookings?",
+      "How should tours be priced?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/tools/tour-pricing-calculator",
+      "/blog/how-to-start-tour-operator-business"
+    ],
+    "inboundLinks": ["Startup blogs", "industry page"],
+    "contentAngle": "Usable operator-specific planning document rather than generic business-plan advice.",
+    "cta": "Get the Template",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 74,
+    "pageType": "Resource",
+    "title": "Travel Agency Business Plan Template",
+    "primaryKeyword": "travel agency business plan",
+    "secondaryKeywords": [
+      "travel agency business plan template",
+      "start travel agency"
+    ],
+    "keywordCluster": "Business Planning",
+    "path": "/resources/travel-agency-business-plan",
+    "entities": [
+      "travel agency",
+      "target market",
+      "packages",
+      "sales",
+      "marketing"
+    ],
+    "metaTitle": "Travel Agency Business Plan Template | TripOne+",
+    "metaDescription": "Create a travel agency business plan covering positioning, services, sales process, marketing, operations and growth.",
+    "faqs": [
+      "What should a travel agency business plan include?",
+      "How do agencies make money?",
+      "What tools are needed?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Travel agencies",
+    "internalLinks": [
+      "/for/travel-agencies",
+      "/blog/how-to-start-travel-agency"
+    ],
+    "inboundLinks": ["Travel agency blogs", "industry page"],
+    "contentAngle": "Action-oriented plan linked to real acquisition and operational systems.",
+    "cta": "Use the Template",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 75,
+    "pageType": "Resource",
+    "title": "Tour Operator Marketing Plan Template",
+    "primaryKeyword": "tour operator marketing plan",
+    "secondaryKeywords": [
+      "tour marketing plan template",
+      "travel marketing strategy"
+    ],
+    "keywordCluster": "Marketing Planning",
+    "path": "/resources/tour-operator-marketing-plan",
+    "entities": [
+      "SEO",
+      "Google Ads",
+      "Meta",
+      "social",
+      "email",
+      "direct bookings"
+    ],
+    "metaTitle": "Tour Operator Marketing Plan Template | TripOne+",
+    "metaDescription": "Build a measurable marketing plan across SEO, paid media, social, content, email, partnerships and direct bookings.",
+    "faqs": [
+      "What should a tour marketing plan include?",
+      "How should budget be split?",
+      "Which KPIs matter?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services",
+      "/tools/travel-marketing-budget-calculator"
+    ],
+    "inboundLinks": ["Marketing blogs", "strategy service"],
+    "contentAngle": "Turn marketing channels into an integrated acquisition system.",
+    "cta": "Download the Plan",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 76,
+    "pageType": "Resource",
+    "title": "Tour Operator Website Checklist",
+    "primaryKeyword": "tour operator website checklist",
+    "secondaryKeywords": [
+      "travel website checklist",
+      "tour website requirements"
+    ],
+    "keywordCluster": "Website CRO",
+    "path": "/resources/tour-operator-website-checklist",
+    "entities": ["website", "mobile", "SEO", "CTA", "tour pages", "reviews"],
+    "metaTitle": "Tour Operator Website Checklist | TripOne+",
+    "metaDescription": "A practical checklist for evaluating your tour website across content, mobile UX, SEO, trust, performance and booking conversion.",
+    "faqs": [
+      "What pages should a tour website have?",
+      "What builds trust?",
+      "What should mobile booking look like?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform/website-builder",
+      "/growth-services/website-growth"
+    ],
+    "inboundLinks": ["Tour website blogs", "compare Wix/WordPress"],
+    "contentAngle": "Diagnostic resource naturally leading to TripOne+ site builder or growth service.",
+    "cta": "Check My Website",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 77,
+    "pageType": "Resource",
+    "title": "Travel SEO Checklist",
+    "primaryKeyword": "travel SEO checklist",
+    "secondaryKeywords": [
+      "tour operator SEO checklist",
+      "tourism SEO checklist"
+    ],
+    "keywordCluster": "Travel SEO",
+    "path": "/resources/travel-seo-checklist",
+    "entities": [
+      "technical SEO",
+      "on-page SEO",
+      "local SEO",
+      "schema",
+      "content"
+    ],
+    "metaTitle": "Travel SEO Checklist for Tour Businesses | TripOne+",
+    "metaDescription": "A complete travel SEO checklist covering technical health, pages, destinations, local search, content, internal links and structured data.",
+    "faqs": [
+      "What should travel SEO include?",
+      "How often should SEO be audited?",
+      "Which pages should rank?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/tools/travel-meta-title-generator"
+    ],
+    "inboundLinks": ["SEO blogs", "service SEO page"],
+    "contentAngle": "Operational checklist mapped directly to travel website architecture.",
+    "cta": "Use the SEO Checklist",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 78,
+    "pageType": "Resource",
+    "title": "Google Ads Checklist for Tour Operators",
+    "primaryKeyword": "Google Ads checklist for tour operators",
+    "secondaryKeywords": ["travel PPC checklist", "tourism Google Ads"],
+    "keywordCluster": "Travel PPC",
+    "path": "/resources/google-ads-checklist-tour-operators",
+    "entities": [
+      "Google Ads",
+      "keywords",
+      "negatives",
+      "conversion tracking",
+      "campaigns"
+    ],
+    "metaTitle": "Google Ads Checklist for Tour Operators | TripOne+",
+    "metaDescription": "Review campaign structure, keywords, negatives, tracking, landing pages and budgets before spending more on Google Ads.",
+    "faqs": [
+      "Which campaigns should tour operators run?",
+      "What should be tracked?",
+      "What negatives should be used?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services/google-ads",
+      "/tools/google-ads-budget-calculator"
+    ],
+    "inboundLinks": ["PPC blogs", "Google Ads service"],
+    "contentAngle": "Tour-specific preflight checklist designed to prevent wasted spend.",
+    "cta": "Run the Checklist",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 79,
+    "pageType": "Resource",
+    "title": "Meta Ads Checklist for Travel Businesses",
+    "primaryKeyword": "Meta Ads checklist travel",
+    "secondaryKeywords": [
+      "Facebook ads checklist tourism",
+      "Instagram ads travel"
+    ],
+    "keywordCluster": "Meta Advertising",
+    "path": "/resources/meta-ads-checklist-travel",
+    "entities": ["Meta Ads", "audiences", "creative", "Pixel", "retargeting"],
+    "metaTitle": "Meta Ads Checklist for Travel Businesses | TripOne+",
+    "metaDescription": "A practical campaign checklist covering travel creative, audiences, tracking, retargeting, landing pages and optimisation.",
+    "faqs": [
+      "What should travel Meta campaigns contain?",
+      "How many creatives are needed?",
+      "Should travel brands retarget?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/meta-ads",
+      "/growth-services/creative-design"
+    ],
+    "inboundLinks": ["Meta blogs", "service page"],
+    "contentAngle": "Creative-first checklist tailored to visual tourism products.",
+    "cta": "Use the Checklist",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 80,
+    "pageType": "Resource",
+    "title": "Travel Social Media Calendar Template",
+    "primaryKeyword": "travel social media calendar",
+    "secondaryKeywords": [
+      "tour operator content calendar",
+      "travel social media planner"
+    ],
+    "keywordCluster": "Travel Social",
+    "path": "/resources/travel-social-media-calendar",
+    "entities": ["Instagram", "TikTok", "Facebook", "Reels", "content pillars"],
+    "metaTitle": "Travel Social Media Calendar Template | TripOne+",
+    "metaDescription": "Plan a month of travel content across inspiration, proof, products, destination storytelling and conversion posts.",
+    "faqs": [
+      "How often should tour companies post?",
+      "What content pillars work?",
+      "Which formats should be used?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/social-media-marketing",
+      "/tools/travel-content-idea-generator"
+    ],
+    "inboundLinks": ["Social blogs", "content service"],
+    "contentAngle": "A usable calendar structured around traveller intent, not random daily posts.",
+    "cta": "Get the Calendar",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 81,
+    "pageType": "Resource",
+    "title": "Travel Content Calendar Template",
+    "primaryKeyword": "travel content calendar",
+    "secondaryKeywords": ["travel blog calendar", "tour content plan"],
+    "keywordCluster": "Travel Content Strategy",
+    "path": "/resources/travel-content-calendar",
+    "entities": [
+      "content marketing",
+      "SEO",
+      "blog",
+      "destination pages",
+      "social"
+    ],
+    "metaTitle": "Travel Content Calendar Template | TripOne+",
+    "metaDescription": "Plan SEO articles, destination content, product stories and campaign content around demand, seasonality and business goals.",
+    "faqs": [
+      "How far ahead should travel content be planned?",
+      "What should be evergreen?",
+      "How does seasonality affect content?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": ["/growth-services/content-marketing", "/blog"],
+    "inboundLinks": ["Content blogs", "SEO service"],
+    "contentAngle": "Connect organic search, social and campaign calendars.",
+    "cta": "Get the Calendar",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 82,
+    "pageType": "Resource",
+    "title": "Tour Product Page Template",
+    "primaryKeyword": "tour product page template",
+    "secondaryKeywords": [
+      "tour landing page template",
+      "tour description template"
+    ],
+    "keywordCluster": "Tour Page CRO",
+    "path": "/resources/tour-product-page-template",
+    "entities": [
+      "itinerary",
+      "highlights",
+      "inclusions",
+      "pricing",
+      "FAQ",
+      "CTA"
+    ],
+    "metaTitle": "Tour Product Page Template That Converts | TripOne+",
+    "metaDescription": "Structure tour pages with the information travellers need to understand, trust and book an experience.",
+    "faqs": [
+      "What should a tour page include?",
+      "Where should price appear?",
+      "How many FAQs should a tour have?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform/website-builder", "/growth-services/cro"],
+    "inboundLinks": ["Website blogs", "SEO checklist"],
+    "contentAngle": "Conversion-focused product-page blueprint.",
+    "cta": "Use the Template",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 83,
+    "pageType": "Resource",
+    "title": "Tour Package Page Template",
+    "primaryKeyword": "tour package template",
+    "secondaryKeywords": [
+      "travel package page template",
+      "holiday package layout"
+    ],
+    "keywordCluster": "Travel Packages",
+    "path": "/resources/tour-package-page-template",
+    "entities": [
+      "package",
+      "itinerary",
+      "accommodation",
+      "transfers",
+      "inclusions"
+    ],
+    "metaTitle": "Tour Package Page Template | TripOne+",
+    "metaDescription": "Create clearer package pages with itinerary, logistics, inclusions, accommodation, transport, pricing and booking information.",
+    "faqs": [
+      "What belongs on a package page?",
+      "How detailed should itineraries be?",
+      "How should inclusions be shown?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Multi-day operators",
+    "internalLinks": ["/platform/packages", "/tools/tour-itinerary-generator"],
+    "inboundLinks": ["Package blogs", "DMC page"],
+    "contentAngle": "Template designed for complex multi-day purchase decisions.",
+    "cta": "Build a Package Page",
+    "priority": "P1",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 84,
+    "pageType": "Resource",
+    "title": "Tour Itinerary Template",
+    "primaryKeyword": "tour itinerary template",
+    "secondaryKeywords": [
+      "travel itinerary template",
+      "multi-day tour itinerary"
+    ],
+    "keywordCluster": "Itinerary Resources",
+    "path": "/resources/tour-itinerary-template",
+    "entities": [
+      "itinerary",
+      "days",
+      "activities",
+      "meals",
+      "accommodation",
+      "transport"
+    ],
+    "metaTitle": "Tour Itinerary Template for Travel Businesses | TripOne+",
+    "metaDescription": "Build clear day-by-day itineraries with activities, timing, accommodation, meals, transport and practical trip information.",
+    "faqs": [
+      "What should an itinerary include?",
+      "How detailed should each day be?",
+      "Can itineraries be reused?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Tours; DMCs; agencies",
+    "internalLinks": ["/tools/tour-itinerary-generator", "/platform/packages"],
+    "inboundLinks": ["Package pages", "itinerary blogs"],
+    "contentAngle": "Reusable professional itinerary structure.",
+    "cta": "Use the Itinerary Template",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 85,
+    "pageType": "Resource",
+    "title": "Tour Booking Workflow Template",
+    "primaryKeyword": "tour booking workflow",
+    "secondaryKeywords": ["tour booking process", "travel booking workflow"],
+    "keywordCluster": "Booking Operations",
+    "path": "/resources/tour-booking-workflow",
+    "entities": [
+      "enquiry",
+      "booking",
+      "confirmation",
+      "payment",
+      "departure",
+      "follow-up"
+    ],
+    "metaTitle": "Tour Booking Workflow Template | TripOne+",
+    "metaDescription": "Map every stage from first enquiry to booking, pre-trip operations, departure and post-trip follow-up.",
+    "faqs": [
+      "What are the stages of a tour booking?",
+      "Who should own each step?",
+      "What can be automated?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform/bookings",
+      "/growth-services/marketing-automation"
+    ],
+    "inboundLinks": ["Operations blogs", "platform pages"],
+    "contentAngle": "Process blueprint that reveals exactly where TripOne+ replaces manual handoffs.",
+    "cta": "Map My Workflow",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 86,
+    "pageType": "Resource",
+    "title": "Travel CRM Pipeline Template",
+    "primaryKeyword": "travel CRM pipeline",
+    "secondaryKeywords": ["tour operator sales pipeline", "travel lead stages"],
+    "keywordCluster": "Travel CRM",
+    "path": "/resources/travel-crm-pipeline",
+    "entities": ["lead", "enquiry", "qualified", "proposal", "won", "lost"],
+    "metaTitle": "Travel CRM Pipeline Template | TripOne+",
+    "metaDescription": "Structure travel enquiries from new lead through qualification, follow-up, proposal, booking and retention.",
+    "faqs": [
+      "What stages should a travel CRM have?",
+      "How long should leads be followed up?",
+      "What information should be captured?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Agencies; operators",
+    "internalLinks": ["/platform/crm", "/growth-services/email-marketing-crm"],
+    "inboundLinks": ["CRM blogs", "travel agency page"],
+    "contentAngle": "Travel-native pipeline rather than generic B2B sales stages.",
+    "cta": "Build My Pipeline",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 87,
+    "pageType": "Resource",
+    "title": "Tour Operator SOP Template",
+    "primaryKeyword": "tour operator SOP",
+    "secondaryKeywords": ["tour operations SOP template", "travel agency SOP"],
+    "keywordCluster": "Travel Operations",
+    "path": "/resources/tour-operator-sop-template",
+    "entities": [
+      "SOP",
+      "operations",
+      "staff",
+      "booking",
+      "departure",
+      "quality"
+    ],
+    "metaTitle": "Tour Operator SOP Template | TripOne+",
+    "metaDescription": "Standardise booking, customer service, departures, suppliers and operational handoffs with a practical tour SOP framework.",
+    "faqs": [
+      "What SOPs should tour operators have?",
+      "How should SOPs be documented?",
+      "Who owns SOP updates?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform", "/resources/departure-checklist"],
+    "inboundLinks": ["Operations blogs", "spreadsheet comparison"],
+    "contentAngle": "Move tacit operational knowledge into repeatable systems.",
+    "cta": "Get the SOP Template",
+    "priority": "P1",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 88,
+    "pageType": "Resource",
+    "title": "Tour Departure Checklist",
+    "primaryKeyword": "tour departure checklist",
+    "secondaryKeywords": ["pre tour checklist", "tour operations checklist"],
+    "keywordCluster": "Departure Operations",
+    "path": "/resources/tour-departure-checklist",
+    "entities": [
+      "departure",
+      "manifest",
+      "guide",
+      "vehicle",
+      "equipment",
+      "customers"
+    ],
+    "metaTitle": "Tour Departure Checklist | TripOne+",
+    "metaDescription": "Check guests, guides, vehicles, equipment, documents and communications before every departure.",
+    "faqs": [
+      "What should be checked before departure?",
+      "Who signs off?",
+      "How early should checks start?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform/resources",
+      "/resources/guest-manifest-template"
+    ],
+    "inboundLinks": ["Operations blogs", "SOP template"],
+    "contentAngle": "Simple high-frequency operational resource.",
+    "cta": "Get the Checklist",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 89,
+    "pageType": "Resource",
+    "title": "Guest Manifest Template",
+    "primaryKeyword": "tour guest manifest template",
+    "secondaryKeywords": ["passenger manifest template", "travel guest list"],
+    "keywordCluster": "Guest Operations",
+    "path": "/resources/guest-manifest-template",
+    "entities": ["guest names", "contact", "emergency", "dietary", "booking"],
+    "metaTitle": "Guest Manifest Template for Tours | TripOne+",
+    "metaDescription": "Create organised guest manifests containing the essential traveller information your operations team needs before departure.",
+    "faqs": [
+      "What goes on a guest manifest?",
+      "Should emergency contacts be included?",
+      "Who can access manifests?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Tours; transfers",
+    "internalLinks": ["/tools/guest-manifest-generator", "/platform/customers"],
+    "inboundLinks": ["Departure checklist", "operations blogs"],
+    "contentAngle": "Lead into customer and booking data consolidation.",
+    "cta": "Create a Manifest",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 90,
+    "pageType": "Resource",
+    "title": "Travel Supplier Management Template",
+    "primaryKeyword": "travel supplier management template",
+    "secondaryKeywords": [
+      "tour operator supplier sheet",
+      "DMC supplier database"
+    ],
+    "keywordCluster": "Supplier Operations",
+    "path": "/resources/travel-supplier-management-template",
+    "entities": [
+      "supplier",
+      "hotel",
+      "guide",
+      "transport",
+      "rates",
+      "contracts"
+    ],
+    "metaTitle": "Travel Supplier Management Template | TripOne+",
+    "metaDescription": "Organise supplier contacts, services, rates, terms and operational notes in a consistent travel-business framework.",
+    "faqs": [
+      "What supplier data should be stored?",
+      "How often should rates be updated?",
+      "How should contracts be tracked?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "DMCs; multi-day operators",
+    "internalLinks": ["/for/dmcs", "/platform"],
+    "inboundLinks": ["DMC blogs", "business plan resource"],
+    "contentAngle": "Structured transition away from disconnected supplier spreadsheets.",
+    "cta": "Get the Template",
+    "priority": "P2",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 91,
+    "pageType": "Resource",
+    "title": "Tour Pricing Worksheet",
+    "primaryKeyword": "tour pricing worksheet",
+    "secondaryKeywords": ["tour costing template", "travel package costing"],
+    "keywordCluster": "Pricing Resources",
+    "path": "/resources/tour-pricing-worksheet",
+    "entities": ["costs", "markup", "margin", "capacity", "commission"],
+    "metaTitle": "Tour Pricing Worksheet | TripOne+",
+    "metaDescription": "Calculate costs, commissions, margins and selling-price assumptions before publishing a new tour or package.",
+    "faqs": [
+      "What costs should tour pricing include?",
+      "Markup vs margin?",
+      "How should OTA commission be handled?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/tools/tour-pricing-calculator",
+      "/tools/ota-commission-calculator"
+    ],
+    "inboundLinks": ["Pricing blogs", "business plan"],
+    "contentAngle": "The manual planning companion to interactive pricing tools.",
+    "cta": "Use the Worksheet",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 92,
+    "pageType": "Resource",
+    "title": "Tour Operator KPI Dashboard Template",
+    "primaryKeyword": "tour operator KPIs",
+    "secondaryKeywords": ["travel business KPI dashboard", "tour metrics"],
+    "keywordCluster": "Travel Analytics",
+    "path": "/resources/tour-operator-kpi-dashboard",
+    "entities": [
+      "bookings",
+      "conversion",
+      "CPA",
+      "occupancy",
+      "revenue",
+      "leads"
+    ],
+    "metaTitle": "Tour Operator KPI Dashboard Template | TripOne+",
+    "metaDescription": "Track bookings, leads, acquisition cost, conversion, capacity, cancellations and channel performance in one KPI framework.",
+    "faqs": [
+      "Which KPIs matter most?",
+      "How often should KPIs be reviewed?",
+      "Which metrics indicate growth?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform/analytics",
+      "/growth-services/analytics-tracking"
+    ],
+    "inboundLinks": ["Analytics blogs", "ROAS tools"],
+    "contentAngle": "Unify marketing metrics with operational performance.",
+    "cta": "Get the KPI Dashboard",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 93,
+    "pageType": "Tool",
+    "title": "Tour Pricing Calculator",
+    "primaryKeyword": "tour pricing calculator",
+    "secondaryKeywords": ["tour cost calculator", "tour price calculator"],
+    "keywordCluster": "Pricing Tools",
+    "path": "/tools/tour-pricing-calculator",
+    "entities": ["cost", "margin", "capacity", "commission", "selling price"],
+    "metaTitle": "Tour Pricing Calculator | Free Travel Business Tool",
+    "metaDescription": "Calculate a profitable tour selling price using operating costs, group size, commissions, desired margin and capacity.",
+    "faqs": [
+      "How do you calculate tour price?",
+      "What margin should a tour have?",
+      "How are commissions included?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/resources/tour-pricing-worksheet",
+      "/platform/products"
+    ],
+    "inboundLinks": ["Pricing blogs", "resource pages"],
+    "contentAngle": "Immediate utility with save-to-TripOne+ upsell.",
+    "cta": "Calculate Tour Price",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 94,
+    "pageType": "Tool",
+    "title": "Tour Package Pricing Calculator",
+    "primaryKeyword": "tour package pricing calculator",
+    "secondaryKeywords": [
+      "travel package cost calculator",
+      "holiday package pricing"
+    ],
+    "keywordCluster": "Pricing Tools",
+    "path": "/tools/tour-package-pricing-calculator",
+    "entities": ["accommodation", "transport", "activities", "guide", "markup"],
+    "metaTitle": "Tour Package Pricing Calculator | TripOne+",
+    "metaDescription": "Calculate package cost, markup and selling price across accommodation, transport, activities, guides and other components.",
+    "faqs": [
+      "How is package pricing calculated?",
+      "What costs should be included?",
+      "Margin vs markup?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "DMCs; multi-day operators",
+    "internalLinks": [
+      "/platform/packages",
+      "/resources/tour-package-page-template"
+    ],
+    "inboundLinks": ["Package blogs", "DMC pages"],
+    "contentAngle": "Multi-component package economics rather than simple percentage markup.",
+    "cta": "Price a Package",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 95,
+    "pageType": "Tool",
+    "title": "Tour Profit Margin Calculator",
+    "primaryKeyword": "tour profit margin calculator",
+    "secondaryKeywords": [
+      "travel margin calculator",
+      "tour profitability calculator"
+    ],
+    "keywordCluster": "Profitability Tools",
+    "path": "/tools/tour-profit-margin-calculator",
+    "entities": ["revenue", "direct costs", "gross profit", "margin"],
+    "metaTitle": "Tour Profit Margin Calculator | TripOne+",
+    "metaDescription": "Calculate gross profit and profit margin for a tour, activity or travel package in seconds.",
+    "faqs": [
+      "How is tour margin calculated?",
+      "What is the difference between markup and margin?",
+      "What affects tour profitability?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/tools/tour-markup-calculator",
+      "/resources/tour-pricing-worksheet"
+    ],
+    "inboundLinks": ["Pricing blogs", "pricing calculator"],
+    "contentAngle": "Simple high-intent commercial calculator.",
+    "cta": "Calculate Margin",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 96,
+    "pageType": "Tool",
+    "title": "Tour Markup Calculator",
+    "primaryKeyword": "tour markup calculator",
+    "secondaryKeywords": [
+      "travel markup calculator",
+      "package markup calculator"
+    ],
+    "keywordCluster": "Pricing Tools",
+    "path": "/tools/tour-markup-calculator",
+    "entities": ["markup", "cost", "selling price", "margin"],
+    "metaTitle": "Tour Markup Calculator | Free TripOne+ Tool",
+    "metaDescription": "Calculate the markup and selling price required for tours, travel packages, activities and transfers.",
+    "faqs": [
+      "How do you calculate markup?",
+      "Is markup the same as margin?",
+      "What markup should travel agencies use?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "TOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/tools/tour-profit-margin-calculator",
+      "/tools/tour-pricing-calculator"
+    ],
+    "inboundLinks": ["Pricing blogs"],
+    "contentAngle": "SEO-friendly simple calculator feeding deeper tools.",
+    "cta": "Calculate Markup",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 97,
+    "pageType": "Tool",
+    "title": "Tour Break-Even Calculator",
+    "primaryKeyword": "tour break even calculator",
+    "secondaryKeywords": ["break-even passengers", "tour profitability"],
+    "keywordCluster": "Profitability Tools",
+    "path": "/tools/tour-break-even-calculator",
+    "entities": ["fixed costs", "variable costs", "guests", "revenue"],
+    "metaTitle": "Tour Break-Even Calculator | TripOne+",
+    "metaDescription": "Find how many bookings or guests a tour needs before revenue covers fixed and variable operating costs.",
+    "faqs": [
+      "How do you calculate break-even guests?",
+      "What costs count?",
+      "How does capacity affect break-even?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/tools/tour-pricing-calculator", "/platform/analytics"],
+    "inboundLinks": ["Pricing blogs", "startup resources"],
+    "contentAngle": "Translate pricing decisions into minimum viable load factor.",
+    "cta": "Calculate Break-Even",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 98,
+    "pageType": "Tool",
+    "title": "OTA Commission Calculator",
+    "primaryKeyword": "OTA commission calculator",
+    "secondaryKeywords": [
+      "Viator commission calculator",
+      "GetYourGuide commission calculator"
+    ],
+    "keywordCluster": "Distribution Economics",
+    "path": "/tools/ota-commission-calculator",
+    "entities": [
+      "OTA",
+      "commission",
+      "direct bookings",
+      "revenue",
+      "Viator",
+      "GetYourGuide"
+    ],
+    "metaTitle": "OTA Commission Calculator for Tour Operators | TripOne+",
+    "metaDescription": "Compare OTA commission costs with direct-booking revenue and see how distribution fees affect tour profitability.",
+    "faqs": [
+      "How much do OTAs cost?",
+      "How is commission calculated?",
+      "When are direct bookings more profitable?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/growth-services/seo", "/blog/ota-vs-direct-bookings"],
+    "inboundLinks": ["Direct-booking blogs", "pricing resources"],
+    "contentAngle": "Financially quantify why operators need owned acquisition channels.",
+    "cta": "Calculate OTA Cost",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 99,
+    "pageType": "Tool",
+    "title": "ROAS Calculator for Travel Marketing",
+    "primaryKeyword": "travel ROAS calculator",
+    "secondaryKeywords": [
+      "Google Ads ROAS calculator",
+      "tourism advertising ROI"
+    ],
+    "keywordCluster": "Marketing Analytics",
+    "path": "/tools/roas-calculator",
+    "entities": ["ROAS", "ad spend", "revenue", "bookings"],
+    "metaTitle": "Travel ROAS Calculator | TripOne+",
+    "metaDescription": "Calculate return on ad spend for Google, Meta, TikTok and other travel marketing campaigns.",
+    "faqs": [
+      "How is ROAS calculated?",
+      "What is a good ROAS for travel?",
+      "Should booking revenue or profit be used?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/google-ads",
+      "/growth-services/meta-ads"
+    ],
+    "inboundLinks": ["Ads blogs", "KPI resources"],
+    "contentAngle": "Bridge ad performance to booking revenue.",
+    "cta": "Calculate ROAS",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 100,
+    "pageType": "Tool",
+    "title": "Travel Customer Acquisition Cost Calculator",
+    "primaryKeyword": "travel customer acquisition cost calculator",
+    "secondaryKeywords": ["tour CAC calculator", "booking acquisition cost"],
+    "keywordCluster": "Marketing Analytics",
+    "path": "/tools/customer-acquisition-cost-calculator",
+    "entities": [
+      "customer acquisition cost",
+      "marketing spend",
+      "new customers"
+    ],
+    "metaTitle": "Travel Customer Acquisition Cost Calculator | TripOne+",
+    "metaDescription": "Calculate what it costs to acquire a new traveller from your total sales and marketing investment.",
+    "faqs": [
+      "What is CAC?",
+      "What costs belong in CAC?",
+      "How does CAC differ from CPA?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/tools/cost-per-booking-calculator",
+      "/platform/analytics"
+    ],
+    "inboundLinks": ["Analytics blogs", "KPI dashboard"],
+    "contentAngle": "Broader unit economics beyond advertising CPA.",
+    "cta": "Calculate CAC",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 101,
+    "pageType": "Tool",
+    "title": "Cost Per Booking Calculator",
+    "primaryKeyword": "cost per booking calculator",
+    "secondaryKeywords": [
+      "travel booking CPA",
+      "tour marketing cost per booking"
+    ],
+    "keywordCluster": "Marketing Analytics",
+    "path": "/tools/cost-per-booking-calculator",
+    "entities": ["bookings", "advertising spend", "CPA", "acquisition"],
+    "metaTitle": "Cost Per Booking Calculator for Travel Businesses",
+    "metaDescription": "Calculate marketing cost per booking and compare acquisition efficiency across channels and campaigns.",
+    "faqs": [
+      "How is cost per booking calculated?",
+      "What is a good CPA?",
+      "How does it differ from CAC?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/analytics-tracking",
+      "/tools/roas-calculator"
+    ],
+    "inboundLinks": ["Paid media blogs", "KPI resource"],
+    "contentAngle": "Booking-specific paid acquisition metric.",
+    "cta": "Calculate Cost Per Booking",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 102,
+    "pageType": "Tool",
+    "title": "Tour Occupancy Rate Calculator",
+    "primaryKeyword": "tour occupancy calculator",
+    "secondaryKeywords": ["tour utilisation rate", "departure load factor"],
+    "keywordCluster": "Capacity Analytics",
+    "path": "/tools/tour-occupancy-calculator",
+    "entities": ["booked guests", "capacity", "utilisation", "departure"],
+    "metaTitle": "Tour Occupancy Rate Calculator | TripOne+",
+    "metaDescription": "Calculate the percentage of available tour capacity filled by confirmed guests on one or multiple departures.",
+    "faqs": [
+      "How is occupancy calculated?",
+      "What is load factor?",
+      "Why does occupancy matter?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform/availability",
+      "/tools/tour-capacity-calculator"
+    ],
+    "inboundLinks": ["Capacity blogs", "operations resources"],
+    "contentAngle": "Make capacity performance measurable.",
+    "cta": "Calculate Occupancy",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 103,
+    "pageType": "Tool",
+    "title": "Tour Capacity Calculator",
+    "primaryKeyword": "tour capacity calculator",
+    "secondaryKeywords": ["tour availability calculator", "remaining capacity"],
+    "keywordCluster": "Capacity Tools",
+    "path": "/tools/tour-capacity-calculator",
+    "entities": ["capacity", "bookings", "guests", "remaining seats"],
+    "metaTitle": "Tour Capacity Calculator | TripOne+",
+    "metaDescription": "Calculate remaining capacity for a tour or activity based on maximum guests and confirmed bookings.",
+    "faqs": [
+      "How do I calculate remaining capacity?",
+      "How should children count?",
+      "Can capacity vary by departure?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Tours; activities",
+    "internalLinks": ["/platform/availability", "/platform/bookings"],
+    "inboundLinks": ["Operations blogs", "departure checklist"],
+    "contentAngle": "Simple tool naturally demonstrating live availability value.",
+    "cta": "Calculate Capacity",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 104,
+    "pageType": "Tool",
+    "title": "Guide-to-Guest Ratio Calculator",
+    "primaryKeyword": "guide to guest ratio calculator",
+    "secondaryKeywords": ["tour guide ratio", "guide staffing calculator"],
+    "keywordCluster": "Resource Planning",
+    "path": "/tools/guide-guest-ratio-calculator",
+    "entities": ["guides", "guests", "staffing", "group size"],
+    "metaTitle": "Guide-to-Guest Ratio Calculator | TripOne+",
+    "metaDescription": "Calculate how many guides are required based on guest numbers and your maximum preferred group-to-guide ratio.",
+    "faqs": [
+      "How many guests per guide?",
+      "Should ratios vary by activity?",
+      "How can staffing be planned?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "TOFU",
+    "vertical": "Adventure; guided tours",
+    "internalLinks": ["/platform/resources", "/resources/departure-checklist"],
+    "inboundLinks": ["Operations blogs", "industry pages"],
+    "contentAngle": "Staffing/resource planning utility.",
+    "cta": "Calculate Guides Needed",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 105,
+    "pageType": "Tool",
+    "title": "Tour Cancellation Rate Calculator",
+    "primaryKeyword": "tour cancellation rate calculator",
+    "secondaryKeywords": [
+      "booking cancellation calculator",
+      "cancellation percentage"
+    ],
+    "keywordCluster": "Booking Analytics",
+    "path": "/tools/tour-cancellation-rate-calculator",
+    "entities": ["bookings", "cancellations", "rate", "forecasting"],
+    "metaTitle": "Tour Cancellation Rate Calculator | TripOne+",
+    "metaDescription": "Calculate booking cancellation rate and understand how cancellations affect forecasting, capacity and revenue.",
+    "faqs": [
+      "How is cancellation rate calculated?",
+      "What is a high cancellation rate?",
+      "Should reschedules count?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "TOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform/analytics", "/platform/bookings"],
+    "inboundLinks": ["Cancellation blogs", "KPI resource"],
+    "contentAngle": "Turn cancellation behaviour into an operational metric.",
+    "cta": "Calculate Cancellation Rate",
+    "priority": "P1",
+    "demandSignal": "Medium"
+  },
+  {
+    "sn": 106,
+    "pageType": "Tool",
+    "title": "Travel UTM Builder",
+    "primaryKeyword": "travel UTM builder",
+    "secondaryKeywords": ["UTM generator tourism", "campaign URL builder"],
+    "keywordCluster": "Marketing Tracking",
+    "path": "/tools/travel-utm-builder",
+    "entities": ["UTM", "source", "medium", "campaign", "GA4"],
+    "metaTitle": "Travel UTM Builder | Free Campaign URL Tool",
+    "metaDescription": "Create consistent UTM-tagged campaign links for travel ads, partnerships, social media, email and creator campaigns.",
+    "faqs": [
+      "What are UTM parameters?",
+      "Which UTMs should travel marketers use?",
+      "Does GA4 read UTMs?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "TOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/analytics-tracking",
+      "/resources/tour-operator-kpi-dashboard"
+    ],
+    "inboundLinks": ["Marketing service pages", "analytics blogs"],
+    "contentAngle": "Add travel-specific naming conventions and campaign presets.",
+    "cta": "Build Tracking URL",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 107,
+    "pageType": "Tool",
+    "title": "Travel Meta Title Generator",
+    "primaryKeyword": "travel meta title generator",
+    "secondaryKeywords": ["tour title generator SEO", "tourism SEO title"],
+    "keywordCluster": "SEO Tools",
+    "path": "/tools/travel-meta-title-generator",
+    "entities": ["title tag", "SEO", "SERP", "tour page", "destination page"],
+    "metaTitle": "Travel Meta Title Generator | TripOne+",
+    "metaDescription": "Generate SEO-friendly title-tag ideas for tours, destinations, packages, travel agencies and experience pages.",
+    "faqs": [
+      "How long should a meta title be?",
+      "Should location be included?",
+      "Can titles be duplicated?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "TOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/resources/travel-seo-checklist"
+    ],
+    "inboundLinks": ["SEO blogs", "website resources"],
+    "contentAngle": "Niche generator with travel page-type presets.",
+    "cta": "Generate Titles",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 108,
+    "pageType": "Tool",
+    "title": "Travel Meta Description Generator",
+    "primaryKeyword": "travel meta description generator",
+    "secondaryKeywords": ["tour meta description generator", "SEO description"],
+    "keywordCluster": "SEO Tools",
+    "path": "/tools/travel-meta-description-generator",
+    "entities": ["meta description", "SERP", "CTA", "SEO"],
+    "metaTitle": "Travel Meta Description Generator | TripOne+",
+    "metaDescription": "Create compelling meta descriptions for tour pages, destinations, packages and travel-business landing pages.",
+    "faqs": [
+      "How long should meta descriptions be?",
+      "Do they affect ranking?",
+      "What should tour descriptions contain?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "TOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/tools/travel-meta-title-generator"
+    ],
+    "inboundLinks": ["SEO blogs", "SEO checklist"],
+    "contentAngle": "Conversion-oriented SERP copy rather than generic AI writing.",
+    "cta": "Generate Descriptions",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 109,
+    "pageType": "Tool",
+    "title": "Tour Schema Markup Generator",
+    "primaryKeyword": "tour schema generator",
+    "secondaryKeywords": ["travel schema generator", "JSON-LD tourism"],
+    "keywordCluster": "Technical SEO Tools",
+    "path": "/tools/tour-schema-generator",
+    "entities": [
+      "Schema.org",
+      "JSON-LD",
+      "Product",
+      "FAQPage",
+      "BreadcrumbList"
+    ],
+    "metaTitle": "Tour Schema Markup Generator | TripOne+",
+    "metaDescription": "Generate structured-data templates for travel businesses, tour pages, FAQs and breadcrumbs for easier technical SEO implementation.",
+    "faqs": [
+      "What schema should tour sites use?",
+      "What is JSON-LD?",
+      "Does schema improve rankings?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/resources/travel-seo-checklist"
+    ],
+    "inboundLinks": ["Technical SEO blogs", "website resources"],
+    "contentAngle": "Travel-specific structured data wizard with implementation guidance.",
+    "cta": "Generate Schema",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 110,
+    "pageType": "Tool",
+    "title": "Tour Invoice Generator",
+    "primaryKeyword": "tour invoice generator",
+    "secondaryKeywords": ["travel invoice template", "travel agency invoice"],
+    "keywordCluster": "Document Tools",
+    "path": "/tools/tour-invoice-generator",
+    "entities": ["invoice", "traveller", "booking", "tax", "services"],
+    "metaTitle": "Tour Invoice Generator | Free TripOne+ Tool",
+    "metaDescription": "Create professional tour and travel invoices with customer, booking, service, tax and payment details.",
+    "faqs": [
+      "What should a travel invoice contain?",
+      "Can taxes be added?",
+      "Can invoices be downloaded?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Agencies; operators",
+    "internalLinks": ["/platform/bookings", "/platform/customers"],
+    "inboundLinks": ["Operations resources", "travel agency pages"],
+    "contentAngle": "Free utility that naturally leads to native customer/booking management.",
+    "cta": "Create an Invoice",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 111,
+    "pageType": "Tool",
+    "title": "Travel Quote Generator",
+    "primaryKeyword": "travel quote generator",
+    "secondaryKeywords": [
+      "tour quotation generator",
+      "travel agency quotation"
+    ],
+    "keywordCluster": "Document Tools",
+    "path": "/tools/travel-quote-generator",
+    "entities": ["quotation", "package", "itinerary", "price", "customer"],
+    "metaTitle": "Travel Quote Generator | Free TripOne+ Tool",
+    "metaDescription": "Create polished tour and travel quotations with itinerary, inclusions, pricing and client details.",
+    "faqs": [
+      "What should a travel quote contain?",
+      "How long should quotes remain valid?",
+      "Can quotes include packages?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "MOFU",
+    "vertical": "Travel agencies; DMCs",
+    "internalLinks": ["/platform/packages", "/platform/crm"],
+    "inboundLinks": ["CRM resources", "agency pages"],
+    "contentAngle": "Top-of-funnel utility feeding quote-to-booking workflow.",
+    "cta": "Create a Travel Quote",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 112,
+    "pageType": "Tool",
+    "title": "Tour Itinerary Generator",
+    "primaryKeyword": "tour itinerary generator",
+    "secondaryKeywords": ["travel itinerary builder", "itinerary creator"],
+    "keywordCluster": "Itinerary Tools",
+    "path": "/tools/tour-itinerary-generator",
+    "entities": ["itinerary", "destination", "days", "activities", "logistics"],
+    "metaTitle": "Tour Itinerary Generator | Free TripOne+ Tool",
+    "metaDescription": "Build a structured day-by-day tour itinerary from destinations, duration, activities, accommodation and trip notes.",
+    "faqs": [
+      "How do I create a tour itinerary?",
+      "What should each day include?",
+      "Can itineraries be edited?"
+    ],
+    "intent": "Tool",
+    "funnelStage": "TOFU",
+    "vertical": "Tours; agencies; DMCs",
+    "internalLinks": [
+      "/platform/packages",
+      "/resources/tour-itinerary-template"
+    ],
+    "inboundLinks": ["Itinerary blogs", "package resources"],
+    "contentAngle": "Generate usable operational structure, then manage it persistently in TripOne+.",
+    "cta": "Build an Itinerary",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 113,
+    "pageType": "Blog",
+    "title": "How to Start a Tour Operator Business",
+    "primaryKeyword": "how to start a tour operator business",
+    "secondaryKeywords": ["start tour company", "tour business startup"],
+    "keywordCluster": "Tour Business Startup",
+    "path": "/blog/how-to-start-tour-operator-business",
+    "entities": [
+      "tour operator",
+      "business plan",
+      "product",
+      "pricing",
+      "booking",
+      "marketing"
+    ],
+    "metaTitle": "How to Start a Tour Operator Business in 2026",
+    "metaDescription": "Learn how to launch a tour company—from market selection and products to pricing, operations, website, bookings and marketing.",
+    "faqs": [
+      "Do you need a licence?",
+      "How much does it cost?",
+      "What software is needed?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "New tour operators",
+    "internalLinks": [
+      "/resources/tour-operator-business-plan",
+      "/for/tour-operators"
+    ],
+    "inboundLinks": ["Business plan resource", "startup cluster"],
+    "contentAngle": "Definitive business-building guide linked throughout TripOne+ ecosystem.",
+    "cta": "Start Building",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 114,
+    "pageType": "Blog",
+    "title": "How to Start a Travel Agency",
+    "primaryKeyword": "how to start a travel agency",
+    "secondaryKeywords": [
+      "start travel agency business",
+      "travel agency setup"
+    ],
+    "keywordCluster": "Travel Agency Startup",
+    "path": "/blog/how-to-start-travel-agency",
+    "entities": ["travel agency", "CRM", "suppliers", "marketing", "website"],
+    "metaTitle": "How to Start a Travel Agency in 2026",
+    "metaDescription": "A practical guide to launching a travel agency, choosing a business model, building supplier relationships and acquiring customers.",
+    "faqs": [
+      "Can you start from home?",
+      "What software is needed?",
+      "How do agencies make money?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "New travel agencies",
+    "internalLinks": [
+      "/resources/travel-agency-business-plan",
+      "/for/travel-agencies"
+    ],
+    "inboundLinks": ["Business plan resource", "agency cluster"],
+    "contentAngle": "Commercially useful launch guide rather than generic entrepreneurship content.",
+    "cta": "Start TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 115,
+    "pageType": "Blog",
+    "title": "How to Get More Direct Tour Bookings",
+    "primaryKeyword": "how to get more tour bookings",
+    "secondaryKeywords": ["increase direct bookings", "tour booking marketing"],
+    "keywordCluster": "Direct Booking Growth",
+    "path": "/blog/how-to-get-more-direct-tour-bookings",
+    "entities": ["direct bookings", "SEO", "PPC", "website", "reviews", "CRM"],
+    "metaTitle": "How to Get More Direct Tour Bookings",
+    "metaDescription": "Increase direct bookings with stronger search visibility, conversion, paid campaigns, reviews and customer retention.",
+    "faqs": [
+      "Why are direct bookings important?",
+      "Which channels work?",
+      "How do I convert more visitors?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/growth-services/cro",
+      "/tools/ota-commission-calculator"
+    ],
+    "inboundLinks": ["OTA resource", "service pages"],
+    "contentAngle": "Core pillar connecting most growth services.",
+    "cta": "Get a Growth Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 116,
+    "pageType": "Blog",
+    "title": "How to Market a Tour Company",
+    "primaryKeyword": "how to market a tour company",
+    "secondaryKeywords": ["tour operator marketing", "tour marketing ideas"],
+    "keywordCluster": "Tour Marketing",
+    "path": "/blog/how-to-market-tour-company",
+    "entities": ["tour marketing", "SEO", "PPC", "social", "content", "email"],
+    "metaTitle": "How to Market a Tour Company: Complete Guide",
+    "metaDescription": "Build a practical tour marketing system across SEO, paid search, social, content, email, reviews and direct bookings.",
+    "faqs": [
+      "Which marketing channels work best?",
+      "How much should you spend?",
+      "How do you measure results?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/resources/tour-operator-marketing-plan",
+      "/growth-services"
+    ],
+    "inboundLinks": ["All marketing service pages"],
+    "contentAngle": "Broad pillar page feeding every marketing service cluster.",
+    "cta": "Build My Marketing Plan",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 117,
+    "pageType": "Blog",
+    "title": "Tour Operator SEO Guide",
+    "primaryKeyword": "tour operator SEO",
+    "secondaryKeywords": ["SEO for tour operators", "tour company SEO"],
+    "keywordCluster": "Travel SEO",
+    "path": "/blog/tour-operator-seo-guide",
+    "entities": ["Google", "keywords", "destinations", "schema", "local SEO"],
+    "metaTitle": "Tour Operator SEO: Complete Guide for 2026",
+    "metaDescription": "Learn how tour operators can rank product, destination and local pages while building sustainable direct-booking traffic.",
+    "faqs": [
+      "What keywords should tour operators target?",
+      "How long does SEO take?",
+      "Should tours have separate pages?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/resources/travel-seo-checklist"
+    ],
+    "inboundLinks": ["SEO service", "tool pages"],
+    "contentAngle": "Pillar SEO guide around commercial + destination architecture.",
+    "cta": "Get an SEO Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 118,
+    "pageType": "Blog",
+    "title": "Travel Agency SEO Guide",
+    "primaryKeyword": "SEO for travel agencies",
+    "secondaryKeywords": ["travel agency SEO", "tourism SEO"],
+    "keywordCluster": "Travel SEO",
+    "path": "/blog/travel-agency-seo",
+    "entities": ["travel agency", "Google", "destination content", "packages"],
+    "metaTitle": "SEO for Travel Agencies: Complete Guide",
+    "metaDescription": "Learn how travel agencies can build organic visibility with service, package, destination and authority content.",
+    "faqs": [
+      "What should travel agencies rank for?",
+      "Is blogging necessary?",
+      "How does local SEO help?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Travel agencies",
+    "internalLinks": ["/growth-services/seo", "/for/travel-agencies"],
+    "inboundLinks": ["Agency pages", "SEO tools"],
+    "contentAngle": "Search architecture tailored to agencies instead of tour inventory.",
+    "cta": "Get an SEO Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 119,
+    "pageType": "Blog",
+    "title": "Google Ads for Tour Operators",
+    "primaryKeyword": "Google Ads for tour operators",
+    "secondaryKeywords": ["tour operator PPC", "travel Google Ads"],
+    "keywordCluster": "Travel PPC",
+    "path": "/blog/google-ads-for-tour-operators",
+    "entities": [
+      "Google Ads",
+      "search campaigns",
+      "PMax",
+      "keywords",
+      "tracking"
+    ],
+    "metaTitle": "Google Ads for Tour Operators: Complete Guide",
+    "metaDescription": "Learn campaign structures, keywords, budgets, landing pages and tracking approaches for generating travel bookings through Google Ads.",
+    "faqs": [
+      "What campaigns should tour operators run?",
+      "What budget is needed?",
+      "Should branded terms be used?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services/google-ads",
+      "/resources/google-ads-checklist-tour-operators"
+    ],
+    "inboundLinks": ["Google Ads service", "ROAS tool"],
+    "contentAngle": "Practical vertical PPC framework with booking economics.",
+    "cta": "Get a Google Ads Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 120,
+    "pageType": "Blog",
+    "title": "Meta Ads for Travel Businesses",
+    "primaryKeyword": "Meta Ads for travel businesses",
+    "secondaryKeywords": [
+      "Facebook ads travel agency",
+      "Instagram ads tourism"
+    ],
+    "keywordCluster": "Meta Advertising",
+    "path": "/blog/meta-ads-for-travel-businesses",
+    "entities": [
+      "Meta Ads",
+      "Facebook",
+      "Instagram",
+      "creative",
+      "retargeting"
+    ],
+    "metaTitle": "Meta Ads for Travel Businesses: Complete Guide",
+    "metaDescription": "Learn how travel businesses can structure Meta campaigns, creative, audiences and retargeting for demand and bookings.",
+    "faqs": [
+      "Which campaign objective should be used?",
+      "What creative works?",
+      "How does retargeting work?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/meta-ads",
+      "/resources/meta-ads-checklist-travel"
+    ],
+    "inboundLinks": ["Meta service", "creative page"],
+    "contentAngle": "Travel is visual; teach how creative and intent layers interact.",
+    "cta": "Get a Meta Ads Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 121,
+    "pageType": "Blog",
+    "title": "TikTok Marketing for Tour Operators",
+    "primaryKeyword": "TikTok marketing for tour operators",
+    "secondaryKeywords": [
+      "TikTok travel marketing",
+      "TikTok for travel business"
+    ],
+    "keywordCluster": "TikTok Marketing",
+    "path": "/blog/tiktok-marketing-tour-operators",
+    "entities": ["TikTok", "UGC", "creators", "short video", "discovery"],
+    "metaTitle": "TikTok Marketing for Tour Operators",
+    "metaDescription": "Learn how tour businesses can use organic TikTok, creators and paid campaigns to turn visual experiences into demand.",
+    "faqs": [
+      "What should tour companies post?",
+      "How often?",
+      "Do TikTok Ads work for travel?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Visual experience businesses",
+    "internalLinks": [
+      "/growth-services/tiktok-ads",
+      "/growth-services/social-media-marketing"
+    ],
+    "inboundLinks": ["TikTok service", "creative blogs"],
+    "contentAngle": "Content-to-ads flywheel for visually rich experiences.",
+    "cta": "Plan TikTok Growth",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  },
+  {
+    "sn": 122,
+    "pageType": "Blog",
+    "title": "Social Media Marketing for Tour Operators",
+    "primaryKeyword": "social media marketing for tour operators",
+    "secondaryKeywords": [
+      "social media ideas tour company",
+      "travel social marketing"
+    ],
+    "keywordCluster": "Travel Social",
+    "path": "/blog/social-media-marketing-tour-operators",
+    "entities": ["Instagram", "TikTok", "Facebook", "UGC", "reviews"],
+    "metaTitle": "Social Media Marketing for Tour Operators",
+    "metaDescription": "Learn what to post, which platforms to prioritise and how to turn travel content into enquiries, trust and bookings.",
+    "faqs": [
+      "Which platform is best?",
+      "How often should you post?",
+      "What types of content convert?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services/social-media-marketing",
+      "/resources/travel-social-media-calendar"
+    ],
+    "inboundLinks": ["Social resource", "industry pages"],
+    "contentAngle": "Separate awareness, proof, education and conversion content.",
+    "cta": "Get the Calendar",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 123,
+    "pageType": "Blog",
+    "title": "Tour Operator Website Design Guide",
+    "primaryKeyword": "tour operator website design",
+    "secondaryKeywords": ["tour website design", "travel website design"],
+    "keywordCluster": "Tour Websites",
+    "path": "/blog/tour-operator-website-design",
+    "entities": ["tour pages", "UX", "navigation", "bookings", "mobile"],
+    "metaTitle": "Tour Operator Website Design: Complete Guide",
+    "metaDescription": "Learn how to structure a modern tour website around discovery, trust, product information, mobile UX and direct bookings.",
+    "faqs": [
+      "What pages are required?",
+      "What should the homepage contain?",
+      "Which booking CTA works best?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/platform/website-builder",
+      "/resources/tour-operator-website-checklist"
+    ],
+    "inboundLinks": ["Website service", "comparison Wix/WordPress"],
+    "contentAngle": "Product-led website architecture rather than visual-design inspiration.",
+    "cta": "Audit My Website",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 124,
+    "pageType": "Blog",
+    "title": "Travel Website SEO Guide",
+    "primaryKeyword": "travel website SEO",
+    "secondaryKeywords": ["tourism website SEO", "travel SEO optimisation"],
+    "keywordCluster": "Travel SEO",
+    "path": "/blog/travel-website-seo",
+    "entities": ["technical SEO", "content", "internal links", "schema"],
+    "metaTitle": "Travel Website SEO: Complete Guide",
+    "metaDescription": "Optimise a travel website for search across technical SEO, page architecture, destinations, products, content and authority.",
+    "faqs": [
+      "How should travel sites be structured?",
+      "Does schema matter?",
+      "How do destination pages rank?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/seo",
+      "/resources/travel-seo-checklist"
+    ],
+    "inboundLinks": ["SEO resource", "website pages"],
+    "contentAngle": "Site-wide SEO architecture rather than isolated keyword tactics.",
+    "cta": "Run the SEO Checklist",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 125,
+    "pageType": "Blog",
+    "title": "How to Improve Travel Website Conversion",
+    "primaryKeyword": "travel website conversion",
+    "secondaryKeywords": [
+      "tour website conversion rate",
+      "booking conversion optimisation"
+    ],
+    "keywordCluster": "Travel CRO",
+    "path": "/blog/improve-travel-website-conversion",
+    "entities": [
+      "conversion",
+      "CTA",
+      "trust",
+      "mobile",
+      "pricing",
+      "booking funnel"
+    ],
+    "metaTitle": "How to Improve Travel Website Conversion",
+    "metaDescription": "Turn more visitors into enquiries and bookings by improving trust, page structure, mobile UX, offer clarity and booking flow.",
+    "faqs": [
+      "What is a good conversion rate?",
+      "What causes booking drop-off?",
+      "What should be tested first?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": [
+      "/growth-services/cro",
+      "/tools/conversion-rate-calculator"
+    ],
+    "inboundLinks": ["Website checklist", "CRO service"],
+    "contentAngle": "Diagnose conversion friction by stage of traveller decision.",
+    "cta": "Get a CRO Audit",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 126,
+    "pageType": "Blog",
+    "title": "How to Price Tours and Activities",
+    "primaryKeyword": "how to price a tour",
+    "secondaryKeywords": ["tour pricing strategy", "activity pricing"],
+    "keywordCluster": "Tour Pricing",
+    "path": "/blog/how-to-price-tours",
+    "entities": ["cost", "capacity", "margin", "commission", "demand"],
+    "metaTitle": "How to Price Tours & Activities Profitably",
+    "metaDescription": "Learn how to build profitable tour pricing around operating costs, capacity, commissions, demand, margin and positioning.",
+    "faqs": [
+      "How do you calculate tour price?",
+      "What profit margin is normal?",
+      "How should OTA fees be included?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/tools/tour-pricing-calculator",
+      "/resources/tour-pricing-worksheet"
+    ],
+    "inboundLinks": ["Pricing tools", "startup blogs"],
+    "contentAngle": "Data-led commercial pricing guide.",
+    "cta": "Calculate My Tour Price",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 127,
+    "pageType": "Blog",
+    "title": "How to Create Tour Packages",
+    "primaryKeyword": "how to create tour packages",
+    "secondaryKeywords": ["travel package creation", "package tour planning"],
+    "keywordCluster": "Package Creation",
+    "path": "/blog/how-to-create-tour-packages",
+    "entities": [
+      "package",
+      "itinerary",
+      "accommodation",
+      "transfer",
+      "pricing"
+    ],
+    "metaTitle": "How to Create Tour Packages Customers Want",
+    "metaDescription": "Learn how to combine experiences, transport, accommodation, timing and pricing into clear, bookable travel packages.",
+    "faqs": [
+      "What should a package include?",
+      "How should packages be priced?",
+      "How detailed should itineraries be?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "DMCs; operators",
+    "internalLinks": [
+      "/platform/packages",
+      "/tools/tour-package-pricing-calculator"
+    ],
+    "inboundLinks": ["Package resources", "DMC page"],
+    "contentAngle": "Product-design framework linked to TripOne+ package management.",
+    "cta": "Build a Package",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 128,
+    "pageType": "Blog",
+    "title": "Tour Booking Management Guide",
+    "primaryKeyword": "tour booking management",
+    "secondaryKeywords": ["manage tour bookings", "booking operations"],
+    "keywordCluster": "Booking Operations",
+    "path": "/blog/tour-booking-management",
+    "entities": [
+      "bookings",
+      "status",
+      "customers",
+      "confirmations",
+      "departures"
+    ],
+    "metaTitle": "Tour Booking Management: Complete Guide",
+    "metaDescription": "Organise tour bookings from initial request through confirmation, operations, customer communication and post-trip follow-up.",
+    "faqs": [
+      "What information should bookings contain?",
+      "What booking statuses are useful?",
+      "What should be automated?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform/bookings", "/resources/tour-booking-workflow"],
+    "inboundLinks": ["Platform booking page", "operations resource"],
+    "contentAngle": "Model a proper booking lifecycle rather than a spreadsheet list.",
+    "cta": "See Booking Management",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 129,
+    "pageType": "Blog",
+    "title": "How to Manage Tour Availability & Capacity",
+    "primaryKeyword": "tour availability management",
+    "secondaryKeywords": ["tour capacity management", "booking availability"],
+    "keywordCluster": "Availability Operations",
+    "path": "/blog/tour-availability-capacity-management",
+    "entities": [
+      "departure",
+      "capacity",
+      "inventory",
+      "resources",
+      "overbooking"
+    ],
+    "metaTitle": "Tour Availability & Capacity Management Guide",
+    "metaDescription": "Learn how to manage departures, seats, resources and inventory while preventing overbooking and improving utilisation.",
+    "faqs": [
+      "How is capacity calculated?",
+      "How do resources affect availability?",
+      "How can overbooking be prevented?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tours; activities",
+    "internalLinks": [
+      "/platform/availability",
+      "/tools/tour-capacity-calculator"
+    ],
+    "inboundLinks": ["Capacity tools", "resource page"],
+    "contentAngle": "Explain availability as intersection of product, capacity and resources.",
+    "cta": "Manage Availability",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 130,
+    "pageType": "Blog",
+    "title": "CRM for Tour Operators",
+    "primaryKeyword": "CRM for tour operators",
+    "secondaryKeywords": ["tour operator CRM", "travel CRM"],
+    "keywordCluster": "Travel CRM",
+    "path": "/blog/crm-for-tour-operators",
+    "entities": [
+      "CRM",
+      "leads",
+      "customers",
+      "enquiries",
+      "follow-up",
+      "bookings"
+    ],
+    "metaTitle": "CRM for Tour Operators: What You Actually Need",
+    "metaDescription": "Learn how a travel-specific CRM should manage enquiries, follow-ups, customers, bookings and repeat business.",
+    "faqs": [
+      "Do tour operators need CRM?",
+      "What fields should be tracked?",
+      "How does CRM connect to bookings?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/platform/crm", "/resources/travel-crm-pipeline"],
+    "inboundLinks": ["CRM comparison pages", "automation services"],
+    "contentAngle": "Define travel CRM around traveller lifecycle, not generic deal tracking.",
+    "cta": "Explore TripOne+ CRM",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 131,
+    "pageType": "Blog",
+    "title": "How to Convert Travel Enquiries Into Bookings",
+    "primaryKeyword": "convert travel leads to bookings",
+    "secondaryKeywords": ["travel sales funnel", "tour enquiry conversion"],
+    "keywordCluster": "Travel Sales",
+    "path": "/blog/convert-travel-enquiries-to-bookings",
+    "entities": ["lead", "enquiry", "follow-up", "proposal", "booking"],
+    "metaTitle": "How to Turn Travel Enquiries Into Bookings",
+    "metaDescription": "Improve lead response, qualification, follow-up and proposal workflows to convert more travel enquiries into confirmed bookings.",
+    "faqs": [
+      "How quickly should enquiries be answered?",
+      "How many follow-ups?",
+      "What information converts leads?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Agencies; operators",
+    "internalLinks": ["/platform/crm", "/growth-services/marketing-automation"],
+    "inboundLinks": ["CRM pipeline resource", "sales pages"],
+    "contentAngle": "Build measurable enquiry-to-booking system.",
+    "cta": "Improve My Sales Process",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 132,
+    "pageType": "Blog",
+    "title": "OTA vs Direct Bookings for Tour Operators",
+    "primaryKeyword": "OTA vs direct bookings",
+    "secondaryKeywords": ["direct bookings vs Viator", "OTA commission tours"],
+    "keywordCluster": "Direct Booking Strategy",
+    "path": "/blog/ota-vs-direct-bookings-tour-operators",
+    "entities": [
+      "Viator",
+      "GetYourGuide",
+      "OTA",
+      "direct booking",
+      "commission"
+    ],
+    "metaTitle": "OTA vs Direct Bookings for Tour Operators",
+    "metaDescription": "Compare OTA and direct bookings across commission, customer ownership, distribution, marketing and long-term economics.",
+    "faqs": [
+      "Should tour operators use OTAs?",
+      "What do OTAs cost?",
+      "How do I increase direct bookings?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/tools/ota-commission-calculator",
+      "/growth-services/seo"
+    ],
+    "inboundLinks": ["Direct booking blog", "pricing resources"],
+    "contentAngle": "Balanced distribution strategy, not anti-OTA rhetoric.",
+    "cta": "Calculate OTA Cost",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 133,
+    "pageType": "Blog",
+    "title": "How to Reduce OTA Dependence",
+    "primaryKeyword": "how to reduce OTA dependence",
+    "secondaryKeywords": [
+      "increase direct bookings tours",
+      "reduce Viator reliance"
+    ],
+    "keywordCluster": "Direct Booking Strategy",
+    "path": "/blog/reduce-ota-dependence",
+    "entities": [
+      "OTA",
+      "SEO",
+      "paid search",
+      "email",
+      "brand",
+      "repeat customers"
+    ],
+    "metaTitle": "How Tour Operators Can Reduce OTA Dependence",
+    "metaDescription": "Build stronger owned demand through SEO, advertising, customer data, brand, email and a higher-converting direct website.",
+    "faqs": [
+      "Should OTAs be removed completely?",
+      "Which direct channels work fastest?",
+      "How long does transition take?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services",
+      "/platform",
+      "/blog/ota-vs-direct-bookings-tour-operators"
+    ],
+    "inboundLinks": ["OTA calculator", "direct-booking pages"],
+    "contentAngle": "Use OTAs strategically while gradually increasing owned acquisition share.",
+    "cta": "Build Direct Demand",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 134,
+    "pageType": "Blog",
+    "title": "How to Choose Tour Operator Software",
+    "primaryKeyword": "how to choose tour operator software",
+    "secondaryKeywords": [
+      "tour operator software comparison",
+      "best tour management software"
+    ],
+    "keywordCluster": "Tour Software Selection",
+    "path": "/blog/how-to-choose-tour-operator-software",
+    "entities": ["tour software", "bookings", "CRM", "resources", "website"],
+    "metaTitle": "How to Choose Tour Operator Software",
+    "metaDescription": "Learn which capabilities matter when comparing tour software across booking, availability, operations, customer management and growth.",
+    "faqs": [
+      "Which features matter most?",
+      "Booking engine vs operating system?",
+      "When should software be replaced?"
+    ],
+    "intent": "Commercial Research",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/compare", "/for/tour-operators"],
+    "inboundLinks": ["Every comparison page", "software resources"],
+    "contentAngle": "Create buying criteria that naturally favour integrated systems without rigging the comparison.",
+    "cta": "Compare TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 135,
+    "pageType": "Blog",
+    "title": "Best Website Builders for Tour Operators",
+    "primaryKeyword": "best website builder for tour operators",
+    "secondaryKeywords": [
+      "travel website builder",
+      "tour operator website builder"
+    ],
+    "keywordCluster": "Travel Website Software",
+    "path": "/blog/best-website-builders-tour-operators",
+    "entities": ["Wix", "WordPress", "Squarespace", "TripOne+", "Webflow"],
+    "metaTitle": "Best Website Builders for Tour Operators in 2026",
+    "metaDescription": "Compare website-building approaches for tour companies across design, SEO, bookings, maintenance, operations and scalability.",
+    "faqs": [
+      "What is the best website builder for tours?",
+      "WordPress or hosted SaaS?",
+      "Do I need a booking plugin?"
+    ],
+    "intent": "Commercial Research",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/compare/tripone-vs-wix",
+      "/compare/tripone-vs-wordpress",
+      "/platform/website-builder"
+    ],
+    "inboundLinks": ["Comparison pages", "website checklist"],
+    "contentAngle": "Evaluate general builders through actual tour-business requirements.",
+    "cta": "Build with TripOne+",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 136,
+    "pageType": "Blog",
+    "title": "Best Tour Booking Software",
+    "primaryKeyword": "best tour booking software",
+    "secondaryKeywords": [
+      "best booking system for tours",
+      "tour reservation software"
+    ],
+    "keywordCluster": "Tour Booking Software",
+    "path": "/blog/best-tour-booking-software",
+    "entities": [
+      "FareHarbor",
+      "Bókun",
+      "Rezdy",
+      "Checkfront",
+      "Xola",
+      "TripOne+"
+    ],
+    "metaTitle": "Best Tour Booking Software in 2026",
+    "metaDescription": "Compare leading tour booking platforms across reservations, capacity, websites, customer management, operations and business growth.",
+    "faqs": [
+      "What is tour booking software?",
+      "Which features matter?",
+      "Which platform suits small operators?"
+    ],
+    "intent": "Commercial Research",
+    "funnelStage": "MOFU",
+    "vertical": "Tour operators",
+    "internalLinks": ["/compare", "/platform/bookings"],
+    "inboundLinks": ["All booking comparisons", "software-selection guide"],
+    "contentAngle": "Independent-style criteria first; TripOne+ positioning follows from verified fit.",
+    "cta": "Compare Tour Software",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 137,
+    "pageType": "Blog",
+    "title": "Travel Marketing Ideas for Tour Operators",
+    "primaryKeyword": "tour operator marketing ideas",
+    "secondaryKeywords": ["travel marketing ideas", "tourism promotion ideas"],
+    "keywordCluster": "Tour Marketing",
+    "path": "/blog/tour-operator-marketing-ideas",
+    "entities": ["SEO", "social", "partnerships", "ads", "reviews", "email"],
+    "metaTitle": "Tour Operator Marketing Ideas That Drive Bookings",
+    "metaDescription": "Explore practical marketing ideas across search, social, partnerships, content, reviews, email and direct-booking campaigns.",
+    "faqs": [
+      "What are low-cost marketing ideas?",
+      "Which channels work quickest?",
+      "How should ideas be prioritised?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "TOFU",
+    "vertical": "Tour operators",
+    "internalLinks": [
+      "/growth-services",
+      "/resources/tour-operator-marketing-plan"
+    ],
+    "inboundLinks": ["Marketing service pages", "social resources"],
+    "contentAngle": "A large idea library organised by cost, effort and funnel stage rather than a random listicle.",
+    "cta": "Get the Marketing Plan",
+    "priority": "P0",
+    "demandSignal": "High"
+  },
+  {
+    "sn": 138,
+    "pageType": "Blog",
+    "title": "Travel Marketing Automation Guide",
+    "primaryKeyword": "travel marketing automation",
+    "secondaryKeywords": [
+      "tour operator automation",
+      "travel agency automation"
+    ],
+    "keywordCluster": "Travel Automation",
+    "path": "/blog/travel-marketing-automation",
+    "entities": ["CRM", "email", "workflows", "leads", "bookings", "reviews"],
+    "metaTitle": "Travel Marketing Automation: What to Automate",
+    "metaDescription": "Learn which lead, booking, customer and review workflows travel businesses can automate without making the experience feel impersonal.",
+    "faqs": [
+      "What should be automated first?",
+      "Which workflows save most time?",
+      "Can automation hurt customer experience?"
+    ],
+    "intent": "Informational",
+    "funnelStage": "MOFU",
+    "vertical": "All travel businesses",
+    "internalLinks": ["/growth-services/marketing-automation", "/platform/crm"],
+    "inboundLinks": ["Automation service", "CRM pipeline"],
+    "contentAngle": "Automation ranked by business value and customer sensitivity.",
+    "cta": "Automate My Workflows",
+    "priority": "P1",
+    "demandSignal": "Medium-High"
+  }
+]

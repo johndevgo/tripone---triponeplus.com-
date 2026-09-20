@@ -1,0 +1,84 @@
+import { describe, expect, it } from "vitest";
+import {
+  getRelatedSeoPages,
+  getSeoEditorialLinks,
+  getSeoPage,
+  getSeoPages,
+  seoPages,
+} from "./seo-catalog";
+import {
+  buildSeoContent,
+  buildSeoFaqs,
+  seoContentWordCount,
+} from "./seo-content";
+
+describe("SEO content catalog", () => {
+  it("contains every unique page from the supplied inventory", () => {
+    expect(seoPages).toHaveLength(138);
+    expect(new Set(seoPages.map((page) => page.path)).size).toBe(138);
+  });
+
+  it("generates at least 1,500 visible words for every page", () => {
+    for (const page of seoPages) {
+      expect(
+        seoContentWordCount(page),
+        `${page.path} content depth`,
+      ).toBeGreaterThanOrEqual(1500);
+    }
+  });
+
+  it("builds valid contextual related-page links", () => {
+    for (const page of seoPages) {
+      const related = getRelatedSeoPages(page);
+      expect(related).toHaveLength(6);
+      expect(related.every((item) => getSeoPage(item.path))).toBe(true);
+      expect(related.some((item) => item.path === page.path)).toBe(false);
+    }
+  });
+
+  it("keeps every industry page in the industry hub, including supplied root slugs", () => {
+    expect(getSeoPages("for")).toHaveLength(18);
+    expect(getSeoPage("/for-diving-snorkelling")?.pageType).toBe("Industry");
+    expect(getSeoPage("/for-transfer-operators")?.pageType).toBe("Industry");
+  });
+
+  it("provides six valid, non-self editorial links per page", () => {
+    for (const page of seoPages) {
+      const links = getSeoEditorialLinks(page);
+      expect(links, `${page.path} editorial links`).toHaveLength(6);
+      expect(new Set(links.map((link) => link.href)).size).toBe(6);
+      expect(links.every((link) => link.href.startsWith("/"))).toBe(true);
+      expect(links.some((link) => link.href === page.path)).toBe(false);
+    }
+  });
+
+  it("covers the primary query and every supplied entity in visible copy", () => {
+    for (const page of seoPages) {
+      const visibleText = [
+        page.title,
+        page.metaDescription,
+        ...buildSeoContent(page).flatMap((section) => [
+          section.heading,
+          ...section.paragraphs,
+          ...(section.bullets ?? []),
+        ]),
+        ...buildSeoFaqs(page).flatMap((faq) => [faq.question, faq.answer]),
+      ]
+        .join(" ")
+        .toLocaleLowerCase("en");
+      expect(
+        occurrences(visibleText, page.primaryKeyword.toLocaleLowerCase("en")),
+        `${page.path} primary-keyword coverage`,
+      ).toBeGreaterThanOrEqual(4);
+      for (const entity of page.entities) {
+        expect(visibleText, `${page.path} entity: ${entity}`).toContain(
+          entity.toLocaleLowerCase("en"),
+        );
+      }
+    }
+  });
+});
+
+function occurrences(source: string, query: string) {
+  return source.split(query).length - 1;
+}

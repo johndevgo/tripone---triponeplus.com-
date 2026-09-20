@@ -11,22 +11,62 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { ResourceCard } from "@/components/marketing/resource-card";
+import { SeoMarketingPage } from "@/components/marketing/seo-marketing-page";
 import {
   getRelatedResources,
   getResource,
   resourceCategorySlugs,
   resources,
 } from "@/content/resources";
+import {
+  getSeoPageFromSlug,
+  getSeoPageImage,
+  getSeoPageSlug,
+  getSeoPages,
+} from "@/content/seo-catalog";
 import { getAppUrl } from "@/lib/app-url";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export function generateStaticParams() {
-  return resources.map(({ slug }) => ({ slug }));
+  return Array.from(
+    new Set([
+      ...resources.map(({ slug }) => slug),
+      ...getSeoPages("resources").map(getSeoPageSlug),
+    ]),
+  ).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const article = getResource((await params).slug);
+  const slug = (await params).slug;
+  const article = getResource(slug);
+  const seoPage = getSeoPageFromSlug("resources", slug);
+  if (seoPage && !article) {
+    const image = getSeoPageImage(seoPage);
+    return {
+      title: seoPage.metaTitle,
+      description: seoPage.metaDescription,
+      keywords: [
+        seoPage.primaryKeyword,
+        ...seoPage.secondaryKeywords,
+        ...seoPage.entities,
+      ],
+      alternates: { canonical: seoPage.path },
+      openGraph: {
+        type: "article",
+        title: seoPage.metaTitle,
+        description: seoPage.metaDescription,
+        url: seoPage.path,
+        images: [{ url: image, alt: seoPage.title }],
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: seoPage.metaTitle,
+        description: seoPage.metaDescription,
+        images: [image],
+      },
+    };
+  }
   if (!article) return {};
   const path = `/resources/${article.slug}`;
   return {
@@ -52,7 +92,25 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ResourceArticlePage({ params }: Props) {
-  const article = getResource((await params).slug);
+  const slug = (await params).slug;
+  const article = getResource(slug);
+  const seoPage = getSeoPageFromSlug("resources", slug);
+  if (seoPage) {
+    return (
+      <SeoMarketingPage
+        page={
+          article
+            ? {
+                ...seoPage,
+                title: article.title,
+                metaTitle: article.title,
+                metaDescription: article.description,
+              }
+            : seoPage
+        }
+      />
+    );
+  }
   if (!article) notFound();
   const origin = getAppUrl("https://triponeplus.com").replace(/\/$/, "");
   const canonical = `${origin}/resources/${article.slug}`;

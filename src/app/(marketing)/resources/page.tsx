@@ -9,6 +9,12 @@ import {
   resourceCategorySlugs,
   resources,
 } from "@/content/resources";
+import {
+  getSeoPageImage,
+  getSeoPageImageAlt,
+  getSeoPageSlug,
+  getSeoPages,
+} from "@/content/seo-catalog";
 
 export const metadata: Metadata = {
   title: "Tourism website guides and comparisons",
@@ -26,17 +32,31 @@ export const metadata: Metadata = {
 export default function ResourcesPage() {
   const featured = resources[0];
   if (!featured) return null;
-  const summaries = resources.map(
-    ({ slug, category, title, description, image, imageAlt, readTime }) => ({
-      slug,
-      category,
-      title,
-      description,
-      image,
-      imageAlt,
-      readTime,
-    }),
-  );
+  const existingSlugs = new Set(resources.map((resource) => resource.slug));
+  const summaries = [
+    ...resources.map(
+      ({ slug, category, title, description, image, imageAlt, readTime }) => ({
+        slug,
+        category,
+        title,
+        description,
+        image,
+        imageAlt,
+        readTime,
+      }),
+    ),
+    ...getSeoPages("resources")
+      .filter((page) => !existingSlugs.has(getSeoPageSlug(page)))
+      .map((page) => ({
+        slug: getSeoPageSlug(page),
+        category: "Guide" as const,
+        title: page.title,
+        description: page.metaDescription,
+        image: getSeoPageImage(page),
+        imageAlt: getSeoPageImageAlt(page),
+        readTime: "12 min read",
+      })),
+  ];
 
   return (
     <>

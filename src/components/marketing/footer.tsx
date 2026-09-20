@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, MessageCircle, Phone } from "lucide-react";
+import type { ComponentType, SVGProps } from "react";
 import { Logo } from "@/components/logo";
 import { tripOneSupport } from "@/content/support";
 import { getCurrentUser } from "@/lib/auth/current-user";
@@ -37,22 +38,14 @@ export async function MarketingFooter() {
           title="Learn"
           links={[
             ["Resources", "/resources"],
+            ["Free tools", "/tools"],
+            ["Travel business guides", "/blog"],
+            ["Platform comparisons", "/compare"],
             ["SEO guide", "/resources/tourism-website-seo-guide"],
             ["Launch checklist", "/resources/tour-operator-website-checklist"],
-            ["Comparisons", "/resources/category/platform-comparisons"],
           ]}
         />
-        <FooterGroup
-          title="Support"
-          links={[
-            ["WhatsApp us", tripOneSupport.whatsappHref],
-            [`Call ${tripOneSupport.phoneDisplay}`, tripOneSupport.phoneHref],
-            ["Instagram", tripOneSupport.instagramHref],
-            ["Facebook", tripOneSupport.facebookHref],
-            ["Privacy", "/privacy"],
-            ["Terms", "/terms"],
-          ]}
-        />
+        <SupportLinks />
       </div>
       <div className="mx-auto mt-12 flex max-w-7xl flex-col justify-between gap-3 border-t border-white/10 pt-6 text-xs sm:flex-row">
         <p>© {new Date().getFullYear()} TripOne+</p>
@@ -61,6 +54,67 @@ export async function MarketingFooter() {
     </footer>
   );
 }
+
+function SupportLinks() {
+  const links = [
+    [MessageCircle, "WhatsApp us", tripOneSupport.whatsappHref],
+    [Phone, tripOneSupport.phoneDisplay, tripOneSupport.phoneHref],
+    [InstagramIcon, "Instagram", tripOneSupport.instagramHref],
+    [FacebookIcon, "Facebook", tripOneSupport.facebookHref],
+  ] as const;
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-[.16em] text-white/35">
+        Support
+      </p>
+      <div className="mt-4 grid grid-cols-2 gap-2 text-sm lg:grid-cols-1">
+        {links.map(([Icon, label, href]) => (
+          <Link
+            key={href}
+            href={href}
+            target={href.startsWith("http") ? "_blank" : undefined}
+            rel={href.startsWith("http") ? "noreferrer" : undefined}
+            aria-label={`${label} support`}
+            className="group flex min-h-12 items-center gap-3 rounded-xl border border-white/[.07] bg-white/[.035] px-3 text-white/70 transition hover:border-emerald-300/25 hover:bg-white/[.08] hover:text-white"
+          >
+            <span className="grid size-9 shrink-0 place-items-center rounded-xl border border-emerald-300/15 bg-emerald-300/[.09] text-[#95ee8e] transition group-hover:border-emerald-300/35 group-hover:bg-emerald-300/[.14]">
+              <Icon width={18} height={18} aria-hidden="true" />
+            </span>
+            {label}
+          </Link>
+        ))}
+        <div className="col-span-2 mt-2 flex gap-4 px-2 text-xs lg:col-span-1">
+          <Link href="/privacy" className="hover:text-white">
+            Privacy
+          </Link>
+          <Link href="/terms" className="hover:text-white">
+            Terms
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const InstagramIcon: ComponentType<SVGProps<SVGSVGElement>> = (props) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    {...props}
+  >
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
+  </svg>
+);
+
+const FacebookIcon: ComponentType<SVGProps<SVGSVGElement>> = (props) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...props}>
+    <path d="M14.4 8.2V6.7c0-.8.5-1 1-1h2.5V2.1L14.5 2C11.1 2 10 4 10 6.4v1.8H7.8v4H10V22h4.4v-9.8h3.1l.5-4h-3.6Z" />
+  </svg>
+);
 
 function FooterGroup({
   title,
