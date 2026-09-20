@@ -72,6 +72,26 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives specialist operator pages twenty-one to thirty distinct operating plans", () => {
+    const batch = seoPages.slice(20, 30);
+    const bodies = batch.map((page) =>
+      buildSeoContent(page)
+        .flatMap((section) => [
+          section.heading,
+          ...section.paragraphs,
+          ...(section.bullets ?? []),
+        ])
+        .join(" "),
+    );
+
+    expect(new Set(bodies).size).toBe(10);
+    for (const body of bodies) {
+      expect(body).toContain("From catalogue to customer and delivery");
+      expect(body).toContain("Operational safeguards before scale");
+      expect(body).toContain("A practical 30, 60 and 90-day implementation");
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);
