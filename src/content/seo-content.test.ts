@@ -48,6 +48,30 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives pages eleven to twenty distinct service and industry operating plans", () => {
+    const batch = seoPages.slice(10, 20);
+    const bodies = batch.map((page) =>
+      buildSeoContent(page)
+        .flatMap((section) => [
+          section.heading,
+          ...section.paragraphs,
+          ...(section.bullets ?? []),
+        ])
+        .join(" "),
+    );
+
+    expect(new Set(bodies).size).toBe(10);
+    for (const [index, body] of bodies.entries()) {
+      if (index < 6) {
+        expect(body).toContain("Measurement and evidence");
+        expect(body).toContain("Common risks to control");
+      } else {
+        expect(body).toContain("From catalogue to customer and delivery");
+        expect(body).toContain("Operational safeguards before scale");
+      }
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);

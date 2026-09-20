@@ -377,6 +377,222 @@ const profiles: Record<string, GrowthServiceProfile> = {
     thirdMonth:
       "By day 90, reconcile the dashboard with lead and booking samples, document remaining blind spots and establish a monthly quality-control routine for tags, consent and definitions.",
   },
+  "/services/strategy-consulting": {
+    thesis:
+      "A travel marketing consultant should turn competing ideas into a sequenced commercial plan. The work begins with the operator's margins, capacity, markets and customer journey, then identifies the few changes most likely to improve qualified demand and direct bookings without creating an operational bottleneck.",
+    commercialContext:
+      "Tourism growth strategy crosses acquisition, positioning, technology, pricing, distribution and service delivery. A channel can look weak because the offer is unclear, a website can convert poorly because availability is uncertain, and a sales team can lose strong enquiries through slow follow-up. Strategy therefore has to diagnose the system rather than prescribe a favourite channel.",
+    diagnosis:
+      "The diagnostic reviews products, destinations, customer segments, margins, seasonality, channel mix, website journeys, CRM stages and booking evidence. Interviews with leadership and customer-facing staff expose where published promises, operating reality and reporting diverge. Opportunities are scored by commercial value, confidence, effort and dependency.",
+    operatingModel:
+      "The resulting growth plan names an objective, baseline, owner, resources, constraints and review date for every initiative. Foundational work precedes scale: measurement before additional spend, offer clarity before more creative, and lead ownership before automation. A decision log keeps assumptions visible when evidence changes.",
+    travellerJourney:
+      "Strategy is tested against representative traveller journeys, from discovery through comparison, enquiry, payment, preparation and post-trip follow-up. This prevents a board-level plan from overlooking mobile friction, unanswered questions or internal handoffs that determine whether demand becomes revenue and a good guest experience.",
+    deliverables: [
+      "Leadership, offer and channel diagnostic",
+      "Market, customer and direct-booking opportunity map",
+      "Prioritised growth roadmap with owners and dependencies",
+      "Measurement framework and decision dashboard",
+      "Website, CRM and campaign workflow recommendations",
+      "Quarterly test plan and governance cadence",
+    ],
+    measurement:
+      "Success is evaluated against the objective agreed at the start: qualified pipeline, direct-booking contribution, acquisition efficiency, response time, repeat demand or another defensible commercial measure. Leading indicators are retained, but they are not substituted for the business outcome.",
+    reporting:
+      "Strategy reviews compare planned work, shipped changes, observed evidence and new constraints. They explain why priorities moved and what should stop as clearly as what should begin. Forecasts remain labelled as assumptions until real operating data supports them.",
+    risks: [
+      "Trying to repair every channel at once",
+      "Selecting tactics before agreeing the commercial problem",
+      "Ignoring capacity, margin or lead-response constraints",
+      "Treating a strategy presentation as implementation",
+    ],
+    firstMonth:
+      "In the first 30 days, establish the commercial and measurement baseline, interview the responsible teams, map the primary traveller journey and agree the highest-confidence constraint to address first.",
+    secondMonth:
+      "By day 60, ship the foundational changes, run a controlled test around one priority offer and create an operating review that connects marketing activity with lead and booking evidence.",
+    thirdMonth:
+      "By day 90, compare results with the baseline, retire weak assumptions and approve the next quarter's roadmap according to evidence, capacity and strategic fit.",
+  },
+  "/services/email-marketing-crm": {
+    thesis:
+      "Email marketing for a travel agency should preserve context from the first enquiry and use permissioned customer data to make follow-up more relevant. The goal is not a larger newsletter list; it is a dependable relationship system for active leads, booked guests, past travellers and people with genuinely useful preferences.",
+    commercialContext:
+      "Travel decisions may take days or months, while departures, seasons and customer interests change. A CRM can connect source, destination, party, timing and sales stage so the next message reflects what the person actually asked about. Broadcast newsletters, transactional messages and automated journeys each need a distinct purpose and lawful basis.",
+    diagnosis:
+      "The audit maps forms, inboxes, spreadsheets, CRM fields, consent records, segments, templates, automations, deliverability and unsubscribe handling. It samples records to find missing ownership, duplicate contacts, stale stages and promises that no longer match available products.",
+    operatingModel:
+      "A compact lifecycle defines new enquiry, qualified opportunity, proposal, booking, pre-trip, completed trip and re-engagement stages. Segments use useful facts such as destination interest or past purchase instead of sensitive profiling. Automation handles consistent timing and routing while staff retain control where judgement or personal service matters.",
+    travellerJourney:
+      "Every message should help the traveller make or complete a decision. Enquiry follow-up restores the requested context, pre-trip email reduces uncertainty, post-trip communication supports care and review requests, and retention campaigns offer relevant ideas without pretending to know more than the customer shared.",
+    deliverables: [
+      "CRM data, consent and lifecycle audit",
+      "Lead stages, ownership rules and field dictionary",
+      "Segmentation and preference framework",
+      "Enquiry, pre-trip, post-trip and retention journeys",
+      "Accessible modular email templates",
+      "Deliverability, conversion and data-quality dashboard",
+    ],
+    measurement:
+      "Delivery, bounce, complaint and unsubscribe rates protect list health. Replies, qualified conversations, recovered enquiries, repeat bookings and attributable revenue provide stronger commercial evidence. Open rates are treated cautiously because privacy features can inflate them.",
+    reporting:
+      "Monthly review combines message performance with CRM stage movement and booking samples. It identifies which segments receive value, where automation creates confusion and which records need correction rather than celebrating send volume.",
+    risks: [
+      "Importing contacts without a valid permission basis",
+      "Automating from inaccurate or incomplete CRM fields",
+      "Sending generic offers to every traveller",
+      "Optimising open rate while replies and bookings decline",
+    ],
+    firstMonth:
+      "Month one cleans the lifecycle, consent and ownership foundations, protects deliverability and launches a reliable response journey for new enquiries.",
+    secondMonth:
+      "By day 60, introduce useful segments, pre-trip and post-trip communication, then test one retention campaign against a clearly defined audience and offer.",
+    thirdMonth:
+      "By day 90, compare CRM progression and booking evidence, remove weak automations and document the ongoing data-quality and campaign calendar.",
+  },
+  "/services/landing-pages-funnels": {
+    thesis:
+      "Travel landing page design should continue one campaign promise into one coherent booking decision. A high-converting page earns action by matching the visitor's destination and intent, answering practical questions and reducing uncertainty—not by hiding information behind artificial urgency.",
+    commercialContext:
+      "A paid-search visitor, social-discovery visitor and returning package researcher arrive with different context. Tour landing pages can support each journey when message, imagery, offer detail and booking CTA remain aligned. A generic homepage usually forces campaign traffic to rediscover the offer it already selected.",
+    diagnosis:
+      "The review compares ads and referring content with page headlines, product facts, performance, mobile layout, forms, booking handoffs, analytics and follow-up. Session evidence and customer questions reveal friction; they do not justify deceptive countdowns, fabricated scarcity or unsupported proof.",
+    operatingModel:
+      "Each funnel has a defined audience, source, promise, evidence, primary action and accountable destination. Reusable page modules cover location, itinerary, suitability, inclusions, price context, trust and questions while retaining campaign-specific relevance. Experiments change one material hypothesis and protect technical SEO where indexable pages are involved.",
+    travellerJourney:
+      "The mobile journey keeps the primary action available without obscuring content. Forms request only information needed for the next step and retain campaign, page and offer context. External booking transitions are clearly labelled, measured and tested so the visitor does not mistake a broken handoff for unavailable inventory.",
+    deliverables: [
+      "Campaign-to-page message audit",
+      "Traveller objection and decision map",
+      "Responsive landing-page information architecture",
+      "Form, booking and WhatsApp funnel design",
+      "Analytics and qualified-conversion specification",
+      "Ethical experiment and iteration backlog",
+    ],
+    measurement:
+      "The funnel is assessed through page speed, engagement, CTA use, form completion, qualified-enquiry rate, booking progression and acquisition cost. Conversion rate is segmented by source and device so a change is not credited for a different traffic mix.",
+    reporting:
+      "Test reports state the hypothesis, audience, dates, sample, outcome and limitations. A visual improvement is not called a commercial win unless the downstream action and lead quality support it.",
+    risks: [
+      "Breaking the promise between advert and landing page",
+      "Removing useful detail in the name of minimalism",
+      "Measuring button clicks instead of qualified outcomes",
+      "Running overlapping tests without enough evidence",
+    ],
+    firstMonth:
+      "In month one, select one valuable campaign journey, document objections and measurement, then ship a fast mobile page with a complete and accountable action path.",
+    secondMonth:
+      "By day 60, use real visitor and sales-team evidence to improve the offer explanation, trust, form and booking handoff, then run one controlled experiment.",
+    thirdMonth:
+      "By day 90, validate downstream lead quality and create reusable modules and governance for the next destination, product or campaign funnel.",
+  },
+  "/services/reputation-review-growth": {
+    thesis:
+      "Tour operator review management should make it easy for real guests to describe a genuine experience and easy for the business to respond responsibly. Review growth is a customer-care workflow, not a system for manufacturing ratings or filtering every unhappy guest out of public channels.",
+    commercialContext:
+      "Google Reviews, Tripadvisor and relevant specialist platforms influence discovery and trust at different points. The right mix depends on where travellers research the business and what the team can maintain. Review requests work best when the trip is complete, the customer is recognisable and the request is simple and platform-compliant.",
+    diagnosis:
+      "The audit inventories listings, ownership, naming, duplicates, rating patterns, response times, request methods and operational themes inside feedback. It checks whether staff can identify the completed experience and resolve private issues without using incentives or review gating.",
+    operatingModel:
+      "A completion event triggers a neutral request with approved links and appropriate timing. Positive and critical feedback follow the same honest invitation. Response playbooks protect privacy, acknowledge specifics and escalate safety, discrimination, fraud or service-recovery issues to an accountable person.",
+    travellerJourney:
+      "Reviews should appear where they help a traveller evaluate the corresponding business or offer, with source and context visible. Structured data must follow platform and search-engine rules; TripOne+ does not convert third-party ratings into self-serving markup where that is not permitted.",
+    deliverables: [
+      "Listing ownership, duplicate and reputation audit",
+      "Post-experience review-request workflow",
+      "Google, Tripadvisor and relevant channel links",
+      "Response and escalation playbook",
+      "Feedback-theme and service-recovery reporting",
+      "Website proof placement and schema review",
+    ],
+    measurement:
+      "Review volume, recency, response rate and response time are combined with recurring feedback themes and service-recovery actions. Rating is monitored but never guaranteed, and staff are not rewarded for suppressing critical feedback.",
+    reporting:
+      "Reporting separates reviews requested, reviews published and issues resolved. It highlights operational learning—such as unclear meeting points or equipment concerns—so reputation work improves the actual experience as well as its presentation.",
+    risks: [
+      "Incentivising only positive reviews or review gating",
+      "Publishing defensive replies that expose customer information",
+      "Using unsupported aggregate-rating schema",
+      "Collecting feedback without closing operational issues",
+    ],
+    firstMonth:
+      "The first month secures listings, resolves critical duplicates, defines completion and ownership, and launches a compliant request and response workflow.",
+    secondMonth:
+      "By day 60, analyse themes, improve weak service touchpoints and place sourced review evidence at relevant decision points on the website.",
+    thirdMonth:
+      "By day 90, compare request coverage, response quality and recurring issues, then establish a sustainable review and service-improvement cadence.",
+  },
+  "/services/marketing-automation": {
+    thesis:
+      "Travel marketing automation should remove repetitive delay while preserving the context and judgement that make travel service valuable. It is most useful when a clear event, trustworthy data and named owner already exist; automating a confused process only makes the confusion faster.",
+    commercialContext:
+      "Tour operators, agencies and DMCs repeat important tasks around enquiry acknowledgement, assignment, proposal follow-up, payment reminders, pre-trip information, review requests and retention. These workflows cross websites, CRM records, email, messaging and booking systems, so source-of-truth and failure handling matter as much as the automation tool.",
+    diagnosis:
+      "The audit maps triggers, inputs, systems, owners, delays, duplicates, consent and exceptions. High-volume manual work is considered alongside customer risk: a useful convenience is prioritised, while safety advice, complex itinerary changes and sensitive complaints remain human-led.",
+    operatingModel:
+      "Every workflow documents its trigger, conditions, action, data source, owner, exit, error alert and audit trail. Idempotent design prevents duplicate messages or records. Staff can pause a journey, correct the record and understand why an action occurred instead of relying on a black box.",
+    travellerJourney:
+      "Automated communication remains recognisable, timely and easy to leave. Messages restore the relevant destination, product or booking context and offer a human route when the situation does not fit. Optional marketing consent is kept distinct from necessary service communication.",
+    deliverables: [
+      "Manual-work and automation-opportunity map",
+      "System ownership and data-flow specification",
+      "Lead routing and follow-up workflows",
+      "Pre-trip, post-trip and review automation",
+      "Exception, retry and human-escalation controls",
+      "Consent, testing and workflow health dashboard",
+    ],
+    measurement:
+      "Automation is judged through response time, completion, error rate, recovered opportunities, staff time and customer outcomes. Message volume is not a success measure by itself, and booking attribution is used only when the underlying record supports it.",
+    reporting:
+      "A workflow register shows status, owner, last test, failures and commercial purpose. Monthly review removes stale journeys and samples real records to confirm that a technically successful run was also appropriate for the customer.",
+    risks: [
+      "Triggering messages from stale or incomplete data",
+      "Creating duplicate actions across connected systems",
+      "Automating sensitive conversations without escalation",
+      "Leaving failed workflows invisible to the team",
+    ],
+    firstMonth:
+      "Month one maps systems and consent, selects one low-risk high-value workflow, defines ownership and tests success, failure and duplicate-event scenarios.",
+    secondMonth:
+      "By day 60, connect lead-quality feedback, add guarded lifecycle journeys and give staff visibility and intervention controls.",
+    thirdMonth:
+      "By day 90, quantify time and response improvements, audit customer appropriateness and approve only the next workflows with reliable data and clear ownership.",
+  },
+  "/services/brand-positioning": {
+    thesis:
+      "A travel branding agency should clarify why a specific traveller would choose this operator for this kind of experience. Distinctive identity matters, but positioning begins with the audience, offer, operating truth and credible difference before it reaches a logo, palette or campaign line.",
+    commercialContext:
+      "Travel businesses often use the same destination imagery and broad promises of unforgettable service. Strong positioning makes a useful choice legible: expertise in a place, way of travelling, service model, guest need or product philosophy that the business can repeatedly deliver. It should work from a search result to a guide briefing, not only in a brand presentation.",
+    diagnosis:
+      "Discovery reviews founders, staff, customers, competitors, offers, reviews, sales conversations and existing identity. Repeated customer language is separated from internal aspiration. Any proposed differentiator is tested for relevance, credibility, distinctiveness and operational proof.",
+    operatingModel:
+      "The positioning system defines audience, category, promise, reasons to believe, personality, message hierarchy and boundaries. Verbal and visual direction then translates it into website, product, sales and service touchpoints. Templates keep expression consistent without forcing every destination into the same composition.",
+    travellerJourney:
+      "The brand should help people recognise fit and build accurate expectations. A clear homepage promise leads into product-level facts, proof and tone; booking and pre-trip communication continue the same standard; and guides or service teams understand what the promise requires in practice.",
+    deliverables: [
+      "Customer, competitor and offer discovery",
+      "Positioning statement and value proposition",
+      "Message hierarchy and proof architecture",
+      "Voice, vocabulary and claim guardrails",
+      "Visual identity and art-direction principles",
+      "Website, campaign and service application guide",
+    ],
+    measurement:
+      "Brand work can be evaluated through message comprehension, qualified preference, direct and branded demand, sales-call objections and consistency across touchpoints. These signals are interpreted over time; a design launch is not labelled a revenue result on appearance alone.",
+    reporting:
+      "Reviews show how the system is being applied and where customer response differs from the hypothesis. Claims remain connected to evidence, and teams receive practical guidance for new products rather than a static document they cannot operate.",
+    risks: [
+      "Designing an identity before defining the choice it represents",
+      "Claiming exclusivity or quality without credible proof",
+      "Copying category visual conventions too closely",
+      "Launching a promise operations cannot deliver consistently",
+    ],
+    firstMonth:
+      "The first month gathers customer and operating evidence, maps the competitive category and agrees a focused positioning hypothesis and claim boundaries.",
+    secondMonth:
+      "By day 60, test the message hierarchy and creative direction across a homepage, representative product and acquisition example before broad rollout.",
+    thirdMonth:
+      "By day 90, refine the system from comprehension and sales feedback, document reusable standards and sequence the remaining customer touchpoints.",
+  },
 };
 
 export function buildGrowthServiceSections(
