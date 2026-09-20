@@ -180,6 +180,24 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives resources eighty-one to ninety distinct operational templates", () => {
+    const batch = seoPages.slice(80, 90);
+    const sections = batch.map((page) => buildSeoContent(page));
+    expect(new Set(sections.map((items) => JSON.stringify(items))).size).toBe(
+      10,
+    );
+    for (const items of sections) {
+      const headings = items.map((section) => section.heading).join(" ");
+      expect(headings).toContain("Complete the work in decision order");
+      expect(headings).toContain(
+        "Turn the completed resource into an operating system",
+      );
+      expect(items.some((section) => (section.bullets?.length ?? 0) >= 4)).toBe(
+        true,
+      );
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);
