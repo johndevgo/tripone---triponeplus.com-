@@ -231,6 +231,26 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives pages one hundred and eleven to one hundred and twenty distinct tools and guides", () => {
+    const batch = seoPages.slice(110, 120);
+    const sections = batch.map((page) => buildSeoContent(page));
+    expect(new Set(sections.map((items) => JSON.stringify(items))).size).toBe(
+      10,
+    );
+    for (const [index, items] of sections.entries()) {
+      const headings = items.map((section) => section.heading).join(" ");
+      if (index < 2) {
+        expect(headings).toContain("How to read the live result");
+        expect(headings).toContain(
+          "Calculation checks before making a decision",
+        );
+      } else {
+        expect(headings).toContain("Build the operating foundation first");
+        expect(headings).toContain("A practical 90-day action plan");
+      }
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);

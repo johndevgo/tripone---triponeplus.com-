@@ -481,6 +481,58 @@ const profiles: Record<string, ToolProfile> = {
     nextStep:
       "Complete and approve the document in the business's accounting workflow, reconcile payment against the booking and retain records under the applicable policy.",
   },
+  "/tools/travel-quote-generator": {
+    purpose:
+      "The travel quote generator creates a copyable draft from a customer, service and amount. It helps structure the first document, but it does not confirm supplier inventory, calculate a complete price or create a binding agreement.",
+    inputs: [
+      "Correct customer or lead identity",
+      "The specific tour, package or proposed service",
+      "An approved amount in the intended currency",
+      "Dates, inclusions, exclusions, validity and terms added before issue",
+    ],
+    formula:
+      "The browser formats the entered fields into a simple quote heading and amount. No tax, currency, supplier, capacity, deposit or cancellation logic is inferred.",
+    interpretation:
+      "Treat the result as a draft shell. A useful travel quote should let the customer identify the proposal version, services, assumptions, optional items, total, payment schedule and next approval action.",
+    decisions:
+      "Confirm availability and price ownership before sending. Clearly separate confirmed components from proposed or subject-to-availability items, and set a realistic validity period where supplier terms can change.",
+    limitations:
+      "The tool does not save, send, sign, approve or version the quote and cannot determine contractual or tax requirements.",
+    mistakes: [
+      "Presenting an estimated amount as confirmed availability",
+      "Leaving currency, validity or exclusions ambiguous",
+      "Mixing optional and included services",
+      "Sending sensitive traveller or payment data in the draft",
+    ],
+    nextStep:
+      "Complete the quote in the authorised sales workflow, link it to the correct opportunity and itinerary, record approval and convert accepted services into controlled booking records.",
+  },
+  "/tools/tour-itinerary-generator": {
+    purpose:
+      "The tour itinerary generator creates a day-by-day outline from destination, main experience and number of days. It removes blank-page friction while keeping every operational claim visibly incomplete until a person verifies it.",
+    inputs: [
+      "The trip's primary destination or route",
+      "The main experience or organising theme",
+      "The intended number of itinerary days",
+      "Verified services, timings and practical detail added during editing",
+    ],
+    formula:
+      "The generator creates one labelled line for each day, capped at the tool's safe maximum, and prompts the editor to add timing, transport, inclusions and practical notes.",
+    interpretation:
+      "Use the output as structure, not finished travel advice. Day titles should explain movement or purpose, while verified detail should distinguish confirmed services, optional ideas and free time.",
+    decisions:
+      "Check travel time, overnight location, opening or access constraints, supplier availability and customer pace before turning the outline into a proposal or public package.",
+    limitations:
+      "The deterministic tool does not research destinations, contact suppliers, calculate routes, check safety or generate live availability. Entries remain only in the current browser unless copied.",
+    mistakes: [
+      "Treating placeholder day text as researched advice",
+      "Ignoring realistic movement and rest time",
+      "Presenting optional services as included or confirmed",
+      "Publishing without destination and operational review",
+    ],
+    nextStep:
+      "Move the outline into a versioned itinerary, link verified services and destinations, add customer-safe logistics and complete operational review before approval.",
+  },
 };
 
 export function buildToolSections(
