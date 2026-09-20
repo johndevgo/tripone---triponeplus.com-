@@ -215,6 +215,22 @@ describe("SEO content catalog", () => {
     }
   });
 
+  it("gives tools one hundred and one to one hundred and ten distinct methods and safeguards", () => {
+    const batch = seoPages.slice(100, 110);
+    const sections = batch.map((page) => buildSeoContent(page));
+    expect(new Set(sections.map((items) => JSON.stringify(items))).size).toBe(
+      10,
+    );
+    for (const items of sections) {
+      const headings = items.map((section) => section.heading).join(" ");
+      expect(headings).toContain("How to read the live result");
+      expect(headings).toContain("Calculation checks before making a decision");
+      expect(items.some((section) => (section.bullets?.length ?? 0) >= 4)).toBe(
+        true,
+      );
+    }
+  });
+
   it("builds valid contextual related-page links", () => {
     for (const page of seoPages) {
       const related = getRelatedSeoPages(page);
