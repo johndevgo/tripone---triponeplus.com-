@@ -3,6 +3,7 @@ import {
   getRelatedSeoPages,
   getSeoEditorialLinks,
   getSeoPage,
+  getSeoPageImage,
   getSeoPages,
   seoPages,
 } from "./seo-catalog";
@@ -300,6 +301,12 @@ describe("SEO content catalog", () => {
     expect(getSeoPages("for")).toHaveLength(18);
     expect(getSeoPage("/for-diving-snorkelling")?.pageType).toBe("Industry");
     expect(getSeoPage("/for-transfer-operators")?.pageType).toBe("Industry");
+  });
+
+  it("gives every industry page distinct, category-relevant artwork", () => {
+    const industryPages = getSeoPages("for");
+    const artwork = industryPages.map(getSeoPageImage);
+    expect(new Set(artwork).size).toBe(industryPages.length);
   });
 
   it("provides six valid, non-self editorial links per page", () => {

@@ -66,6 +66,27 @@ const serviceArtwork: Record<string, string> = {
   "/services/brand-positioning": "/images/service-art/brand-positioning.webp",
 };
 
+const industryArtwork: Record<string, string> = {
+  "/for/tour-operators": marketingImages.planning,
+  "/for/travel-agencies": marketingImages.rail,
+  "/for/dmcs": marketingImages.city,
+  "/for/activity-providers": marketingImages.balloon,
+  "/for/adventure-tour-operators": marketingImages.jungle,
+  "/for/trekking-companies": marketingImages.mountain,
+  "/for/safari-operators": marketingImages.safari,
+  "/for/boat-tour-operators": marketingImages.yacht,
+  "/for/yacht-charters": marketingImages.luxuryYacht,
+  "/for-diving-snorkelling": marketingImages.diving,
+  "/for/rafting-companies": marketingImages.ocean,
+  "/for/atv-buggy-tours": marketingImages.atv,
+  "/for/motorcycle-tour-rentals": marketingImages.himalayanJeep,
+  "/for/bike-tour-rentals": marketingImages.bhutanTrekking,
+  "/for/food-tour-companies": marketingImages.market,
+  "/for/walking-cultural-tours": marketingImages.guide,
+  "/for-transfer-operators": marketingImages.transfer,
+  "/for/wellness-retreats": marketingImages.mountainWellness,
+};
+
 const pagesByPath = new Map(seoPages.map((page) => [page.path, page]));
 
 export const seoNamespaces = [
@@ -204,6 +225,8 @@ export function getRelatedSeoPages(page: SeoPageSpec, limit = 6) {
 export function getSeoPageImage(page: SeoPageSpec) {
   const suppliedArtwork = serviceArtwork[page.path];
   if (suppliedArtwork) return suppliedArtwork;
+  const industryImage = industryArtwork[page.path];
+  if (industryImage) return industryImage;
 
   const context = [
     page.title,
@@ -240,6 +263,9 @@ export function getSeoPageImage(page: SeoPageSpec) {
 export function getSeoPageImageAlt(page: SeoPageSpec) {
   if (serviceArtwork[page.path]) {
     return `TripOne+ ${page.title.toLowerCase()} capability artwork`;
+  }
+  if (industryArtwork[page.path]) {
+    return `Travel experience representing ${page.title.toLowerCase()}`;
   }
   return `Travel business scene supporting ${page.primaryKeyword} for ${page.vertical.toLowerCase()}`;
 }

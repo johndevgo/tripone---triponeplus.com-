@@ -9,6 +9,7 @@ import {
   ClipboardCheck,
   Compass,
   Layers3,
+  Scale,
   Search,
   Sparkles,
 } from "lucide-react";
@@ -106,16 +107,126 @@ export function SeoHubPage({ namespace }: { namespace: SeoNamespace }) {
       />
       {namespace === "services" ? (
         <ServicesHub pages={pages} />
+      ) : namespace === "for" ? (
+        <IndustryHub pages={pages} />
       ) : namespace === "compare" ? (
         <ComparisonHub pages={pages} />
       ) : namespace === "tools" ? (
         <ToolHub pages={pages} />
       ) : namespace === "resources" ? (
         <ResourceHub pages={pages} />
+      ) : namespace === "blog" ? (
+        <BlogHub pages={pages} />
       ) : (
         <PageGrid pages={pages} />
       )}
     </>
+  );
+}
+
+function IndustryHub({ pages }: { pages: SeoPageSpec[] }) {
+  const foundation = pages.slice(0, 3);
+  const specialists = pages.slice(3);
+  return (
+    <div id="explore" className="mt-16 scroll-mt-28">
+      <section className="grid gap-5 lg:grid-cols-[.75fr_1.25fr] lg:items-end">
+        <div>
+          <p className="marketing-kicker">Operating models</p>
+          <h2 className="mt-5 text-3xl font-semibold tracking-[-.03em] sm:text-4xl">
+            Start with how the business sells and delivers.
+          </h2>
+        </div>
+        <p className="max-w-2xl leading-8 text-white/58">
+          Every industry workspace uses the same dependable platform, then
+          adapts its catalogue, booking context, resources and conversion path
+          to the operator&apos;s actual model.
+        </p>
+      </section>
+      <section className="mt-8 grid gap-5 lg:grid-cols-3">
+        {foundation.map((page) => (
+          <VisualCard key={page.path} page={page} />
+        ))}
+      </section>
+      <section className="mt-14 border-t border-white/10 pt-10">
+        <div className="flex flex-wrap items-end justify-between gap-5">
+          <div>
+            <p className="marketing-kicker">Specialist workflows</p>
+            <h2 className="mt-5 text-3xl font-semibold">
+              Activities, journeys, rentals and retreats
+            </h2>
+          </div>
+          <p className="max-w-xl text-sm leading-6 text-white/48">
+            The imagery is matched to each operating category; the underlying
+            workflow remains structured and maintainable.
+          </p>
+        </div>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {specialists.map((page) => (
+            <VisualCard key={page.path} page={page} compact />
+          ))}
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function BlogHub({ pages }: { pages: SeoPageSpec[] }) {
+  const [featured, ...rest] = pages;
+  if (!featured) return null;
+  return (
+    <div id="explore" className="mt-16 scroll-mt-28">
+      <Link
+        href={featured.path}
+        className="glass group grid overflow-hidden rounded-[2rem] lg:grid-cols-[1.1fr_.9fr]"
+      >
+        <div className="p-7 sm:p-10">
+          <p className="marketing-kicker">Featured field guide</p>
+          <h2 className="mt-6 text-3xl font-semibold tracking-[-.03em] sm:text-4xl">
+            {featured.title}
+          </h2>
+          <p className="mt-5 max-w-2xl leading-8 text-white/58">
+            {featured.metaDescription}
+          </p>
+          <span className="mt-7 inline-flex items-center gap-2 font-semibold text-[#95ee8e]">
+            Read the guide <ArrowRight size={16} />
+          </span>
+        </div>
+        <div className="relative min-h-72 overflow-hidden">
+          <Image
+            src={getSeoPageImage(featured)}
+            alt={getSeoPageImageAlt(featured)}
+            fill
+            sizes="(max-width: 1024px) 100vw, 45vw"
+            className="object-cover transition duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#07351c]/35 to-transparent" />
+        </div>
+      </Link>
+      <section className="mt-12 grid gap-x-8 gap-y-4 md:grid-cols-2">
+        {rest.map((page, index) => (
+          <Link
+            key={page.path}
+            href={page.path}
+            className="group grid grid-cols-[4rem_1fr] gap-5 border-t border-white/10 py-7"
+          >
+            <span className="text-3xl font-semibold text-white/16">
+              {String(index + 2).padStart(2, "0")}
+            </span>
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[.14em] text-[#95ee8e]">
+                {page.keywordCluster}
+              </p>
+              <h2 className="mt-3 text-xl font-semibold leading-snug transition group-hover:text-[#aaf5a4]">
+                {page.title}
+              </h2>
+              <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/48">
+                {page.metaDescription}
+              </p>
+            </div>
+          </Link>
+        ))}
+      </section>
+    </div>
   );
 }
 
@@ -157,33 +268,92 @@ function HubHero({
             </Link>
           </div>
         </div>
-        <div
-          className="grid grid-cols-2 gap-3"
-          aria-label={`${namespace} preview`}
-        >
+        <HubPreview namespace={namespace} pages={pages} />
+      </div>
+    </section>
+  );
+}
+
+function HubPreview({
+  namespace,
+  pages,
+}: {
+  namespace: SeoNamespace;
+  pages: SeoPageSpec[];
+}) {
+  if (["compare", "tools", "resources"].includes(namespace)) {
+    const Icon =
+      namespace === "compare"
+        ? Scale
+        : namespace === "tools"
+          ? Blocks
+          : ClipboardCheck;
+    const eyebrow =
+      namespace === "compare"
+        ? "Evaluation workspace"
+        : namespace === "tools"
+          ? "Interactive browser tools"
+          : "Working templates";
+    return (
+      <div
+        className="rounded-[1.8rem] border border-white/12 bg-black/10 p-5 sm:p-6"
+        aria-label={`${namespace} preview`}
+      >
+        <div className="flex items-center justify-between">
+          <p className="text-xs font-bold uppercase tracking-[.15em] text-[#95ee8e]">
+            {eyebrow}
+          </p>
+          <span className="grid size-11 place-items-center rounded-2xl border border-white/12 bg-white/[.06] text-[#95ee8e]">
+            <Icon size={21} />
+          </span>
+        </div>
+        <div className="mt-6 grid gap-3">
           {pages.slice(0, 3).map((page, index) => (
             <Link
               href={page.path}
               key={page.path}
-              className={`group relative min-h-40 overflow-hidden rounded-[1.5rem] border border-white/12 ${index === 0 ? "col-span-2 aspect-[2.25/1]" : "aspect-square"}`}
+              className="group flex items-center gap-4 rounded-xl border border-white/10 bg-white/[.045] p-4 transition hover:border-[#95ee8e]/30 hover:bg-white/[.08]"
             >
-              <Image
-                src={getSeoPageImage(page)}
-                alt=""
-                fill
-                preload={index === 0}
-                sizes="(max-width: 1024px) 45vw, 22vw"
-                className="object-cover transition duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#021b0d]/95 via-[#021b0d]/25 to-transparent" />
-              <span className="absolute inset-x-0 bottom-0 p-4 text-sm font-semibold leading-snug text-white">
+              <span className="grid size-7 shrink-0 place-items-center rounded-full bg-[#5bcd57] text-xs font-bold text-[#062b16]">
+                {index + 1}
+              </span>
+              <span className="line-clamp-1 text-sm font-semibold">
                 {page.title}
               </span>
+              <ArrowRight
+                size={14}
+                className="ml-auto shrink-0 text-[#95ee8e]"
+              />
             </Link>
           ))}
         </div>
       </div>
-    </section>
+    );
+  }
+
+  return (
+    <div className="grid grid-cols-2 gap-3" aria-label={`${namespace} preview`}>
+      {pages.slice(0, 3).map((page, index) => (
+        <Link
+          href={page.path}
+          key={page.path}
+          className={`group relative min-h-40 overflow-hidden rounded-[1.5rem] border border-white/12 ${index === 0 ? "col-span-2 aspect-[2.25/1]" : "aspect-square"}`}
+        >
+          <Image
+            src={getSeoPageImage(page)}
+            alt=""
+            fill
+            preload={index === 0}
+            sizes="(max-width: 1024px) 45vw, 22vw"
+            className="object-cover transition duration-700 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#021b0d]/95 via-[#021b0d]/25 to-transparent" />
+          <span className="absolute inset-x-0 bottom-0 p-4 text-sm font-semibold leading-snug text-white">
+            {page.title}
+          </span>
+        </Link>
+      ))}
+    </div>
   );
 }
 
@@ -341,11 +511,54 @@ function ComparisonHub({ pages }: { pages: SeoPageSpec[] }) {
         </div>
         <div className="grid gap-5 sm:grid-cols-2">
           {pages.map((page, index) => (
-            <VisualCard key={page.path} page={page} compact={index > 3} />
+            <ComparisonCard key={page.path} page={page} index={index} />
           ))}
         </div>
       </section>
     </div>
+  );
+}
+
+function ComparisonCard({ page, index }: { page: SeoPageSpec; index: number }) {
+  const alternative = page.title
+    .replace(/^TripOne\+ vs\.?\s*/i, "")
+    .replace(/ comparison.*$/i, "");
+  const accents = [
+    "from-[#5bcd57]/20 to-white/[.04]",
+    "from-[#95ee8e]/14 to-white/[.035]",
+    "from-emerald-400/15 to-white/[.04]",
+    "from-lime-300/12 to-white/[.035]",
+  ];
+  return (
+    <Link
+      href={page.path}
+      className={`group relative min-h-72 overflow-hidden rounded-[1.8rem] border border-white/12 bg-gradient-to-br ${accents[index % accents.length]} p-6 transition hover:-translate-y-1 hover:border-[#95ee8e]/35`}
+    >
+      <div className="flex items-center justify-between">
+        <span className="grid size-11 place-items-center rounded-2xl border border-white/12 bg-black/10 text-[#95ee8e]">
+          <Scale size={20} />
+        </span>
+        <span className="text-xs font-bold text-white/25">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+      <div className="mt-8 grid grid-cols-[1fr_auto_1fr] items-center gap-2 text-sm font-semibold">
+        <span className="rounded-xl border border-white/10 bg-white/[.055] px-3 py-3 text-center">
+          TripOne+
+        </span>
+        <span className="text-xs text-[#95ee8e]">VS</span>
+        <span className="truncate rounded-xl border border-white/10 bg-black/10 px-3 py-3 text-center">
+          {alternative}
+        </span>
+      </div>
+      <h3 className="mt-6 text-xl font-semibold leading-snug">{page.title}</h3>
+      <p className="mt-3 line-clamp-2 text-sm leading-6 text-white/50">
+        {page.metaDescription}
+      </p>
+      <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-white/72 transition group-hover:text-white">
+        Compare workflows <ArrowRight size={15} />
+      </span>
+    </Link>
   );
 }
 

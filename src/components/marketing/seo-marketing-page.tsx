@@ -2,8 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
-  BookOpenCheck,
-  Check,
   ChevronRight,
   Compass,
   ExternalLink,
@@ -13,6 +11,8 @@ import {
 import { ButtonLink } from "@/components/ui/button";
 import { MarketingPrimaryCta } from "@/components/marketing/primary-cta";
 import { SeoPageTypeIntro } from "@/components/marketing/seo-page-type-intro";
+import { SeoPageContentLayout } from "@/components/marketing/seo-page-content-layout";
+import { SeoPageHeroVisual } from "@/components/marketing/seo-page-hero-visual";
 import { SeoToolWorkspace } from "@/components/marketing/seo-tool-workspace";
 import {
   getSeoEditorialLinks,
@@ -126,25 +126,11 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
               )}
             </div>
           </div>
-          <div className="relative min-h-[25rem] overflow-hidden rounded-[2rem] border border-white/12 shadow-[0_30px_90px_rgba(0,35,12,.35)]">
-            <Image
-              src={image}
-              alt={getSeoPageImageAlt(page)}
-              fill
-              preload
-              sizes="(max-width: 1024px) 100vw, 48vw"
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#021912]/90 via-transparent to-emerald-950/10" />
-            <div className="absolute inset-x-0 bottom-0 p-7">
-              <p className="text-xs font-semibold uppercase tracking-[.16em] text-[#95ee8e]">
-                Our approach
-              </p>
-              <p className="mt-3 max-w-xl text-lg font-medium leading-7 text-white/90">
-                {page.contentAngle}
-              </p>
-            </div>
-          </div>
+          <SeoPageHeroVisual
+            page={page}
+            image={image}
+            imageAlt={getSeoPageImageAlt(page)}
+          />
         </header>
 
         <SeoPageTypeIntro page={page} />
@@ -216,153 +202,12 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
             title={page.title}
           />
         )}
-
-        <div className="mt-16 grid gap-12 lg:grid-cols-[17rem_minmax(0,1fr)]">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
-            <div className="glass rounded-2xl p-5">
-              <p className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[.15em] text-[#95ee8e]">
-                <BookOpenCheck size={15} /> In this guide
-              </p>
-              <nav aria-label="Page sections" className="mt-5 grid gap-3">
-                {content.map((section) => (
-                  <a
-                    key={section.heading}
-                    href={`#${headingId(section.heading)}`}
-                    className="text-sm leading-5 text-white/50 transition hover:text-white"
-                  >
-                    {section.heading}
-                  </a>
-                ))}
-              </nav>
-            </div>
-          </aside>
-
-          <div className="min-w-0">
-            <section className="rounded-[1.6rem] border border-emerald-300/15 bg-emerald-300/[.07] p-6 sm:p-8">
-              <p className="text-xs font-semibold uppercase tracking-[.15em] text-[#95ee8e]">
-                Decision summary
-              </p>
-              <h2 className="mt-3 text-2xl font-semibold">
-                What a strong implementation should deliver
-              </h2>
-              <ul className="mt-5 grid gap-4 sm:grid-cols-2">
-                {[
-                  `A clear answer for ${page.primaryKeyword}`,
-                  `Accurate coverage of ${page.keywordCluster.toLowerCase()}`,
-                  "A complete mobile and keyboard-accessible journey",
-                  "Measured actions without invented performance claims",
-                ].map((item) => (
-                  <li key={item} className="flex gap-3 leading-7 text-white/70">
-                    <Check className="mt-1 shrink-0 text-[#95ee8e]" size={18} />{" "}
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </section>
-
-            <div className="article-body mt-12">
-              {content.map((section, index) => (
-                <section key={section.heading} id={headingId(section.heading)}>
-                  <h2>{section.heading}</h2>
-                  {section.paragraphs.map((paragraph) => (
-                    <p key={paragraph}>{paragraph}</p>
-                  ))}
-                  {section.bullets && (
-                    <ul>
-                      {section.bullets.map((bullet) => (
-                        <li key={bullet}>{bullet}</li>
-                      ))}
-                    </ul>
-                  )}
-                  {section.sources && (
-                    <aside className="not-prose mt-7 rounded-2xl border border-white/10 bg-white/[.04] p-5">
-                      <p className="text-xs font-semibold uppercase tracking-[.14em] text-[#95ee8e]">
-                        First-party sources checked
-                      </p>
-                      <ul className="mt-3 grid gap-2">
-                        {section.sources.map((source) => (
-                          <li key={source.href}>
-                            <a
-                              href={source.href}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center gap-2 text-sm font-semibold text-white/68 transition hover:text-white"
-                            >
-                              {source.label} <ExternalLink size={13} />
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </aside>
-                  )}
-                  {index === 3 && (
-                    <div className="not-prose mt-9 rounded-2xl border border-white/10 bg-white/[.045] p-6">
-                      <p className="text-sm font-semibold text-white">
-                        Ready to put this framework into one connected
-                        workspace?
-                      </p>
-                      <MarketingPrimaryCta
-                        guestLabel={page.cta}
-                        guestHref="/signup"
-                        className="mt-4"
-                      >
-                        <ArrowRight size={16} />
-                      </MarketingPrimaryCta>
-                    </div>
-                  )}
-                  {index === 1 && (
-                    <aside className="not-prose mt-9 rounded-2xl border border-emerald-300/15 bg-emerald-300/[.055] p-6">
-                      <p className="text-xs font-semibold uppercase tracking-[.15em] text-[#95ee8e]">
-                        Continue the decision
-                      </p>
-                      <div className="mt-4 grid gap-3 sm:grid-cols-3">
-                        {editorialLinks.slice(0, 3).map((link) => (
-                          <Link
-                            key={link.href}
-                            href={link.href}
-                            className="rounded-xl border border-white/10 bg-white/[.045] p-4 text-sm font-semibold leading-5 text-white/72 transition hover:border-emerald-300/25 hover:bg-white/[.08] hover:text-white"
-                          >
-                            {link.label}
-                            <ArrowRight
-                              size={14}
-                              className="mt-3 text-[#95ee8e]"
-                            />
-                          </Link>
-                        ))}
-                      </div>
-                    </aside>
-                  )}
-                </section>
-              ))}
-            </div>
-
-            <section
-              className="mt-16 border-t border-white/10 pt-12"
-              aria-labelledby="page-faqs"
-            >
-              <p className="marketing-kicker">Direct answers</p>
-              <h2 id="page-faqs" className="mt-5 text-3xl font-semibold">
-                Frequently asked questions
-              </h2>
-              <div className="mt-7 divide-y divide-white/10 border-y border-white/10">
-                {faqs.map((faq) => (
-                  <details key={faq.question} className="group py-6">
-                    <summary className="flex cursor-pointer list-none items-center justify-between gap-5 font-semibold marker:hidden">
-                      {faq.question}
-                      <ChevronRight
-                        size={18}
-                        className="shrink-0 text-[#95ee8e] transition group-open:rotate-90"
-                      />
-                    </summary>
-                    <p className="mt-4 max-w-3xl leading-7 text-white/58">
-                      {faq.answer}
-                    </p>
-                  </details>
-                ))}
-              </div>
-            </section>
-          </div>
-        </div>
+        <SeoPageContentLayout
+          page={page}
+          content={content}
+          faqs={faqs}
+          editorialLinks={editorialLinks}
+        />
       </article>
 
       <section
@@ -435,13 +280,6 @@ export function SeoMarketingPage({ page }: { page: SeoPageSpec }) {
       </section>
     </>
   );
-}
-
-function headingId(value: string) {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
 }
 
 function buildStructuredData(
